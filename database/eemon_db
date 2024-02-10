@@ -26,18 +26,30 @@ REFERENCES genre(id)
 ON DELETE CASCADE
 ON UPDATE CASCADE;
 
-/* user テーブル*/
-/*ユーザーの正誤を表示*/
-CREATE TABLE userdata (
+/* user_data テーブル*/
+CREATE TABLE user_data (
   id SERIAL PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
+  name VARCHAR(255) NOT NULL
+);
+
+/* user_questiondata テーブル*/
+/*ユーザーの正誤を表示*/
+CREATE TABLE user_questiondata (
+  user_data_id INT,
   cor BOOLEAN,
   qes_id INT
 );
 
+ALTER TABLE user_questiondata
+ADD CONSTRAINT fk_user_questiondata_user_data
+FOREIGN KEY (user_data_id)
+REFERENCES user_data(id)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
 /*qes_idの外部キー制約設定*/
-ALTER TABLE userdata
-ADD CONSTRAINT fk_user_question
+ALTER TABLE user_questiondata
+ADD CONSTRAINT fk_user_questiondata_question
 FOREIGN KEY (qes_id)
 REFERENCES question(id)
 ON DELETE CASCADE

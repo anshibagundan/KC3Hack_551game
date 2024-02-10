@@ -1,0 +1,2 @@
+INSERT INTO user_data (name)
+VALUES ('user1');
