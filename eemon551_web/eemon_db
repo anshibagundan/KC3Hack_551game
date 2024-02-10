@@ -28,7 +28,7 @@ ON UPDATE CASCADE;
 
 /* user テーブル*/
 /*ユーザーの正誤を表示*/
-CREATE TABLE user (
+CREATE TABLE userdata (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
   cor BOOLEAN,
@@ -36,7 +36,7 @@ CREATE TABLE user (
 );
 
 /*qes_idの外部キー制約設定*/
-ALTER TABLE user
+ALTER TABLE userdata
 ADD CONSTRAINT fk_user_question
 FOREIGN KEY (qes_id)
 REFERENCES question(id)
