@@ -1,0 +1,59 @@
+/* question テーブル*/
+/*問題文の設定を表示*/
+CREATE TABLE question (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  img TEXT DEFAULT 'no image',
+  txt TEXT NOT NULL,
+  link VARCHAR(255),
+  iskansai BOOLEAN,
+  loc_id INT,
+  genre_id INT
+);
+
+/*loc_idとgenre_idの外部キー制約設定*/
+ALTER TABLE question
+ADD CONSTRAINT fk_question_loc
+FOREIGN KEY (loc_id)
+REFERENCES location(id)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+ALTER TABLE question
+ADD CONSTRAINT fk_question_genre
+FOREIGN KEY (genre_id)
+REFERENCES genre(id)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+/* user テーブル*/
+/*ユーザーの正誤を表示*/
+CREATE TABLE userdata (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  cor BOOLEAN,
+  qes_id INT
+);
+
+/*qes_idの外部キー制約設定*/
+ALTER TABLE userdata
+ADD CONSTRAINT fk_user_question
+FOREIGN KEY (qes_id)
+REFERENCES question(id)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+/* location テーブル*/
+CREATE TABLE location (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  font VARCHAR(255) NOT NULL,
+  img TEXT DEFAULT 'no image'
+);
+
+/* genre テーブル*/
+CREATE TABLE genre (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  col VARCHAR(6) DEFAULT '000000'
+);
