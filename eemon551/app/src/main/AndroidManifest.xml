@@ -13,6 +13,7 @@
         android:theme="@style/Theme.Eemon551"
         tools:targetApi="31">
         <activity
+<<<<<<< HEAD
             android:name=".garally"
             android:exported="false" />
         <activity
@@ -24,6 +25,11 @@
             android:label="@string/title_activity_game"
             android:theme="@style/Theme.Eemon551" />
         <activity
+=======
+            android:name=".QuestionActivity"
+            android:exported="false" />
+        <activity
+>>>>>>> c51bb548c51a2403b2e9c8a8568e08e93d74875b
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

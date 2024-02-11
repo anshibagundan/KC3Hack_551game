@@ -1,0 +1,2 @@
+INSERT INTO genre (name,col)
+VALUES ('食べ物', '000000');

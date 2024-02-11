@@ -1,0 +1,7 @@
+INSERT INTO location (name, font,img,iskansai)
+VALUES ('大阪', 'fontex1','no image','1');
+VALUES ('京都', 'fontex2','no image','1' );
+VALUES ('兵庫', 'fontex3','no image','1');
+VALUES ('奈良', 'fontex4','no image','1');
+VALUES ('和歌山', 'fontex5','no image','1');
+VALUES ('滋賀', 'fontex6', 'no image','1');

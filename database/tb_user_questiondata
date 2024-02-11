@@ -1,0 +1,2 @@
+INSERT INTO user_questiondata (user_data_id,cor,qes_id)
+VALUES ('1','1','1')
