@@ -2,6 +2,7 @@ import org.apache.tools.ant.util.JavaEnvUtils.VERSION_1_8
 
 plugins {
     id("com.android.application")
+    id("kotlin-kapt")
 }
 
 android {
@@ -45,5 +46,6 @@ dependencies {
     val room_version = "2.5.0"
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-runtime:2.5.0")
 
 }

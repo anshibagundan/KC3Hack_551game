@@ -4,14 +4,14 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "question") // テーブル名の指定
-public class Question { // Javaの規約ではクラス名はキャメルケースで大文字始まり
+@Entity(tableName = "eemon_db") // テーブル名の指定
+public class eemon_db {
 
     @PrimaryKey // プライマリキー
     public int qes_id;
 
-    @ColumnInfo(name = "name") // カラム名の指定
-    public String name; // Javaの規約ではフィールド名は小文字始まり
+    @ColumnInfo(name = "ques_name") // カラム名の指定
+    public String name;
 
     @ColumnInfo(name = "img")
     public String img;
@@ -28,6 +28,15 @@ public class Question { // Javaの規約ではクラス名はキャメルケー�
     @ColumnInfo(name = "location_img")
     public String location_img;
 
-    @ColumnInfo
+    @ColumnInfo(name = "iskansai")
+    public Boolean iskansai;
 
+    @ColumnInfo(name = "genre_name")
+    public String genre_name;
+
+    @ColumnInfo(name = "genre_color")
+    public int genre_color;
+
+    @ColumnInfo(name = "isCorrect")
+    public Boolean isCorrect;
 }
