@@ -21,4 +21,5 @@ public interface eemon_db_dao {
 
     @Query("SELECT * FROM eemon_db")
     List<eemon_db> getAll();
+
 }
