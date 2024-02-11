@@ -1,6 +1,8 @@
 package com.example.eemon551;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.database.Observable;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -20,36 +22,4 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_question);
 
         textView = findViewById(R.id.text_question_name);
-
-
-        // データベース接続
-        String dbUrl = "jdbc:postgresql://dpg-cn3h3cv109ks73epvbhg-a:5432/eemon";
-        String dbUsername = "eemon_user";
-        String dbPassword = "xBcSex0Q4EVEJZf6FAeBtjHJlLdy7xbu";
-
-        try (Connection connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword)) {
-            // Statementの作成
-            Statement statement = connection.createStatement();
-
-            // SQLクエリの実行
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM \"question\"");
-
-            // データの取得
-            StringBuilder resultText = new StringBuilder();
-            while (resultSet.next()) {
-                resultText.append(resultSet.getString("\"name\"")).append("\n");
-            }
-
-            // TextViewへの表示
-            if (resultText.length() > 0) {
-                textView.setText(resultText.toString());
-            }else{
-                textView.setText("接続エラー2");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            textView.setText("接続エラー3"+ e.getMessage());
-        }
-    }
-}
-
+    }}
