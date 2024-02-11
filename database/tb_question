@@ -1,2 +1,2 @@
-INSERT INTO question (name,img,txt,link,iskansai,loc_id,genre_id)
-VALUES ('551', 'no image','551の補足説明','https://www.551horai.co.jp/','1','1','1');
+INSERT INTO question (name,img,txt,link,loc_id,genre_id)
+VALUES ('551', 'no image','551の補足説明','https://www.551horai.co.jp/','1','1');

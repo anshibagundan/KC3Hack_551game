@@ -6,7 +6,6 @@ CREATE TABLE question (
   img TEXT DEFAULT 'no image',
   txt TEXT NOT NULL,
   link VARCHAR(255),
-  iskansai BOOLEAN,
   loc_id INT,
   genre_id INT
 );
@@ -60,7 +59,8 @@ CREATE TABLE location (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
   font VARCHAR(255) NOT NULL,
-  img TEXT DEFAULT 'no image'
+  img TEXT DEFAULT 'no image',
+  iskansai BOOLEAN
 );
 
 /* genre テーブル*/
