@@ -1,10 +1,5 @@
 <resources>
     <string name="app_name">eemon551</string>
-<<<<<<< HEAD
     <string name="title_activity_game">game</string>
-=======
-    <string name="db_url">jdbc:postgresql://dpg-cn3h3cv109ks73epvbhg-a:5432/eemon</string>
-    <string name="db_username">eemon_user</string>
-    <string name="db_password">xBcSex0Q4EVEJZf6FAeBtjHJlLdy7xbu</string>
->>>>>>> c51bb548c51a2403b2e9c8a8568e08e93d74875b
+
 </resources>
