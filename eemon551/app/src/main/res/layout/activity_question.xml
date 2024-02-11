@@ -8,16 +8,16 @@ tools:context=".QuestionActivity">
     <TextView
         android:id="@+id/text_question_name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/text_brief_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_below="@id/text_question_name" />
-
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="53dp"
+        android:layout_marginTop="181dp"
+        android:layout_marginEnd="55dp"
+        android:layout_marginBottom="217dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textSize="34sp" />
 </RelativeLayout>

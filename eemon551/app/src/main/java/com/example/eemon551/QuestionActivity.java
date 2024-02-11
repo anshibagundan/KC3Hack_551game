@@ -24,6 +24,7 @@ public class QuestionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_question);
 
         textView = findViewById(R.id.text_question_name);
+        textView.setText('1');
 
         // 非同期処理でデータ取得
         ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -32,6 +33,7 @@ public class QuestionActivity extends AppCompatActivity {
             public String call() throws Exception {
                 Connection connection = null;
                 StringBuilder resultText = new StringBuilder();
+                textView.setText('1');
                 try {
                     // データベース接続
                     connection = DriverManager.getConnection(getString(R.string.db_url), getString(R.string.db_username), getString(R.string.db_password));
@@ -43,9 +45,10 @@ public class QuestionActivity extends AppCompatActivity {
                     ResultSet resultSet = statement.executeQuery("SELECT * FROM question");
 
                     // データの表示
+                    textView.setText(1);
                     while (resultSet.next()) {
-                        resultText.append(resultSet.getString("name"));
-                        textView.append(resultText);
+                        textView.append(resultSet.getString("name"));
+                        textView.setText(1);
                     }
 
                 } catch (SQLException e) {
