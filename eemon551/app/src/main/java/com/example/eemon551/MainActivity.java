@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // リクエストオブジェクトを作成する
                 Request request = new Request.Builder()
-                        .url("http://YOUR_SERVER_URL/api/users/")  // Django REST APIのエンドポイントURLを指定する
+                        .url("https://eemon-551.onrender.com/api/Question/")  // Django REST APIのエンドポイントURLを指定する
                         .build();
 
                 // リクエストを送信し、レスポンスを取得する
