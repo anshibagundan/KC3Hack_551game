@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textView = findViewById(R.id.questionTitleTextView); // TextView を取得
+        textView = findViewById(R.id.app_name); // TextView を取得
 
         // 複数のeemon_dbエンティティをリストに格納
         List<eemon_db> eemonDbs = new ArrayList<>();
@@ -52,17 +52,17 @@ public class MainActivity extends AppCompatActivity {
         eemonDb2.isCorrect = false;
 
         eemon_db eemonDb3 = new eemon_db();
-        eemonDb2.qes_id = 3;
-        eemonDb2.name = "名前3";
-        eemonDb2.img = "画像3";
-        eemonDb2.txt = "テキスト3";
-        eemonDb2.link = "リンク3";
-        eemonDb2.location = "場所3";
-        eemonDb2.location_img = "場所画像3";
-        eemonDb2.iskansai = false;
-        eemonDb2.genre_name = "ジャンル名3";
-        eemonDb2.genre_color = 0;
-        eemonDb2.isCorrect = false;
+        eemonDb3.qes_id = 3;
+        eemonDb3.name = "名前3";
+        eemonDb3.img = "画像3";
+        eemonDb3.txt = "テキスト3";
+        eemonDb3.link = "リンク3";
+        eemonDb3.location = "場所3";
+        eemonDb3.location_img = "場所画像3";
+        eemonDb3.iskansai = false;
+        eemonDb3.genre_name = "ジャンル名3";
+        eemonDb3.genre_color = 0;
+        eemonDb3.isCorrect = false;
 
         eemonDbs.add(eemonDb1);
         eemonDbs.add(eemonDb2);
@@ -72,8 +72,10 @@ public class MainActivity extends AppCompatActivity {
         database = Room.databaseBuilder(this, AppDatabase.class, "eemon_db")
                 .build();
 
+
         // AsyncTaskを利用してデータベースへの挿入処理を実行
         new InsertAsyncTask(database, eemonDbs).execute();
+
     }
 
     private class InsertAsyncTask extends AsyncTask<Void, Void, Void> {
@@ -90,7 +92,9 @@ public class MainActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
             // DAOのinsertAllメソッドを利用して複数データを挿入
             eemon_db_dao dao = database.eemonDbDao();
-            dao.insertAll(eemonDbs.toArray(new eemon_db[0]));
+            if(dao == null){
+                dao.insertAll(eemonDbs.toArray(new eemon_db[0]));
+            }
 
             return null;
         }
