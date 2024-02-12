@@ -1,28 +1,27 @@
 from rest_framework import serializers
-from .models import question, location, genre, userdata, userquestiondata
-
-class QuestionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = question
-        fields = '__all__'
+from .models import Location, Genre, Question, UserData, UserQuestionData
 
 class LocationSerializer(serializers.ModelSerializer):
     class Meta:
-        model = location
+        model = Location
         fields = '__all__'
 
 class GenreSerializer(serializers.ModelSerializer):
     class Meta:
-        model = genre
+        model = Genre
         fields = '__all__'
 
-class UserdataSerializer(serializers.ModelSerializer):
+class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = userdata
+        model = Question
         fields = '__all__'
 
-class UserquestiondataSerializer(serializers.ModelSerializer):
+class UserDataSerializer(serializers.ModelSerializer):
     class Meta:
-        model = userquestiondata
+        model = UserData
         fields = '__all__'
 
+class UserQuestionDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserQuestionData
+        fields = '__all__'

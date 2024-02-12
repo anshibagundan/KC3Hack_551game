@@ -1,7 +1,23 @@
-from rest_framework import generics
-from .models import location, genre, question, userdata, userquestiondata
-from .serializers import QuestionSerializer
+from rest_framework import viewsets
+from .models import Location, Genre, Question, UserData, UserQuestionData
+from .serializers import LocationSerializer, GenreSerializer, QuestionSerializer, UserDataSerializer, UserQuestionDataSerializer
 
-class QuestionListCreate(generics.ListCreateAPIView):
-    queryset = question.objects.all()  # 問題モデルのクエリセットを取得
-    serializer_class = QuestionSerializer  # 問題モデル用のシリアライザを使用
+class LocationViewSet(viewsets.ModelViewSet):
+    queryset = Location.objects.all()
+    serializer_class = LocationSerializer
+
+class GenreViewSet(viewsets.ModelViewSet):
+    queryset = Genre.objects.all()
+    serializer_class = GenreSerializer
+
+class QuestionViewSet(viewsets.ModelViewSet):
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
+
+class UserDataViewSet(viewsets.ModelViewSet):
+    queryset = UserData.objects.all()
+    serializer_class = UserDataSerializer
+
+class UserQuestionDataViewSet(viewsets.ModelViewSet):
+    queryset = UserQuestionData.objects.all()
+    serializer_class = UserQuestionDataSerializer
