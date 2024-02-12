@@ -9,4 +9,7 @@ public class Question {
     private int genre_id;
 
     // Getters and Setters
+    public String getName() {
+        return name;
+    }
 }
