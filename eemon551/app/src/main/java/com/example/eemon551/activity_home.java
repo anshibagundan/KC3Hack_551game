@@ -1,7 +1,6 @@
 package com.example.eemon551;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
 public class activity_home extends AppCompatActivity {

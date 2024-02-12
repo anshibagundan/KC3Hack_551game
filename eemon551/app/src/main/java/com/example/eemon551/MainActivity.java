@@ -69,8 +69,7 @@ public class MainActivity extends AppCompatActivity {
         eemonDbs.add(eemonDb3);
 
         // データベースへの接続を構築
-        database = Room.databaseBuilder(this, AppDatabase.class, "eemon_db")
-                .build();
+        database = Room.databaseBuilder(this, AppDatabase.class, "eemon_db").build();
 
 
         // AsyncTaskを利用してデータベースへの挿入処理を実行
