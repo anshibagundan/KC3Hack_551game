@@ -1,25 +1,16 @@
-"""
-URL configuration for eemon_551 project.
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from eemon_551_app import views
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-from django.contrib import admin
-from django.urls import path
-from eemon_551_app.views import QuestionListCreate
+# ルーターの作成とビューセットの登録
+router = DefaultRouter()
+router.register(r'locations', views.LocationViewSet)
+router.register(r'genres', views.GenreViewSet)
+router.register(r'questions', views.QuestionViewSet)
+router.register(r'userdatas', views.UserDataViewSet)
+router.register(r'userquestiondatas', views.UserQuestionDataViewSet)
 
-
+# APIのURLパターンをurlpatternsに追加
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/Question/', QuestionListCreate.as_view(), name='Question-list-create'),
+    path('', include(router.urls)),
 ]
