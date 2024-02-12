@@ -1,68 +1,139 @@
-
 package com.example.eemon551;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import java.io.IOException;
+import androidx.room.Room;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private AppDatabase database;
+    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // HTTPリクエストを送信するAsyncTaskを開始する
-        new HttpRequestTask().execute();
+        textView = findViewById(R.id.app_name); // TextView を取得
+
+        // 複数のeemon_dbエンティティをリストに格納
+        List<eemon_db> eemonDbs = new ArrayList<>();
+        eemon_db eemonDb1 = new eemon_db();
+        eemonDb1.qes_id = 1;
+        eemonDb1.name = "名前1";
+        eemonDb1.img = "画像1";
+        eemonDb1.txt = "テキスト1";
+        eemonDb1.link = "リンク1";
+        eemonDb1.location = "場所1";
+        eemonDb1.location_img = "場所画像1";
+        eemonDb1.iskansai = true;
+        eemonDb1.genre_name = "ジャンル名1";
+        eemonDb1.genre_color = 0; // 色の値を修正
+        eemonDb1.isCorrect = true;
+
+
+        eemon_db eemonDb2 = new eemon_db();
+        eemonDb2.qes_id = 2;
+        eemonDb2.name = "名前2";
+        eemonDb2.img = "画像2";
+        eemonDb2.txt = "テキスト2";
+        eemonDb2.link = "リンク2";
+        eemonDb2.location = "場所2";
+        eemonDb2.location_img = "場所画像2";
+        eemonDb2.iskansai = false;
+        eemonDb2.genre_name = "ジャンル名2";
+        eemonDb2.genre_color = 0;
+        eemonDb2.isCorrect = false;
+
+        eemon_db eemonDb3 = new eemon_db();
+        eemonDb3.qes_id = 3;
+        eemonDb3.name = "名前3";
+        eemonDb3.img = "画像3";
+        eemonDb3.txt = "テキスト3";
+        eemonDb3.link = "リンク3";
+        eemonDb3.location = "場所3";
+        eemonDb3.location_img = "場所画像3";
+        eemonDb3.iskansai = false;
+        eemonDb3.genre_name = "ジャンル名3";
+        eemonDb3.genre_color = 0;
+        eemonDb3.isCorrect = false;
+
+        eemonDbs.add(eemonDb1);
+        eemonDbs.add(eemonDb2);
+        eemonDbs.add(eemonDb3);
+
+        // データベースへの接続を構築
+        database = Room.databaseBuilder(this, AppDatabase.class, "eemon_db")
+                .build();
+
+
+        // AsyncTaskを利用してデータベースへの挿入処理を実行
+        new InsertAsyncTask(database, eemonDbs).execute();
+
     }
 
-    // AsyncTaskを使用してHTTPリクエストを送信するクラス
-    private class HttpRequestTask extends AsyncTask<Void, Void, String> {
-        @Override
-        protected String doInBackground(Void... params) {
-            try {
-                // HTTPクライアントを作成する
-                OkHttpClient client = new OkHttpClient();
+    private class InsertAsyncTask extends AsyncTask<Void, Void, Void> {
 
-                // リクエストオブジェクトを作成する
-                Request request = new Request.Builder()
-                        .url("https://eemon-551.onrender.com/api/Question/")  // Django REST APIのエンドポイントURLを指定する
-                        .build();
+        private AppDatabase database;
+        private List<eemon_db> eemonDbs;
 
-                // リクエストを送信し、レスポンスを取得する
-                Response response = client.newCall(request).execute();
-                return response.body().string();
-            } catch (IOException e) {
-                Log.e("HTTP Request", "Error: " + e.getMessage());
-                return null;
-            }
+        public InsertAsyncTask(AppDatabase database, List<eemon_db> eemonDbs) {
+            this.database = database;
+            this.eemonDbs = eemonDbs;
         }
 
         @Override
-        protected void onPostExecute(String response) {
-            super.onPostExecute(response);
-            if (response != null) {
-                try {
-                    // JSONレスポンスをパースしてユーザー情報を取得する
-                    JSONArray jsonArray = new JSONArray(response);
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        String username = jsonObject.getString("username");
-                        Log.d("User", "Username: " + username);
-                        // ここで取得したユーザー情報をUIに表示するなどの処理を行う
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+        protected Void doInBackground(Void... voids) {
+            // DAOのinsertAllメソッドを利用して複数データを挿入
+            eemon_db_dao dao = database.eemonDbDao();
+            if(dao == null){
+                dao.insertAll(eemonDbs.toArray(new eemon_db[0]));
             }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            // データベースへの接続を閉じる
+            database.close();
+
+            // データベースからデータを取得して TextView に表示
+            new RetrieveAsyncTask(database).execute();
+        }
+    }
+
+    private class RetrieveAsyncTask extends AsyncTask<Void, Void, List<eemon_db>> {
+
+        private AppDatabase database;
+
+        public RetrieveAsyncTask(AppDatabase database) {
+            this.database = database;
+        }
+
+        @Override
+        protected List<eemon_db> doInBackground(Void... voids) {
+            // DAOのgetAllメソッドを利用して全データを取得
+            return database.eemonDbDao().getAll();
+        }
+
+        @Override
+        protected void onPostExecute(List<eemon_db> eemonDbs) {
+            // 取得したデータをログに出力
+            StringBuilder stringBuilder = new StringBuilder();
+            for (eemon_db eemonDb : eemonDbs) {
+                stringBuilder.append(eemonDb.name).append("\n"); // 追加
+            }
+            String text = stringBuilder.toString();
+
+            // TextView に表示
+            textView.setText(text);
         }
     }
 }
