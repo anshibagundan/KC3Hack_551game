@@ -5,19 +5,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#89B2F0">
 
-    <TextView
-        android:id="@+id/questionTitleTextView"
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="問題タイトル" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/questionTextTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="問題文" />
+        <View
+            android:id="@+id/image_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/img" />
+
+        <Button
+            android:id="@+id/tap"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="150dp"
+            android:backgroundTint="#C89696"
+            android:text="タップ"
+            android:textSize="50dp"/>
+
+        <TextView
+            android:id="@+id/app_name"
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_marginBottom="100dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="eemonn" />
+    </FrameLayout>
+
+
 
 </LinearLayout>
 
