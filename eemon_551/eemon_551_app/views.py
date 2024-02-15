@@ -1,6 +1,8 @@
 from rest_framework import viewsets
 from .models import Location, Genre, Question, UserData, UserQuestionData
 from .serializers import LocationSerializer, GenreSerializer, QuestionSerializer, UserDataSerializer, UserQuestionDataSerializer
+from django_filters.rest_framework import DjangoFilterBackend
+from .filters import UserQuestionDataFilter
 
 class LocationViewSet(viewsets.ModelViewSet):
     queryset = Location.objects.all()
@@ -21,3 +23,5 @@ class UserDataViewSet(viewsets.ModelViewSet):
 class UserQuestionDataViewSet(viewsets.ModelViewSet):
     queryset = UserQuestionData.objects.all()
     serializer_class = UserQuestionDataSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = UserQuestionDataFilter

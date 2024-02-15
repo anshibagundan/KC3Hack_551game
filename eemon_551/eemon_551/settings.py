@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'eemon_551_app',
     'rest_framework',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
