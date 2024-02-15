@@ -51,57 +51,55 @@
           android:gravity="center"
           app:cornerRadius="15dp" />
 
-      <Button
+      <ImageView
           android:id="@+id/right_genre"
-          android:layout_width="75dp"
-          android:layout_height="75dp"
+          android:layout_width="50dp"
+          android:layout_height="50dp"
           android:backgroundTint="#C89696"
           android:layout_gravity="center"
-          android:layout_marginLeft="190dp"
+          android:layout_marginLeft="180dp"
           android:layout_marginBottom="150dp"
-          android:text="右"
-          android:textSize="30dp"
           android:gravity="center"
-          app:cornerRadius="15dp" />
+          app:cornerRadius="15dp"
+          app:srcCompat="@drawable/img_1" />
 
-      <Button
+      <ImageView
           android:id="@+id/left_genre"
-          android:layout_width="75dp"
-          android:layout_height="75dp"
-          android:backgroundTint="#C89696"
+          android:layout_width="50dp"
+          android:layout_height="50dp"
           android:layout_gravity="center"
-          android:layout_marginRight="190dp"
+          android:layout_marginRight="180dp"
           android:layout_marginBottom="150dp"
-          android:text="左"
-          android:textSize="30dp"
+          android:backgroundTint="#C89696"
           android:gravity="center"
-          app:cornerRadius="15dp" />
+          android:rotationY="180"
+          app:cornerRadius="15dp"
+          app:srcCompat="@drawable/img_1" />
 
-      <Button
+      <ImageView
           android:id="@+id/right_prefecture"
-          android:layout_width="75dp"
-          android:layout_height="75dp"
+          android:layout_width="50dp"
+          android:layout_height="50dp"
           android:backgroundTint="#C89696"
           android:layout_gravity="center"
-          android:layout_marginLeft="190dp"
+          android:layout_marginLeft="180dp"
           android:layout_marginTop="50dp"
-          android:text="右"
-          android:textSize="30dp"
           android:gravity="center"
-          app:cornerRadius="15dp" />
+          app:cornerRadius="15dp"
+          app:srcCompat="@drawable/img_1" />
 
-      <Button
+      <ImageView
           android:id="@+id/left_prefecture"
-          android:layout_width="75dp"
-          android:layout_height="75dp"
-          android:backgroundTint="#C89696"
+          android:layout_width="50dp"
+          android:layout_height="50dp"
           android:layout_gravity="center"
-          android:layout_marginRight="190dp"
+          android:layout_marginRight="180dp"
           android:layout_marginTop="50dp"
-          android:text="左"
-          android:textSize="30dp"
+          android:backgroundTint="#C89696"
           android:gravity="center"
-          app:cornerRadius="15dp" />
+          android:rotationY="180"
+          app:cornerRadius="15dp"
+          app:srcCompat="@drawable/img_1" />
 
       <TextView
           android:id="@+id/genre"
@@ -123,6 +121,8 @@
           android:gravity="center"
           android:text="関西全域"
           android:textSize="30dp"/>
+
+
     </FrameLayout>
 
 
