@@ -210,26 +210,28 @@ class QuestionsViewModel: ObservableObject {
     
     
     func deleteUserQuestionData(for questionID: Int, userID: Int) {
-        guard let url = URL(string: "https://eemon-551.onrender.com/userquestiondatas?qes_id=\(questionID)&user_data_id=\(userID)") else {
-            print("Invalid URL")
-            return
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "DELETE"
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode == 204 {
-                // 成功した場合、ステータスコード204 (No Content) が期待されます
-                print("Successfully deleted user question data.")
-            } else {
-                // エラーレスポンスを処理
-                if let httpResponse = response as? HTTPURLResponse {
-                    print("Error deleting user question data. Status code: \(httpResponse.statusCode)")
-                } else {
-                    print("Error deleting user question data. No response from server.")
-                }
-            }
-        }.resume()
-    }
+       // 新しいエンドポイントURLに合わせてURLを更新
+       guard let url = URL(string: "https://eemon-551.onrender.com/delete_userquestiondata/?qes_id=\(questionID)&user_data_id=\(userID)") else {
+           print("Invalid URL")
+           return
+       }
+       
+       var request = URLRequest(url: url)
+       request.httpMethod = "DELETE"
+       
+       URLSession.shared.dataTask(with: request) { data, response, error in
+           if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode == 204 {
+               // 成功した場合、ステータスコード204 (No Content) を期待
+               print("Successfully deleted user question data.")
+           } else {
+               // エラーレスポンスを処理
+               if let httpResponse = response as? HTTPURLResponse {
+                   print("Error deleting user question data. Status code: \(httpResponse.statusCode)")
+               } else {
+                   print("Error deleting user question data. No response from server.")
+               }
+           }
+       }.resume()
+   }
+
 }
