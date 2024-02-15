@@ -14,5 +14,5 @@ router.register(r'userquestiondatas', views.UserQuestionDataViewSet)
 # APIのURLパターンをurlpatternsに追加
 urlpatterns = [
     path('', include(router.urls)),
-    path('userquestiondatas', UserQuestionDataDelete.as_view()),
+    path('delete_userquestiondata/', views.UserQuestionDataDelete.as_view()),
 ]
