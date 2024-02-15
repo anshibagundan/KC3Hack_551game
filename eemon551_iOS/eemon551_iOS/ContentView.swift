@@ -141,9 +141,9 @@ struct QuestionDetailView: View {
             case .notFetched:
                 Text("データを取得中...(T/F更新を押してね)")
             case .exists(let value):
-                Text(value ? "True" : "False")
+                Text(value ? "True　(ユーザ変更時はT/F更新を押してね)" : "False(ユーザ変更時はT/F更新を押してね")
             case .notExists:
-                Text("T/Fデータなし")
+                Text("T/Fデータなしユーザ変更時はT/F更新を押してね")
             }
             
             // Trueにするボタン
@@ -161,7 +161,7 @@ struct QuestionDetailView: View {
             
             // リセットボタン
             Button("リセット(一回リセットしてからTF変更してね)") {
-                viewModel.resetUserQuestionData(for: question.id!,userID: userID)
+                viewModel.deleteUserQuestionData(for: question.id!,userID: userID)
             }
         }
         .navigationBarItems(trailing: Button("T/F更新") {
