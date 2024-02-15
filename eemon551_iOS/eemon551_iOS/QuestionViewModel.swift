@@ -3,8 +3,12 @@ import Foundation
 class QuestionsViewModel: ObservableObject {
     @Published var questions: [Question] = []
     @Published var users: [UserData] = []
+    @Published var locations: [Location] = []
+    @Published var genres: [Genre] = []
     @Published var message: String = "Question loading..."
     @Published var showingAddQuestionSheet = false
+    @Published var showingAddLocationSheet = false
+    @Published var showingAddGenreSheet = false
     
     
     
@@ -94,33 +98,53 @@ class QuestionsViewModel: ObservableObject {
         }.resume()
     }
     
-    func editQuestion(question: Question) {
-        guard let url = URL(string: "https://eemon-551.onrender.com/questions/\(question.loc_id)/") else { return }
+    func editQuestion(question: Question, completion: @escaping (Bool, Error?) -> Void) {
+        guard let questionId = question.id else {
+            print("Question ID is nil")
+            completion(false, nil)
+            return
+        }
+        
+        let urlString = "https://eemon-551.onrender.com/questions/\(questionId)/"
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL")
+            completion(false, nil)
+            return
+        }
+        
         var request = URLRequest(url: url)
-        request.httpMethod = "PUT" // 編集は通常PUTまたはPATCHメソッドを使用
+        request.httpMethod = "PUT"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
+        let updateData = ["name": question.name, "img": question.img, "txt": question.txt, "link": question.link, "loc_id": question.loc_id, "genre_id": question.genre_id] as [String: Any]
+        
         do {
-            let jsonData = try JSONEncoder().encode(question)
+            let jsonData = try JSONSerialization.data(withJSONObject: updateData)
             request.httpBody = jsonData
             
             URLSession.shared.dataTask(with: request) { _, response, error in
-                if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode == 200 {
-                    DispatchQueue.main.async {
-                        print("Question edited successfully")
-                    }
-                } else if error != nil {
-                    print("Error editing question. Status code: \((response as? HTTPURLResponse)?.statusCode ?? -1)")
+                if let error = error {
+                    completion(false, error)
+                    return
                 }
+                
+                guard let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode == 200 else {
+                    completion(false, nil)
+                    return
+                }
+                
+                completion(true, nil) 
             }.resume()
         } catch {
-            print("Error encoding question for update: \(error)")
+            completion(false, error)
         }
     }
+
+
+
     
     //開発者用のtrue false登録
     func checkDataExistence(for questionID: Int, userID: Int, completion: @escaping (Bool) -> Void) {
-        // URLを修正して、userIDもクエリパラメータに含める
         let fetchURL = URL(string: "https://eemon-551.onrender.com/userquestiondatas?qes_id=\(questionID)&user_data_id=\(userID)")!
         
         URLSession.shared.dataTask(with: fetchURL) { data, response, error in
@@ -134,7 +158,6 @@ class QuestionsViewModel: ObservableObject {
             
             do {
                 let userQuestionDatas = try JSONDecoder().decode([UserQuestionData].self, from: data)
-                // userIDとquestionIDの組み合わせでデータが存在するかどうかをチェック
                 completion(!userQuestionDatas.isEmpty)
             } catch {
                 print("Error decoding user question data: \(error)")
@@ -177,7 +200,7 @@ class QuestionsViewModel: ObservableObject {
                   let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode == 200,
                   error == nil else {
                 DispatchQueue.main.async {
-                    // エラーが発生した場合は、データが存在しないとみなし、適切な状態を設定
+                    
                     self.userQuestionDataStatus = .notExists
                 }
                 print("Error fetching user question data for userID: \(userID) and questionID: \(questionID).")
@@ -186,21 +209,18 @@ class QuestionsViewModel: ObservableObject {
             
             do {
                 let userQuestionDatas = try JSONDecoder().decode([UserQuestionData].self, from: data)
-                // データが取得できた場合、最初のデータを基に状態を更新（通常は1つのデータのみが期待される）
                 if let firstUserQuestionData = userQuestionDatas.first {
                     DispatchQueue.main.async {
-                        // ユーザーと問題IDの組み合わせに対するデータが存在する場合、そのcor値に基づいて状態を更新
+                        
                         self.userQuestionDataStatus = .exists(value: firstUserQuestionData.cor)
                     }
                 } else {
-                    // データが空の場合、データが存在しないとみなし、状態を更新
                     DispatchQueue.main.async {
                         self.userQuestionDataStatus = .notExists
                     }
                 }
             } catch {
                 DispatchQueue.main.async {
-                    // デコード中にエラーが発生した場合も、データが存在しないとみなし、状態を更新
                     self.userQuestionDataStatus = .notExists
                 }
                 print("Error decoding user question data: \(error)")
@@ -210,28 +230,24 @@ class QuestionsViewModel: ObservableObject {
     
     
     func deleteUserQuestionData(for questionID: Int, userID: Int) {
-       // 新しいエンドポイントURLに合わせてURLを更新
-       guard let url = URL(string: "https://eemon-551.onrender.com/delete_userquestiondata/?qes_id=\(questionID)&user_data_id=\(userID)") else {
-           print("Invalid URL")
-           return
-       }
-       
-       var request = URLRequest(url: url)
-       request.httpMethod = "DELETE"
-       
-       URLSession.shared.dataTask(with: request) { data, response, error in
-           if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode == 204 {
-               // 成功した場合、ステータスコード204 (No Content) を期待
-               print("Successfully deleted user question data.")
-           } else {
-               // エラーレスポンスを処理
-               if let httpResponse = response as? HTTPURLResponse {
-                   print("Error deleting user question data. Status code: \(httpResponse.statusCode)")
-               } else {
-                   print("Error deleting user question data. No response from server.")
-               }
-           }
-       }.resume()
-   }
-
+        guard let url = URL(string: "https://eemon-551.onrender.com/delete_userquestiondata/?qes_id=\(questionID)&user_data_id=\(userID)") else {
+            print("Invalid URL")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode == 204 {
+                print("Successfully deleted user question data.")
+            } else {
+                if let httpResponse = response as? HTTPURLResponse {
+                    print("Error deleting user question data. Status code: \(httpResponse.statusCode)")
+                } else {
+                    print("Error deleting user question data. No response from server.")
+                }
+            }
+        }.resume()
+    }
 }
