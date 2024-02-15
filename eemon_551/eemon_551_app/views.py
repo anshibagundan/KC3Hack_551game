@@ -1,4 +1,7 @@
 from rest_framework import viewsets
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 from .models import Location, Genre, Question, UserData, UserQuestionData
 from .serializers import LocationSerializer, GenreSerializer, QuestionSerializer, UserDataSerializer, UserQuestionDataSerializer
 from django_filters.rest_framework import DjangoFilterBackend
@@ -25,3 +28,24 @@ class UserQuestionDataViewSet(viewsets.ModelViewSet):
     serializer_class = UserQuestionDataSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = UserQuestionDataFilter
+
+class UserQuestionDataDelete(APIView):
+    def delete(self, request, *args, **kwargs):
+        # クエリパラメータから qes_id と user_data_id を取得
+        qes_id = request.query_params.get('qes_id')
+        user_data_id = request.query_params.get('user_data_id')
+
+        # qes_id と user_data_id が両方提供されているか確認
+        if qes_id and user_data_id:
+            # 対象のオブジェクトを検索
+            objects = UserQuestionData.objects.filter(qes_id=qes_id, user_data_id=user_data_id)
+            # 対象オブジェクトが存在する場合は削除
+            if objects.exists():
+                objects.delete()
+                return Response(status=status.HTTP_204_NO_CONTENT)
+            else:
+                # 指定された条件に一致するオブジェクトが存在しない場合
+                return Response({"error": "No matching objects found to delete."}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            # 必要なクエリパラメータが提供されていない場合
+            return Response({"error": "qes_id and user_data_id are required."}, status=status.HTTP_400_BAD_REQUEST)
