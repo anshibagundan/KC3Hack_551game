@@ -1,6 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from eemon_551_app import views
+from eemon_551_app.views import UserQuestionDataDelete
 
 # ルーターの作成とビューセットの登録
 router = DefaultRouter()
@@ -13,4 +14,5 @@ router.register(r'userquestiondatas', views.UserQuestionDataViewSet)
 # APIのURLパターンをurlpatternsに追加
 urlpatterns = [
     path('', include(router.urls)),
+    path('userquestiondatas', UserQuestionDataDelete.as_view()),
 ]
