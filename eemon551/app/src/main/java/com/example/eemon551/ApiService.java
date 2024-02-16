@@ -13,4 +13,10 @@ public interface ApiService {
 
     @POST("/userquestiondatas/")
     Call<Void> insertUserQuestionData(@Body UserQuestionData data);
+
+    @GET("/locations/")
+    Call<List<Location>> getAllLocations();
+
+    @GET("/genres/")
+    Call<List<Genre>> getAllGenres();
 }

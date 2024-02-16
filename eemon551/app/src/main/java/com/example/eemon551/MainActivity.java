@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
                 if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
-                    // 最初の質問のnameを取得してTextViewにセット
                     String name = response.body().get(0).getName();
                     textView.setText(name);
                 }
