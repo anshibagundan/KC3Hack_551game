@@ -94,7 +94,60 @@ public class game extends AppCompatActivity {
     }
 
     private void setupButtonListeners(Button buttonLeft, Button buttonRight) {
-        // buttonLeftのClickListenerをここに設定
-        // buttonRightのClickListenerをここに設定
+            buttonLeft.setOnClickListener(view -> {
+                if (currentQuestionIsKansai) {
+                    // 正解の処理
+                    questionText.setText("正解！");
+                    updateUserScore(10);
+                } else {
+                    // 不正解の処理
+                    questionText.setText("不正解");
+                }
+            });
+
+            buttonRight.setOnClickListener(view -> {
+                if (!currentQuestionIsKansai) {
+                    // 正解の処理
+                    questionText.setText("正解！");
+                    updateUserScore(10); // スコアを10加算する
+                } else {
+                    // 不正解の処理
+                    questionText.setText("不正解");
+                }
+            });
+        }
+
+    private void updateUserScore(int scoreToAdd) {
+        // 現在のユーザースコアを取得するAPIリクエストを想定
+        apiService.getUserMoney(1).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    int currentScore = response.body().getMoney();
+                    int newScore = currentScore + scoreToAdd;
+
+                    ApiService.ScoreUpdateRequest scoreUpdateRequest = new ApiService.ScoreUpdateRequest(newScore);
+                    apiService.updateUserScore(1, scoreUpdateRequest).enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if (response.isSuccessful()) {
+                                Log.d("ScoreUpdate", "スコア更新成功");
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Log.e("ScoreUpdate", "スコア更新失敗", t);
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("ScoreFetch", "スコア取得失敗", t);
+            }
+        });
     }
+
 }
