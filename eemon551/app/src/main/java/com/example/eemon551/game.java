@@ -19,6 +19,10 @@ public class game extends AppCompatActivity {
 
     private int currentQuestionId; // 現在表示されている質問のID
 
+    private Random random = new Random();
+
+    private int questionNo = random.nextInt(10);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,14 +38,12 @@ public class game extends AppCompatActivity {
 
         // APIリクエストを実行して質問をロード
         apiService.getAllQuestions().enqueue(new Callback<List<Question>>() {
-            Random random = new Random();
-
-            int questionNo = random.nextInt(10);
             @Override
             public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
                 if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
                     // 最初の質問のnameを取得してTextViewにセット
-                    String name = response.body().get(questionNo).getName();
+                    String name0 = response.body().get(questionNo).getName();
+                    String name = name0 + "が～？";
                     questionText.setText(name);
 
                     String img = response.body().get(questionNo).getImg().replace("\"", "").trim();

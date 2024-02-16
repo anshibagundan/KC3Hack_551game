@@ -6,56 +6,60 @@
     android:layout_height="match_parent"
     tools:context=".game">
 
-    <Button
-        android:id="@+id/button_left"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="500dp"
-        android:layout_marginEnd="273dp"
-        android:layout_marginBottom="183dp"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
-    <Button
-        android:id="@+id/button_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="208dp"
-        android:layout_marginTop="500dp"
-        android:text="Button"
-        app:layout_constraintStart_toStartOf="@+id/button_left"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/button_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="200dp"
+            android:layout_marginRight="100dp"
+            android:text="Button" />
 
-    <TextView
-        android:id="@+id/question_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Questiion loading..."
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.264" />
+        <Button
+            android:id="@+id/button_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="200dp"
+            android:layout_marginLeft="100dp"
+            android:text="Button" />
 
-    <ImageView
-        android:id="@+id/Question_image"
-        android:layout_width="150dp"
-        android:layout_height="109dp"
-        android:layout_marginStart="136dp"
-        android:layout_marginTop="33dp"
-        android:layout_marginEnd="125dp"
-        android:layout_marginBottom="151dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_left"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/question_text"
-        app:srcCompat="@android:drawable/alert_light_frame" />
+        <TextView
+            android:id="@+id/question_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Questiion loading..."
+            android:textSize="30dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="240dp" />
+
+        <ImageView
+            android:id="@+id/Question_image"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@android:drawable/alert_light_frame" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        >
+        <Button
+            android:id="@+id/next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="300dp"
+            android:text="Next"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
