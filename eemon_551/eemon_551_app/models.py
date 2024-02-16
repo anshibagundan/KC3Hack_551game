@@ -16,9 +16,11 @@ class Genre(models.Model):
 
 class Question(models.Model):
     name = models.CharField(max_length=255, null=False)
-    img = models.BinaryField(blank=True, null=True)  # DjangoのBinaryFieldを使用
+    img = models.CharField(max_length=255, null=False)
+    card = models.CharField(max_length=255, null=False)
     txt = models.TextField(null=False)
     link = models.CharField(max_length=255, blank=True, null=True)
+    rare = models.IntegerField(default=0)
     loc_id = models.ForeignKey(Location, on_delete=models.CASCADE, related_name='questions')
     genre_id = models.ForeignKey(Genre, on_delete=models.CASCADE, related_name='questions')
 
@@ -27,8 +29,8 @@ class Question(models.Model):
 
 class UserData(models.Model):
     name = models.CharField(max_length=255, null=False)
-    score = models.IntegerField(default=0)
-    combo = models.IntegerField(default=0)
+    level = models.IntegerField(default=1, null = True)
+    money = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name

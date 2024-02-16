@@ -239,7 +239,8 @@ struct AddQuestionView: View {
                 
                 Button("作成") {
                     if let inputImage = inputImage, let imgData = inputImage.jpegData(compressionQuality: 1) {
-                        let newQuestion = Question(name: name, img: imgData, txt: txt, link: link, locId: locId, genreId: genreId)
+                        let newQuestion = Question(id: nil, name: name, txt: txt, link: link, locId: locId, genreId: genreId, img: imgData)
+
                         viewModel.addQuestion(question: newQuestion)
                     }
                 }
@@ -303,8 +304,9 @@ struct EditQuestionView: View {
                 
                 Button("変更") {
                     if let inputImage = inputImage, let imgData = inputImage.jpegData(compressionQuality: 1) {
-                        let updatedQuestion = Question(id: question.id, name: name, img: imgData, txt: txt, link: link, locId: locId, genreId: genreId)
-                        viewModel.editQuestion(question: updatedQuestion) { success, error in
+                        let newQuestion = Question(name: name, txt: txt, link: link, locId: locId, genreId: genreId, img: imgData)
+
+                        viewModel.editQuestion(question: newQuestion) { success, error in
                             if success {
                                 presentationMode.wrappedValue.dismiss()
                             }

@@ -1,7 +1,5 @@
 from rest_framework import serializers
 from .models import Location, Genre, Question, UserData, UserQuestionData
-from .fields import Base64ImageField
-
 
 class LocationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -14,7 +12,6 @@ class GenreSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class QuestionSerializer(serializers.ModelSerializer):
-    img = Base64ImageField(max_length=None, use_url=True)
     class Meta:
         model = Question
         fields = '__all__'
