@@ -9,7 +9,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
+        android:visibility="visible"
         >
 
         <Button
@@ -34,7 +34,7 @@
             android:id="@+id/question_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Questiion loading..."
+            android:text="Question loading..."
             android:textSize="30dp"
             android:layout_gravity="center"
             android:layout_marginBottom="240dp" />
@@ -49,17 +49,49 @@
     </FrameLayout>
 
     <FrameLayout
+        android:id="@+id/seigo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
+        android:visibility="gone"
         >
-        <Button
-            android:id="@+id/next"
+        <TextView
+            android:id="@+id/seikai"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="30dp"
+            android:text="正解のイメージ画像"
+            />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/kaisetu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        >
+        <View
+            android:id="@+id/back_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/houryuuji" />
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="400dp"
+            android:layout_gravity="center"
+            android:text="ここに解説を書きます"
+            android:textSize="25dp"
+            android:background="@color/white"/>
+
+        <Button
+            android:id="@+id/next"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
             android:layout_marginTop="300dp"
             android:text="Next"
-            android:layout_gravity="center" />
+            app:cornerRadius="0dp" />
     </FrameLayout>
 
 
