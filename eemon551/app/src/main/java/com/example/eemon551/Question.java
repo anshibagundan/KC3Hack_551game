@@ -10,6 +10,7 @@ public class Question {
     private int genre_id;
 
     // Getters and Setters
+    public int getId() { return id;}
     public String getName() {
         return name;
     }
@@ -20,6 +21,6 @@ public class Question {
     public String getTxt(){return txt;}
 
     public String grtLink(){return link;}
-    public int getId(){return id;}
+    public int getLoc_id(){return loc_id;}
     public int getGenre_id(){return genre_id;}
 }

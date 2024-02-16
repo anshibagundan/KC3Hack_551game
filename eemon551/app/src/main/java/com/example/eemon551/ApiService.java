@@ -18,9 +18,7 @@ public interface ApiService {
     @POST("/userquestiondatas/")
     Call<Void> insertUserQuestionData(@Body UserQuestionData data);
 
-    @GET("/locations/")
-    Call<List<Location>> getAllLocations();
+    @GET("locations/{id}/")
+    Call<Location> getLocationById(@Path("id") int locationId);
 
-    @GET("/genres/")
-    Call<List<Genre>> getAllGenres();
 }
