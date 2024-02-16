@@ -3,7 +3,7 @@
 CREATE TABLE Question (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
-  img TEXT DEFAULT 'no image',
+  img TYPE BYTEA USING img::bytea;
   txt TEXT NOT NULL,
   link VARCHAR(255),
   loc_id INT,
@@ -29,6 +29,8 @@ ON UPDATE CASCADE;
 CREATE TABLE UserData (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL
+  score INT DEFAULT 0;
+  combo INT DEFAULT 0;
 );
 
 /* user_questiondata テーブル*/
@@ -58,7 +60,6 @@ ON UPDATE CASCADE;
 CREATE TABLE Location (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
-  font VARCHAR(255) NOT NULL,
   img TEXT DEFAULT 'no image',
   iskansai BOOLEAN
 );
@@ -67,5 +68,4 @@ CREATE TABLE Location (
 CREATE TABLE Genre (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
-  col VARCHAR(6) DEFAULT '000000'
 );
