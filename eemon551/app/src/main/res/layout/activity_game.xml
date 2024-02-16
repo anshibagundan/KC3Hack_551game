@@ -44,4 +44,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.264" />
 
+    <ImageView
+        android:id="@+id/Question_image"
+        android:layout_width="150dp"
+        android:layout_height="109dp"
+        android:layout_marginStart="136dp"
+        android:layout_marginTop="33dp"
+        android:layout_marginEnd="125dp"
+        android:layout_marginBottom="151dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_left"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/question_text"
+        app:srcCompat="@android:drawable/alert_light_frame" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

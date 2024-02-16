@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class game extends AppCompatActivity {
         Button buttonLeft = findViewById(R.id.button_left);
         Button buttonRight = findViewById(R.id.button_right);
         TextView questionText = findViewById(R.id.question_text);
+        ImageView questionImage = findViewById(R.id.Question_image);
 
         // ApiServiceインスタンスを取得
         ApiService apiService = ApiClient.getApiService();
@@ -37,8 +39,11 @@ public class game extends AppCompatActivity {
                     // 最初の質問のnameを取得してTextViewにセット
                     String name = response.body().get(0).getName();
                     questionText.setText(name);
+                    String img = response.body().get(0).getImg().replace("\"", "").trim();
+                    int resourceId = getResources().getIdentifier(img, "drawable", getPackageName());
 
-                    // 現在表示されている質問のIDを保存
+                    questionImage.setImageResource(resourceId);
+
                     currentQuestionId = response.body().get(0).getId();
                 }
             }
