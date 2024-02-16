@@ -98,7 +98,6 @@ public class game extends AppCompatActivity {
     }
 
     private void setupButtonListeners(Button buttonLeft, Button buttonRight) {
-        seigoText.setVisibility(View.VISIBLE);
         buttonLeft.setOnClickListener(view -> {
             if (currentQuestionIsKansai) {
                 // 正解の処理
@@ -108,6 +107,7 @@ public class game extends AppCompatActivity {
                 // 不正解の処理
                 seigoText.setText("不正解画像をセット");
             }
+            seigoText.setVisibility(View.VISIBLE);
         });
 
         buttonRight.setOnClickListener(view -> {
@@ -119,6 +119,7 @@ public class game extends AppCompatActivity {
                 // 不正解の処理
                 seigoText.setText("不正解画像をセット");
             }
+            seigoText.setVisibility(View.VISIBLE);
         });
     }
 

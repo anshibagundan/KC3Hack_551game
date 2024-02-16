@@ -57,7 +57,7 @@
             android:textColor="@color/white"
             android:background="#AA000000"
             android:visibility="gone"
-            
+
             />
     </FrameLayout>
 
