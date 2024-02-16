@@ -1,7 +1,6 @@
 package com.example.eemon551;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,9 +8,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call; // Callをインポート
