@@ -29,6 +29,8 @@ public class game extends AppCompatActivity {
     private ImageView questionImage;
     private boolean seigo;
 
+    private int user_data = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,7 +128,7 @@ public class game extends AppCompatActivity {
 
     private void updateUserScore(int scoreToAdd) {
         // 現在のユーザースコアを取得するAPIリクエストを想定
-        apiService.getUserMoney(1).enqueue(new Callback<User>() {
+        apiService.getUserMoney(user_data).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -134,7 +136,7 @@ public class game extends AppCompatActivity {
                     Log.e("money", String.valueOf(currentScore));
                     int newScore = currentScore +10;
                     String name ="name1";
-                    apiService.updateUserData(1,  new ApiService.UserUpdateRequest(name,newScore)).enqueue(new Callback<Void>() {
+                    apiService.updateUserData(user_data,  new ApiService.UserUpdateRequest(name,newScore)).enqueue(new Callback<Void>() {
                         @Override
                         public void onResponse(Call<Void> call, Response<Void> response) {
                             if (response.isSuccessful()) {
