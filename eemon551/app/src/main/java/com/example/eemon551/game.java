@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,18 +34,21 @@ public class game extends AppCompatActivity {
 
         // APIリクエストを実行して質問をロード
         apiService.getAllQuestions().enqueue(new Callback<List<Question>>() {
+            Random random = new Random();
+
+            int questionNo = random.nextInt(10);
             @Override
             public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
                 if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
                     // 最初の質問のnameを取得してTextViewにセット
-                    String name = response.body().get(0).getName();
+                    String name = response.body().get(questionNo).getName();
                     questionText.setText(name);
-                    String img = response.body().get(0).getImg().replace("\"", "").trim();
-                    int resourceId = getResources().getIdentifier(img, "drawable", getPackageName());
 
+                    String img = response.body().get(questionNo).getImg().replace("\"", "").trim();
+                    int resourceId = getResources().getIdentifier(img, "drawable", getPackageName());
                     questionImage.setImageResource(resourceId);
 
-                    currentQuestionId = response.body().get(0).getId();
+                    currentQuestionId = response.body().get(questionNo).getId();
                 }
             }
 
