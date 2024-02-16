@@ -1,7 +1,4 @@
 import SwiftUI
-
-import SwiftUI
-
 struct ContentView: View {
     @State private var showingSettingsSheet = false
     @State private var navigateToQuestions = false
@@ -209,80 +206,121 @@ private func checkDataAndRegister(cor: Bool) {
 
 }
 
-
-
 struct AddQuestionView: View {
     @ObservedObject var viewModel: QuestionsViewModel
     @State private var name: String = ""
-    @State private var img: String = ""
     @State private var txt: String = ""
     @State private var link: String = ""
     @State private var locId: Int = 0
     @State private var genreId: Int = 0
-    
+    @State private var showingImagePicker = false
+    @State private var inputImage: UIImage?
+    @State private var imagePreview: Image?
+
     var body: some View {
-        Form {
-            TextField("名前(下2つは上からlocation_id,genre_id)", text: $name)
-            TextField("写真があるパス(-/-.pngまで)", text: $img)
-            TextField("詳細な説明文", text: $txt)
-            TextField("リンク", text: $link)
-            TextField("Location ID", value: $locId, formatter: NumberFormatter())
-            TextField("Genre ID", value: $genreId, formatter: NumberFormatter())
-            Button("作成") {
-                let newQuestion = Question(name: name, img: img, txt: txt, link: link, loc_id: locId, genre_id: genreId)
-                viewModel.addQuestion(question: newQuestion)
+        NavigationView {
+            Form {
+                TextField("名前", text: $name)
+                TextField("詳細な説明文", text: $txt)
+                TextField("リンク", text: $link)
+                TextField("Location ID", value: $locId, formatter: NumberFormatter())
+                TextField("Genre ID", value: $genreId, formatter: NumberFormatter())
+                
+                Button("画像を選択") {
+                    showingImagePicker = true
+                }
+                
+                if let imagePreview = imagePreview {
+                    imagePreview
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 200)
+                }
+                
+                Button("作成") {
+                    if let inputImage = inputImage, let imgData = inputImage.jpegData(compressionQuality: 1) {
+                        let newQuestion = Question(name: name, img: imgData, txt: txt, link: link, locId: locId, genreId: genreId)
+                        viewModel.addQuestion(question: newQuestion)
+                    }
+                }
             }
+            .sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
+                ImagePicker(image: self.$inputImage)
+            }
+            .navigationBarTitle("質問を追加", displayMode: .inline)
         }
     }
+    
+    func loadImage() {
+        guard let inputImage = inputImage else { return }
+        imagePreview = Image(uiImage: inputImage)
+    }
 }
+
+
 struct EditQuestionView: View {
     @ObservedObject var viewModel: QuestionsViewModel
     var question: Question
     @State private var name: String
-    @State private var img: String
     @State private var txt: String
     @State private var link: String
     @State private var locId: Int
     @State private var genreId: Int
+    @State private var showingImagePicker = false
+    @State private var inputImage: UIImage?
+    @State private var imagePreview: Image?
     @Environment(\.presentationMode) var presentationMode
-    
+
     init(question: Question, viewModel: QuestionsViewModel) {
         self.question = question
         self.viewModel = viewModel
         _name = State(initialValue: question.name)
-        _img = State(initialValue: question.img)
         _txt = State(initialValue: question.txt)
-        _link = State(initialValue: question.link)
-        _locId = State(initialValue: question.loc_id)
-        _genreId = State(initialValue: question.genre_id)
+        _link = State(initialValue: question.link ?? "")
+        _locId = State(initialValue: question.locId)
+        _genreId = State(initialValue: question.genreId)
     }
     
     var body: some View {
-        Form {
-            TextField("名前(下2つは上からlocation_id,genre_id)", text: $name)
-            TextField("写真があるパス(-/-.pngまで)", text: $img)
-            TextField("詳細な説明文", text: $txt)
-            TextField("リンク", text: $link)
-            TextField("Location ID", value: $locId, formatter: NumberFormatter())
-            TextField("Genre ID", value: $genreId, formatter: NumberFormatter())
-            
-            Button("変更") {
-                let updatedQuestion = Question(id: question.id, name: name, img: img, txt: txt, link: link, loc_id: locId, genre_id: genreId)
-                viewModel.editQuestion(question: updatedQuestion) { success, error in
-                    if success {
-                        print("質問が正常に更新されました。")
-                    } else if let error = error {
-                        print("質問の更新中にエラーが発生しました: \(error.localizedDescription)")
+        NavigationView {
+            Form {
+                TextField("名前", text: $name)
+                TextField("詳細な説明文", text: $txt)
+                TextField("リンク", text: $link)
+                TextField("Location ID", value: $locId, formatter: NumberFormatter())
+                TextField("Genre ID", value: $genreId, formatter: NumberFormatter())
+                
+                Button("画像を選択") {
+                    showingImagePicker = true
+                }
+                
+                if let imagePreview = imagePreview {
+                    imagePreview
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 200)
+                }
+                
+                Button("変更") {
+                    if let inputImage = inputImage, let imgData = inputImage.jpegData(compressionQuality: 1) {
+                        let updatedQuestion = Question(id: question.id, name: name, img: imgData, txt: txt, link: link, locId: locId, genreId: genreId)
+                        viewModel.editQuestion(question: updatedQuestion) { success, error in
+                            if success {
+                                presentationMode.wrappedValue.dismiss()
+                            }
+                        }
                     }
-                    presentationMode.wrappedValue.dismiss()
                 }
             }
-
-            Button("削除", role: .destructive) {
-                viewModel.deleteQuestion(id: question.id!)
-                presentationMode.wrappedValue.dismiss()
+            .sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
+                ImagePicker(image: self.$inputImage)
             }
+            .navigationBarTitle("質問を編集", displayMode: .inline)
         }
-        .navigationBarTitle("問題文編集画面")
+    }
+    
+    func loadImage() {
+        guard let inputImage = inputImage else { return }
+        imagePreview = Image(uiImage: inputImage)
     }
 }

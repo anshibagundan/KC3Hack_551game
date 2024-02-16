@@ -21,6 +21,7 @@
 		DE46AF122B7C6DDF00FF58D0 /* UserQuestionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE46AF112B7C6DDF00FF58D0 /* UserQuestionData.swift */; };
 		DE46AF142B7C6E9C00FF58D0 /* QuestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE46AF132B7C6E9C00FF58D0 /* QuestionViewModel.swift */; };
 		DE46AF182B7D019C00FF58D0 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE46AF172B7D019C00FF58D0 /* UserData.swift */; };
+		DEF3C28A2B7F1313008D2850 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF3C2892B7F1313008D2850 /* ImagePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		DE46AF112B7C6DDF00FF58D0 /* UserQuestionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserQuestionData.swift; sourceTree = "<group>"; };
 		DE46AF132B7C6E9C00FF58D0 /* QuestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewModel.swift; sourceTree = "<group>"; };
 		DE46AF172B7D019C00FF58D0 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		DEF3C2892B7F1313008D2850 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 				DE46AF112B7C6DDF00FF58D0 /* UserQuestionData.swift */,
 				DE46AF172B7D019C00FF58D0 /* UserData.swift */,
 				DE46AF132B7C6E9C00FF58D0 /* QuestionViewModel.swift */,
+				DEF3C2892B7F1313008D2850 /* ImagePicker.swift */,
 				DE46AEE32B7C6B8F00FF58D0 /* ContentView.swift */,
 				DE1EB55B2B7DCFC4000202D4 /* Location.swift */,
 				DE1EB55D2B7DCFDB000202D4 /* Genre.swift */,
@@ -285,6 +288,7 @@
 				DE46AF182B7D019C00FF58D0 /* UserData.swift in Sources */,
 				DE46AEE42B7C6B8F00FF58D0 /* ContentView.swift in Sources */,
 				DE46AEE62B7C6B8F00FF58D0 /* Item.swift in Sources */,
+				DEF3C28A2B7F1313008D2850 /* ImagePicker.swift in Sources */,
 				DE46AF142B7C6E9C00FF58D0 /* QuestionViewModel.swift in Sources */,
 				DE46AEE22B7C6B8F00FF58D0 /* eemon551_iOSApp.swift in Sources */,
 			);

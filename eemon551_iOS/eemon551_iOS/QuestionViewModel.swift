@@ -42,12 +42,24 @@ class QuestionsViewModel: ObservableObject {
     
     func fetchQuestions() {
         guard let url = URL(string: "https://eemon-551.onrender.com/questions/") else { return }
-        
+
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
-                if let decodedResponse = try? JSONDecoder().decode([Question].self, from: data) {
+                do {
+                    var decodedResponse = try JSONDecoder().decode([Question].self, from: data)
+                    decodedResponse = decodedResponse.map { question -> Question in
+                        var modifiedQuestion = question
+                        if let imgBase64 = question.img, let imgData = Data(base64Encoded: imgBase64) {
+                            modifiedQuestion.img = imgData
+                        }
+                        return modifiedQuestion
+                    }
                     DispatchQueue.main.async {
                         self.questions = decodedResponse
+                    }
+                } catch {
+                    DispatchQueue.main.async {
+                        self.message = "Data decoding error: \(error.localizedDescription)"
                     }
                 }
             } else {
@@ -63,17 +75,17 @@ class QuestionsViewModel: ObservableObject {
         var request = URLRequest(url: postURL)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
+
         do {
-            let jsonData = try JSONEncoder().encode(question)
+            let jsonData = try JSONEncoder().encode(question) // Questionのカスタムエンコードメソッドを使用
             request.httpBody = jsonData
-            
+
             URLSession.shared.dataTask(with: request) { _, response, error in
-                if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode == 200 {
+                if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode == 200 || httpStatus.statusCode == 201 {
                     DispatchQueue.main.async {
                         print("Question added successfully")
                     }
-                } else if error != nil {
+                } else {
                     print("Error adding question. Status code: \((response as? HTTPURLResponse)?.statusCode ?? -1)")
                 }
             }.resume()
@@ -81,6 +93,8 @@ class QuestionsViewModel: ObservableObject {
             print("Error encoding question: \(error)")
         }
     }
+
+
     
     
     func deleteQuestion(id: Int) {
@@ -104,45 +118,46 @@ class QuestionsViewModel: ObservableObject {
             completion(false, nil)
             return
         }
-        
+
         let urlString = "https://eemon-551.onrender.com/questions/\(questionId)/"
         guard let url = URL(string: urlString) else {
             print("Invalid URL")
             completion(false, nil)
             return
         }
-        
+
         var request = URLRequest(url: url)
         request.httpMethod = "PUT"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        let updateData = ["name": question.name, "img": question.img, "txt": question.txt, "link": question.link, "loc_id": question.loc_id, "genre_id": question.genre_id] as [String: Any]
-        
+
+        var questionToUpdate = question
+        // img プロパティを Base64 文字列に変換
+        if let imgBase64 = question.img {
+                questionToUpdate.img = Data(base64Encoded: imgBase64)
+            }
+
         do {
-            let jsonData = try JSONSerialization.data(withJSONObject: updateData)
+            let jsonData = try JSONEncoder().encode(questionToUpdate)
             request.httpBody = jsonData
-            
+
             URLSession.shared.dataTask(with: request) { _, response, error in
                 if let error = error {
                     completion(false, error)
                     return
                 }
-                
+
                 guard let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode == 200 else {
                     completion(false, nil)
                     return
                 }
-                
-                completion(true, nil) 
+
+                completion(true, nil)
             }.resume()
         } catch {
             completion(false, error)
         }
     }
 
-
-
-    
     //開発者用のtrue false登録
     func checkDataExistence(for questionID: Int, userID: Int, completion: @escaping (Bool) -> Void) {
         let fetchURL = URL(string: "https://eemon-551.onrender.com/userquestiondatas?qes_id=\(questionID)&user_data_id=\(userID)")!
