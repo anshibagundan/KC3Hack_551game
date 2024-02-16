@@ -8,12 +8,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import java.util.List;
-
-import retrofit2.Call; // Callをインポート
-import retrofit2.Callback; // Callbackをインポート
-import retrofit2.Response; // Responseをインポート
-
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -36,25 +30,12 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.app_name);
 
 
-
         // ApiServiceインスタンスを取得
         ApiService apiService = ApiClient.getApiService();
 
         // APIリクエストを実行
-        apiService.getAllQuestions().enqueue(new Callback<List<Question>>() {
-            @Override
-            public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
-                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
-                    String name = response.body().get(0).getName();
-                    textView.setText(name);
-                }
-            }
 
-            @Override
-            public void onFailure(Call<List<Question>> call, Throwable t) {
-                // エラーハンドリング
-                Log.e("MainActivity", "APIリクエスト失敗: ", t);
-            }
-        });
+        textView.setText("551ゲーム");
+
     }
 }
