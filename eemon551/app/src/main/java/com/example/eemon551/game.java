@@ -27,6 +27,7 @@ public class game extends AppCompatActivity {
 
     private TextView seigoText;
     private ImageView questionImage;
+    private boolean seigo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
