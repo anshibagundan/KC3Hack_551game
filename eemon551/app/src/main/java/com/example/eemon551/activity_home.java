@@ -75,6 +75,8 @@ public class activity_home extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
                     // 最初の質問のnameを取得してTextViewにセット
                     String img = response.body().get(0).getImg();
+                    int resourceId = getResources().getIdentifier(img, "drawable", getPackageName());
+                    img1.setImageResource(resourceId);
                 }
             }
             @Override
@@ -83,6 +85,5 @@ public class activity_home extends AppCompatActivity {
                 Log.e("MainActivity", "APIリクエスト失敗: ", t);
             }
         });
-        }
     }
 }
