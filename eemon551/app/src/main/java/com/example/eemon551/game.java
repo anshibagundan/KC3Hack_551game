@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,7 +28,9 @@ public class game extends AppCompatActivity {
 
     private TextView seigoText;
     private ImageView questionImage;
-    private boolean seigo;
+    private boolean seigo = false;
+
+    private FrameLayout kaisetu;
 
     private int user_data = 1;
 
@@ -42,6 +45,7 @@ public class game extends AppCompatActivity {
         questionText = findViewById(R.id.question_text);
         seigoText = findViewById(R.id.seigo);
         questionImage = findViewById(R.id.Question_image);
+        kaisetu = findViewById(R.id.kaisetu);
 
         // ApiServiceインスタンスを取得
         apiService = ApiClient.getApiService();
@@ -112,6 +116,7 @@ public class game extends AppCompatActivity {
                 seigoText.setText("不正解画像をセット");
             }
             seigoText.setVisibility(View.VISIBLE);
+            seigo = true;
         });
 
         buttonRight.setOnClickListener(view -> {
@@ -124,7 +129,14 @@ public class game extends AppCompatActivity {
                 seigoText.setText("不正解画像をセット");
             }
             seigoText.setVisibility(View.VISIBLE);
+            seigo = true;
         });
+    }
+
+    public void onTap(){
+        if(seigo){
+            kaisetu.setVisibility(View.VISIBLE);
+        }
     }
 
     private void updateUserScore(int scoreToAdd) {

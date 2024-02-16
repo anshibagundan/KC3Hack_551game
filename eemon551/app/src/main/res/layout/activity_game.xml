@@ -51,14 +51,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:background="#AA000000"
             android:gravity="center"
-            android:textSize="30dp"
+            android:onClick="onTap"
             android:text="正解のイメージ画像"
             android:textColor="@color/white"
-            android:background="#AA000000"
-            android:visibility="gone"
+            android:textSize="30dp"
 
-            />
+            android:visibility="gone" />
     </FrameLayout>
 
 
@@ -75,6 +75,7 @@
             android:background="@drawable/houryuuji" />
 
         <TextView
+            android:id="@+id/kaisetu_text"
             android:layout_width="300dp"
             android:layout_height="400dp"
             android:layout_gravity="center"
