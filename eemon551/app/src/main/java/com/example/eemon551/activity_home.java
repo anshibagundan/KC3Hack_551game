@@ -46,7 +46,15 @@ public class activity_home extends AppCompatActivity {
                     String genre;
                     if(genre_id == 1){
                         genre = "食べ物";
-                    }else{
+                    } else if (genre_id == 2) {
+                        genre = "建物";
+                    } else if (genre_id == 3) {
+                        genre = "人";
+                    } else if (genre_id == 4) {
+                        genre = "土地";
+                    } else if (genre_id == 5) {
+                        genre = "文化";
+                    } else{
                         genre = "全て";
                     }
                     text_genre.setText(genre);
