@@ -12,6 +12,7 @@ public class Question {
     public String getName() {
         return name;
     }
+    public String getImg() {return img;}
     public int getId(){return id;}
     public int getGenre_id(){return genre_id;}
 }

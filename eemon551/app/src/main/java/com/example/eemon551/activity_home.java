@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class activity_home extends AppCompatActivity {
 
         Button startButton = findViewById(R.id.start);
         TextView text_genre= findViewById(R.id.genre);
+        ImageView img1 = findViewById(R.id.right_genre);
 
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,5 +68,21 @@ public class activity_home extends AppCompatActivity {
                 Log.e("MainActivity", "APIリクエスト失敗: ", t);
             }
         });
+
+        apiService.getAllQuestions().enqueue(new Callback<List<Question>>() {
+            @Override
+            public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
+                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
+                    // 最初の質問のnameを取得してTextViewにセット
+                    String img = response.body().get(0).getImg();
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Question>> call, Throwable t) {
+                // エラーハンドリング
+                Log.e("MainActivity", "APIリクエスト失敗: ", t);
+            }
+        });
+        }
     }
 }

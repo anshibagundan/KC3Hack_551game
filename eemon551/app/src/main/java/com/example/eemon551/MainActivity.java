@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         // TextViewを取得
         TextView textView = findViewById(R.id.app_name);
 
+
+
         // ApiServiceインスタンスを取得
         ApiService apiService = ApiClient.getApiService();
 
