@@ -69,6 +69,7 @@ public class activity_home extends AppCompatActivity {
             }
         });
 
+        int questionId = 1;
         apiService.getAllQuestions().enqueue(new Callback<List<Question>>() {
             @Override
             public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
@@ -85,4 +86,3 @@ public class activity_home extends AppCompatActivity {
         });
         }
     }
-}
