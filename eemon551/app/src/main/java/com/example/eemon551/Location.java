@@ -9,4 +9,6 @@ public class Location {
     public String getName(){return name;}
 
     public String getImg(){return img;}
+
+    public boolean isIskansai(){return iskansai;}
 }
