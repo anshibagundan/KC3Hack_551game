@@ -19,7 +19,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="200dp"
             android:layout_marginRight="100dp"
-            android:text="Button" />
+            android:text="あるとき~!" />
 
         <Button
             android:id="@+id/button_right"
@@ -28,7 +28,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="200dp"
             android:layout_marginLeft="100dp"
-            android:text="Button" />
+            android:text="ないとき..." />
 
         <TextView
             android:id="@+id/question_text"
