@@ -13,4 +13,5 @@ public class Question {
         return name;
     }
     public int getId(){return id;}
+    public int getGenre_id(){return genre_id;}
 }
