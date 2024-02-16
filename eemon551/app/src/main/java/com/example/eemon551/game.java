@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,6 +24,8 @@ public class game extends AppCompatActivity {
 
     private ApiService apiService;
     private TextView questionText;
+
+    private TextView seigoText;
     private ImageView questionImage;
 
     @Override
@@ -33,6 +36,7 @@ public class game extends AppCompatActivity {
         Button buttonLeft = findViewById(R.id.button_left);
         Button buttonRight = findViewById(R.id.button_right);
         questionText = findViewById(R.id.question_text);
+        seigoText = findViewById(R.id.seigo);
         questionImage = findViewById(R.id.Question_image);
 
         // ApiServiceインスタンスを取得
@@ -94,28 +98,29 @@ public class game extends AppCompatActivity {
     }
 
     private void setupButtonListeners(Button buttonLeft, Button buttonRight) {
-            buttonLeft.setOnClickListener(view -> {
-                if (currentQuestionIsKansai) {
-                    // 正解の処理
-                    questionText.setText("正解！");
-                    updateUserScore(10);
-                } else {
-                    // 不正解の処理
-                    questionText.setText("不正解");
-                }
-            });
+        seigoText.setVisibility(View.VISIBLE);
+        buttonLeft.setOnClickListener(view -> {
+            if (currentQuestionIsKansai) {
+                // 正解の処理
+                seigoText.setText("正解！画像をセット");
+                updateUserScore(10);
+            } else {
+                // 不正解の処理
+                seigoText.setText("不正解画像をセット");
+            }
+        });
 
-            buttonRight.setOnClickListener(view -> {
-                if (!currentQuestionIsKansai) {
-                    // 正解の処理
-                    questionText.setText("正解！");
-                    updateUserScore(10); // スコアを10加算する
-                } else {
-                    // 不正解の処理
-                    questionText.setText("不正解");
-                }
-            });
-        }
+        buttonRight.setOnClickListener(view -> {
+            if (!currentQuestionIsKansai) {
+                // 正解の処理
+                seigoText.setText("正解！画像をセット");
+                updateUserScore(10); // スコアを10加算する
+            } else {
+                // 不正解の処理
+                seigoText.setText("不正解画像をセット");
+            }
+        });
+    }
 
     private void updateUserScore(int scoreToAdd) {
         // 現在のユーザースコアを取得するAPIリクエストを想定

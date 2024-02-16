@@ -46,23 +46,19 @@
             android:layout_height="match_parent"
             app:srcCompat="@android:drawable/alert_light_frame" />
 
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/seigo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        >
         <TextView
-            android:id="@+id/seikai"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/seigo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:gravity="center"
             android:textSize="30dp"
             android:text="正解のイメージ画像"
+            android:textColor="@color/white"
+            android:background="#AA000000"
             />
     </FrameLayout>
+
 
     <FrameLayout
         android:id="@+id/kaisetu"
