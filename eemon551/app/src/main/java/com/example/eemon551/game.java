@@ -31,6 +31,7 @@ public class game extends AppCompatActivity {
 
     private int user_data = 1;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,6 +128,7 @@ public class game extends AppCompatActivity {
     }
 
     private void updateUserScore(int scoreToAdd) {
+
         // 現在のユーザースコアを取得するAPIリクエストを想定
         apiService.getUserMoney(user_data).enqueue(new Callback<User>() {
             @Override
