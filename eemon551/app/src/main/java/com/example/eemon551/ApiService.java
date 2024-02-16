@@ -26,14 +26,16 @@ public interface ApiService {
     Call<User> getUserMoney(@Path("id") int money);
 
     @PUT("/userdatas/{id}/")
-    Call<Void> updateUserScore(@Path("id") int userId, @Body ScoreUpdateRequest scoreUpdateRequest);
+    Call<Void> updateUserData(@Path("id") int userId, @Body UserUpdateRequest userUpdateRequest);
 
-    // スコア更新リクエストのボディを定義するクラス
-    class ScoreUpdateRequest {
-        final int score;
+    class UserUpdateRequest {
+        final String name;
+        final int money;
 
-        public ScoreUpdateRequest(int score) {
-            this.score = score;
+        public UserUpdateRequest(String name, int money) {
+            this.name = name;
+            this.money = money;
         }
     }
+
 }

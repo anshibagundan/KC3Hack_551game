@@ -124,20 +124,22 @@ public class game extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     int currentScore = response.body().getMoney();
-                    int newScore = currentScore + scoreToAdd;
-
-                    ApiService.ScoreUpdateRequest scoreUpdateRequest = new ApiService.ScoreUpdateRequest(newScore);
-                    apiService.updateUserScore(1, scoreUpdateRequest).enqueue(new Callback<Void>() {
+                    Log.e("money", String.valueOf(currentScore));
+                    int newScore = currentScore +10;
+                    String name ="name1";
+                    apiService.updateUserData(1,  new ApiService.UserUpdateRequest(name,newScore)).enqueue(new Callback<Void>() {
                         @Override
                         public void onResponse(Call<Void> call, Response<Void> response) {
                             if (response.isSuccessful()) {
-                                Log.d("ScoreUpdate", "スコア更新成功");
+                                Log.d("UserDataUpdate", "ユーザーデータ更新成功");
+                            } else {
+                                Log.e("UserDataUpdate", "ユーザーデータ更新失敗: " + response.message());
                             }
                         }
 
                         @Override
                         public void onFailure(Call<Void> call, Throwable t) {
-                            Log.e("ScoreUpdate", "スコア更新失敗", t);
+                            Log.e("UserDataUpdate", "ユーザーデータ更新失敗", t);
                         }
                     });
                 }
@@ -145,7 +147,7 @@ public class game extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Log.e("ScoreFetch", "スコア取得失敗", t);
+                Log.e("UserMoneyFetch", "ユーザーのmoney取得失敗", t);
             }
         });
     }
