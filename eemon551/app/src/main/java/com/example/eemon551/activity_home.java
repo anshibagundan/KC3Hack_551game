@@ -23,6 +23,7 @@ public class activity_home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+
         Button startButton = findViewById(R.id.start);
         TextView text_genre= findViewById(R.id.genre);
         ImageView img1 = findViewById(R.id.right_genre);
