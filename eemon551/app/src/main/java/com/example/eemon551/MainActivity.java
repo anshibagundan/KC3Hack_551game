@@ -18,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,18 +39,23 @@ public class MainActivity extends AppCompatActivity {
 
 
             ApiService apiService = ApiClient.getApiService();
-            String name = user_name.getText().toString();
+
 
             kettei.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    String name = prefs.getString("UserId", user_name.getText().toString());
+                    Log.e("first_db", name);
+
                     if(name==null) {
                         textView.setText("名前入力せい！");
                     }else {
                         User user = new User(name, 0, 0);
+
                         Call<Void> call = apiService.insertUserData(user);
 
                         call.enqueue(new Callback<Void>() {
+
                             @Override
                             public void onResponse(Call<Void> call, Response<Void> response) {
                                 if (response.isSuccessful()) {
