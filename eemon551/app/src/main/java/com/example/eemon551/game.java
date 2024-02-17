@@ -220,7 +220,7 @@ public class game extends AppCompatActivity {
                     Log.e("money", String.valueOf(currentScore));
                     int newScore = currentScore +10;
                     SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
-                    String name = prefs.getString("UserName", "デフォルト名");
+                    String name = prefs.getString("UserName", "test_user");
                     apiService.updateUserData(userId,  new ApiService.UserUpdateRequest(name,newScore)).enqueue(new Callback<Void>() {
                         @Override
                         public void onResponse(Call<Void> call, Response<Void> response) {

@@ -44,6 +44,9 @@ public interface ApiService {
 
     @GET("api/user-id/")
     Call<User> getUserId(@Query("name") String name, @Query("level") int level, @Query("money") int money);
+    @GET("/questions")
+    Call<List<Question>> getFilteredQuestions(@Query("genreId") int genreId, @Query("locationId") int locationId);
+
 
 
 
