@@ -56,8 +56,8 @@
             android:onClick="onTap"
             android:text="正解のイメージ画像"
             android:textColor="@color/white"
-            android:textSize="30dp"
 
+            android:textSize="30dp"
             android:visibility="gone" />
     </FrameLayout>
 

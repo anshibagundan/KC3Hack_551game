@@ -133,7 +133,7 @@ public class game extends AppCompatActivity {
         });
     }
 
-    public void onTap(){
+    public void onTap(View view){
         if(seigo){
             kaisetu.setVisibility(View.VISIBLE);
         }
