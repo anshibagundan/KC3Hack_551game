@@ -5,7 +5,7 @@ from rest_framework import status
 from .models import Location, Genre, Question, UserData, UserQuestionData
 from .serializers import LocationSerializer, GenreSerializer, QuestionSerializer, UserDataSerializer, UserQuestionDataSerializer
 from django_filters.rest_framework import DjangoFilterBackend
-from .filters import UserQuestionDataFilter
+from .filters import UserQuestionDataFilter, QuestionFilter
 
 class LocationViewSet(viewsets.ModelViewSet):
     queryset = Location.objects.all()
@@ -65,20 +65,8 @@ class UserIdView(APIView):
         else:
             return Response({'error': 'User not found'}, status=404)
 
-class FilteredQuestionsAPIView(APIView):
-    def get(self, request, *args, **kwargs):
-        # クエリパラメータから`genre_id`を取得
-        genre_id = request.query_params.get('genre_id')
-
-        # 全ての質問を取得
-        questions = Question.objects.all()
-
-        # `genre_id`が指定されている場合、その値でフィルタリング
-        if genre_id:
-            questions = questions.filter(genre_id=genre_id)
-
-        # 質問をシリアライズ
-        serializer = QuestionSerializer(questions, many=True)
-
-        # シリアライズされたデータをレスポンスとして返す
-        return Response(serializer.data, status=status.HTTP_200_OK)
+class QuestionListView(generics.ListAPIView):
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = QuestionFilter
