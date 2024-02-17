@@ -22,8 +22,8 @@ public class activity_home extends AppCompatActivity {
     private TextView textGenre;
     private TextView textLocation;
     private ImageView img1;
-    public int genreId;
-    public int locationId;
+    public int genreId = 0;
+    public int locationId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,9 @@ public class activity_home extends AppCompatActivity {
 
     public void setButtonClickListener(View view) {
         // Intentを作成してGameActivityを起動
+        //ここでgama.javaにgenreIdとlocationIdを渡す
         Intent intent = new Intent(activity_home.this, game.class);
+        intent.putExtra("genreId", genreId);
         startActivity(intent);
     }
 

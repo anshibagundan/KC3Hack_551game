@@ -68,13 +68,10 @@ class UserIdView(APIView):
 class FilteredQuestionsAPIView(APIView):
     def get(self, request):
         genre_id = request.query_params.get('genreId')
-        location_id = request.query_params.get('locationId')
         questions = Question.objects.all()
 
         if genre_id:
             questions = questions.filter(genre__id=genre_id)
-        if location_id:
-            questions = questions.filter(location__id=location_id)
 
         serializer = QuestionSerializer(questions, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
