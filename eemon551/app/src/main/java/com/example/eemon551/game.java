@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -39,7 +40,13 @@ public class game extends AppCompatActivity {
 
     private ImageView kaisetu_img;
     private TextView kaisetu_text;
+    private Button next;
 
+    private TextView question_number;
+
+    private int questionNumber = 1;
+
+    private String questionNumber_Str = "第1問";
 
 
     @Override
@@ -55,8 +62,8 @@ public class game extends AppCompatActivity {
         kaisetu_name = findViewById(R.id.kaisetu_name);
         kaisetu_img = findViewById(R.id.kaisetu_img);
         kaisetu_text = findViewById(R.id.kaisetu_text);
-
-
+        next = findViewById(R.id.next);
+        question_number = findViewById(R.id.question_number);
 
 
         // ApiServiceインスタンスを取得
@@ -161,11 +168,26 @@ public class game extends AppCompatActivity {
 
     public void onTap(View view){
         if(seigo){
-
             kaisetu.setVisibility(View.VISIBLE);
             toi.setVisibility(View.GONE);
 
         }
+    }
+
+    public void onTap_next(View view){
+        questionNumber ++;
+        questionNumber_Str = "第" +questionNumber+"問";
+        question_number.setText(questionNumber_Str);
+        if(questionNumber>10){
+            kaisetu_text.setText("終わり");//あとで宝箱画面をVISIBLEにする
+        }else{
+            toi.setVisibility(View.VISIBLE);
+            kaisetu.setVisibility(View.GONE);
+            seigoText.setVisibility(View.GONE);
+            loadQuestion();
+        }
+
+
     }
 
 
