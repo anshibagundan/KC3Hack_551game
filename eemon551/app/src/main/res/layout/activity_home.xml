@@ -36,8 +36,9 @@
           android:layout_gravity="bottom|center_horizontal"
           android:layout_marginBottom="100dp"
           android:backgroundTint="#C89696"
+          android:onClick="setButtonClickListener"
           android:text="start"
-          android:textSize="50dp"/>
+          android:textSize="50dp" />
 
       <ImageView
           android:id="@+id/right_genre"
