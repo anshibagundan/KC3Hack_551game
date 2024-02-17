@@ -7,6 +7,23 @@ from .models import Location, Genre, Question, UserData, UserQuestionData
 from .serializers import LocationSerializer, GenreSerializer, QuestionSerializer, UserDataSerializer, UserQuestionDataSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from .filters import UserQuestionDataFilter
+import logging
+
+logger = logging.getLogger(__name__)
+
+def get_queryset(self):
+    genre_id = self.request.query_params.get('genre_id', None)
+    logger.debug(f"Genre ID: {genre_id}")  # genre_idの値をログに出力
+
+    if genre_id is not None:
+        queryset = Question.objects.filter(genre_id=genre_id)
+        logger.debug(f"Filtered queryset count: {queryset.count()}")  # フィルタリング後のクエリセットの数
+        return queryset
+    else:
+        queryset = Question.objects.all()
+        logger.debug("Returning all questions.")  # 全てのQuestionオブジェクトを返すことをログに出力
+        return queryset
+
 
 class LocationViewSet(viewsets.ModelViewSet):
     queryset = Location.objects.all()
