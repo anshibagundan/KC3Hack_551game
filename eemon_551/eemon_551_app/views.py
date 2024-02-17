@@ -6,7 +6,7 @@ from rest_framework import generics
 from .models import Location, Genre, Question, UserData, UserQuestionData
 from .serializers import LocationSerializer, GenreSerializer, QuestionSerializer, UserDataSerializer, UserQuestionDataSerializer
 from django_filters.rest_framework import DjangoFilterBackend
-from .filters import UserQuestionDataFilter, QuestionFilter
+from .filters import UserQuestionDataFilter
 
 class LocationViewSet(viewsets.ModelViewSet):
     queryset = Location.objects.all()
@@ -66,8 +66,13 @@ class UserIdView(APIView):
         else:
             return Response({'error': 'User not found'}, status=404)
 
-class QuestionListView(generics.ListAPIView):
-    queryset = Question.objects.all()
+class QuestionListByGenre(generics.ListAPIView):
     serializer_class = QuestionSerializer
-    filter_backends = (DjangoFilterBackend,)
-    filterset_class = QuestionFilter
+
+    def get_queryset(self):
+
+        genre_id = self.request.query_params.get('genre_id', None)
+        if genre_id is not None:
+            return Question.objects.filter(genre_id=genre_id)
+        else:
+            return Question.objects.all()
