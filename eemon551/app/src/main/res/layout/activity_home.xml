@@ -89,7 +89,7 @@
           android:backgroundTint="#C89696"
           android:gravity="center"
           android:rotationY="180"
-          android:onClick="location_right"
+          android:onClick="location_left"
           app:cornerRadius="15dp"
           app:srcCompat="@drawable/img_1" />
 
