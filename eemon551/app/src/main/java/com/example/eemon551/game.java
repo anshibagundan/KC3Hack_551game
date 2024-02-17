@@ -143,8 +143,9 @@ public class game extends AppCompatActivity {
 
     public void onTap(View view){
         if(seigo){
+//            toi.setVisibility(View.GONE);
             kaisetu.setVisibility(View.VISIBLE);
-            toi.setVisibility(View.GONE);
+
         }
     }
 
