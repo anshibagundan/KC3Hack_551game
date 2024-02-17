@@ -16,5 +16,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('delete_userquestiondata/', views.UserQuestionDataDelete.as_view()),
     path('api/user-id/', UserIdView.as_view(), name='user-id'),
-    path('questions/filtered/', FilteredQuestionsAPIView.as_view(), name='filtered-questions'),
+    path('questions/', FilteredQuestionsAPIView.as_view(), name='filtered-questions'),
 ]
