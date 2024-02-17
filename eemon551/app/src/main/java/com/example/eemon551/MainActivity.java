@@ -16,6 +16,8 @@ import retrofit2.Response;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +55,28 @@ public class MainActivity extends AppCompatActivity {
 
             SharedPreferences.Editor editor = prefs.edit();
             editor.putBoolean("isFirstRun", false);
-            int User_id = prefs.getInt("isFirstRun")
+
+            Call<User> call_user = apiService.getUserId(name, 0, 0);
+
+            call_user.enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                         int User_id = prefs.getInt("isFirstRun",response.body().getId());
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putInt("UserId", User_id); // "UserId"はキー名です
+                        editor.apply();
+                        Log.d("API_CALL", "User ID: " + User_id);
+                    } else {
+                        Log.e("API_CALL", "User not found or error in API");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+                    Log.e("API_CALL", "API call failed: " + t.getMessage());
+                }
+            });
             editor.apply();
         }else{
             textView.setText("551ゲーム");
