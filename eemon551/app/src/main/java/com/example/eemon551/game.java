@@ -33,6 +33,8 @@ public class game extends AppCompatActivity {
 
     private FrameLayout kaisetu;
 
+    private FrameLayout toi;
+
 
 
     @Override
@@ -44,7 +46,8 @@ public class game extends AppCompatActivity {
         seigoText = findViewById(R.id.seigo);
         questionImage = findViewById(R.id.Question_image);
         kaisetu = findViewById(R.id.kaisetu);
-        
+
+
 
         // ApiServiceインスタンスを取得
         apiService = ApiClient.getApiService();
@@ -141,6 +144,7 @@ public class game extends AppCompatActivity {
     public void onTap(View view){
         if(seigo){
             kaisetu.setVisibility(View.VISIBLE);
+            toi.setVisibility(View.GONE);
         }
     }
 
