@@ -35,6 +35,11 @@ public class game extends AppCompatActivity {
 
     private FrameLayout toi;
 
+    private TextView kaisetu_name;
+
+    private ImageView kaisetu_img;
+    private TextView kaisetu_text;
+
 
 
     @Override
@@ -46,6 +51,11 @@ public class game extends AppCompatActivity {
         seigoText = findViewById(R.id.seigo);
         questionImage = findViewById(R.id.Question_image);
         kaisetu = findViewById(R.id.kaisetu);
+        toi = findViewById(R.id.toi);
+        kaisetu_name = findViewById(R.id.kaisetu_name);
+        kaisetu_img = findViewById(R.id.kaisetu_img);
+        kaisetu_text = findViewById(R.id.kaisetu_text);
+
 
 
 
@@ -68,10 +78,18 @@ public class game extends AppCompatActivity {
                     Question question = response.body().get(questionNo);
                     String name = question.getName() + "が～？";
                     questionText.setText(name);
+                    kaisetu_name.setText(name);
+
+
 
                     String img = question.getImg().replace("\"", "").trim();
                     int resourceId = getResources().getIdentifier(img, "drawable", getPackageName());
                     questionImage.setImageResource(resourceId);
+                    kaisetu_img.setImageResource(resourceId);
+
+                    String txt = question.getTxt();
+                    kaisetu_text.setText(txt);
+
 
                     currentQuestionId = question.getId();
                     currentQuestionLoc_id = question.getLoc_id();
@@ -143,11 +161,13 @@ public class game extends AppCompatActivity {
 
     public void onTap(View view){
         if(seigo){
-//            toi.setVisibility(View.GONE);
+
             kaisetu.setVisibility(View.VISIBLE);
+            toi.setVisibility(View.GONE);
 
         }
     }
+
 
     private void updateUserScore(int scoreToAdd) {
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);

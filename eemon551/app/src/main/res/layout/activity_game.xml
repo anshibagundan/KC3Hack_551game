@@ -81,13 +81,13 @@
             android:gravity="center"
             android:textSize="30dp"/>
 
-        <View
+        <ImageView
             android:id="@+id/kaisetu_img"
             android:layout_width="match_parent"
             android:layout_height="295dp"
             android:layout_gravity="center"
             android:layout_marginBottom="100dp"
-            android:background="@drawable/houryuuji" />
+            app:srcCompat="@android:drawable/alert_light_frame" />
 
         <TextView
             android:id="@+id/kaisetu_text"
