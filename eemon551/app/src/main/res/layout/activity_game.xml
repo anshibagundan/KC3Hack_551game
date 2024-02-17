@@ -70,6 +70,18 @@
 
             android:textSize="30dp"
             android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/touka_loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#CC000000"
+            android:visibility="gone"
+            android:text="Now loading..."
+            android:textColor="@color/white"
+            android:textSize="30dp"
+            android:gravity="center"
+            android:onClick="setting" />
     </FrameLayout>
 
 

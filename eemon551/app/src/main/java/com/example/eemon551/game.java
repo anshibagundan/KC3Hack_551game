@@ -32,6 +32,7 @@ public class game extends AppCompatActivity {
     private TextView questionText;
 
     private TextView seigoText;
+    private TextView touka_loading;
     private ImageView questionImage;
     private boolean seigo = false;
 
@@ -62,6 +63,7 @@ public class game extends AppCompatActivity {
 
         questionText = findViewById(R.id.question_text);
         seigoText = findViewById(R.id.seigo);
+        touka_loading = findViewById(R.id.touka_loading);
         questionImage = findViewById(R.id.Question_image);
         kaisetu = findViewById(R.id.kaisetu);
         toi = findViewById(R.id.toi);
@@ -94,10 +96,9 @@ public class game extends AppCompatActivity {
                 public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
                     if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
                         // 質問データをセット
-                        questionText.setText("Now Loading...");
-                        //ここにloadingのフレーム入れて
                         Question question = response.body().get(questionNo);
                         if (!displayedQuestionIds.contains(question.getId())) {
+                            touka_loading.setVisibility(View.GONE);
                             String name = question.getName() + "が～？";
                             questionText.setText(name);
                             kaisetu_name.setText(name);
@@ -239,6 +240,7 @@ public class game extends AppCompatActivity {
     public void onTap(View view){
         if(seigo){
             kaisetu.setVisibility(View.VISIBLE);
+            touka_loading.setVisibility(View.VISIBLE);
             toi.setVisibility(View.GONE);
 
         }
