@@ -88,9 +88,11 @@ public class activity_home extends AppCompatActivity {
     public void genre_right(View view){
         genreId++;
         genreId = genreId % 6;
+        loadFirstQuestionGenre();
     }
     public void genre_left(View view){
         genreId--;
         genreId = genreId % 6;
+        loadFirstQuestionGenre();
     }
 }
