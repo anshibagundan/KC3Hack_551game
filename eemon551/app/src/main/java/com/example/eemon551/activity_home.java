@@ -20,8 +20,10 @@ public class activity_home extends AppCompatActivity {
 
     private Button startButton;
     private TextView textGenre;
+    private TextView textLocation;
     private ImageView img1;
-    private int genreId;
+    public int genreId;
+    public int locationId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class activity_home extends AppCompatActivity {
     private void initializeViews() {
         startButton = findViewById(R.id.start);
         textGenre = findViewById(R.id.genre);
+        textLocation = findViewById(R.id.prefecture);
         img1 = findViewById(R.id.right_genre);
     }
 
@@ -57,6 +60,9 @@ public class activity_home extends AppCompatActivity {
 //                    int genreId = response.body().get(0).getGenre_id();
                     String genre = getGenreName(genreId);
                     textGenre.setText(genre);
+
+                    String location = getLocationName(locationId);
+                    textLocation.setText(location);
                 }
             }
 
@@ -85,6 +91,25 @@ public class activity_home extends AppCompatActivity {
         }
     }
 
+    private String getLocationName(int locationId) {
+        switch (locationId) {
+            case 1:
+                return "大阪";
+            case 2:
+                return "京都";
+            case 3:
+                return "滋賀";
+            case 4:
+                return "奈良";
+            case 5:
+                return "兵庫";
+            case 6:
+                return "和歌山";
+            default:
+                return "全て";
+        }
+    }
+
     public void genre_right(View view){
         genreId++;
         genreId = genreId % 6;
@@ -92,6 +117,9 @@ public class activity_home extends AppCompatActivity {
     }
     public void genre_left(View view){
         genreId--;
+        if(genreId<0){
+            genreId = 5;
+        }
         genreId = genreId % 6;
         loadFirstQuestionGenre();
     }

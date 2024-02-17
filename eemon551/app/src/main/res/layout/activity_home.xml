@@ -75,6 +75,7 @@
           android:layout_gravity="center"
           android:layout_marginLeft="160dp"
           android:layout_marginTop="50dp"
+          android:onClick="location_right"
           app:cornerRadius="15dp"
           app:srcCompat="@drawable/img_1" />
 
@@ -88,6 +89,7 @@
           android:backgroundTint="#C89696"
           android:gravity="center"
           android:rotationY="180"
+          android:onClick="location_right"
           app:cornerRadius="15dp"
           app:srcCompat="@drawable/img_1" />
 
