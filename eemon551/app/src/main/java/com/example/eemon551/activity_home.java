@@ -125,16 +125,16 @@ public class activity_home extends AppCompatActivity {
     }
 
     public void location_right(View view){
-        genreId++;
-        genreId = genreId % 6;
+        locationId++;
+        locationId = locationId % 6;
         loadFirstQuestionGenre();
     }
     public void location_left(View view){
-        genreId--;
-        if(genreId<0){
-            genreId = 5;
+        locationId--;
+        if(locationId<0){
+            locationId = 5;
         }
-        genreId = genreId % 6;
+        locationId = locationId % 6;
         loadFirstQuestionGenre();
     }
 }
