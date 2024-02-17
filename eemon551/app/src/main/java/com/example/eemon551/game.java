@@ -2,6 +2,7 @@ package com.example.eemon551;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,7 +33,7 @@ public class game extends AppCompatActivity {
 
     private FrameLayout kaisetu;
 
-    private int user_data = 1;
+
 
 
     @Override
@@ -140,6 +141,8 @@ public class game extends AppCompatActivity {
     }
 
     private void updateUserScore(int scoreToAdd) {
+        SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        int user_data = prefs.getInt("UserId", 1);
 
         // 現在のユーザースコアを取得するAPIリクエストを想定
         apiService.getUserMoney(user_data).enqueue(new Callback<User>() {

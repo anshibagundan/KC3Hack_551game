@@ -49,3 +49,18 @@ class UserQuestionDataDelete(APIView):
         else:
             # 必要なクエリパラメータが提供されていない場合
             return Response({"error": "qes_id and user_data_id are required."}, status=status.HTTP_400_BAD_REQUEST)
+
+class UserIdView(APIView):
+    def get(self, request):
+        # クエリパラメータからフィルタ条件を取得
+        name = request.query_params.get('name')
+        level = request.query_params.get('level')
+        money = request.query_params.get('money')
+
+        # データベースから条件に一致するレコードを検索
+        user = UserData.objects.filter(name=name, level=level, money=money).first()
+        if user:
+            # IDをレスポンスとして返す
+            return Response({'id': user.id})
+        else:
+            return Response({'error': 'User not found'}, status=404)

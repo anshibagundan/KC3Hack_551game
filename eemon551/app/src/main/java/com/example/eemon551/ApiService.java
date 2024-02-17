@@ -6,6 +6,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 import java.util.List;
 
@@ -37,5 +38,13 @@ public interface ApiService {
             this.money = money;
         }
     }
+
+    @POST("/userdatas/")
+    Call<Void> insertUserData(@Body User data);
+
+    @GET("api/user-id/")
+    Call<User> getUserId(@Query("name") String name, @Query("level") int level, @Query("money") int money);
+
+
 
 }

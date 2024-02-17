@@ -1,7 +1,5 @@
 package com.example.eemon551;
 
-import com.example.eemon551.ApiService;
-
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;

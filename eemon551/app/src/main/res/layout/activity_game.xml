@@ -68,20 +68,34 @@
         android:layout_height="match_parent"
         android:visibility="gone"
         >
+
+        <TextView
+            android:layout_width="350dp"
+            android:layout_height="65dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="25dp"
+            android:background="@color/white"
+            android:text="名前"
+            android:gravity="center"
+            android:textSize="30dp"/>
+
         <View
             android:id="@+id/back_img"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="295dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="100dp"
             android:background="@drawable/houryuuji" />
 
         <TextView
             android:id="@+id/kaisetu_text"
-            android:layout_width="300dp"
-            android:layout_height="400dp"
+            android:layout_width="350dp"
+            android:layout_height="182dp"
             android:layout_gravity="center"
+            android:layout_marginTop="160dp"
+            android:background="@color/white"
             android:text="ここに解説を書きます"
-            android:textSize="25dp"
-            android:background="@color/white"/>
+            android:textSize="25dp" />
 
         <Button
             android:id="@+id/next"
@@ -90,6 +104,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="300dp"
             android:text="Next"
+            android:textSize="20dp"
             app:cornerRadius="0dp" />
     </FrameLayout>
 
