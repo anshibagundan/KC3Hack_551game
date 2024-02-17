@@ -34,8 +34,8 @@ public class game extends AppCompatActivity {
     private FrameLayout kaisetu;
 
 
-    SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
-    int user_data = prefs.getInt("UserId", 1);
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,6 +141,8 @@ public class game extends AppCompatActivity {
     }
 
     private void updateUserScore(int scoreToAdd) {
+        SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        int user_data = prefs.getInt("UserId", 1);
 
         // 現在のユーザースコアを取得するAPIリクエストを想定
         apiService.getUserMoney(user_data).enqueue(new Callback<User>() {
