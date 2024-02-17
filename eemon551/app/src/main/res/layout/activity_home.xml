@@ -114,12 +114,14 @@
           android:text="関西全域"
           android:textSize="30dp"/>
 
+
       <TextView
           android:id="@+id/touka"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           android:background="#AA000000"
-          android:visibility="gone"/>
+          android:visibility="gone"
+          android:onClick="setting"/>
 
       <Button
           android:id="@+id/zukann"
@@ -155,6 +157,7 @@
           android:text="≡"
           android:textSize="30dp"
           android:gravity="center"
+          android:onClick="setting"
           app:cornerRadius="15dp" />
 
 
