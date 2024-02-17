@@ -38,4 +38,9 @@ public interface ApiService {
         }
     }
 
+    @POST("/userdatas/")
+    Call<Void> insertUserData(@Body User data);
+
+    @GET("/userdatas/")
+
 }
