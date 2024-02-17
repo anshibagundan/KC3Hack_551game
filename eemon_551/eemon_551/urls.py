@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from eemon_551_app import views
-from eemon_551_app.views import UserQuestionDataDelete, UserIdView, FilteredQuestionsAPIView
+from eemon_551_app.views import UserIdView, FilteredQuestionsAPIView
 
 # ルーターの作成とビューセットの登録
 router = DefaultRouter()

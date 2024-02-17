@@ -67,7 +67,7 @@ class UserIdView(APIView):
 
 class FilteredQuestionsAPIView(APIView):
     def get(self, request):
-        genre_id = request.query_params.get('genreId')
+        genre_id = request.query_params.get('genre_id')
         questions = Question.objects.all()
 
         if genre_id:

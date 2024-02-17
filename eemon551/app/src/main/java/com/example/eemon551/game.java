@@ -53,7 +53,6 @@ public class game extends AppCompatActivity {
     private Set<Integer> displayedQuestionIds = new HashSet<>();
 
     private int genreId;
-    private int locationId;
 
 
     @Override
@@ -78,21 +77,18 @@ public class game extends AppCompatActivity {
 
         // IntentからgenreIdとlocationIdを取得
         Intent intent = getIntent();
-        genreId = intent.getIntExtra("genreId", 0); // デフォルト値は適宜設定
-        locationId = intent.getIntExtra("locationId", 0);
+        genreId = intent.getIntExtra("genreId", 0);
 
         loadQuestion();
     }
 
     private void loadQuestion() {
-        Log.e("genlocID", "locationId"+locationId );
-        Log.e("genlocID", "genreId"+genreId );
+        Log.e("genreId", "genreId"+genreId );
         Random random = new Random();
         int questionNo = random.nextInt(10); // 仮定する質問の数に応じて調整
 
-
             // APIリクエストを実行して質問をロード
-        if(genreId == 0 && locationId ==0) {
+        if(genreId == 0) {
             apiService.getAllQuestions().enqueue(new Callback<List<Question>>() {
                 @Override
                 public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
@@ -137,7 +133,7 @@ public class game extends AppCompatActivity {
                     Log.e("LocationFetch", "APIリクエスト失敗: ", t);
                 }
             });
-        } else if (genreId != 0 && locationId == 0) {
+        } else{
             apiService.getGenreFilteredQuestions(genreId).enqueue(new Callback<List<Question>>() {
                 @Override
                 public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
@@ -182,99 +178,6 @@ public class game extends AppCompatActivity {
                     Log.e("LocationFetch", "APIリクエスト失敗: ", t);
                 }
             });
-
-        } else if (genreId == 0 && locationId != 0) {
-
-            apiService.getLocationFilteredQuestions(locationId).enqueue(new Callback<List<Question>>() {
-                @Override
-                public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
-                    if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
-                        // 質問データをセット
-                        questionText.setText("Now Loading...");
-                        //ここにloadingのフレーム入れて
-                        Question question = response.body().get(questionNo);
-                        if (!displayedQuestionIds.contains(question.getId())) {
-                            String name = question.getName() + "が～？";
-                            questionText.setText(name);
-                            kaisetu_name.setText(name);
-
-
-                            String img = question.getImg().replace("\"", "").trim();
-                            int resourceId = getResources().getIdentifier(img, "drawable", getPackageName());
-                            questionImage.setImageResource(resourceId);
-                            kaisetu_img.setImageResource(resourceId);
-
-                            String txt = question.getTxt();
-                            kaisetu_text.setText(txt);
-
-
-                            currentQuestionId = question.getId();
-                            currentQuestionLoc_id = question.getLoc_id();
-
-                            // locationデータを取得
-                            loadLocationData(currentQuestionLoc_id);
-
-                            //出題済みidを格納
-                            displayedQuestionIds.add(question.getId());
-
-                        } else {
-                            //もし出題するidが出題済みidリストに存在したらもう一回ロード
-                            loadQuestion();
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<List<Question>> call, Throwable t) {
-                    Log.e("LocationFetch", "APIリクエスト失敗: ", t);
-                }
-            });
-            }else{
-            apiService.getGenre_LocationFilteredQuestions(genreId, locationId).enqueue(new Callback<List<Question>>() {
-                @Override
-                public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
-                    if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
-                        // 質問データをセット
-                        questionText.setText("Now Loading...");
-                        //ここにloadingのフレーム入れて
-                        Question question = response.body().get(questionNo);
-                        if (!displayedQuestionIds.contains(question.getId())) {
-                            String name = question.getName() + "が～？";
-                            questionText.setText(name);
-                            kaisetu_name.setText(name);
-
-
-                            String img = question.getImg().replace("\"", "").trim();
-                            int resourceId = getResources().getIdentifier(img, "drawable", getPackageName());
-                            questionImage.setImageResource(resourceId);
-                            kaisetu_img.setImageResource(resourceId);
-
-                            String txt = question.getTxt();
-                            kaisetu_text.setText(txt);
-
-
-                            currentQuestionId = question.getId();
-                            currentQuestionLoc_id = question.getLoc_id();
-
-                            // locationデータを取得
-                            loadLocationData(currentQuestionLoc_id);
-
-                            //出題済みidを格納
-                            displayedQuestionIds.add(question.getId());
-
-                        } else {
-                            //もし出題するidが出題済みidリストに存在したらもう一回ロード
-                            loadQuestion();
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<List<Question>> call, Throwable t) {
-                    Log.e("LocationFetch", "APIリクエスト失敗: ", t);
-                }
-            });
-
         }
 
         }

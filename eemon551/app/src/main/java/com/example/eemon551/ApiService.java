@@ -14,7 +14,7 @@ public interface ApiService {
     @GET("/questions/")
     Call<List<Question>> getAllQuestions();
     @GET("/questions/filtered/")
-    Call<List<Question>> getGenreFilteredQuestions(@Query("genreId") int genreId);
+    Call<List<Question>> getGenreFilteredQuestions(@Query("genre_id") int genreId);
 
     @GET("/questions/{id}")
     Call<Question> getQuestionById(@Path("id") int questionId);
