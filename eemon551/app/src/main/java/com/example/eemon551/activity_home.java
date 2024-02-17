@@ -84,4 +84,13 @@ public class activity_home extends AppCompatActivity {
                 return "全て";
         }
     }
+
+    public void genre_right(View view){
+        genreId++;
+        genreId = genreId % 6;
+    }
+    public void genre_left(View view){
+        genreId--;
+        genreId = genreId % 6;
+    }
 }
