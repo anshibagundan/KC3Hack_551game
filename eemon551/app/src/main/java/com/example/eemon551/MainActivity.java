@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<Void> call, Throwable t) {
-                    // 通信エラー (例: インターネット接続なし)
                     Log.e("first_db", "Failed to send data. Error: " + t.getMessage());
                 }
             });
