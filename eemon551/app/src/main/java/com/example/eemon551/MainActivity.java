@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,12 +25,14 @@ public class MainActivity extends AppCompatActivity {
         boolean isFirstRun = prefs.getBoolean("isFirstRun", true);
         // TextViewを取得
         TextView textView = findViewById(R.id.app_name);
+        EditText user_name = findViewById(R.id.user_name);
 
         if (isFirstRun) {
             textView.setText("ようこそ551ゲーム");
 
-            ApiService apiService = ApiClient.getApiService()
-            User user = new User("zono",0,0);
+            ApiService apiService = ApiClient.getApiService();
+            String name = user_name.getText().toString();
+            User user = new User(name,0,0);
             Call<Void> call = apiService.insertUserData(user);
 
             call.enqueue(new Callback<Void>() {
