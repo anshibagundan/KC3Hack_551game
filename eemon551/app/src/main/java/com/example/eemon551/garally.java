@@ -14,7 +14,7 @@ public class garally extends AppCompatActivity {
         setContentView(R.layout.activity_garally);
 
         // LinearLayoutのインスタンスを取得
-        LinearLayout linearLayout = findViewById(R.id.linearLayout);
+        LinearLayout linearLayout = findViewById(R.id.LinearLayout);
 
         // forループを使用してImageViewを動的に追加
         for (int i = 0; i < 3; i++) {

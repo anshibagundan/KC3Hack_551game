@@ -33,6 +33,12 @@ public class game extends AppCompatActivity {
 
     private FrameLayout kaisetu;
 
+    private FrameLayout toi;
+
+    private TextView kaisetu_name;
+
+    private ImageView kaisetu_img;
+    private TextView kaisetu_text;
 
 
 
@@ -41,20 +47,22 @@ public class game extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        Button buttonLeft = findViewById(R.id.button_left);
-        Button buttonRight = findViewById(R.id.button_right);
         questionText = findViewById(R.id.question_text);
         seigoText = findViewById(R.id.seigo);
         questionImage = findViewById(R.id.Question_image);
         kaisetu = findViewById(R.id.kaisetu);
+        toi = findViewById(R.id.toi);
+        kaisetu_name = findViewById(R.id.kaisetu_name);
+        kaisetu_img = findViewById(R.id.kaisetu_img);
+        kaisetu_text = findViewById(R.id.kaisetu_text);
+
+
+
 
         // ApiServiceインスタンスを取得
         apiService = ApiClient.getApiService();
 
         loadQuestion();
-
-        // button_leftとbutton_rightのClickListenerを設定
-        setupButtonListeners(buttonLeft, buttonRight);
     }
 
     private void loadQuestion() {
@@ -70,10 +78,18 @@ public class game extends AppCompatActivity {
                     Question question = response.body().get(questionNo);
                     String name = question.getName() + "が～？";
                     questionText.setText(name);
+                    kaisetu_name.setText(name);
+
+
 
                     String img = question.getImg().replace("\"", "").trim();
                     int resourceId = getResources().getIdentifier(img, "drawable", getPackageName());
                     questionImage.setImageResource(resourceId);
+                    kaisetu_img.setImageResource(resourceId);
+
+                    String txt = question.getTxt();
+                    kaisetu_text.setText(txt);
+
 
                     currentQuestionId = question.getId();
                     currentQuestionLoc_id = question.getLoc_id();
@@ -85,7 +101,7 @@ public class game extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Question>> call, Throwable t) {
-                Log.e("GameActivity", "APIリクエスト失敗: ", t);
+                Log.e("LocationFetch", "APIリクエスト失敗: ", t);
             }
         });
     }
@@ -96,6 +112,10 @@ public class game extends AppCompatActivity {
             public void onResponse(Call<Location> call, Response<Location> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     currentQuestionIsKansai = response.body().isIskansai();
+                    Log.e("LocationFetch", String.valueOf(currentQuestionIsKansai));
+                    Button buttonLeft = findViewById(R.id.button_left);
+                    Button buttonRight = findViewById(R.id.button_right);
+                    setupButtonListeners(buttonLeft, buttonRight, currentQuestionIsKansai);
                 }
             }
 
@@ -106,14 +126,17 @@ public class game extends AppCompatActivity {
         });
     }
 
-    private void setupButtonListeners(Button buttonLeft, Button buttonRight) {
+    private void setupButtonListeners(Button buttonLeft, Button buttonRight,Boolean currentQuestionIsKansai) {
+        Log.e("LocationFetch", "button" +currentQuestionIsKansai);
         buttonLeft.setOnClickListener(view -> {
             if (currentQuestionIsKansai) {
                 // 正解の処理
+                Log.d("LocationFetch", "left true");
                 seigoText.setText("正解！画像をセット");
                 updateUserScore(10);
             } else {
                 // 不正解の処理
+                Log.d("LocationFetch", "left false");
                 seigoText.setText("不正解画像をセット");
             }
             seigoText.setVisibility(View.VISIBLE);
@@ -122,10 +145,12 @@ public class game extends AppCompatActivity {
 
         buttonRight.setOnClickListener(view -> {
             if (!currentQuestionIsKansai) {
+                Log.d("LocationFetch", "right true");
                 // 正解の処理
                 seigoText.setText("正解！画像をセット");
                 updateUserScore(10); // スコアを10加算する
             } else {
+                Log.d("LocationFetch", "right false");
                 // 不正解の処理
                 seigoText.setText("不正解画像をセット");
             }
@@ -136,24 +161,30 @@ public class game extends AppCompatActivity {
 
     public void onTap(View view){
         if(seigo){
+
             kaisetu.setVisibility(View.VISIBLE);
+            toi.setVisibility(View.GONE);
+
         }
     }
 
+
     private void updateUserScore(int scoreToAdd) {
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
-        int user_data = prefs.getInt("UserId", 1);
+        int userId = prefs.getInt("UserId", 0);
+        Log.e("UserID", String.valueOf(userId));
 
         // 現在のユーザースコアを取得するAPIリクエストを想定
-        apiService.getUserMoney(user_data).enqueue(new Callback<User>() {
+        apiService.getUserMoney(userId).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     int currentScore = response.body().getMoney();
                     Log.e("money", String.valueOf(currentScore));
                     int newScore = currentScore +10;
-                    String name ="name1";
-                    apiService.updateUserData(user_data,  new ApiService.UserUpdateRequest(name,newScore)).enqueue(new Callback<Void>() {
+                    SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+                    String name = prefs.getString("UserName", "デフォルト名");
+                    apiService.updateUserData(userId,  new ApiService.UserUpdateRequest(name,newScore)).enqueue(new Callback<Void>() {
                         @Override
                         public void onResponse(Call<Void> call, Response<Void> response) {
                             if (response.isSuccessful()) {
