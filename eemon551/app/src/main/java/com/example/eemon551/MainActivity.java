@@ -34,50 +34,54 @@ public class MainActivity extends AppCompatActivity {
 
             ApiService apiService = ApiClient.getApiService();
             String name = user_name.getText().toString();
-            User user = new User(name,0,0);
-            Call<Void> call = apiService.insertUserData(user);
+            if(name==null) {
+                textView.setText("名前入力せい！");
+            }else {
+                User user = new User(name, 0, 0);
+                Call<Void> call = apiService.insertUserData(user);
 
-            call.enqueue(new Callback<Void>() {
-                @Override
-                public void onResponse(Call<Void> call, Response<Void> response) {
-                    if (response.isSuccessful()) {
-                        Log.d("first_db", "Data successfully sent to the server.");
-                    } else {
-                        Log.e("first_db", "Failed to send data. Response code: " + response.code());
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            Log.d("first_db", "Data successfully sent to the server.");
+                        } else {
+                            Log.e("first_db", "Failed to send data. Response code: " + response.code());
+                        }
                     }
-                }
 
-                @Override
-                public void onFailure(Call<Void> call, Throwable t) {
-                    Log.e("first_db", "Failed to send data. Error: " + t.getMessage());
-                }
-            });
-
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean("isFirstRun", false);
-
-            Call<User> call_user = apiService.getUserId(name, 0, 0);
-
-            call_user.enqueue(new Callback<User>() {
-                @Override
-                public void onResponse(Call<User> call, Response<User> response) {
-                    if (response.isSuccessful() && response.body() != null) {
-                         int User_id = prefs.getInt("isFirstRun",response.body().getId());
-                        SharedPreferences.Editor editor = prefs.edit();
-                        editor.putInt("UserId", User_id); // "UserId"はキー名です
-                        editor.apply();
-                        Log.d("API_CALL", "User ID: " + User_id);
-                    } else {
-                        Log.e("API_CALL", "User not found or error in API");
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Log.e("first_db", "Failed to send data. Error: " + t.getMessage());
                     }
-                }
+                });
 
-                @Override
-                public void onFailure(Call<User> call, Throwable t) {
-                    Log.e("API_CALL", "API call failed: " + t.getMessage());
-                }
-            });
-            editor.apply();
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putBoolean("isFirstRun", false);
+
+                Call<User> call_user = apiService.getUserId(name, 0, 0);
+
+                call_user.enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(Call<User> call, Response<User> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            int User_id = prefs.getInt("isFirstRun", response.body().getId());
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putInt("UserId", User_id); // "UserId"はキー名です
+                            editor.apply();
+                            Log.d("API_CALL", "User ID: " + User_id);
+                        } else {
+                            Log.e("API_CALL", "User not found or error in API");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<User> call, Throwable t) {
+                        Log.e("API_CALL", "API call failed: " + t.getMessage());
+                    }
+                });
+                editor.apply();
+            }
         }else{
             textView.setText("551ゲーム");
             Button tapButton = findViewById(R.id.tap);
