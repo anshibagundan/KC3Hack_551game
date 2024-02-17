@@ -25,6 +25,11 @@ public class activity_home extends AppCompatActivity {
     public int genreId = 0;
     public int locationId = 0;
 
+    private TextView touka;
+    private Button zukann;
+    private Button introduce;
+    private Boolean setting = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +45,9 @@ public class activity_home extends AppCompatActivity {
         textGenre = findViewById(R.id.genre);
         textLocation = findViewById(R.id.prefecture);
         img1 = findViewById(R.id.right_genre);
+        touka = findViewById(R.id.touka);
+        zukann = findViewById(R.id.zukann);
+        introduce = findViewById(R.id.introduce);
     }
 
     public void setButtonClickListener(View view) {
@@ -138,5 +146,17 @@ public class activity_home extends AppCompatActivity {
         }
         locationId = locationId % 6;
         loadFirstQuestionGenre();
+    }
+    public void setting(View view){
+        setting = !setting;
+        if (setting){
+            touka.setVisibility(View.VISIBLE);
+            zukann.setVisibility(View.VISIBLE);
+            introduce.setVisibility(View.VISIBLE);
+        }else{
+            touka.setVisibility(View.GONE);
+            zukann.setVisibility(View.GONE);
+            introduce.setVisibility(View.GONE);
+        }
     }
 }
