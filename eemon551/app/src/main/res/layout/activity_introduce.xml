@@ -6,39 +6,80 @@
     android:layout_height="match_parent"
     tools:context=".introduce">
 
-    <Button
-        android:id="@+id/back"
-        android:layout_width="97dp"
-        android:layout_height="63dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="BACK"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity"
+        android:orientation="vertical"
+        android:background="#89B2F0">
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/introduction"
-        android:layout_width="344dp"
-        android:layout_height="396dp"
-        android:layout_marginTop="172dp"
-        android:text="このゲームは，クイズ形式のゲームです。問題は写真とその名称が表示され、それが関西のものかを答える○✕ゲームです。\n表示されたものが関西のものの時は，\n「あるとき！」ボタンを押し、違う場合は「ないとき！」ボタンを押してください。\n\n例）\n551の蓬莱が〜：あるとき！\nもんじゃ焼きが〜：ないとき！"
-        android:textSize="18dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/back" />
+            <View
+                android:id="@+id/image_3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/img" />
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="説明"
-        android:textSize="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/introduction"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.586" />
+            <Button
+                android:id="@+id/back"
+                android:layout_width="97dp"
+                android:layout_height="63dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="BACK"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/introduction"
+                android:layout_width="358dp"
+                android:layout_height="362dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="250dp"
+                android:background="@color/white"
+                android:text="このゲームは，クイズ形式のゲームです。\n問題は写真とその名称が表示され、それが関西のものかを答える○✕ゲームです。\n表示されたものが関西のものの時は，\n「あるとき～！」ボタンを押し、違う場合は「ないとき...」ボタンを押してください。\n\n　あるとき～！ボタン→\n\n　ないとき...ボタン→\n\n例）\n551の蓬莱が〜：あるとき！\nもんじゃ焼きが〜：ないとき！"
+                android:textSize="17dp" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="130dp"
+                android:text="説明"
+                android:textSize="70dp"
+                android:textStyle="bold"/>
+
+            <Button
+                android:id="@+id/arutoki"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="65dp"
+                android:text="あるとき～！" />
+
+            <Button
+                android:id="@+id/naitoki"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="110dp"
+                android:layout_marginLeft="100dp"
+                android:text="ないとき..." />
+
+
+        </FrameLayout>
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
