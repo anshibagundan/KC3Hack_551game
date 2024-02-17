@@ -88,9 +88,14 @@ class QuestionListByGenre(generics.ListAPIView):
     serializer_class = QuestionSerializer
 
     def get_queryset(self):
-
         genre_id = self.request.query_params.get('genre_id', None)
+        logger.debug(f"Genre ID: {genre_id}")  # genre_idの値をログに出力
+
         if genre_id is not None:
-            return Question.objects.filter(genre_id=genre_id)
+            queryset = Question.objects.filter(genre_id=genre_id)
+            logger.debug(f"Filtered queryset count: {queryset.count()}")  # フィルタリング後のクエリセットの数
+            return queryset
         else:
-            return Question.objects.all()
+            queryset = Question.objects.all()
+            logger.debug("Returning all questions.")  # 全てのQuestionオブジェクトを返すことをログに出力
+            return queryset
