@@ -142,18 +142,20 @@ public class game extends AppCompatActivity {
 
     private void updateUserScore(int scoreToAdd) {
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
-        int user_data = prefs.getInt("UserId", 1);
+        int userId = prefs.getInt("UserId", 0);
+        Log.e("UserID", String.valueOf(userId));
 
         // 現在のユーザースコアを取得するAPIリクエストを想定
-        apiService.getUserMoney(user_data).enqueue(new Callback<User>() {
+        apiService.getUserMoney(userId).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     int currentScore = response.body().getMoney();
                     Log.e("money", String.valueOf(currentScore));
                     int newScore = currentScore +10;
-                    String name ="name1";
-                    apiService.updateUserData(user_data,  new ApiService.UserUpdateRequest(name,newScore)).enqueue(new Callback<Void>() {
+                    SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+                    String name = prefs.getString("UserName", "デフォルト名");
+                    apiService.updateUserData(userId,  new ApiService.UserUpdateRequest(name,newScore)).enqueue(new Callback<Void>() {
                         @Override
                         public void onResponse(Call<Void> call, Response<Void> response) {
                             if (response.isSuccessful()) {
