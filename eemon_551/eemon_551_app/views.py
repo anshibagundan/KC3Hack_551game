@@ -9,6 +9,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .filters import UserQuestionDataFilter
 import logging
 
+logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 def get_queryset(self):
