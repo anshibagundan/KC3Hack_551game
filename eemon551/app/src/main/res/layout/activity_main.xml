@@ -120,6 +120,7 @@
             android:hint="user_nameを入力してください"
             android:layout_gravity="center"
             android:layout_marginTop="100dp"
+            android:gravity="center"
             android:textColor="@color/black"
             android:background="@color/white" />
 
