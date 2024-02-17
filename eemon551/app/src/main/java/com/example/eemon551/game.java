@@ -2,6 +2,7 @@ package com.example.eemon551;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,8 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,6 +50,9 @@ public class game extends AppCompatActivity {
     private int questionNumber = 1;
 
     private String questionNumber_Str = "第1問";
+    private Set<Integer> displayedQuestionIds = new HashSet<>();
+
+    private int genreId;
 
 
     @Override
@@ -69,49 +75,113 @@ public class game extends AppCompatActivity {
         // ApiServiceインスタンスを取得
         apiService = ApiClient.getApiService();
 
+        // IntentからgenreIdとlocationIdを取得
+        Intent intent = getIntent();
+        genreId = intent.getIntExtra("genreId", 0);
+
         loadQuestion();
     }
 
     private void loadQuestion() {
+        Log.e("genreId", "genreId"+genreId );
         Random random = new Random();
         int questionNo = random.nextInt(10); // 仮定する質問の数に応じて調整
 
-        // APIリクエストを実行して質問をロード
-        apiService.getAllQuestions().enqueue(new Callback<List<Question>>() {
-            @Override
-            public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
-                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
-                    // 質問データをセット
-                    Question question = response.body().get(questionNo);
-                    String name = question.getName() + "が～？";
-                    questionText.setText(name);
-                    kaisetu_name.setText(name);
+            // APIリクエストを実行して質問をロード
+        if(genreId == 0) {
+            apiService.getAllQuestions().enqueue(new Callback<List<Question>>() {
+                @Override
+                public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
+                    if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
+                        // 質問データをセット
+                        questionText.setText("Now Loading...");
+                        //ここにloadingのフレーム入れて
+                        Question question = response.body().get(questionNo);
+                        if (!displayedQuestionIds.contains(question.getId())) {
+                            String name = question.getName() + "が～？";
+                            questionText.setText(name);
+                            kaisetu_name.setText(name);
 
 
+                            String img = question.getImg().replace("\"", "").trim();
+                            int resourceId = getResources().getIdentifier(img, "drawable", getPackageName());
+                            questionImage.setImageResource(resourceId);
+                            kaisetu_img.setImageResource(resourceId);
 
-                    String img = question.getImg().replace("\"", "").trim();
-                    int resourceId = getResources().getIdentifier(img, "drawable", getPackageName());
-                    questionImage.setImageResource(resourceId);
-                    kaisetu_img.setImageResource(resourceId);
-
-                    String txt = question.getTxt();
-                    kaisetu_text.setText(txt);
+                            String txt = question.getTxt();
+                            kaisetu_text.setText(txt);
 
 
-                    currentQuestionId = question.getId();
-                    currentQuestionLoc_id = question.getLoc_id();
+                            currentQuestionId = question.getId();
+                            currentQuestionLoc_id = question.getLoc_id();
 
-                    // locationデータを取得
-                    loadLocationData(currentQuestionLoc_id);
+                            // locationデータを取得
+                            loadLocationData(currentQuestionLoc_id);
+
+                            //出題済みidを格納
+                            displayedQuestionIds.add(question.getId());
+
+                        } else {
+                            //もし出題するidが出題済みidリストに存在したらもう一回ロード
+                            loadQuestion();
+                        }
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<List<Question>> call, Throwable t) {
-                Log.e("LocationFetch", "APIリクエスト失敗: ", t);
-            }
-        });
-    }
+                @Override
+                public void onFailure(Call<List<Question>> call, Throwable t) {
+                    Log.e("LocationFetch", "APIリクエスト失敗: ", t);
+                }
+            });
+        } else{
+            apiService.getGenreFilteredQuestions(genreId).enqueue(new Callback<List<Question>>() {
+                @Override
+                public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
+                    if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
+                        // 質問データをセット
+                        questionText.setText("Now Loading...");
+                        //ここにloadingのフレーム入れて
+                        Question question = response.body().get(questionNo);
+                        if (!displayedQuestionIds.contains(question.getId())) {
+                            String name = question.getName() + "が～？";
+                            questionText.setText(name);
+                            kaisetu_name.setText(name);
+
+
+                            String img = question.getImg().replace("\"", "").trim();
+                            int resourceId = getResources().getIdentifier(img, "drawable", getPackageName());
+                            questionImage.setImageResource(resourceId);
+                            kaisetu_img.setImageResource(resourceId);
+
+                            String txt = question.getTxt();
+                            kaisetu_text.setText(txt);
+
+
+                            currentQuestionId = question.getId();
+                            currentQuestionLoc_id = question.getLoc_id();
+
+                            // locationデータを取得
+                            loadLocationData(currentQuestionLoc_id);
+
+                            //出題済みidを格納
+                            displayedQuestionIds.add(question.getId());
+
+                        } else {
+                            //もし出題するidが出題済みidリストに存在したらもう一回ロード
+                            loadQuestion();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Question>> call, Throwable t) {
+                    Log.e("LocationFetch", "APIリクエスト失敗: ", t);
+                }
+            });
+        }
+
+        }
+
 
     private void loadLocationData(int locId) {
         apiService.getLocationById(locId).enqueue(new Callback<Location>() {
@@ -205,7 +275,7 @@ public class game extends AppCompatActivity {
                     Log.e("money", String.valueOf(currentScore));
                     int newScore = currentScore +10;
                     SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
-                    String name = prefs.getString("UserName", "デフォルト名");
+                    String name = prefs.getString("UserName", "test_user");
                     apiService.updateUserData(userId,  new ApiService.UserUpdateRequest(name,newScore)).enqueue(new Callback<Void>() {
                         @Override
                         public void onResponse(Call<Void> call, Response<Void> response) {

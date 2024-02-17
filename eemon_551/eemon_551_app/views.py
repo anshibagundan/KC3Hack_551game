@@ -64,3 +64,14 @@ class UserIdView(APIView):
             return Response({'id': user.id})
         else:
             return Response({'error': 'User not found'}, status=404)
+
+class FilteredQuestionsAPIView(APIView):
+    def get(self, request):
+        genre_id = request.query_params.get('genre_id')
+        questions = Question.objects.all()
+
+        if genre_id:
+            questions = questions.filter(genre__id=genre_id)
+
+        serializer = QuestionSerializer(questions, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
