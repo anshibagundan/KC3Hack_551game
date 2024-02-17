@@ -90,6 +90,7 @@
             android:gravity="center"
             app:cornerRadius="15dp" />
     </FrameLayout>
+    
     <FrameLayout
         android:id="@+id/set_user"
         android:layout_width="match_parent"
