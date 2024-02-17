@@ -33,6 +33,7 @@ public class game extends AppCompatActivity {
 
     private FrameLayout kaisetu;
 
+    private FrameLayout toi;
 
 
 
@@ -41,20 +42,17 @@ public class game extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        Button buttonLeft = findViewById(R.id.button_left);
-        Button buttonRight = findViewById(R.id.button_right);
         questionText = findViewById(R.id.question_text);
         seigoText = findViewById(R.id.seigo);
         questionImage = findViewById(R.id.Question_image);
         kaisetu = findViewById(R.id.kaisetu);
 
+
+
         // ApiServiceインスタンスを取得
         apiService = ApiClient.getApiService();
 
         loadQuestion();
-
-        // button_leftとbutton_rightのClickListenerを設定
-        setupButtonListeners(buttonLeft, buttonRight);
     }
 
     private void loadQuestion() {
@@ -85,7 +83,7 @@ public class game extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Question>> call, Throwable t) {
-                Log.e("GameActivity", "APIリクエスト失敗: ", t);
+                Log.e("LocationFetch", "APIリクエスト失敗: ", t);
             }
         });
     }
@@ -96,6 +94,10 @@ public class game extends AppCompatActivity {
             public void onResponse(Call<Location> call, Response<Location> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     currentQuestionIsKansai = response.body().isIskansai();
+                    Log.e("LocationFetch", String.valueOf(currentQuestionIsKansai));
+                    Button buttonLeft = findViewById(R.id.button_left);
+                    Button buttonRight = findViewById(R.id.button_right);
+                    setupButtonListeners(buttonLeft, buttonRight, currentQuestionIsKansai);
                 }
             }
 
@@ -106,14 +108,17 @@ public class game extends AppCompatActivity {
         });
     }
 
-    private void setupButtonListeners(Button buttonLeft, Button buttonRight) {
+    private void setupButtonListeners(Button buttonLeft, Button buttonRight,Boolean currentQuestionIsKansai) {
+        Log.e("LocationFetch", "button" +currentQuestionIsKansai);
         buttonLeft.setOnClickListener(view -> {
             if (currentQuestionIsKansai) {
                 // 正解の処理
+                Log.d("LocationFetch", "left true");
                 seigoText.setText("正解！画像をセット");
                 updateUserScore(10);
             } else {
                 // 不正解の処理
+                Log.d("LocationFetch", "left false");
                 seigoText.setText("不正解画像をセット");
             }
             seigoText.setVisibility(View.VISIBLE);
@@ -122,10 +127,12 @@ public class game extends AppCompatActivity {
 
         buttonRight.setOnClickListener(view -> {
             if (!currentQuestionIsKansai) {
+                Log.d("LocationFetch", "right true");
                 // 正解の処理
                 seigoText.setText("正解！画像をセット");
                 updateUserScore(10); // スコアを10加算する
             } else {
+                Log.d("LocationFetch", "right false");
                 // 不正解の処理
                 seigoText.setText("不正解画像をセット");
             }
@@ -137,6 +144,7 @@ public class game extends AppCompatActivity {
     public void onTap(View view){
         if(seigo){
             kaisetu.setVisibility(View.VISIBLE);
+            toi.setVisibility(View.GONE);
         }
     }
 
