@@ -6,7 +6,3 @@ class UserQuestionDataFilter(django_filters.FilterSet):
         model = UserQuestionData
         fields = ['qes_id', 'user_data_id']
 
-class QuestionDataFilter(django_filters.FilterSet):
-    class Meta:
-        model = Question
-        fields = ['genre']
