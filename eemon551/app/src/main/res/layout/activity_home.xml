@@ -49,6 +49,7 @@
           android:layout_marginLeft="180dp"
           android:layout_marginBottom="150dp"
           android:gravity="center"
+          android:onClick="genre_right"
           app:cornerRadius="15dp"
           app:srcCompat="@drawable/img_1" />
 
@@ -62,6 +63,7 @@
           android:backgroundTint="#C89696"
           android:gravity="center"
           android:rotationY="180"
+          android:onClick="genre_left"
           app:cornerRadius="15dp"
           app:srcCompat="@drawable/img_1" />
 
@@ -73,7 +75,6 @@
           android:layout_gravity="center"
           android:layout_marginLeft="180dp"
           android:layout_marginTop="50dp"
-          android:gravity="center"
           app:cornerRadius="15dp"
           app:srcCompat="@drawable/img_1" />
 
