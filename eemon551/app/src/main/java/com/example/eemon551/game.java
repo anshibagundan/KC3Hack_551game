@@ -98,30 +98,7 @@ public class game extends AppCompatActivity {
                         // 質問データをセット
                         Question question = response.body().get(questionNo);
                         if (!displayedQuestionIds.contains(question.getId())) {
-                            touka_loading.setVisibility(View.GONE);
-                            String name = question.getName() + "が～？";
-                            questionText.setText(name);
-                            kaisetu_name.setText(name);
-
-
-                            String img = question.getImg().replace("\"", "").trim();
-                            int resourceId = getResources().getIdentifier(img, "drawable", getPackageName());
-                            questionImage.setImageResource(resourceId);
-                            kaisetu_img.setImageResource(resourceId);
-
-                            String txt = question.getTxt();
-                            kaisetu_text.setText(txt);
-
-
-                            currentQuestionId = question.getId();
-                            currentQuestionLoc_id = question.getLoc_id();
-
-                            // locationデータを取得
-                            loadLocationData(currentQuestionLoc_id);
-
-                            //出題済みidを格納
-                            displayedQuestionIds.add(question.getId());
-
+                            DisplayQuestion(question);
                         } else {
                             //もし出題するidが出題済みidリストに存在したらもう一回ロード
                             loadQuestion();
@@ -135,38 +112,21 @@ public class game extends AppCompatActivity {
                 }
             });
         } else{
-            apiService.getGenreFilteredQuestions(genreId).enqueue(new Callback<List<Question>>() {
+            apiService.getAllQuestions().enqueue(new Callback<List<Question>>() {
                 @Override
                 public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
                     if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
+
                         // 質問データをセット
-                        questionText.setText("Now Loading...");
+                        questionText.setText("question Loading...");
                         //ここにloadingのフレーム入れて
                         Question question = response.body().get(questionNo);
-                        if (!displayedQuestionIds.contains(question.getId())) {
-                            String name = question.getName() + "が～？";
-                            questionText.setText(name);
-                            kaisetu_name.setText(name);
-
-
-                            String img = question.getImg().replace("\"", "").trim();
-                            int resourceId = getResources().getIdentifier(img, "drawable", getPackageName());
-                            questionImage.setImageResource(resourceId);
-                            kaisetu_img.setImageResource(resourceId);
-
-                            String txt = question.getTxt();
-                            kaisetu_text.setText(txt);
-
-
-                            currentQuestionId = question.getId();
-                            currentQuestionLoc_id = question.getLoc_id();
-
-                            // locationデータを取得
-                            loadLocationData(currentQuestionLoc_id);
-
-                            //出題済みidを格納
-                            displayedQuestionIds.add(question.getId());
-
+                        if (!displayedQuestionIds.contains(question.getId())){
+                            if((question.getGenre_id()==genreId)) {
+                                DisplayQuestion(question);
+                            }else{
+                                loadQuestion();
+                            }
                         } else {
                             //もし出題するidが出題済みidリストに存在したらもう一回ロード
                             loadQuestion();
@@ -183,6 +143,32 @@ public class game extends AppCompatActivity {
 
         }
 
+        private void DisplayQuestion(Question question){
+            touka_loading.setVisibility(View.GONE);
+            String name = question.getName() + "が～？";
+            questionText.setText(name);
+            kaisetu_name.setText(name);
+
+
+            String img = question.getImg().replace("\"", "").trim();
+            int resourceId = getResources().getIdentifier(img, "drawable", getPackageName());
+            questionImage.setImageResource(resourceId);
+            kaisetu_img.setImageResource(resourceId);
+
+            String txt = question.getTxt();
+            kaisetu_text.setText(txt);
+
+
+            currentQuestionId = question.getId();
+            currentQuestionLoc_id = question.getLoc_id();
+
+            // locationデータを取得
+            loadLocationData(currentQuestionLoc_id);
+
+            //出題済みidを格納
+            displayedQuestionIds.add(question.getId());
+
+        }
 
     private void loadLocationData(int locId) {
         apiService.getLocationById(locId).enqueue(new Callback<Location>() {

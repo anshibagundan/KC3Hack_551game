@@ -10,5 +10,15 @@ public class UserQuestionData {
         this.qes_id = qesId;
         this.user_data_id = userId;
     }
+    public boolean get_cor(){
+        return cor;
+    }
+    public int get_qes_id(){
+        return qes_id;
+    }
+    public int getUser_data_id(){
+        return user_data_id;
+    }
+
 }
 
