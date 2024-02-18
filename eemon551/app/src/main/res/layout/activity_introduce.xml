@@ -11,7 +11,8 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity"
         android:orientation="vertical"
-        android:background="#89B2F0">
+        android:background="#89B2F0"
+        >
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -25,7 +26,7 @@
                 android:id="@+id/image_3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/img" />
+                android:background="@drawable/introduce_back" />
 
             <Button
                 android:id="@+id/back"
@@ -33,8 +34,11 @@
                 android:layout_height="63dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="BACK"
                 android:onClick="introduce_home"
+                android:text="BACK"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/white"
+                app:cornerRadius="0dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -56,6 +60,7 @@
                 android:layout_marginTop="130dp"
                 android:text="説明"
                 android:textSize="70dp"
+                android:textColor="@color/white"
                 android:textStyle="bold"/>
 
             <Button
