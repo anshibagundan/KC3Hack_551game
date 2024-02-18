@@ -6,7 +6,65 @@
     android:layout_height="match_parent"
     tools:context=".garally">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical">
 
+        <LinearLayout
+            android:id="@+id/zukan_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/bar"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/zukann_to_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⇐"
+                android:textSize="20sp"
+                android:layout_marginStart="10dp"
+                android:backgroundTint="@color/button"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="30dp"
+                android:text="カード図鑑"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="関西ゲージ: 　"
+                android:textSize="15sp"/>
+
+            <View
+                android:id="@+id/kansai"
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
+                android:background="@color/food">
+            </View>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,16 +75,9 @@
 
         <LinearLayout
             android:id="@+id/LinearLayout"
-            android:orientation="vertical"
+            android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_width="fill_parent">
-            <TextView
-                android:id="@+id/text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="カード図鑑"
-                android:textSize="45sp"
-                android:layout_gravity="center_horizontal"/>
+            android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/genre1"
@@ -59,11 +110,45 @@
 
 <!--        大阪の画像    -->
             <GridLayout
+                android:id="@+id/genre1_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:columnCount="3"
+                android:layout_gravity="center">
 
+                <!-- レイアウト内のコンポーネントを追加 -->
+
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/osaka_image"-->
+<!--                    android:layout_width="100dp"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    app:srcCompat="@drawable/okonomiyaki"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_columnWeight="1"-->
+<!--                    android:background="@color/food"/>-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/imageButton3"-->
+<!--                    android:layout_width="100dp"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    app:srcCompat="@drawable/takoyaki"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_columnWeight="1"-->
+<!--                    android:background="@color/food"/>-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/imageButton"-->
+<!--                    android:layout_width="100dp"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    app:srcCompat="@drawable/doutonnbori"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_columnWeight="1"-->
+<!--                    android:background="@color/place"/>-->
 
             </GridLayout>
+
+
 
             <LinearLayout
                 android:id="@+id/genre2"
@@ -96,6 +181,15 @@
 
 <!--            京都の画像-->
 
+            <GridLayout
+                android:id="@+id/genre2_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="3"
+                android:layout_gravity="center">
+
+            </GridLayout>
+
             <LinearLayout
                 android:id="@+id/genre3"
                 android:layout_width="match_parent"
@@ -124,6 +218,14 @@
             </LinearLayout>
 
 <!--            奈良の画像-->
+            <GridLayout
+                android:id="@+id/genre3_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="3"
+                android:layout_gravity="center">
+
+            </GridLayout>
 
             <LinearLayout
                 android:id="@+id/genre4"
@@ -152,6 +254,14 @@
             </LinearLayout>
 
 <!--            兵庫の画像-->
+            <GridLayout
+                android:id="@+id/genre4_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="3"
+                android:layout_gravity="center">
+
+            </GridLayout>
 
             <LinearLayout
                 android:id="@+id/genre5"
@@ -180,6 +290,14 @@
             </LinearLayout>
 
 <!--            和歌山の画像-->
+            <GridLayout
+                android:id="@+id/genre5_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="3"
+                android:layout_gravity="center">
+
+            </GridLayout>
 
             <LinearLayout
                 android:id="@+id/genre6"
@@ -208,6 +326,14 @@
             </LinearLayout>
 
 <!--            滋賀の画像-->
+            <GridLayout
+                android:id="@+id/genre6_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="3"
+                android:layout_gravity="center">
+
+            </GridLayout>
 
         </LinearLayout>
     </ScrollView>
