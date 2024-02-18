@@ -7,4 +7,6 @@
     <color name="chara">#222A35</color>
     <color name="place">#119983</color>
     <color name="culture">#7769B8</color>
+    <color name="bar">#91A600</color>
+    <color name="button">#6A3300</color>
 </resources>

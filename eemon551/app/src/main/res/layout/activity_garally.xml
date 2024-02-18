@@ -8,42 +8,64 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/zukann_to_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="⇐"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="図鑑"
-            android:textSize="50sp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"/>
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:id="@+id/zukan_title"
+            android:background="@color/bar">
+
+            <Button
+                android:id="@+id/zukann_to_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⇐"
+                android:textSize="20sp"
+                android:layout_marginLeft="10dp"
+                android:backgroundTint="@color/button"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="カード図鑑"
+                android:textSize="30sp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="30dp"
+                android:textColor="@color/white"
                 />
-
-
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="関西ゲージ: 　"
+                android:textSize="15sp"/>
 
+            <View
+                android:id="@+id/kansai"
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
+                android:background="@color/food">
+            </View>
 
+        </LinearLayout>
     </LinearLayout>
+
 
     <ScrollView
         android:layout_width="match_parent"
