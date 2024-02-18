@@ -93,7 +93,6 @@
 
 
                 <ImageView
-                    android:id="@+id/imageButton2"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     app:srcCompat="@drawable/okonomiyaki"
@@ -102,7 +101,6 @@
                     android:background="@color/food"/>
 
                 <ImageView
-                    android:id="@+id/imageButton3"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     app:srcCompat="@drawable/takoyaki"
@@ -111,7 +109,6 @@
                     android:background="@color/food"/>
 
                 <ImageView
-                    android:id="@+id/imageButton"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     app:srcCompat="@drawable/doutonnbori"
