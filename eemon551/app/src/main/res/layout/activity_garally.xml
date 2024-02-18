@@ -6,7 +6,38 @@
     android:layout_height="match_parent"
     tools:context=".garally">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="horizontal">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="図鑑"
+            android:textSize="50sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -20,13 +51,6 @@
             android:orientation="vertical"
             android:layout_height="fill_parent"
             android:layout_width="fill_parent">
-            <TextView
-                android:id="@+id/text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="カード図鑑"
-                android:textSize="45sp"
-                android:layout_gravity="center_horizontal"/>
 
             <LinearLayout
                 android:id="@+id/genre1"
@@ -59,11 +83,45 @@
 
 <!--        大阪の画像    -->
             <GridLayout
+                android:id="@+id/genre1_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:columnCount="3"
+                android:layout_gravity="center">
 
+                <!-- レイアウト内のコンポーネントを追加 -->
+
+
+                <ImageView
+                    android:id="@+id/imageButton2"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:srcCompat="@drawable/okonomiyaki"
+                    android:layout_gravity="center"
+                    android:layout_columnWeight="1"
+                    android:background="@color/food"/>
+
+                <ImageView
+                    android:id="@+id/imageButton3"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:srcCompat="@drawable/takoyaki"
+                    android:layout_gravity="center"
+                    android:layout_columnWeight="1"
+                    android:background="@color/food"/>
+
+                <ImageView
+                    android:id="@+id/imageButton"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:srcCompat="@drawable/doutonnbori"
+                    android:layout_gravity="center"
+                    android:layout_columnWeight="1"
+                    android:background="@color/place"/>
 
             </GridLayout>
+
+
 
             <LinearLayout
                 android:id="@+id/genre2"
