@@ -24,10 +24,11 @@
                 android:id="@+id/zukann_to_home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="⇐"
-                android:textSize="20sp"
                 android:layout_marginStart="10dp"
-                android:backgroundTint="@color/button"/>
+                android:backgroundTint="@color/button"
+                android:onClick="back_home"
+                android:text="⇐"
+                android:textSize="20sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -114,6 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="3"
+                android:rowCount="50"
                 android:layout_gravity="center">
 
                 <!-- レイアウト内のコンポーネントを追加 -->
@@ -186,6 +188,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="3"
+                android:rowCount="50"
                 android:layout_gravity="center">
 
             </GridLayout>
@@ -223,6 +226,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="3"
+                android:rowCount="50"
                 android:layout_gravity="center">
 
             </GridLayout>
@@ -259,6 +263,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="3"
+                android:rowCount="50"
                 android:layout_gravity="center">
 
             </GridLayout>
@@ -295,6 +300,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="3"
+                android:rowCount="50"
                 android:layout_gravity="center">
 
             </GridLayout>
@@ -331,6 +337,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="3"
+                android:rowCount="50"
                 android:layout_gravity="center">
 
             </GridLayout>

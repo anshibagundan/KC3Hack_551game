@@ -29,6 +29,8 @@ public class activity_home extends AppCompatActivity {
     private Button zukann;
     private Button introduce;
     private Boolean setting = false;
+    private  ImageView zukan_img;
+    private  ImageView setsumei_img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,8 @@ public class activity_home extends AppCompatActivity {
         touka = findViewById(R.id.touka);
         zukann = findViewById(R.id.zukann);
         introduce = findViewById(R.id.introduce);
+        zukan_img=findViewById(R.id.zukan_img);
+        setsumei_img=findViewById(R.id.setsumei_img);
     }
 
     public void setButtonClickListener(View view) {
@@ -153,10 +157,14 @@ public class activity_home extends AppCompatActivity {
             touka.setVisibility(View.VISIBLE);
             zukann.setVisibility(View.VISIBLE);
             introduce.setVisibility(View.VISIBLE);
+            zukan_img.setVisibility(View.VISIBLE);
+            setsumei_img.setVisibility(View.VISIBLE);
         }else{
             touka.setVisibility(View.GONE);
             zukann.setVisibility(View.GONE);
             introduce.setVisibility(View.GONE);
+            zukan_img.setVisibility(View.GONE);
+            setsumei_img.setVisibility(View.GONE);
         }
     }
 
