@@ -2,7 +2,9 @@ package com.example.eemon551;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,5 +34,9 @@ public class garally extends AppCompatActivity {
             // GridLayoutにImageViewを追加
             gridLayout.addView(imageView);
         }
+    }
+    public void back_home(View view){
+        Intent intent = new Intent(garally.this, activity_home.class);
+        startActivity(intent);
     }
 }
