@@ -114,6 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="3"
+                android:rowCount="50"
                 android:layout_gravity="center">
 
                 <!-- レイアウト内のコンポーネントを追加 -->
@@ -186,6 +187,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="3"
+                android:rowCount="50"
                 android:layout_gravity="center">
 
             </GridLayout>
@@ -223,6 +225,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="3"
+                android:rowCount="50"
                 android:layout_gravity="center">
 
             </GridLayout>
@@ -259,6 +262,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="3"
+                android:rowCount="50"
                 android:layout_gravity="center">
 
             </GridLayout>
@@ -295,6 +299,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="3"
+                android:rowCount="50"
                 android:layout_gravity="center">
 
             </GridLayout>
@@ -331,6 +336,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="3"
+                android:rowCount="50"
                 android:layout_gravity="center">
 
             </GridLayout>
