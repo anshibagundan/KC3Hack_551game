@@ -63,7 +63,7 @@
             </View>
 
         </LinearLayout>
-        
+
     </LinearLayout>
 
     <ScrollView
@@ -181,6 +181,15 @@
 
 <!--            京都の画像-->
 
+            <GridLayout
+                android:id="@+id/genre2_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="3"
+                android:layout_gravity="center">
+
+            </GridLayout>
+
             <LinearLayout
                 android:id="@+id/genre3"
                 android:layout_width="match_parent"
@@ -209,6 +218,14 @@
             </LinearLayout>
 
 <!--            奈良の画像-->
+            <GridLayout
+                android:id="@+id/genre3_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="3"
+                android:layout_gravity="center">
+
+            </GridLayout>
 
             <LinearLayout
                 android:id="@+id/genre4"
@@ -237,6 +254,14 @@
             </LinearLayout>
 
 <!--            兵庫の画像-->
+            <GridLayout
+                android:id="@+id/genre4_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="3"
+                android:layout_gravity="center">
+
+            </GridLayout>
 
             <LinearLayout
                 android:id="@+id/genre5"
@@ -265,6 +290,14 @@
             </LinearLayout>
 
 <!--            和歌山の画像-->
+            <GridLayout
+                android:id="@+id/genre5_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="3"
+                android:layout_gravity="center">
+
+            </GridLayout>
 
             <LinearLayout
                 android:id="@+id/genre6"
@@ -293,6 +326,14 @@
             </LinearLayout>
 
 <!--            滋賀の画像-->
+            <GridLayout
+                android:id="@+id/genre6_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="3"
+                android:layout_gravity="center">
+
+            </GridLayout>
 
         </LinearLayout>
     </ScrollView>
