@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -164,8 +166,12 @@ public class garally extends AppCompatActivity {
 
     public void DisplayQuestion(Question question, ImageView imageView){
         String img = question.getImg().replace("\"", "").trim();
-        int resourceId = getResources().getIdentifier(img, "drawable", getPackageName());
-        imageView.setImageResource(resourceId);
+        int imageResId = getResources().getIdentifier(img, "drawable", getPackageName());
+
+        Glide.with(this)
+                .load(imageResId)
+                .override(600, 400) // 画像の解像度を指定
+                .into(imageView);
 
         if (question.getGenre_id() == 1) {
             imageView.setBackgroundColor(ContextCompat.getColor(this, R.color.food));
@@ -183,7 +189,7 @@ public class garally extends AppCompatActivity {
         params.width = (int) getResources().getDimension(R.dimen.image_width); // 100dpをピクセル単位に変換
         params.height = (int) getResources().getDimension(R.dimen.image_height); // 100dpをピクセル単位に変換
         params.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f); // layout_columnWeight="1" に相当
-        params.rowSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f);
+        params.rowSpec = GridLayout.spec(GridLayout.UNDEFINED, 2f);
         params.setGravity(Gravity.CENTER);
         imageView.setLayoutParams(params);
     }
