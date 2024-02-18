@@ -12,6 +12,14 @@
         app:layout_constraintTop_toTopOf="parent"
         android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/zukann_to_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="back_home"
+            android:text="⇐"/>
+
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -92,32 +100,32 @@
                 <!-- レイアウト内のコンポーネントを追加 -->
 
 
-                <ImageView
-                    android:id="@+id/imageButton2"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    app:srcCompat="@drawable/okonomiyaki"
-                    android:layout_gravity="center"
-                    android:layout_columnWeight="1"
-                    android:background="@color/food"/>
+<!--                <ImageView-->
+<!--                    android:id="@+id/osaka_image"-->
+<!--                    android:layout_width="100dp"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    app:srcCompat="@drawable/okonomiyaki"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_columnWeight="1"-->
+<!--                    android:background="@color/food"/>-->
 
-                <ImageView
-                    android:id="@+id/imageButton3"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    app:srcCompat="@drawable/takoyaki"
-                    android:layout_gravity="center"
-                    android:layout_columnWeight="1"
-                    android:background="@color/food"/>
+<!--                <ImageView-->
+<!--                    android:id="@+id/imageButton3"-->
+<!--                    android:layout_width="100dp"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    app:srcCompat="@drawable/takoyaki"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_columnWeight="1"-->
+<!--                    android:background="@color/food"/>-->
 
-                <ImageView
-                    android:id="@+id/imageButton"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    app:srcCompat="@drawable/doutonnbori"
-                    android:layout_gravity="center"
-                    android:layout_columnWeight="1"
-                    android:background="@color/place"/>
+<!--                <ImageView-->
+<!--                    android:id="@+id/imageButton"-->
+<!--                    android:layout_width="100dp"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    app:srcCompat="@drawable/doutonnbori"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_columnWeight="1"-->
+<!--                    android:background="@color/place"/>-->
 
             </GridLayout>
 
