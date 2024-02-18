@@ -9,4 +9,4 @@ class UserQuestionDataFilter(django_filters.FilterSet):
 class QuestionFilter(django_filters.FilterSet):
     class Meta:
         model = Question
-        fields = ['genre_id']
+        fields = ['rare']

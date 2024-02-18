@@ -159,4 +159,13 @@ public class activity_home extends AppCompatActivity {
             introduce.setVisibility(View.GONE);
         }
     }
+
+    public void zukann(View view){
+        Intent intent = new Intent(activity_home.this, garally.class);
+        startActivity(intent);
+    }
+    public void introduce(View view){
+        Intent intent = new Intent(activity_home.this, introduce.class);
+        startActivity(intent);
+    }
 }

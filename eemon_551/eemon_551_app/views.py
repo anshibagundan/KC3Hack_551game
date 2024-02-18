@@ -70,7 +70,7 @@ class UserQuestionDataDelete(APIView):
             return Response({"error": "qes_id and user_data_id are required."}, status=status.HTTP_400_BAD_REQUEST)
 
 class UserIdView(APIView):
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         # クエリパラメータからフィルタ条件を取得
         name = request.query_params.get('name')
         level = request.query_params.get('level')
@@ -84,18 +84,5 @@ class UserIdView(APIView):
         else:
             return Response({'error': 'User not found'}, status=404)
 
-class QuestionListByGenre(generics.ListAPIView):
-    serializer_class = QuestionSerializer
 
-    def get_queryset(self):
-        genre_id = self.request.query_params.get('genre_id', None)
-        logger.debug(f"Genre ID: {genre_id}")  # genre_idの値をログに出力
 
-        if genre_id is not None:
-            queryset = Question.objects.filter(genre_id=genre_id)
-            logger.debug(f"Filtered queryset count: {queryset.count()}")  # フィルタリング後のクエリセットの数
-            return queryset
-        else:
-            queryset = Question.objects.all()
-            logger.debug("Returning all questions.")  # 全てのQuestionオブジェクトを返すことをログに出力
-            return queryset
