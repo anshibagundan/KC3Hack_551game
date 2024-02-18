@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-w3^qllo7x!waznc0oc@m)^4roz_(1=&2*fj^a-*c&14bys)@9h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['eemon-551.onrender.com']
+ALLOWED_HOSTS = ['eemon-551.onrender.com',
+                  '127.0.0.1',]
 
 
 # Application definition
@@ -132,20 +133,4 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'loggers': {
-        '': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-    },
-}
 
