@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 import android.os.Bundle;
 import android.content.Intent;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageView;
@@ -48,8 +49,18 @@ public class garally extends AppCompatActivity {
         gridLayout_4 = findViewById(R.id.genre4_layout);
         gridLayout_5 = findViewById(R.id.genre5_layout);
         gridLayout_6 = findViewById(R.id.genre6_layout);
-        gridLayout.setAlignmentMode(GridLayout.ALIGN_BOUNDS);
-        gridLayout.setColumnCount(3); // 3列を使用する設定
+        gridLayout_1.setAlignmentMode(GridLayout.ALIGN_BOUNDS);
+        gridLayout_1.setColumnCount(3);
+        gridLayout_2.setAlignmentMode(GridLayout.ALIGN_BOUNDS);
+        gridLayout_2.setColumnCount(3);
+        gridLayout_3.setAlignmentMode(GridLayout.ALIGN_BOUNDS);
+        gridLayout_3.setColumnCount(3);
+        gridLayout_4.setAlignmentMode(GridLayout.ALIGN_BOUNDS);
+        gridLayout_4.setColumnCount(3);
+        gridLayout_5.setAlignmentMode(GridLayout.ALIGN_BOUNDS);
+        gridLayout_5.setColumnCount(3);
+        gridLayout_6.setAlignmentMode(GridLayout.ALIGN_BOUNDS);
+        gridLayout_6.setColumnCount(3);
 
         fetchQuestions();
     }
@@ -108,31 +119,72 @@ public class garally extends AppCompatActivity {
     }
 
     private void addImagesToGridLayout() {
-        for (int i = 0; i < Math.min(QuestionList.size(), 10); i++) {
-            Question question = QuestionList.get(i);
+        for (int i = 0; i < Osaka_QuestionList.size(); i++) {
+            Question question = Osaka_QuestionList.get(i);
             ImageView imageView = new ImageView(this);
-            String img = question.getImg().replace("\"", "").trim();
-            int resourceId = getResources().getIdentifier(img, "drawable", getPackageName());
-            imageView.setImageResource(resourceId);
-
-            if (question.getGenre_id() == 1) {
-                imageView.setBackgroundColor(ContextCompat.getColor(this, R.color.food));
-            } else if (question.getGenre_id() == 2) {
-                imageView.setBackgroundColor(ContextCompat.getColor(this, R.color.build));
-            }
-
-            GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-            params.width = (int) getResources().getDimension(R.dimen.image_width); // 100dpをピクセル単位に変換
-            params.height = (int) getResources().getDimension(R.dimen.image_height); // 100dpをピクセル単位に変換
-            params.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f); // layout_columnWeight="1" に相当
-
-            imageView.setLayoutParams(params);
-            gridLayout.addView(imageView);
+            DisplayQuestion(question,imageView);
+            gridLayout_1.addView(imageView);
+        }
+        for (int i = 0; i < Kyoto_QuestionList.size(); i++) {
+            Question question = Kyoto_QuestionList.get(i);
+            ImageView imageView = new ImageView(this);
+            DisplayQuestion(question,imageView);
+            gridLayout_2.addView(imageView);
+        }
+        for (int i = 0; i < Shiga_QuestionList.size(); i++) {
+            Question question = Shiga_QuestionList.get(i);
+            ImageView imageView = new ImageView(this);
+            DisplayQuestion(question,imageView);
+            gridLayout_3.addView(imageView);
+        }
+        for (int i = 0; i < Nara_QuestionList.size(); i++) {
+            Question question = Nara_QuestionList.get(i);
+            ImageView imageView = new ImageView(this);
+            DisplayQuestion(question,imageView);
+            gridLayout_4.addView(imageView);
+        }
+        for (int i = 0; i < Hyogo_QuestionList.size(); i++) {
+            Question question = Hyogo_QuestionList.get(i);
+            ImageView imageView = new ImageView(this);
+            DisplayQuestion(question,imageView);
+            gridLayout_5.addView(imageView);
+        }
+        for (int i = 0; i < Wakayama_QuestionList.size(); i++) {
+            Question question = Wakayama_QuestionList.get(i);
+            ImageView imageView = new ImageView(this);
+            DisplayQuestion(question,imageView);
+            gridLayout_6.addView(imageView);
         }
     }
 
     public void back_home(View view){
         Intent intent = new Intent(garally.this, activity_home.class);
         startActivity(intent);
+    }
+
+    public void DisplayQuestion(Question question, ImageView imageView){
+        String img = question.getImg().replace("\"", "").trim();
+        int resourceId = getResources().getIdentifier(img, "drawable", getPackageName());
+        imageView.setImageResource(resourceId);
+
+        if (question.getGenre_id() == 1) {
+            imageView.setBackgroundColor(ContextCompat.getColor(this, R.color.food));
+        } else if (question.getGenre_id() == 2) {
+            imageView.setBackgroundColor(ContextCompat.getColor(this, R.color.build));
+        }  else if (question.getGenre_id() == 3) {
+            imageView.setBackgroundColor(ContextCompat.getColor(this, R.color.chara));
+        } else if (question.getGenre_id() == 4) {
+            imageView.setBackgroundColor(ContextCompat.getColor(this, R.color.place));
+        } else if (question.getGenre_id() == 5) {
+            imageView.setBackgroundColor(ContextCompat.getColor(this, R.color.culture));
+        }
+
+        GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+        params.width = (int) getResources().getDimension(R.dimen.image_width); // 100dpをピクセル単位に変換
+        params.height = (int) getResources().getDimension(R.dimen.image_height); // 100dpをピクセル単位に変換
+        params.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f); // layout_columnWeight="1" に相当
+        params.rowSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f);
+        params.setGravity(Gravity.CENTER);
+        imageView.setLayoutParams(params);
     }
 }
