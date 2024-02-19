@@ -268,8 +268,7 @@ public class game extends AppCompatActivity {
 
     private void updateUserScore(int scoreToAdd) {
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
-        int userId = prefs.getInt("UserId", 0);
-        Log.e("UserID", String.valueOf(userId));
+        int userId = prefs.getInt("UserId", 1);
 
         // 現在のユーザースコアを取得するAPIリクエストを想定
         apiService.getUserMoney(userId).enqueue(new Callback<User>() {
