@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.app.ActionBar;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.content.Intent;
 import android.util.Log;
@@ -201,48 +202,65 @@ public class garally extends AppCompatActivity {
             imageView.setBackgroundColor(ContextCompat.getColor(this, R.color.culture));
         }
 
-        //カード表示
-        // if分岐 trueなら
-        imageView.setOnClickListener(v -> {
-            card.setVisibility(View.VISIBLE);
-            zukan.setVisibility(View.GONE);
-            String card = question.getCard().replace("\"", "").trim();
-            int cardResId = getResources().getIdentifier(card, "drawable", getPackageName());
-            Glide.with(garally.this)
-                    .load(cardResId)
-                    .into(card_image);
+        apiService.getUserQuestionData(1).enqueue(new Callback<List<UserQuestionData>>() {
+            @Override
+            public void onResponse(Call<List<UserQuestionData>> call, Response<List<UserQuestionData>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<UserQuestionData> userquestiondata = response.body();
+                    SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+                    int userId = prefs.getInt("UserId", 1);
+                    for (UserQuestionData data : userquestiondata) {
+                        //image
+                        RelativeLayout.LayoutParams image_params = new RelativeLayout.LayoutParams(300,300);
+//                      image_params.setGravity(Gravity.CENTER);
+                        imageView.setLayoutParams(image_params);
+                        card_lay.addView(imageView);
+                        if (data.get_cor() && data.getUser_data_id() == userId) {//trueの時
+                            imageView.setOnClickListener(v -> {
+                                card.setVisibility(View.VISIBLE);
+                                zukan.setVisibility(View.GONE);
+                                String card = question.getCard().replace("\"", "").trim();
+                                int cardResId = getResources().getIdentifier(card, "drawable", getPackageName());
+                                Glide.with(garally.this)
+                                        .load(cardResId)
+                                        .into(card_image);
 
-        });
+                            });
+                        } else if (!data.get_cor() && data.getUser_data_id() == userId) {//falseの時
+                            lay_txt.setText("?");
+                            lay_txt.setTextSize(40);
+                            lay_txt.setGravity(Gravity.CENTER);
+                            lay_txt.setWidth(300);
+                            lay_txt.setHeight(300);
+                            lay_txt.setBackgroundColor(0xBB000000);
+                            card_lay.addView(lay_txt);
 
-        //image
+                        }else{//nullの時
+                            lay_txt.setText("?");
+                            lay_txt.setTextSize(40);
+                            lay_txt.setGravity(Gravity.CENTER);
+                            lay_txt.setWidth(300);
+                            lay_txt.setHeight(300);
+                            lay_txt.setBackgroundColor(0xBB000000);
+                            card_lay.addView(lay_txt);
 
-        //if分岐
-
-        RelativeLayout.LayoutParams image_params = new RelativeLayout.LayoutParams(300,300);
-//        image_params.setGravity(Gravity.CENTER);
-        imageView.setLayoutParams(image_params);
-        card_lay.addView(imageView);
-
-        //lay_txt
-        lay_txt.setText("?");
-        lay_txt.setTextSize(40);
-        lay_txt.setGravity(Gravity.CENTER);
-        lay_txt.setWidth(300);
-        lay_txt.setHeight(300);
-
-        //if分岐
-        lay_txt.setBackgroundColor(0xBB000000);
-
-        card_lay.addView(lay_txt);
-
-
-        GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-        params.width = params.WRAP_CONTENT;
-        params.height = params.WRAP_CONTENT;
-        params.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f); // layout_columnWeight="1" に相当
-        params.setGravity(Gravity.CENTER);
-        card_lay.setLayoutParams(params);
+                        }
+                        GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                        params.width = params.WRAP_CONTENT;
+                        params.height = params.WRAP_CONTENT;
+                        params.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f); // layout_columnWeight="1" に相当
+                        params.setGravity(Gravity.CENTER);
+                        card_lay.setLayoutParams(params);
+                    }
+                }
+             }
+                @Override
+                public void onFailure(Call<List<UserQuestionData>> call, Throwable t) {
+                    Log.e("API Request Failure", "Error: ", t);
+                }
+            });
     }
+
 
 
     public void back_zukan(View view) {
