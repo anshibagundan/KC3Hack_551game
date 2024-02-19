@@ -172,6 +172,7 @@ public class garally extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     private void DisplayQuestion(Question question, ImageView imageView){
         String img = question.getImg().replace("\"", "").trim();
         int imageResId = getResources().getIdentifier(img, "drawable", getPackageName());
@@ -214,9 +215,11 @@ public class garally extends AppCompatActivity {
         params.setGravity(Gravity.CENTER);
         imageView.setLayoutParams(params);
 
-
     }
 
 
-
+    public void back_zukan(View view) {
+        zukan.setVisibility(View.VISIBLE);
+        card.setVisibility(View.GONE);
+    }
 }
