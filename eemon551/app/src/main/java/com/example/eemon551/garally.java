@@ -38,8 +38,8 @@ public class garally extends AppCompatActivity {
     private GridLayout gridLayout_5;
     private GridLayout gridLayout_6;
 
-    public FrameLayout card;
-    public FrameLayout zukan;
+    private FrameLayout card;
+    private FrameLayout zukan;
     private ImageView card_image;
 
 
@@ -68,9 +68,9 @@ public class garally extends AppCompatActivity {
         gridLayout_5.setColumnCount(3);
         gridLayout_6.setAlignmentMode(GridLayout.ALIGN_BOUNDS);
         gridLayout_6.setColumnCount(3);
-        card.findViewById(R.id.card);
-        zukan.findViewById(R.id.zukan);
-        card_image.findViewById(R.id.card_image);
+        card = findViewById(R.id.card);
+        zukan = findViewById(R.id.zukan);
+        card_image = findViewById(R.id.card_image);
 
         fetchQuestions();
     }
@@ -180,6 +180,19 @@ public class garally extends AppCompatActivity {
                 .override(600, 400) // 画像の解像度を指定
                 .into(imageView);
 
+        imageView.setOnClickListener(v -> {
+            card.setVisibility(View.VISIBLE);
+            zukan.setVisibility(View.GONE);
+            String card = question.getCard().replace("\"", "").trim();
+            int cardResId = getResources().getIdentifier(card, "drawable", getPackageName());
+            Glide.with(garally.this)
+                    .load(cardResId)
+                    .into(card_image);
+
+        });
+        Log.d("card_image", "Img: "+question.getImg());
+        Log.d("card_image", "card: "+question.getCard());
+
 
         if (question.getGenre_id() == 1) {
             imageView.setBackgroundColor(ContextCompat.getColor(this, R.color.food));
@@ -199,18 +212,9 @@ public class garally extends AppCompatActivity {
         params.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f); // layout_columnWeight="1" に相当
         params.rowSpec = GridLayout.spec(GridLayout.UNDEFINED, 2f);
         params.setGravity(Gravity.CENTER);
-        card_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                card.setVisibility(View.VISIBLE);
-                zukan.setVisibility(View.GONE);
-                String card = question.getCard().replace("\"", "").trim();
-                int CardResId = getResources().getIdentifier(card, "drawable", getPackageName());
-                card_image.setImageResource(CardResId);
-
-            }
-        });
         imageView.setLayoutParams(params);
+
+
     }
 
 
