@@ -10,34 +10,48 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ショップ"
-            android:textSize="30dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="50dp"
-            />
-
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="150dp">
-
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/money" />
-
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"
-                android:textSize="40dp"
-                android:gravity="center"/>
-        </LinearLayout>
+                android:text="ショップ"
+                android:textSize="30dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp"
+                />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:layout_marginTop="50dp">
+
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/money" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="40dp"
+                    android:gravity="center"/>
+            </LinearLayout>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                >
+
+
+            </GridLayout>
+        </LinearLayout>
 
 
     </FrameLayout>
