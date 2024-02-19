@@ -128,23 +128,69 @@
                 <!-- レイアウト内のコンポーネントを追加 -->
 
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/osaka_image"-->
-<!--                    android:layout_width="100dp"-->
-<!--                    android:layout_height="100dp"-->
-<!--                    app:srcCompat="@drawable/okonomiyaki"-->
+<!--                <RelativeLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
 <!--                    android:layout_gravity="center"-->
 <!--                    android:layout_columnWeight="1"-->
-<!--                    android:background="@color/food"/>-->
+<!--                    >-->
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/imageButton3"-->
-<!--                    android:layout_width="100dp"-->
-<!--                    android:layout_height="100dp"-->
-<!--                    app:srcCompat="@drawable/takoyaki"-->
+<!--                    <ImageView-->
+<!--                        android:id="@+id/imageButton3"-->
+<!--                        android:layout_width="100dp"-->
+<!--                        android:layout_height="100dp"-->
+<!--                        app:srcCompat="@drawable/takoyaki"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:background="@color/food"-->
+<!--                        />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="100dp"-->
+<!--                        android:layout_height="100dp"-->
+<!--                        android:background="#BB000000"-->
+<!--                        android:text="?"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="40sp"-->
+<!--                        android:gravity="center"-->
+<!--                        />-->
+<!--                </RelativeLayout>-->
+
+<!--                <RelativeLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
 <!--                    android:layout_gravity="center"-->
 <!--                    android:layout_columnWeight="1"-->
-<!--                    android:background="@color/food"/>-->
+<!--                    >-->
+
+<!--                    <ImageView-->
+<!--                        android:id="@+id/imageButton"-->
+<!--                        android:layout_width="100dp"-->
+<!--                        android:layout_height="100dp"-->
+<!--                        app:srcCompat="@drawable/doutonnbori"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_columnWeight="1"-->
+<!--                        android:background="@color/place"/>-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="100dp"-->
+<!--                        android:layout_height="100dp"-->
+<!--                        android:background="#FF000000"-->
+<!--                        android:text="?"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="40sp"-->
+<!--                        android:gravity="center"-->
+<!--                        />-->
+<!--                </RelativeLayout>-->
+
+
+<!--&lt;!&ndash;                <ImageView&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:id="@+id/imageButton3"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_width="100dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_height="100dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                    app:srcCompat="@drawable/takoyaki"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_gravity="center"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_columnWeight="1"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:background="@color/food"/>&ndash;&gt;-->
 
 <!--                <ImageView-->
 <!--                    android:id="@+id/imageButton"-->
