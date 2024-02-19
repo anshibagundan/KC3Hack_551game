@@ -161,14 +161,14 @@ public class activity_home extends AppCompatActivity {
             introduce.setVisibility(View.VISIBLE);
             zukan_img.setVisibility(View.VISIBLE);
             setsumei_img.setVisibility(View.VISIBLE);
-            setting_button.setText("≡");
+            setting_button.setText("X");
         }else{
             touka.setVisibility(View.GONE);
             zukann.setVisibility(View.GONE);
             introduce.setVisibility(View.GONE);
             zukan_img.setVisibility(View.GONE);
             setsumei_img.setVisibility(View.GONE);
-            setting_button.setText("X");
+            setting_button.setText("≡");
         }
     }
 
