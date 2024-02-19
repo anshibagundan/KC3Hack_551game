@@ -133,5 +133,100 @@
             app:cornerRadius="0dp" />
     </FrameLayout>
 
+    <FrameLayout
+        android:id="@+id/kekka"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#AA2244"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="700dp"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="結果"
+                android:textSize="50dp"
+                android:layout_marginTop="100dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/black"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/money"/>
+                <TextView
+                    android:id="@+id/kekka_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="x0"
+                    android:textSize="40dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/takara"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:gravity="center"
+                android:onClick="onTap_takara">
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/takarabako0"/>
+                <TextView
+                    android:id="@+id/kekka_takarabako"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="x0"
+                    android:textSize="40dp"/>
+            </LinearLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30dp"
+                android:text="終了"
+                android:onClick="game_home"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/card_over"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#AA000000"
+            android:gravity="center"
+            android:visibility="gone"
+            android:onClick="onTap_takara_back">
+
+            <ImageView
+                android:layout_width="350dp"
+                android:layout_height="700dp"
+                android:layout_gravity="center"
+                android:src="@drawable/tobita"/>
+        </LinearLayout>
+
+
+    </FrameLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

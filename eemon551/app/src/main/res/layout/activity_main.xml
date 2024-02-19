@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:hint="user_nameを入力してください"
             android:layout_gravity="center"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="130dp"
             android:gravity="center"
             android:textColor="@color/black"
             android:background="@color/white" />
@@ -86,9 +86,62 @@
             android:layout_height="wrap_content"
             android:text="決定"
             android:layout_gravity="center"
-            android:layout_marginTop="200dp"/>
+            android:layout_marginTop="220dp"
+            android:backgroundTint="#C89696"
+            android:textSize="30dp"
+            android:fontFamily="@font/acme"/>
 
-        
+        <ImageView
+            android:id="@+id/arutoki"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="40dp"
+            android:rotation="-8"
+            android:rotationY="44"
+            app:srcCompat="@drawable/arutoki" />
+
+        <ImageView
+            android:id="@+id/naitoki"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="80dp"
+            android:layout_marginBottom="-40dp"
+            android:rotation="16"
+            android:rotationY="-15"
+            app:srcCompat="@drawable/naitoki" />
+
+        <ImageView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="150dp"
+            app:srcCompat="@drawable/rogo551" />
+
+        <ImageView
+            android:id="@+id/happy"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="60dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/happy" />
+
+        <ImageView
+            android:id="@+id/sad"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="100dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/sad" />
+
+
 
     </FrameLayout>
 

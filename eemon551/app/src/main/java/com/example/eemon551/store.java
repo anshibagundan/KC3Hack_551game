@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,21 +36,26 @@ public class store extends AppCompatActivity {
         setContentView(R.layout.activity_store);
         apiService = ApiClient.getApiService();
         gridLayout_1 = findViewById(R.id.card_layout);
+        money =findViewById(R.id.money);
         gridLayout_1.setAlignmentMode(GridLayout.ALIGN_BOUNDS);
         gridLayout_1.setColumnCount(3);
 
         GetMoney();
-        fetchQuestions();
+        for (int i = 0; i < 6; i++) {
+            fetchQuestions();
+        }
     }
 
     private void GetMoney(){
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
-        int userId = prefs.getInt("UserId", 0);
+        int userId = prefs.getInt("UserId", 1);
+        Log.e("UserId", "GetMoney: " + userId);
         apiService.getUserMoney(userId).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     int currentScore = response.body().getMoney();
+                    Log.e("UserId", "GetMoney: " + currentScore);
                     money.setText(String.valueOf(currentScore));
                 }
             }
@@ -62,20 +68,25 @@ public class store extends AppCompatActivity {
 
 
     private void fetchQuestions() {
-        Random random = new Random();
-        int questionNo = random.nextInt(10);
+
             apiService.getAllQuestions().enqueue(new Callback<List<Question>>() {
                 @Override
                 public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
+
+                        Random random = new Random();
+                        int questionNo = random.nextInt(10);
                     if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
                         Question question = response.body().get(questionNo);
-                        if (!displayedQuestionIds.contains(question.getId()) && question.getLoc_id() >= 1 &&question.getLoc_id() <= 6) {
-                            DisplayQuestion(question);
-                        } else {
-                            //もし出題するidが出題済みidリストに存在したらもう一回ロード
-                            fetchQuestions();
+
+                            if (!displayedQuestionIds.contains(question.getId()) && question.getLoc_id() >= 1 && question.getLoc_id() <= 6) {
+                                DisplayQuestion(question);
+                                displayedQuestionIds.add(question.getId());
+                            } else {
+                                //もし出題するidが出題済みidリストに存在したらもう一回ロード
+                                fetchQuestions();
+                            }
                         }
-                    }
+
                 }
 
 
@@ -85,8 +96,8 @@ public class store extends AppCompatActivity {
                 }
             });
         }
-    private void DisplayQuestion(Question question){
-        for (int i = 0; i < 6; i++) {
+    private void DisplayQuestion(Question question) {
+
             ImageView imageView = new ImageView(this);
             String img = question.getCard().replace("\"", "").trim();
             int imageResId = getResources().getIdentifier(img, "drawable", getPackageName());
@@ -95,7 +106,7 @@ public class store extends AppCompatActivity {
                     .override(600, 400) // 画像の解像度を指定
                     .into(imageView);
             gridLayout_1.addView(imageView);
-        }
+
 
     }
 }

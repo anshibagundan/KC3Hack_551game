@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.HashSet;
@@ -53,6 +54,8 @@ public class game extends AppCompatActivity {
     private Set<Integer> displayedQuestionIds = new HashSet<>();
 
     private int genreId;
+    private FrameLayout kekka;
+    private LinearLayout card_over;
 
 
     @Override
@@ -71,6 +74,8 @@ public class game extends AppCompatActivity {
         kaisetu_text = findViewById(R.id.kaisetu_text);
         next = findViewById(R.id.next);
         question_number = findViewById(R.id.question_number);
+        kekka = findViewById(R.id.kekka);
+        card_over = findViewById(R.id.card_over);
 
 
         // ApiServiceインスタンスを取得
@@ -84,10 +89,11 @@ public class game extends AppCompatActivity {
     }
 
     private void loadQuestion() {
+        Log.e("genreId", "genreId"+genreId );
         Random random = new Random();
         int questionNo = random.nextInt(10); // 仮定する質問の数に応じて調整
 
-            // APIリクエストを実行して質問をロード
+        // APIリクエストを実行して質問をロード
         if(genreId == 0) {
             apiService.getAllQuestions().enqueue(new Callback<List<Question>>() {
                 @Override
@@ -139,34 +145,34 @@ public class game extends AppCompatActivity {
             });
         }
 
-        }
+    }
 
-        private void DisplayQuestion(Question question){
-            touka_loading.setVisibility(View.GONE);
-            String name = question.getName() + "が～？";
-            questionText.setText(name);
-            kaisetu_name.setText(name);
-
-
-            String img = question.getImg().replace("\"", "").trim();
-            int resourceId = getResources().getIdentifier(img, "drawable", getPackageName());
-            questionImage.setImageResource(resourceId);
-            kaisetu_img.setImageResource(resourceId);
-
-            String txt = question.getTxt();
-            kaisetu_text.setText(txt);
+    private void DisplayQuestion(Question question){
+        touka_loading.setVisibility(View.GONE);
+        String name = question.getName() + "が～？";
+        questionText.setText(name);
+        kaisetu_name.setText(name);
 
 
-            currentQuestionId = question.getId();
-            currentQuestionLoc_id = question.getLoc_id();
+        String img = question.getImg().replace("\"", "").trim();
+        int resourceId = getResources().getIdentifier(img, "drawable", getPackageName());
+        questionImage.setImageResource(resourceId);
+        kaisetu_img.setImageResource(resourceId);
 
-            // locationデータを取得
-            loadLocationData(currentQuestionLoc_id);
+        String txt = question.getTxt();
+        kaisetu_text.setText(txt);
 
-            //出題済みidを格納
-            displayedQuestionIds.add(question.getId());
 
-        }
+        currentQuestionId = question.getId();
+        currentQuestionLoc_id = question.getLoc_id();
+
+        // locationデータを取得
+        loadLocationData(currentQuestionLoc_id);
+
+        //出題済みidを格納
+        displayedQuestionIds.add(question.getId());
+
+    }
 
     private void loadLocationData(int locId) {
         apiService.getLocationById(locId).enqueue(new Callback<Location>() {
@@ -226,7 +232,9 @@ public class game extends AppCompatActivity {
             kaisetu.setVisibility(View.VISIBLE);
             touka_loading.setVisibility(View.VISIBLE);
             toi.setVisibility(View.GONE);
-
+            if (questionNumber>9){
+                next.setText("結果へ");
+            }
         }
     }
 
@@ -234,23 +242,33 @@ public class game extends AppCompatActivity {
         questionNumber ++;
         questionNumber_Str = "第" +questionNumber+"問";
         question_number.setText(questionNumber_Str);
+        kaisetu.setVisibility(View.GONE);
+        seigoText.setVisibility(View.GONE);
         if(questionNumber>10){
-            kaisetu_text.setText("終わり");//あとで宝箱画面をVISIBLEにする
+            kekka.setVisibility(View.VISIBLE);//あとで宝箱画面をVISIBLEにする
         }else{
             toi.setVisibility(View.VISIBLE);
-            kaisetu.setVisibility(View.GONE);
-            seigoText.setVisibility(View.GONE);
             loadQuestion();
         }
+    }
 
+    public void onTap_takara(View view){
+        card_over.setVisibility(View.VISIBLE);
+    }
 
+    public void onTap_takara_back(View view){
+        card_over.setVisibility(View.GONE);
+    }
+
+    public void game_home(View view){
+        Intent intent = new Intent(game.this, activity_home.class);
+        startActivity(intent);
     }
 
 
     private void updateUserScore(int scoreToAdd) {
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
-        int userId = prefs.getInt("UserId", 0);
-        Log.e("UserID", String.valueOf(userId));
+        int userId = prefs.getInt("UserId", 1);
 
         // 現在のユーザースコアを取得するAPIリクエストを想定
         apiService.getUserMoney(userId).enqueue(new Callback<User>() {
