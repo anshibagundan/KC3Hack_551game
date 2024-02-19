@@ -88,7 +88,41 @@
             android:layout_gravity="center"
             android:layout_marginTop="200dp"/>
 
-        
+        <ImageView
+            android:id="@+id/arutoki"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/arutoki" />
+
+        <ImageView
+            android:id="@+id/naitoki"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            app:srcCompat="@drawable/naitoki" />
+
+        <ImageView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="150dp"
+            app:srcCompat="@drawable/rogo551" />
+
+        <ImageView
+            android:id="@+id/happy"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/happy" />
+
+        <ImageView
+            android:id="@+id/sad"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="100dp"
+            app:srcCompat="@drawable/sad" />
+
 
     </FrameLayout>
 
