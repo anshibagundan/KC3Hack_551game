@@ -71,11 +71,13 @@ public class activity_home extends AppCompatActivity {
         name = findViewById(R.id.name);
     }
 
+    //start button
     public void setButtonClickListener(View view) {
         // Intentを作成してGameActivityを起動
         //ここでgama.javaにgenreIdとlocationIdを渡す
         Intent intent = new Intent(activity_home.this, game.class);
         intent.putExtra("genreId", genreId);
+        intent.putExtra("locationId", locationId);
         startActivity(intent);
     }
 
@@ -137,7 +139,7 @@ public class activity_home extends AppCompatActivity {
             case 6:
                 return "和歌山";
             default:
-                return "全て";
+                return "関西全域";
         }
     }
 
