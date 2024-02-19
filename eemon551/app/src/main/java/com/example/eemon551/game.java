@@ -150,8 +150,8 @@ public class game extends AppCompatActivity {
 
     private void DisplayQuestion(Question question){
         touka_loading.setVisibility(View.GONE);
-        String name = question.getName() + "が～？";
-        questionText.setText(name);
+        String name = question.getName();
+        questionText.setText(name+ "が～？");
         kaisetu_name.setText(name);
 
 
