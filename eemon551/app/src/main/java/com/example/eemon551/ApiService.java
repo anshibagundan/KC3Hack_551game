@@ -17,6 +17,11 @@ public interface ApiService {
     @GET("/questions/{id}")
     Call<Question> getQuestionById(@Path("id") int questionId);
 
+
+    @GET("/userquestiondatas/")
+    Call<List<UserQuestionData>> getUserQuestionData(@Query("user_data_id") int user_data_id);
+
+
     @POST("/userquestiondatas/")
     Call<Void> insertUserQuestionData(@Body UserQuestionData data);
 
