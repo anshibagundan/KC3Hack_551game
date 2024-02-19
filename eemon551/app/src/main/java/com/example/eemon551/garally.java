@@ -3,14 +3,18 @@ package com.example.eemon551;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -41,6 +45,7 @@ public class garally extends AppCompatActivity {
     private FrameLayout card;
     private FrameLayout zukan;
     private ImageView card_image;
+
 
 
 
@@ -129,39 +134,41 @@ public class garally extends AppCompatActivity {
     private void addImagesToGridLayout() {
         for (int i = 0; i < Osaka_QuestionList.size(); i++) {
             Question question = Osaka_QuestionList.get(i);
+            RelativeLayout card_lay = new RelativeLayout(this);
+            TextView lay_txt = new TextView(this);
             ImageView imageView = new ImageView(this);
-            DisplayQuestion(question,imageView);
-            gridLayout_1.addView(imageView);
+            DisplayQuestion(question,imageView,card_lay,lay_txt);
+            gridLayout_1.addView(card_lay);
 
         }
         for (int i = 0; i < Kyoto_QuestionList.size(); i++) {
             Question question = Kyoto_QuestionList.get(i);
             ImageView imageView = new ImageView(this);
-            DisplayQuestion(question,imageView);
+//            DisplayQuestion(question,imageView);
             gridLayout_2.addView(imageView);
         }
         for (int i = 0; i < Shiga_QuestionList.size(); i++) {
             Question question = Shiga_QuestionList.get(i);
             ImageView imageView = new ImageView(this);
-            DisplayQuestion(question,imageView);
+//            DisplayQuestion(question,imageView);
             gridLayout_3.addView(imageView);
         }
         for (int i = 0; i < Nara_QuestionList.size(); i++) {
             Question question = Nara_QuestionList.get(i);
             ImageView imageView = new ImageView(this);
-            DisplayQuestion(question,imageView);
+//            DisplayQuestion(question,imageView);
             gridLayout_4.addView(imageView);
         }
         for (int i = 0; i < Hyogo_QuestionList.size(); i++) {
             Question question = Hyogo_QuestionList.get(i);
             ImageView imageView = new ImageView(this);
-            DisplayQuestion(question,imageView);
+//            DisplayQuestion(question,imageView);
             gridLayout_5.addView(imageView);
         }
         for (int i = 0; i < Wakayama_QuestionList.size(); i++) {
             Question question = Wakayama_QuestionList.get(i);
             ImageView imageView = new ImageView(this);
-            DisplayQuestion(question,imageView);
+//            DisplayQuestion(question,imageView);
             gridLayout_6.addView(imageView);
         }
     }
@@ -172,14 +179,15 @@ public class garally extends AppCompatActivity {
     }
 
 
-    private void DisplayQuestion(Question question, ImageView imageView){
+    private void DisplayQuestion(Question question, ImageView imageView, RelativeLayout card_lay, TextView lay_txt){
+
+        //イメージ
         String img = question.getImg().replace("\"", "").trim();
         int imageResId = getResources().getIdentifier(img, "drawable", getPackageName());
         Glide.with(this)
                 .load(imageResId)
                 .override(600, 400) // 画像の解像度を指定
                 .into(imageView);
-
 
         if (question.getGenre_id() == 1) {
             imageView.setBackgroundColor(ContextCompat.getColor(this, R.color.food));
@@ -193,6 +201,7 @@ public class garally extends AppCompatActivity {
             imageView.setBackgroundColor(ContextCompat.getColor(this, R.color.culture));
         }
 
+        //カード表示
         // if分岐 trueなら
         imageView.setOnClickListener(v -> {
             card.setVisibility(View.VISIBLE);
@@ -204,15 +213,35 @@ public class garally extends AppCompatActivity {
                     .into(card_image);
 
         });
-        // if分岐する
-        GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-        params.width = (int) getResources().getDimension(R.dimen.image_width); // 100dpをピクセル単位に変換
-        params.height = (int) getResources().getDimension(R.dimen.image_height); // 100dpをピクセル単位に変換
-        params.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f); // layout_columnWeight="1" に相当
-        params.rowSpec = GridLayout.spec(GridLayout.UNDEFINED, 2f);
-        params.setGravity(Gravity.CENTER);
-        imageView.setLayoutParams(params);
 
+        //image
+
+        //if分岐
+
+        RelativeLayout.LayoutParams image_params = new RelativeLayout.LayoutParams(100,100);
+//        image_params.setGravity(Gravity.CENTER);
+        imageView.setLayoutParams(image_params);
+        card_lay.addView(imageView);
+
+        //lay_txt
+        lay_txt.setText("?");
+        lay_txt.setTextSize(40);
+        lay_txt.setGravity(Gravity.CENTER);
+        lay_txt.setWidth(100);
+        lay_txt.setHeight(100);
+
+        //if分岐
+        lay_txt.setBackgroundColor(0xBB000000);
+
+        card_lay.addView(lay_txt);
+
+
+        GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+        params.width = params.WRAP_CONTENT;
+        params.height = params.WRAP_CONTENT;
+        params.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f); // layout_columnWeight="1" に相当
+        params.setGravity(Gravity.CENTER);
+        card_lay.setLayoutParams(params);
     }
 
 
