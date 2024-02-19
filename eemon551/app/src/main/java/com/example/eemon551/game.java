@@ -54,6 +54,7 @@ public class game extends AppCompatActivity {
     private Set<Integer> displayedQuestionIds = new HashSet<>();
 
     private int genreId;
+    private int locationId;
     private FrameLayout kekka;
     private LinearLayout card_over;
 
@@ -84,12 +85,12 @@ public class game extends AppCompatActivity {
         // IntentからgenreIdとlocationIdを取得
         Intent intent = getIntent();
         genreId = intent.getIntExtra("genreId", 0);
+        locationId = intent.getIntExtra("locationId", 0);
 
         loadQuestion();
     }
 
     private void loadQuestion() {
-        Log.e("genreId", "genreId"+genreId );
         Random random = new Random();
         int questionNo = random.nextInt(10); // 仮定する質問の数に応じて調整
 
@@ -183,7 +184,8 @@ public class game extends AppCompatActivity {
                     Log.e("LocationFetch", String.valueOf(currentQuestionIsKansai));
                     Button buttonLeft = findViewById(R.id.button_left);
                     Button buttonRight = findViewById(R.id.button_right);
-                    setupButtonListeners(buttonLeft, buttonRight, currentQuestionIsKansai);
+
+                    setupButtonListeners(buttonLeft, buttonRight, currentQuestionIsKansai,locId);
                 }
             }
 
@@ -194,37 +196,67 @@ public class game extends AppCompatActivity {
         });
     }
 
-    private void setupButtonListeners(Button buttonLeft, Button buttonRight,Boolean currentQuestionIsKansai) {
-        Log.e("LocationFetch", "button" +currentQuestionIsKansai);
-        buttonLeft.setOnClickListener(view -> {
-            if (currentQuestionIsKansai) {
-                // 正解の処理
-                Log.d("LocationFetch", "left true");
-                seigoText.setText("正解！画像をセット");
-                updateUserScore(10);
-            } else {
-                // 不正解の処理
-                Log.d("LocationFetch", "left false");
-                seigoText.setText("不正解画像をセット");
-            }
-            seigoText.setVisibility(View.VISIBLE);
-            seigo = true;
-        });
+    private void setupButtonListeners(Button buttonLeft, Button buttonRight,Boolean currentQuestionIsKansai, int locId) {
 
-        buttonRight.setOnClickListener(view -> {
-            if (!currentQuestionIsKansai) {
-                Log.d("LocationFetch", "right true");
-                // 正解の処理
-                seigoText.setText("正解！画像をセット");
-                updateUserScore(10); // スコアを10加算する
-            } else {
-                Log.d("LocationFetch", "right false");
-                // 不正解の処理
-                seigoText.setText("不正解画像をセット");
-            }
-            seigoText.setVisibility(View.VISIBLE);
-            seigo = true;
-        });
+        if (locationId == 0) {
+            buttonLeft.setOnClickListener(view -> {
+                if (currentQuestionIsKansai) {
+                    // 正解の処理
+                    Log.d("LocationFetch", "left true");
+                    seigoText.setText("正解！画像をセット");
+                    updateUserScore(10);
+                } else {
+                    // 不正解の処理
+                    Log.d("LocationFetch", "left false");
+                    seigoText.setText("不正解画像をセット");
+                }
+                seigoText.setVisibility(View.VISIBLE);
+                seigo = true;
+            });
+
+            buttonRight.setOnClickListener(view -> {
+                if (!currentQuestionIsKansai) {
+                    Log.d("LocationFetch", "right true");
+                    // 正解の処理
+                    seigoText.setText("正解！画像をセット");
+                    updateUserScore(10); // スコアを10加算する
+                } else {
+                    Log.d("LocationFetch", "right false");
+                    // 不正解の処理
+                    seigoText.setText("不正解画像をセット");
+                }
+                seigoText.setVisibility(View.VISIBLE);
+                seigo = true;
+            });
+        }else{
+            buttonLeft.setOnClickListener(view -> {
+                if (locationId==locId) {
+                    Log.d("LocationFetch", "left true");
+                    // 正解の処理
+                    seigoText.setText("正解！画像をセット");
+                    updateUserScore(10);
+                } else {
+                    Log.d("LocationFetch", "left false");
+                    // 不正解の処理
+                    seigoText.setText("不正解画像をセット");
+                }
+                seigoText.setVisibility(View.VISIBLE);
+                seigo = true;
+            });
+
+            buttonRight.setOnClickListener(view -> {
+                if (locId!=locationId) {
+                    // 正解の処理
+                    seigoText.setText("不正解画像をセット");
+                } else {
+                    // 不正解の処理
+                    seigoText.setText("正解！画像をセット");
+                    updateUserScore(10); // スコアを10加算する
+                }
+                seigoText.setVisibility(View.VISIBLE);
+                seigo = true;
+            });
+        }
     }
 
     public void onTap(View view){
