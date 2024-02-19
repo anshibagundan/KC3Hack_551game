@@ -84,7 +84,6 @@ public class game extends AppCompatActivity {
     }
 
     private void loadQuestion() {
-        Log.e("genreId", "genreId"+genreId );
         Random random = new Random();
         int questionNo = random.nextInt(10); // 仮定する質問の数に応じて調整
 

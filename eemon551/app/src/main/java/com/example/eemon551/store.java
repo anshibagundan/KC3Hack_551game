@@ -2,18 +2,100 @@ package com.example.eemon551;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class store extends AppCompatActivity {
 
     private TextView money;
     private ApiService apiService;
+    private GridLayout gridLayout_1;
+    private Set<Integer> displayedQuestionIds = new HashSet<>();
+
+    private int userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store);
+        apiService = ApiClient.getApiService();
+        gridLayout_1 = findViewById(R.id.card_layout);
+        gridLayout_1.setAlignmentMode(GridLayout.ALIGN_BOUNDS);
+        gridLayout_1.setColumnCount(3);
 
+        GetMoney();
+        fetchQuestions();
+    }
+
+    private void GetMoney(){
+        SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        int userId = prefs.getInt("UserId", 0);
+        apiService.getUserMoney(userId).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    int currentScore = response.body().getMoney();
+                    money.setText(String.valueOf(currentScore));
+                }
+            }
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("API Request Failure", "Error: ", t);
+            }
+        });
+    }
+
+
+    private void fetchQuestions() {
+        Random random = new Random();
+        int questionNo = random.nextInt(10);
+            apiService.getAllQuestions().enqueue(new Callback<List<Question>>() {
+                @Override
+                public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
+                    if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
+                        Question question = response.body().get(questionNo);
+                        if (!displayedQuestionIds.contains(question.getId()) && question.getLoc_id() >= 1 &&question.getLoc_id() <= 6) {
+                            DisplayQuestion(question);
+                        } else {
+                            //もし出題するidが出題済みidリストに存在したらもう一回ロード
+                            fetchQuestions();
+                        }
+                    }
+                }
+
+
+                @Override
+                public void onFailure(Call<List<Question>> call, Throwable t) {
+                    Log.e("API Request Failure", "Error: ", t);
+                }
+            });
+        }
+    private void DisplayQuestion(Question question){
+        for (int i = 0; i < 6; i++) {
+            ImageView imageView = new ImageView(this);
+            String img = question.getCard().replace("\"", "").trim();
+            int imageResId = getResources().getIdentifier(img, "drawable", getPackageName());
+            Glide.with(this)
+                    .load(imageResId)
+                    .override(600, 400) // 画像の解像度を指定
+                    .into(imageView);
+            gridLayout_1.addView(imageView);
+        }
 
     }
 }
