@@ -132,133 +132,116 @@ public class garally extends AppCompatActivity {
         });
     }
 
+
     private void addImagesToGridLayout() {
-        for (int i = 0; i < Osaka_QuestionList.size(); i++) {
-            Question question = Osaka_QuestionList.get(i);
-            RelativeLayout card_lay = new RelativeLayout(this);
-            TextView lay_txt = new TextView(this);
-            ImageView imageView = new ImageView(this);
-            DisplayQuestion(question,imageView,card_lay,lay_txt);
-            gridLayout_1.addView(card_lay);
-
+        SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        int userId = prefs.getInt("UserId", 1);
+        for (Question question : Osaka_QuestionList) {
+            gridLayout_1.addView(SetImage(question,userId), SetGridLayout());
         }
-        for (int i = 0; i < Kyoto_QuestionList.size(); i++) {
-            Question question = Kyoto_QuestionList.get(i);
-            ImageView imageView = new ImageView(this);
-//            DisplayQuestion(question,imageView);
-            gridLayout_2.addView(imageView);
+        for (Question question : Kyoto_QuestionList) {
+            gridLayout_2.addView(SetImage(question,userId), SetGridLayout());
         }
-        for (int i = 0; i < Shiga_QuestionList.size(); i++) {
-            Question question = Shiga_QuestionList.get(i);
-            ImageView imageView = new ImageView(this);
-//            DisplayQuestion(question,imageView);
-            gridLayout_3.addView(imageView);
+        for (Question question : Shiga_QuestionList) {
+            gridLayout_3.addView(SetImage(question,userId), SetGridLayout());
         }
-        for (int i = 0; i < Nara_QuestionList.size(); i++) {
-            Question question = Nara_QuestionList.get(i);
-            ImageView imageView = new ImageView(this);
-//            DisplayQuestion(question,imageView);
-            gridLayout_4.addView(imageView);
+        for (Question question : Nara_QuestionList) {
+            gridLayout_4.addView(SetImage(question,userId), SetGridLayout());
         }
-        for (int i = 0; i < Hyogo_QuestionList.size(); i++) {
-            Question question = Hyogo_QuestionList.get(i);
-            ImageView imageView = new ImageView(this);
-//            DisplayQuestion(question,imageView);
-            gridLayout_5.addView(imageView);
+        for (Question question : Hyogo_QuestionList) {
+            gridLayout_5.addView(SetImage(question,userId), SetGridLayout());
         }
-        for (int i = 0; i < Wakayama_QuestionList.size(); i++) {
-            Question question = Wakayama_QuestionList.get(i);
-            ImageView imageView = new ImageView(this);
-//            DisplayQuestion(question,imageView);
-            gridLayout_6.addView(imageView);
+        for (Question question : Wakayama_QuestionList) {
+            gridLayout_6.addView(SetImage(question,userId), SetGridLayout());
         }
     }
 
-    private void back_home(View view){
-        Intent intent = new Intent(garally.this, activity_home.class);
-        startActivity(intent);
-    }
-
-
-    private void DisplayQuestion(Question question, ImageView imageView, RelativeLayout card_lay, TextView lay_txt){
-
-        //イメージ
-        String img = question.getImg().replace("\"", "").trim();
-        int imageResId = getResources().getIdentifier(img, "drawable", getPackageName());
-        Glide.with(this)
-                .load(imageResId)
-                .override(600, 400) // 画像の解像度を指定
-                .into(imageView);
-
-        if (question.getGenre_id() == 1) {
-            imageView.setBackgroundColor(ContextCompat.getColor(this, R.color.food));
-        } else if (question.getGenre_id() == 2) {
-            imageView.setBackgroundColor(ContextCompat.getColor(this, R.color.build));
-        }  else if (question.getGenre_id() == 3) {
-            imageView.setBackgroundColor(ContextCompat.getColor(this, R.color.chara));
-        } else if (question.getGenre_id() == 4) {
-            imageView.setBackgroundColor(ContextCompat.getColor(this, R.color.place));
-        } else if (question.getGenre_id() == 5) {
-            imageView.setBackgroundColor(ContextCompat.getColor(this, R.color.culture));
-        }
-
-        apiService.getUserQuestionData(1).enqueue(new Callback<List<UserQuestionData>>() {
+    private void applyOverlayBasedOnUserQuestionData(int questionId, int userId, RelativeLayout card_lay, TextView lay_txt, ImageView imageView, Question question) {
+        apiService.getUserQuestionData(userId).enqueue(new Callback<List<UserQuestionData>>() {
             @Override
             public void onResponse(Call<List<UserQuestionData>> call, Response<List<UserQuestionData>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<UserQuestionData> userquestiondata = response.body();
-                    SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
-                    int userId = prefs.getInt("UserId", 1);
-                    for (UserQuestionData data : userquestiondata) {
-                        //image
-                        RelativeLayout.LayoutParams image_params = new RelativeLayout.LayoutParams(300,300);
-//                      image_params.setGravity(Gravity.CENTER);
-                        imageView.setLayoutParams(image_params);
-                        card_lay.addView(imageView);
-                        if (data.get_cor() && data.getUser_data_id() == userId) {//trueの時
-                            imageView.setOnClickListener(v -> {
-                                card.setVisibility(View.VISIBLE);
-                                zukan.setVisibility(View.GONE);
-                                String card = question.getCard().replace("\"", "").trim();
-                                int cardResId = getResources().getIdentifier(card, "drawable", getPackageName());
-                                Glide.with(garally.this)
-                                        .load(cardResId)
-                                        .into(card_image);
-
+                    List<UserQuestionData> userQuestionData = response.body();
+                    for (UserQuestionData data : userQuestionData) {
+                        if (data.get_qes_id() == questionId && data.getUser_data_id() == userId) {
+                            if(data.get_cor()){
+                                imageView.setOnClickListener(v -> {
+                                    card.setVisibility(View.VISIBLE);
+                                    zukan.setVisibility(View.GONE);
+                                    String card = question.getCard().replace("\"", "").trim();
+                                    int cardResId = getResources().getIdentifier(card, "drawable", getPackageName());
+                                    Glide.with(garally.this)
+                                            .load(cardResId)
+                                            .into(card_image);
                             });
-                        } else if (!data.get_cor() && data.getUser_data_id() == userId) {//falseの時
-                            lay_txt.setText("?");
-                            lay_txt.setTextSize(40);
-                            lay_txt.setGravity(Gravity.CENTER);
-                            lay_txt.setWidth(300);
-                            lay_txt.setHeight(300);
-                            lay_txt.setBackgroundColor(0xBB000000);
-                            card_lay.addView(lay_txt);
-
-                        }else{//nullの時
-                            lay_txt.setText("?");
-                            lay_txt.setTextSize(40);
-                            lay_txt.setGravity(Gravity.CENTER);
-                            lay_txt.setWidth(300);
-                            lay_txt.setHeight(300);
-                            lay_txt.setBackgroundColor(0xBB000000);
-                            card_lay.addView(lay_txt);
-
+                            }
+                            else if (!data.get_cor()) {
+                                displayTextOverlay(lay_txt, "?", 0xAA000000, card_lay);
+                            }
+                            return;
                         }
-                        GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-                        params.width = params.WRAP_CONTENT;
-                        params.height = params.WRAP_CONTENT;
-                        params.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f); // layout_columnWeight="1" に相当
-                        params.setGravity(Gravity.CENTER);
-                        card_lay.setLayoutParams(params);
                     }
+                    // qes_idがUserQuestionDataに存在しない場合は"?"オーバーレイを適用
+                    displayTextOverlay(new TextView(garally.this), "?", 0xFF000000, card_lay);
                 }
-             }
-                @Override
-                public void onFailure(Call<List<UserQuestionData>> call, Throwable t) {
-                    Log.e("API Request Failure", "Error: ", t);
-                }
-            });
+            }
+
+            @Override
+            public void onFailure(Call<List<UserQuestionData>> call, Throwable t) {
+                Log.e("API Request Failure", "Error: ", t);
+            }
+        });
+    }
+
+    private void displayTextOverlay(TextView lay_txt, String text, int backgroundColor, ViewGroup parent) {
+        lay_txt.setText(text);
+        lay_txt.setTextSize(40);
+        lay_txt.setGravity(Gravity.CENTER);
+        lay_txt.setWidth(300);
+        lay_txt.setHeight(300);
+        lay_txt.setBackgroundColor(backgroundColor);
+        parent.addView(lay_txt);
+    }
+
+    private void SetBackgroundColor(Question question, ImageView imageView){
+        switch (question.getGenre_id()) {
+            case 1:
+                imageView.setBackgroundColor(ContextCompat.getColor(garally.this, R.color.food));
+                break;
+            case 2:
+                imageView.setBackgroundColor(ContextCompat.getColor(garally.this, R.color.build));
+                break;
+            case 3:
+                imageView.setBackgroundColor(ContextCompat.getColor(garally.this, R.color.chara));
+                break;
+            case 4:
+                imageView.setBackgroundColor(ContextCompat.getColor(garally.this, R.color.place));
+                break;
+            case 5:
+                imageView.setBackgroundColor(ContextCompat.getColor(garally.this, R.color.culture));
+                break;
+        }
+    }
+    private RelativeLayout SetImage (Question question, int userId){
+        ImageView imageView = new ImageView(this);
+        String img = question.getImg().replace("\"", "").trim();
+        int imageResId = getResources().getIdentifier(img, "drawable", getPackageName());
+        Glide.with(this).load(imageResId).into(imageView);
+        SetBackgroundColor(question, imageView);
+        RelativeLayout card_lay = new RelativeLayout(this);
+        TextView lay_txt = new TextView(this);
+        card_lay.addView(imageView);
+        applyOverlayBasedOnUserQuestionData(question.getId(), userId, card_lay,lay_txt,imageView,question);
+        return card_lay;
+    }
+
+    private GridLayout.LayoutParams SetGridLayout(){
+        GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+        params.width = 300;  // 画像の幅
+        params.height = 300; // 画像の高さ
+        params.setGravity(Gravity.CENTER);
+        return params;
+
     }
 
 
@@ -267,4 +250,11 @@ public class garally extends AppCompatActivity {
         zukan.setVisibility(View.VISIBLE);
         card.setVisibility(View.GONE);
     }
+
+    public void back_home(View view){
+        Intent intent = new Intent(garally.this, activity_home.class);
+        startActivity(intent);
+    }
 }
+//
+
