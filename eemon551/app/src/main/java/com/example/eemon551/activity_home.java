@@ -28,6 +28,7 @@ public class activity_home extends AppCompatActivity {
     private TextView touka;
     private Button zukann;
     private Button introduce;
+    private Button store;
     private Boolean setting = false;
     private  ImageView zukan_img;
     private  ImageView setsumei_img;
@@ -54,6 +55,7 @@ public class activity_home extends AppCompatActivity {
         zukan_img=findViewById(R.id.zukan_img);
         setsumei_img=findViewById(R.id.setsumei_img);
         setting_button = findViewById(R.id.setting_button);
+        store = findViewById(R.id.store);
     }
 
     public void setButtonClickListener(View view) {
@@ -161,6 +163,7 @@ public class activity_home extends AppCompatActivity {
             introduce.setVisibility(View.VISIBLE);
             zukan_img.setVisibility(View.VISIBLE);
             setsumei_img.setVisibility(View.VISIBLE);
+            store.setVisibility(View.VISIBLE);
             setting_button.setText("X");
         }else{
             touka.setVisibility(View.GONE);
@@ -168,6 +171,7 @@ public class activity_home extends AppCompatActivity {
             introduce.setVisibility(View.GONE);
             zukan_img.setVisibility(View.GONE);
             setsumei_img.setVisibility(View.GONE);
+            store.setVisibility(View.GONE);
             setting_button.setText("≡");
         }
     }
@@ -178,6 +182,10 @@ public class activity_home extends AppCompatActivity {
     }
     public void introduce(View view){
         Intent intent = new Intent(activity_home.this, introduce.class);
+        startActivity(intent);
+    }
+    public void store(View view){
+        Intent intent = new Intent(activity_home.this, store.class);
         startActivity(intent);
     }
 }
