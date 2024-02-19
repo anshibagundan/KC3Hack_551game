@@ -36,6 +36,8 @@ public class activity_home extends AppCompatActivity {
     private  ImageView setsumei_img;
     private ImageView store_img;
     private Button setting_button;
+    private TextView name;
+    private TextView money_num;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class activity_home extends AppCompatActivity {
 
         initializeViews();
         name.setText(username);
+        GetMoney();
         loadFirstQuestionGenre();
     }
 
