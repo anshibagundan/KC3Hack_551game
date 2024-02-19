@@ -49,6 +49,7 @@
 
         </LinearLayout>
 
+<!-- 上部-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -86,7 +87,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:orientation="vertical">
-
+<!--    大阪-->
             <LinearLayout
                 android:id="@+id/genre1"
                 android:layout_width="match_parent"
@@ -278,7 +279,7 @@
 
             </GridLayout>
 
-
+<!--    京都-->
             <LinearLayout
                 android:id="@+id/genre2"
                 android:layout_width="match_parent"
@@ -309,7 +310,6 @@
             </LinearLayout>
 
 <!--            京都の画像-->
-
             <GridLayout
                 android:id="@+id/genre2_layout"
                 android:layout_width="match_parent"
@@ -320,6 +320,7 @@
 
             </GridLayout>
 
+<!--    滋賀-->
             <LinearLayout
                 android:id="@+id/genre3"
                 android:layout_width="match_parent"
@@ -347,7 +348,7 @@
 
             </LinearLayout>
 
-<!--            奈良の画像-->
+<!--            滋賀の画像-->
             <GridLayout
                 android:id="@+id/genre3_layout"
                 android:layout_width="match_parent"
@@ -358,6 +359,7 @@
 
             </GridLayout>
 
+<!--    奈良-->
             <LinearLayout
                 android:id="@+id/genre4"
                 android:layout_width="match_parent"
@@ -384,7 +386,7 @@
                     android:background="@color/black"/>
             </LinearLayout>
 
-<!--            兵庫の画像-->
+<!--            奈良の画像-->
             <GridLayout
                 android:id="@+id/genre4_layout"
                 android:layout_width="match_parent"
@@ -395,6 +397,7 @@
 
             </GridLayout>
 
+<!--    兵庫-->
             <LinearLayout
                 android:id="@+id/genre5"
                 android:layout_width="match_parent"
@@ -421,7 +424,7 @@
                     android:background="@color/black"/>
             </LinearLayout>
 
-<!--            和歌山の画像-->
+<!--            兵庫の画像-->
             <GridLayout
                 android:id="@+id/genre5_layout"
                 android:layout_width="match_parent"
@@ -432,6 +435,7 @@
 
             </GridLayout>
 
+<!--    和歌山        -->
             <LinearLayout
                 android:id="@+id/genre6"
                 android:layout_width="match_parent"
@@ -458,7 +462,7 @@
                     android:background="@color/black"/>
             </LinearLayout>
 
-<!--            滋賀の画像-->
+<!--            和歌山の画像-->
             <GridLayout
                 android:id="@+id/genre6_layout"
                 android:layout_width="match_parent"
@@ -473,12 +477,14 @@
     </ScrollView>
  </FrameLayout>
 
+<!--    カード画面-->
     <FrameLayout
         android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
 
+<!--    上部-->
         <LinearLayout
             android:id="@+id/card_bar"
             android:layout_width="300dp"
@@ -509,7 +515,7 @@
 
         </LinearLayout>
 
-
+<!--    カード    -->
         <ImageView
             android:id="@+id/card_image"
             android:layout_width="match_parent"
