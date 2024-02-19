@@ -23,12 +23,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+<!--背景写真-->
       <View
           android:id="@+id/image_3"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           android:background="@drawable/img" />
 
+<!--      start-->
       <Button
           android:id="@+id/start"
           android:layout_width="200dp"
@@ -41,6 +43,7 @@
           android:textSize="50dp"
           android:fontFamily="@font/acme"/>
 
+<!--      矢印-->
       <ImageView
           android:id="@+id/right_genre"
           android:layout_width="50dp"
@@ -53,7 +56,6 @@
           android:onClick="genre_right"
           app:cornerRadius="15dp"
           app:srcCompat="@drawable/img_1" />
-
       <ImageView
           android:id="@+id/left_genre"
           android:layout_width="50dp"
@@ -67,7 +69,6 @@
           android:onClick="genre_left"
           app:cornerRadius="15dp"
           app:srcCompat="@drawable/img_1" />
-
       <ImageView
           android:id="@+id/right_prefecture"
           android:layout_width="50dp"
@@ -79,7 +80,6 @@
           android:onClick="location_right"
           app:cornerRadius="15dp"
           app:srcCompat="@drawable/img_1" />
-
       <ImageView
           android:id="@+id/left_prefecture"
           android:layout_width="50dp"
@@ -94,6 +94,7 @@
           app:cornerRadius="15dp"
           app:srcCompat="@drawable/img_1" />
 
+<!--      全て-->
       <TextView
           android:id="@+id/genre"
           android:layout_width="250dp"
@@ -104,6 +105,7 @@
           android:gravity="center"
           android:text="全て"
           android:textSize="30dp"/>
+<!--      関西-->
       <TextView
           android:id="@+id/prefecture"
           android:layout_width="250dp"
@@ -115,7 +117,7 @@
           android:text="関西全域"
           android:textSize="30dp"/>
 
-
+<!--      オーバーレイ-->
       <TextView
           android:id="@+id/touka"
           android:layout_width="match_parent"
@@ -123,47 +125,6 @@
           android:background="#AA000000"
           android:visibility="gone"
           android:onClick="setting"/>
-
-      <Button
-          android:id="@+id/zukann"
-          android:layout_width="200dp"
-          android:layout_height="100dp"
-          android:layout_gravity="center"
-          android:layout_marginBottom="100dp"
-          android:backgroundTint="#C89696"
-          android:text="図鑑"
-          android:textSize="30dp"
-          android:visibility="gone"
-          android:onClick="zukann"
-          />
-
-      <Button
-          android:id="@+id/introduce"
-          android:layout_width="204dp"
-          android:layout_height="110dp"
-          android:layout_gravity="center"
-          android:layout_marginTop="70dp"
-          android:backgroundTint="#C89696"
-          android:fontFamily="@font/acme"
-          android:onClick="introduce"
-          android:text="説明"
-          android:textSize="30dp"
-          android:visibility="gone" />
-
-      <Button
-          android:id="@+id/store"
-          android:layout_width="200dp"
-          android:layout_height="100dp"
-          android:layout_gravity="center"
-          android:layout_marginTop="230dp"
-          android:layout_marginLeft="18dp"
-          android:backgroundTint="#C89696"
-          android:fontFamily="@font/acme"
-          android:onClick="store"
-          android:text="ショップ"
-          android:visibility="gone"
-          android:textSize="30dp"/>
-
       <Button
           android:id="@+id/setting_button"
           android:layout_width="75dp"
@@ -177,42 +138,74 @@
           android:onClick="setting"
           app:cornerRadius="15dp" />
 
-
+<!--      図鑑-->
+      <Button
+          android:id="@+id/zukann"
+          android:layout_width="200dp"
+          android:layout_height="100dp"
+          android:layout_gravity="center"
+          android:layout_marginBottom="150dp"
+          android:backgroundTint="#C89696"
+          android:text="図鑑"
+          android:textSize="30dp"
+          android:visibility="gone"
+          android:onClick="zukann"
+          />
       <ImageView
           android:id="@+id/zukan_img"
           android:layout_width="150dp"
           android:layout_height="200dp"
           android:layout_gravity="center"
-          android:layout_marginBottom="100dp"
+          android:layout_marginBottom="150dp"
           android:layout_marginRight="80dp"
           android:visibility="gone"
           app:srcCompat="@drawable/zukan" />
-
-
+<!--      説明-->
+      <Button
+          android:id="@+id/introduce"
+          android:layout_width="204dp"
+          android:layout_height="110dp"
+          android:layout_gravity="center"
+          android:layout_marginTop="70dp"
+          android:backgroundTint="#C89696"
+          android:fontFamily="@font/acme"
+          android:onClick="introduce"
+          android:text="説明"
+          android:textSize="30dp"
+          android:visibility="gone" />
       <ImageView
           android:id="@+id/setsumei_img"
           android:layout_width="130dp"
           android:layout_height="150dp"
           android:layout_gravity="center"
-          android:layout_marginTop="60dp"
           android:layout_marginRight="80dp"
           android:visibility="gone"
           app:srcCompat="@drawable/setsumei" />
-
+<!--      ショップ-->
+      <Button
+          android:id="@+id/store"
+          android:layout_width="200dp"
+          android:layout_height="100dp"
+          android:layout_gravity="center"
+          android:layout_marginTop="230dp"
+          android:layout_marginLeft="18dp"
+          android:backgroundTint="#C89696"
+          android:fontFamily="@font/acme"
+          android:onClick="store"
+          android:text="ショップ"
+          android:visibility="gone"
+          android:textSize="30dp"/>
       <ImageView
           android:id="@+id/store_img"
           android:layout_width="120dp"
           android:layout_height="180dp"
           android:layout_gravity="center"
-          android:layout_marginTop="230dp"
+          android:layout_marginTop="150dp"
           android:layout_marginRight="80dp"
           android:visibility="gone"
           app:srcCompat="@drawable/store" />
 
-
     </FrameLayout>
-
-
 
   </LinearLayout>
 

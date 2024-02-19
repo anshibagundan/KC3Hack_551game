@@ -35,10 +35,11 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:onClick="introduce_home"
-                android:text="BACK"
+                android:text="⇐"
+                android:textSize="25sp"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/white"
-                app:cornerRadius="0dp"
+                app:cornerRadius="20dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
