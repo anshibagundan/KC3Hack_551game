@@ -122,65 +122,140 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="3"
-                android:rowCount="50"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:useDefaultMargins="true">
 
                 <!-- レイアウト内のコンポーネントを追加 -->
 
 
-<!--                <RelativeLayout-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:layout_columnWeight="1"-->
-<!--                    >-->
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_columnWeight="1"
+                    >
 
-<!--                    <ImageView-->
-<!--                        android:id="@+id/imageButton3"-->
-<!--                        android:layout_width="100dp"-->
-<!--                        android:layout_height="100dp"-->
-<!--                        app:srcCompat="@drawable/takoyaki"-->
-<!--                        android:layout_gravity="center"-->
-<!--                        android:background="@color/food"-->
-<!--                        />-->
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        app:srcCompat="@drawable/takoyaki"
+                        android:layout_gravity="center"
+                        android:background="@color/food"
+                        />
 
-<!--                    <TextView-->
-<!--                        android:layout_width="100dp"-->
-<!--                        android:layout_height="100dp"-->
-<!--                        android:background="#BB000000"-->
-<!--                        android:text="?"-->
-<!--                        android:textColor="@color/white"-->
-<!--                        android:textSize="40sp"-->
-<!--                        android:gravity="center"-->
-<!--                        />-->
-<!--                </RelativeLayout>-->
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:background="#BB000000"
+                        android:text="?"
+                        android:textColor="@color/white"
+                        android:textSize="40sp"
+                        android:gravity="center"
+                        />
+                </RelativeLayout>
 
-<!--                <RelativeLayout-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:layout_columnWeight="1"-->
-<!--                    >-->
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_columnWeight="1"
+                    >
 
-<!--                    <ImageView-->
-<!--                        android:id="@+id/imageButton"-->
-<!--                        android:layout_width="100dp"-->
-<!--                        android:layout_height="100dp"-->
-<!--                        app:srcCompat="@drawable/doutonnbori"-->
-<!--                        android:layout_gravity="center"-->
-<!--                        android:layout_columnWeight="1"-->
-<!--                        android:background="@color/place"/>-->
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        app:srcCompat="@drawable/doutonnbori"
+                        android:layout_gravity="center"
+                        android:background="@color/place"/>
 
-<!--                    <TextView-->
-<!--                        android:layout_width="100dp"-->
-<!--                        android:layout_height="100dp"-->
-<!--                        android:background="#FF000000"-->
-<!--                        android:text="?"-->
-<!--                        android:textColor="@color/white"-->
-<!--                        android:textSize="40sp"-->
-<!--                        android:gravity="center"-->
-<!--                        />-->
-<!--                </RelativeLayout>-->
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:background="#FF000000"
+                        android:text="?"
+                        android:textColor="@color/white"
+                        android:textSize="40sp"
+                        android:gravity="center"
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_columnWeight="1"
+                    >
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        app:srcCompat="@drawable/takoyaki"
+                        android:layout_gravity="center"
+                        android:background="@color/food"
+                        />
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:background="#BB000000"
+                        android:text="?"
+                        android:textColor="@color/white"
+                        android:textSize="40sp"
+                        android:gravity="center"
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_columnWeight="1"
+                    >
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        app:srcCompat="@drawable/takoyaki"
+                        android:layout_gravity="center"
+                        android:background="@color/food"
+                        />
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:background="#BB000000"
+                        android:text="?"
+                        android:textColor="@color/white"
+                        android:textSize="40sp"
+                        android:gravity="center"
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_columnWeight="1"
+                    >
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        app:srcCompat="@drawable/takoyaki"
+                        android:layout_gravity="center"
+                        android:background="@color/food"
+                        />
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:background="#BB000000"
+                        android:text="?"
+                        android:textColor="@color/white"
+                        android:textSize="40sp"
+                        android:gravity="center"
+                        />
+                </RelativeLayout>
 
 
 <!--&lt;!&ndash;                <ImageView&ndash;&gt;-->
@@ -240,8 +315,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="3"
-                android:rowCount="50"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:useDefaultMargins="true">
 
             </GridLayout>
 
@@ -278,8 +353,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="3"
-                android:rowCount="50"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:useDefaultMargins="true">
 
             </GridLayout>
 
@@ -315,8 +390,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="3"
-                android:rowCount="50"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:useDefaultMargins="true">
 
             </GridLayout>
 
@@ -352,8 +427,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="3"
-                android:rowCount="50"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:useDefaultMargins="true">
 
             </GridLayout>
 
@@ -389,7 +464,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="3"
-                android:rowCount="50"
+                android:useDefaultMargins="true"
                 android:layout_gravity="center">
 
             </GridLayout>
