@@ -3,6 +3,7 @@ package com.example.eemon551;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +19,7 @@ import retrofit2.Response;
 
 public class activity_home extends AppCompatActivity {
 
+    private ApiService apiService;
     private Button startButton;
     private TextView textGenre;
     private TextView textLocation;
@@ -39,8 +41,12 @@ public class activity_home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        apiService = ApiClient.getApiService();
+        SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        String username = prefs.getString("UserName", "test_user");
 
         initializeViews();
+        name.setText(username);
         loadFirstQuestionGenre();
     }
 
@@ -58,6 +64,8 @@ public class activity_home extends AppCompatActivity {
         setting_button = findViewById(R.id.setting_button);
         store = findViewById(R.id.store);
         store_img=findViewById(R.id.store_img);
+        money_num = findViewById(R.id.money_num);
+        name = findViewById(R.id.name);
     }
 
     public void setButtonClickListener(View view) {
@@ -69,7 +77,7 @@ public class activity_home extends AppCompatActivity {
     }
 
     private void loadFirstQuestionGenre() {
-        ApiService apiService = ApiClient.getApiService();
+
 
         // APIリクエストを実行
         apiService.getAllQuestions().enqueue(new Callback<List<Question>>() {
@@ -178,6 +186,23 @@ public class activity_home extends AppCompatActivity {
             store_img.setVisibility(View.GONE);
             setting_button.setText("≡");
         }
+    }
+    private void GetMoney(){
+        SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        int userId = prefs.getInt("UserId", 1);
+        apiService.getUserMoney(userId).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    int currentScore = response.body().getMoney();
+                    money_num.setText(String.valueOf(currentScore));
+                }
+            }
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("API Request Failure", "Error: ", t);
+            }
+        });
     }
 
     public void zukann(View view){
