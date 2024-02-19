@@ -119,8 +119,6 @@ public class garally extends AppCompatActivity {
                     runOnUiThread(() -> addImagesToGridLayout());
                 }
             }
-
-
             @Override
             public void onFailure(Call<List<Question>> call, Throwable t) {
                 Log.e("API Request Failure", "Error: ", t);
@@ -134,6 +132,7 @@ public class garally extends AppCompatActivity {
             ImageView imageView = new ImageView(this);
             DisplayQuestion(question,imageView);
             gridLayout_1.addView(imageView);
+
         }
         for (int i = 0; i < Kyoto_QuestionList.size(); i++) {
             Question question = Kyoto_QuestionList.get(i);
@@ -181,19 +180,6 @@ public class garally extends AppCompatActivity {
                 .override(600, 400) // 画像の解像度を指定
                 .into(imageView);
 
-        imageView.setOnClickListener(v -> {
-            card.setVisibility(View.VISIBLE);
-            zukan.setVisibility(View.GONE);
-            String card = question.getCard().replace("\"", "").trim();
-            int cardResId = getResources().getIdentifier(card, "drawable", getPackageName());
-            Glide.with(garally.this)
-                    .load(cardResId)
-                    .into(card_image);
-
-        });
-        Log.d("card_image", "Img: "+question.getImg());
-        Log.d("card_image", "card: "+question.getCard());
-
 
         if (question.getGenre_id() == 1) {
             imageView.setBackgroundColor(ContextCompat.getColor(this, R.color.food));
@@ -207,6 +193,18 @@ public class garally extends AppCompatActivity {
             imageView.setBackgroundColor(ContextCompat.getColor(this, R.color.culture));
         }
 
+        // if分岐 trueなら
+        imageView.setOnClickListener(v -> {
+            card.setVisibility(View.VISIBLE);
+            zukan.setVisibility(View.GONE);
+            String card = question.getCard().replace("\"", "").trim();
+            int cardResId = getResources().getIdentifier(card, "drawable", getPackageName());
+            Glide.with(garally.this)
+                    .load(cardResId)
+                    .into(card_image);
+
+        });
+        // if分岐する
         GridLayout.LayoutParams params = new GridLayout.LayoutParams();
         params.width = (int) getResources().getDimension(R.dimen.image_width); // 100dpをピクセル単位に変換
         params.height = (int) getResources().getDimension(R.dimen.image_height); // 100dpをピクセル単位に変換
