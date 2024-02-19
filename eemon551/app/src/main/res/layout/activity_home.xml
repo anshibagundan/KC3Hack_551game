@@ -130,13 +130,78 @@
           android:layout_width="75dp"
           android:layout_height="75dp"
           android:backgroundTint="#C89696"
-          android:layout_marginLeft="10dp"
+          android:layout_marginStart="10dp"
           android:layout_marginTop="10dp"
           android:text="≡"
           android:textSize="30dp"
           android:gravity="center"
           android:onClick="setting"
           app:cornerRadius="15dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:background="#77FFFFFF"
+            android:orientation="vertical">
+<!--    名前-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="left">
+
+<!--        称号-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="なにわの"
+                    android:textSize="30sp"
+                    />
+<!--        名前-->
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ユーザーName"
+                    android:textSize="30sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:orientation="horizontal">
+<!--お金-->
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="20dp"
+                    app:srcCompat="@drawable/money" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:gravity="bottom"
+                    android:text="x"
+                    android:textSize="30sp" />
+<!--        お金の値-->
+                <TextView
+                    android:id="@+id/money_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_marginEnd="20dp"
+                    android:gravity="bottom"
+                    android:text="100"
+                    android:textSize="30sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
 
 <!--      図鑑-->
       <Button
