@@ -218,7 +218,7 @@ public class garally extends AppCompatActivity {
 
         //if分岐
 
-        RelativeLayout.LayoutParams image_params = new RelativeLayout.LayoutParams(100,100);
+        RelativeLayout.LayoutParams image_params = new RelativeLayout.LayoutParams(300,300);
 //        image_params.setGravity(Gravity.CENTER);
         imageView.setLayoutParams(image_params);
         card_lay.addView(imageView);
@@ -227,8 +227,8 @@ public class garally extends AppCompatActivity {
         lay_txt.setText("?");
         lay_txt.setTextSize(40);
         lay_txt.setGravity(Gravity.CENTER);
-        lay_txt.setWidth(100);
-        lay_txt.setHeight(100);
+        lay_txt.setWidth(300);
+        lay_txt.setHeight(300);
 
         //if分岐
         lay_txt.setBackgroundColor(0xBB000000);
