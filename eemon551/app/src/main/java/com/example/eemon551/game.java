@@ -229,7 +229,10 @@ public class game extends AppCompatActivity {
                 seigo = true;
             });
         }else{
+            Log.d("LocationFetch", "locationId" + locationId);
+            Log.d("LocationFetch", "locid" + locId);
             buttonLeft.setOnClickListener(view -> {
+
                 if (locationId==locId) {
                     Log.d("LocationFetch", "left true");
                     // 正解の処理
@@ -247,10 +250,10 @@ public class game extends AppCompatActivity {
             buttonRight.setOnClickListener(view -> {
                 if (locId!=locationId) {
                     // 正解の処理
-                    seigoText.setText("不正解画像をセット");
+                    seigoText.setText("正解！画像をセット");
                 } else {
                     // 不正解の処理
-                    seigoText.setText("正解！画像をセット");
+                    seigoText.setText("不正解画像をセット");
                     updateUserScore(10); // スコアを10加算する
                 }
                 seigoText.setVisibility(View.VISIBLE);

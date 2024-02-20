@@ -1,15 +1,22 @@
 from django.db import models
 
 class Location(models.Model):
-    name = models.CharField(max_length=255, null=False)
-    img = models.TextField(default='no image')
+    name = models.CharField(max_length=255)
+    img = models.TextField(default='no image')  # TEXTデフォルト値の設定
     iskansai = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
 
 class Genre(models.Model):
-    name = models.CharField(max_length=255, null=False)
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+class Title(models.Model):
+    name = models.CharField(max_length=255)
+    rare = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
@@ -28,9 +35,9 @@ class Question(models.Model):
         return self.name
 
 class UserData(models.Model):
-    name = models.CharField(max_length=255, null=False)
-    level = models.IntegerField(default=1, null = True)
-    money = models.IntegerField(default=0)
+    name = models.CharField(max_length=255)
+    score = models.IntegerField(default=0)  # スコアの追加
+    combo = models.IntegerField(default=0)  # コンボの追加
 
     def __str__(self):
         return self.name
@@ -42,3 +49,11 @@ class UserQuestionData(models.Model):
 
     def __str__(self):
         return f"{self.user_data_id.name} - {self.qes_id.name}"
+
+class UserTitle(models.Model):
+    isOwn = models.BooleanField()
+    user_data_id = models.ForeignKey(UserData, on_delete=models.CASCADE, related_name='titles')
+    title_id = models.ForeignKey(Title, on_delete=models.CASCADE, related_name='users')
+
+    def __str__(self):
+        return f"{self.user_data_id.name} - {self.title_id.name}"
