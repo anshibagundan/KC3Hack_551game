@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -34,6 +35,7 @@ public class game extends AppCompatActivity {
     private TextView seigoText;
     private TextView touka_loading;
     private ImageView questionImage;
+    private ImageView huti;
     private boolean seigo = false;
 
     private FrameLayout kaisetu;
@@ -57,6 +59,7 @@ public class game extends AppCompatActivity {
     private int locationId;
     private FrameLayout kekka;
     private LinearLayout card_over;
+    private boolean button_caver = false;
 
 
     @Override
@@ -68,6 +71,7 @@ public class game extends AppCompatActivity {
         seigoText = findViewById(R.id.seigo);
         touka_loading = findViewById(R.id.touka_loading);
         questionImage = findViewById(R.id.Question_image);
+        huti = findViewById(R.id.huti);
         kaisetu = findViewById(R.id.kaisetu);
         toi = findViewById(R.id.toi);
         kaisetu_name = findViewById(R.id.kaisetu_name);
@@ -212,6 +216,7 @@ public class game extends AppCompatActivity {
                 }
                 seigoText.setVisibility(View.VISIBLE);
                 seigo = true;
+                button_caver = false;
             });
 
             buttonRight.setOnClickListener(view -> {
@@ -227,6 +232,7 @@ public class game extends AppCompatActivity {
                 }
                 seigoText.setVisibility(View.VISIBLE);
                 seigo = true;
+                button_caver = false;
             });
         }else{
             Log.d("LocationFetch", "locationId" + locationId);
@@ -245,6 +251,7 @@ public class game extends AppCompatActivity {
                 }
                 seigoText.setVisibility(View.VISIBLE);
                 seigo = true;
+                button_caver = false;
             });
 
             buttonRight.setOnClickListener(view -> {
@@ -258,6 +265,7 @@ public class game extends AppCompatActivity {
                 }
                 seigoText.setVisibility(View.VISIBLE);
                 seigo = true;
+                button_caver = false;
             });
         }
     }
@@ -288,16 +296,20 @@ public class game extends AppCompatActivity {
     }
 
     public void onTap_takara(View view){
+        button_caver = false;
         card_over.setVisibility(View.VISIBLE);
     }
 
     public void onTap_takara_back(View view){
         card_over.setVisibility(View.GONE);
+        button_caver = true;
     }
 
-    public void game_home(View view){
-        Intent intent = new Intent(game.this, activity_home.class);
-        startActivity(intent);
+    public void game_home(View view) {
+        if (button_caver) {
+            Intent intent = new Intent(game.this, activity_home.class);
+            startActivity(intent);
+        }
     }
 
 

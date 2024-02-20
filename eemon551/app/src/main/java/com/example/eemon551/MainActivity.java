@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         FrameLayout main = findViewById(R.id.main);
         FrameLayout set_user = findViewById(R.id.set_user);
         Button kettei = findViewById(R.id.kettei);
+        TextView user_title = findViewById(R.id.user_title);
 
         // APIサービスのインスタンスを取得
         ApiService apiService = ApiClient.getApiService();
@@ -82,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             // 2回目以降の起動時のUI設定
             configureUIForReturningUser(prefs, textView, main, set_user);
+            //称号
+            writeTitle(user_title);
         }
     }
 
@@ -124,5 +127,17 @@ public class MainActivity extends AppCompatActivity {
     private void navigateToHome() {
         Intent intent = new Intent(MainActivity.this, activity_home.class);
         startActivity(intent);
+    }
+
+    //称号
+    private void writeTitle(TextView user_title){
+        //DBから称号を取ってくる titleに格納
+        String title = "なにわの";
+        if(title != null){
+            user_title.setText(title);
+            user_title.setVisibility(View.VISIBLE);
+        }else{
+            user_title.setVisibility(View.GONE);
+        }
     }
 }

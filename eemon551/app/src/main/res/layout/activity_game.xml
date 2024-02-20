@@ -10,8 +10,17 @@
         android:id="@+id/toi"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
+        android:visibility="gone"
+        android:background="#33AA"
         >
+
+        <ImageView
+            android:id="@+id/huti"
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:layout_gravity="center"
+            android:src="@drawable/gakubuti" />
+
 
         <TextView
             android:id="@+id/question_number"
@@ -28,18 +37,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="230dp"
             android:layout_marginRight="100dp"
-            android:text="あるとき~!" />
+            android:backgroundTint="#CC6876"
+            android:text="あるとき~!"
+            android:textSize="20dp"/>
 
         <Button
             android:id="@+id/button_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="230dp"
             android:layout_marginLeft="100dp"
-            android:text="ないとき..." />
+            android:backgroundTint="#CC6876"
+            android:text="ないとき..."
+            android:textSize="20dp"/>
 
         <TextView
             android:id="@+id/question_text"
@@ -53,8 +66,10 @@
         <ImageView
             android:id="@+id/Question_image"
             android:layout_gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
             app:srcCompat="@android:drawable/alert_light_frame" />
 
         <TextView
@@ -91,6 +106,12 @@
         android:layout_height="match_parent"
         android:visibility="gone"
         >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:src="@drawable/game_back" />
 
         <TextView
             android:id="@+id/kaisetu_name"
@@ -138,7 +159,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#AA2244"
-        android:visibility="gone">
+        android:visibility="">
 
         <LinearLayout
             android:layout_width="350dp"
@@ -201,12 +222,13 @@
             </LinearLayout>
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="30dp"
-                android:text="終了"
+                android:layout_width="150dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="100dp"
                 android:onClick="game_home"
-                />
+                android:text="終了"
+                android:textSize="30dp"
+                app:cornerRadius="0dp" />
 
         </LinearLayout>
         <LinearLayout
