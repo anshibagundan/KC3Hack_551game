@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                     editor.apply();
                     Log.d("API_CALL", "User ID: " + userId);
                     // 別のActivityへ遷移
-                    navigateToHome();
+
                 } else {
                     Log.e("API_CALL", "User not found or error in API");
                 }
@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("API_CALL", "API call failed: " + t.getMessage());
             }
         });
+        navigateToHome();
     }
 
     // 2回目以降の起動時のUI設定を行うメソッド
