@@ -2,8 +2,8 @@ from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Location, Genre, Question, UserData, UserQuestionData, UserTitle, Title
-from .serializers import LocationSerializer, GenreSerializer, QuestionSerializer, UserDataSerializer, UserQuestionDataSerializer, UserTitleSerializer, TitleSerializer
+from .models import Location, Genre, Question, UserData, UserQuestionData, UserTitle, Title, BackGround, UserBackGround
+from .serializers import LocationSerializer, GenreSerializer, QuestionSerializer, UserDataSerializer, UserQuestionDataSerializer, UserTitleSerializer, TitleSerializer, BackGroundSerializer, UserBackGroundSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from .filters import UserQuestionDataFilter
 
@@ -14,10 +14,15 @@ class LocationViewSet(viewsets.ModelViewSet):
 class GenreViewSet(viewsets.ModelViewSet):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
-    
+
 class TitleViewSet(viewsets.ModelViewSet):
     queryset = Title.objects.all()
     serializer_class = TitleSerializer
+
+
+class BackGroundViewSet(viewsets.ModelViewSet):
+    queryset = BackGround.objects.all()
+    serializer_class = BackGroundSerializer
 
 class QuestionViewSet(viewsets.ModelViewSet):
     queryset = Question.objects.all()
@@ -33,9 +38,13 @@ class UserQuestionDataViewSet(viewsets.ModelViewSet):
     filter_backends = (DjangoFilterBackend,)
     filterset_class = UserQuestionDataFilter
 
-class UserTitleViewSet(viewsets.ModelViewSet): 
+class UserTitleViewSet(viewsets.ModelViewSet):
     queryset = UserTitle.objects.all()
     serializer_class = UserTitleSerializer
+
+class UserBackGroundViewSet(viewsets.ModelViewSet):
+    queryset = UserBackGround.objects.all()
+    serializer_class = UserBackGroundSerializer
 class UserQuestionDataDelete(APIView):
     def delete(self, request, *args, **kwargs):
         # クエリパラメータから qes_id と user_data_id を取得

@@ -11,6 +11,9 @@ router.register(r'titles', views.TitleViewSet)
 router.register(r'questions', views.QuestionViewSet)
 router.register(r'userdatas', views.UserDataViewSet)
 router.register(r'userquestiondatas', views.UserQuestionDataViewSet)
+router.register(r'backgrounds', views.BackGroundViewSet)
+router.register(r'usertitles', views.UserTitleViewSet)
+router.register(r'userbackgrounds', views.UserBackGroundViewSet)
 
 # APIのURLパターンをurlpatternsに追加
 urlpatterns = [
