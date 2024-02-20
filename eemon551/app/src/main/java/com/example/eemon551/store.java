@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -106,5 +107,10 @@ public class store extends AppCompatActivity {
             gridLayout_1.addView(imageView);
 
 
+    }
+
+    public void introduce_home(View view) {
+        Intent intent = new Intent(store.this, activity_home.class);
+        startActivity(intent);
     }
 }
