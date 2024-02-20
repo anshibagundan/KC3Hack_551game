@@ -96,7 +96,7 @@
             android:textColor="@color/white"
             android:textSize="30dp"
             android:gravity="center"
-            android:onClick="setting" />
+            android:onClick="on" />
     </FrameLayout>
 
 
