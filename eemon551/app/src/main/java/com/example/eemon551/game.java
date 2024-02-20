@@ -149,7 +149,6 @@ public class game extends AppCompatActivity {
                 }
             });
         }
-
     }
 
     private void DisplayQuestion(Question question){
@@ -189,7 +188,9 @@ public class game extends AppCompatActivity {
                     Button buttonLeft = findViewById(R.id.button_left);
                     Button buttonRight = findViewById(R.id.button_right);
 
-                    setupButtonListeners(buttonLeft, buttonRight, currentQuestionIsKansai,locId);
+                    if (touka_loading.getVisibility() == View.GONE) {
+                        setupButtonListeners(buttonLeft, buttonRight, currentQuestionIsKansai, locId);
+                    }
                 }
             }
 
@@ -200,8 +201,8 @@ public class game extends AppCompatActivity {
         });
     }
 
-    private void setupButtonListeners(Button buttonLeft, Button buttonRight,Boolean currentQuestionIsKansai, int locId) {
 
+    private void setupButtonListeners(Button buttonLeft, Button buttonRight,Boolean currentQuestionIsKansai, int locId) {
         if (locationId == 0) {
             buttonLeft.setOnClickListener(view -> {
                 if (currentQuestionIsKansai) {
@@ -216,7 +217,6 @@ public class game extends AppCompatActivity {
                 }
                 seigoText.setVisibility(View.VISIBLE);
                 seigo = true;
-                button_caver = false;
             });
 
             buttonRight.setOnClickListener(view -> {
@@ -270,6 +270,10 @@ public class game extends AppCompatActivity {
         }
     }
 
+
+    public void on(View view){
+
+    }
     public void onTap(View view){
         if(seigo){
             kaisetu.setVisibility(View.VISIBLE);
@@ -293,6 +297,7 @@ public class game extends AppCompatActivity {
             toi.setVisibility(View.VISIBLE);
             loadQuestion();
         }
+        button_caver = false;
     }
 
     public void onTap_takara(View view){
