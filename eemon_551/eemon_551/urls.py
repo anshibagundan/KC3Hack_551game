@@ -7,6 +7,7 @@ from eemon_551_app.views import UserIdView
 router = DefaultRouter()
 router.register(r'locations', views.LocationViewSet)
 router.register(r'genres', views.GenreViewSet)
+router.register(r'titles', views.TitleViewSet)
 router.register(r'questions', views.QuestionViewSet)
 router.register(r'userdatas', views.UserDataViewSet)
 router.register(r'userquestiondatas', views.UserQuestionDataViewSet)
