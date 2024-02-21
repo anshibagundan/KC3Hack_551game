@@ -28,14 +28,7 @@ public class activity_home extends AppCompatActivity {
     public int locationId = 0;
 
     private TextView touka;
-    private Button zukann;
-    private Button introduce;
-    private Button store;
     private Boolean setting = false;
-    private  ImageView zukan_img;
-    private  ImageView setsumei_img;
-    private ImageView store_img;
-    private Button setting_button;
     private TextView name;
     private TextView money_num;
     private TextView shogo;
@@ -75,14 +68,6 @@ public class activity_home extends AppCompatActivity {
         textGenre = findViewById(R.id.genre);
         textLocation = findViewById(R.id.prefecture);
         img1 = findViewById(R.id.right_genre);
-        touka = findViewById(R.id.touka);
-        zukann = findViewById(R.id.zukann);
-        introduce = findViewById(R.id.introduce);
-        zukan_img=findViewById(R.id.zukan_img);
-        setsumei_img=findViewById(R.id.setsumei_img);
-        setting_button = findViewById(R.id.setting_button);
-        store = findViewById(R.id.store);
-        store_img=findViewById(R.id.store_img);
         money_num = findViewById(R.id.money_num);
         name = findViewById(R.id.name);
         shogo = findViewById(R.id.shogo);
@@ -187,28 +172,7 @@ public class activity_home extends AppCompatActivity {
         locationId = locationId % 6;
         loadFirstQuestionGenre();
     }
-    public void setting(View view){
-        setting = !setting;
-        if (setting){
-            touka.setVisibility(View.VISIBLE);
-            zukann.setVisibility(View.VISIBLE);
-            introduce.setVisibility(View.VISIBLE);
-            zukan_img.setVisibility(View.VISIBLE);
-            setsumei_img.setVisibility(View.VISIBLE);
-            store.setVisibility(View.VISIBLE);
-            store_img.setVisibility(View.VISIBLE);
-            setting_button.setText("X");
-        }else{
-            touka.setVisibility(View.GONE);
-            zukann.setVisibility(View.GONE);
-            introduce.setVisibility(View.GONE);
-            zukan_img.setVisibility(View.GONE);
-            setsumei_img.setVisibility(View.GONE);
-            store.setVisibility(View.GONE);
-            store_img.setVisibility(View.GONE);
-            setting_button.setText("≡");
-        }
-    }
+
     private void GetMoney(){
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         int userId = prefs.getInt("UserId", 1);
@@ -288,4 +252,9 @@ public class activity_home extends AppCompatActivity {
         Intent intent = new Intent(activity_home.this, store.class);
         startActivity(intent);
     }
+    public void decoration(View view){
+        Intent intent = new Intent(activity_home.this, decoration.class);
+        startActivity(intent);
+    }
+
 }

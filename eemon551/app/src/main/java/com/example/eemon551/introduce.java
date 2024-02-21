@@ -18,4 +18,16 @@ public class introduce extends AppCompatActivity {
         Intent intent = new Intent(introduce.this, activity_home.class);
         startActivity(intent);
     }
+    public void introduce_zukann(View view){
+        Intent intent = new Intent(introduce.this, garally.class);
+        startActivity(intent);
+    }
+    public void introduce_store(View view){
+        Intent intent = new Intent(introduce.this, store.class);
+        startActivity(intent);
+    }
+    public void introduce_decoration(View view){
+        Intent intent = new Intent(introduce.this, decoration.class);
+        startActivity(intent);
+    }
 }
