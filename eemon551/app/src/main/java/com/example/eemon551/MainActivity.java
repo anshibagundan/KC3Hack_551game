@@ -10,6 +10,9 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -18,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     // APIサービスのインスタンスを取得
     ApiService apiService = ApiClient.getApiService();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,8 +125,6 @@ public class MainActivity extends AppCompatActivity {
     private void configureUIForReturningUser(SharedPreferences prefs, TextView textView, FrameLayout main, FrameLayout set_user, int userId) {
         main.setVisibility(View.VISIBLE);
         set_user.setVisibility(View.GONE);
-
-
         apiService.getUser(userId).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -140,34 +142,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // 別のActivityへ遷移するメソッド
-    private void navigateToHome() {
-        Intent intent = new Intent(MainActivity.this, activity_home.class);
-        startActivity(intent);
-    }
+
 
     //称号
     private void writeTitle(TextView user_title, int userId){
         //DBから称号を取ってくる titleに格納
-        Log.e("UserTitleId", "" +userId);
-        apiService.getUserTitles(userId).enqueue(new Callback<UserTitles>() {
+        apiService.getUserTitles(userId).enqueue(new Callback<List<UserTitles>>() {
             @Override
-            public void onResponse(Call<UserTitles> call, Response<UserTitles> response) {
+            public void onResponse(Call<List<UserTitles>> call, Response<List<UserTitles>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    int UserTitleId = response.body().getTitle_id();
-                        Log.e("UserTitleId", "" +UserTitleId);
-                        setTitleName(UserTitleId,user_title);
-                        Log.e("UserTitleId", "" +UserTitleId);
-
-
+                    int i = 0;
+                    int usertitleid = 0;
+                    while (!response.body().get(i).getUse()) {
+                        i = i + 1;
+                    }
+                    usertitleid = response.body().get(i).getTitle_id();
+                    // ここでtitlesからtitle_idを取得
+                    Log.e("UserTitleId", "" + usertitleid);
+                    setTitleName(usertitleid, user_title);
                 }
             }
+
             @Override
-            public void onFailure(Call<UserTitles> call, Throwable t) {
-                Log.e("API_CALL", "API call failed: " + t.getMessage());
+            public void onFailure(Call<List<UserTitles>> call, Throwable t) {
+                Log.e("UserTitleId", "API call failed: " + t.getMessage());
             }
         });
+
+
     }
     private void setTitleName(int UserTitleId,TextView user_title){
+
 
         apiService.getTitle(UserTitleId).enqueue(new Callback<Titles>() {
             @Override
@@ -183,5 +188,10 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("UserTitleId", "API call failed: " + t.getMessage());
             }
         });
+
+    }
+    private void navigateToHome() {
+        Intent intent = new Intent(MainActivity.this, activity_home.class);
+        startActivity(intent);
     }
 }

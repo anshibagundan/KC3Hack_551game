@@ -54,8 +54,8 @@ public interface ApiService {
 
     @GET("/titles/{id}/")
     Call<Titles> getTitle(@Path("id") int titleId);
-    @GET("/usertitlss/")
-    Call<UserTitles> getUserTitles(@Query("user_data_id") int user_data_id);
+    @GET("/usertitles/")
+    Call<List<UserTitles>> getUserTitles(@Query("user_data_id") int user_data_id);
 
 
 
