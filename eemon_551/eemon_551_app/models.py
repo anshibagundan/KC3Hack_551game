@@ -43,8 +43,8 @@ class Question(models.Model):
 
 class UserData(models.Model):
     name = models.CharField(max_length=255)
-    money = models.IntegerField(default=0)  # スコアの追加
-    combo = models.IntegerField(default=0)  # コンボの追加
+    level = models.IntegerField(default=0)
+    money = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name

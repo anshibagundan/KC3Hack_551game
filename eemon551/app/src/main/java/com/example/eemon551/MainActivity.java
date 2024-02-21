@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
         // APIサービスのインスタンスを取得
         ApiService apiService = ApiClient.getApiService();
 
+
+
         // 初回起動時の処理
         if (isFirstRun) {
             // 初回起動時のUI設定
@@ -68,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
                                 Log.d("first_db", "Data successfully sent to the server.");
                                 // ユーザーIDの取得とSharedPreferencesへの保存
                                 fetchAndSaveUserId(apiService, name, prefs);
+                                Log.d("isFirstRun", "onCreate: "+ isFirstRun);
+                                SharedPreferences.Editor editor = prefs.edit();
+                                editor.putBoolean("isFirstRun", false);
                             } else {
                                 Log.e("first_db", "Failed to send data. Response code: " + response.code());
                             }
