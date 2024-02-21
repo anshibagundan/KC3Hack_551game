@@ -19,7 +19,6 @@ class TitleViewSet(viewsets.ModelViewSet):
     queryset = Title.objects.all()
     serializer_class = TitleSerializer
 
-
 class BackGroundViewSet(viewsets.ModelViewSet):
     queryset = BackGround.objects.all()
     serializer_class = BackGroundSerializer

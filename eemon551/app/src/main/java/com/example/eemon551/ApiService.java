@@ -29,8 +29,6 @@ public interface ApiService {
 
     @GET("locations/{id}/")
     Call<Location> getLocationById(@Path("id") int locationId);
-    @GET()
-
 
     @GET("/userdatas/{id}/")
     Call<User> getUser(@Path("id") int userId);
@@ -54,6 +52,10 @@ public interface ApiService {
     @GET("api/user-id/")
     Call<User> getUserId(@Query("name") String name, @Query("level") int level, @Query("money") int money);
 
+    @GET("/titles/{id}/")
+    Call<Titles> getTitle(@Path("id") int titleId);
+    @GET("/usertitlss/")
+    Call<UserTitles> getUserTitles(@Query("user_data_id") int user_data_id);
 
 
 

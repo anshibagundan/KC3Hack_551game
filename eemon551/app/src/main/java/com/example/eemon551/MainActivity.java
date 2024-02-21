@@ -36,10 +36,6 @@ public class MainActivity extends AppCompatActivity {
         Button kettei = findViewById(R.id.kettei);
         TextView user_title = findViewById(R.id.user_title);
 
-
-
-
-
         // 初回起動時の処理
         if (isFirstRun) {
             // 初回起動時のUI設定
@@ -86,9 +82,11 @@ public class MainActivity extends AppCompatActivity {
             });
         } else {
             // 2回目以降の起動時のUI設定
-            configureUIForReturningUser(prefs, textView, main, set_user);
+            int userId = prefs.getInt("UserId", 0);
+
+            configureUIForReturningUser(prefs, textView, main, set_user,userId);
             //称号
-            writeTitle(user_title);
+            writeTitle(user_title,userId);
         }
     }
 
@@ -120,10 +118,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // 2回目以降の起動時のUI設定を行うメソッド
-    private void configureUIForReturningUser(SharedPreferences prefs, TextView textView, FrameLayout main, FrameLayout set_user) {
+    private void configureUIForReturningUser(SharedPreferences prefs, TextView textView, FrameLayout main, FrameLayout set_user, int userId) {
         main.setVisibility(View.VISIBLE);
         set_user.setVisibility(View.GONE);
-        int userId = prefs.getInt("UserId", 0);
+
 
         apiService.getUser(userId).enqueue(new Callback<User>() {
             @Override
@@ -148,14 +146,42 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //称号
-    private void writeTitle(TextView user_title){
+    private void writeTitle(TextView user_title, int userId){
         //DBから称号を取ってくる titleに格納
-        String title = "なにわの";
-        if(title != null){
-            user_title.setText(title);
-            user_title.setVisibility(View.VISIBLE);
-        }else{
-            user_title.setVisibility(View.GONE);
-        }
+        Log.e("UserTitleId", "" +userId);
+        apiService.getUserTitles(userId).enqueue(new Callback<UserTitles>() {
+            @Override
+            public void onResponse(Call<UserTitles> call, Response<UserTitles> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    int UserTitleId = response.body().getTitle_id();
+                        Log.e("UserTitleId", "" +UserTitleId);
+                        setTitleName(UserTitleId,user_title);
+                        Log.e("UserTitleId", "" +UserTitleId);
+
+
+                }
+            }
+            @Override
+            public void onFailure(Call<UserTitles> call, Throwable t) {
+                Log.e("API_CALL", "API call failed: " + t.getMessage());
+            }
+        });
+    }
+    private void setTitleName(int UserTitleId,TextView user_title){
+
+        apiService.getTitle(UserTitleId).enqueue(new Callback<Titles>() {
+            @Override
+            public void onResponse(Call<Titles> call, Response<Titles> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String title = response.body().getName();
+                    user_title.setText(title);
+                    Log.e("UserTitleId", "" +title);
+                }
+            }
+            @Override
+            public void onFailure(Call<Titles> call, Throwable t) {
+                Log.e("UserTitleId", "API call failed: " + t.getMessage());
+            }
+        });
     }
 }
