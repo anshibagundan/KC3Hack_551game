@@ -244,17 +244,11 @@ public class garally extends AppCompatActivity {
 
     }
 
-
-
     public void back_zukan(View view) {
         zukan.setVisibility(View.VISIBLE);
         card.setVisibility(View.GONE);
     }
 
-    public void back_home(View view){
-        Intent intent = new Intent(garally.this, activity_home.class);
-        startActivity(intent);
-    }
 
     //    ホームデータ遷移
     public void zukan_store(View view){
