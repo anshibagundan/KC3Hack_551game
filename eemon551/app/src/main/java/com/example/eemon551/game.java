@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -54,6 +55,7 @@ public class game extends AppCompatActivity {
 
     private String questionNumber_Str = "第1問";
     private Set<Integer> displayedQuestionIds = new HashSet<>();
+    private Set<Integer> TrueQuestionIds = new HashSet<>();
 
     private int genreId;
     private int locationId;
@@ -61,6 +63,10 @@ public class game extends AppCompatActivity {
     private LinearLayout card_over;
     private boolean button_caver = false;
     private Button finish;
+    private ImageView takara;
+    private boolean T_Q = false;
+    private Integer randomValue;
+    private ImageView get_card;
 
 
     @Override
@@ -83,6 +89,8 @@ public class game extends AppCompatActivity {
         kekka = findViewById(R.id.kekka);
         card_over = findViewById(R.id.card_over);
         finish = findViewById(R.id.finish);
+        takara = findViewById(R.id.takara);
+        get_card = findViewById(R.id.get_card);
 
 
         // ApiServiceインスタンスを取得
@@ -178,6 +186,10 @@ public class game extends AppCompatActivity {
         //出題済みidを格納
         displayedQuestionIds.add(question.getId());
 
+        if (T_Q){
+            TrueQuestionIds.add(question.getId());
+            T_Q = false;
+        }
     }
 
     private void loadLocationData(int locId) {
@@ -204,6 +216,7 @@ public class game extends AppCompatActivity {
     }
 
 
+    //buttomと正誤判定
     private void setupButtonListeners(Button buttonLeft, Button buttonRight,Boolean currentQuestionIsKansai, int locId) {
         if (locationId == 0) {
             buttonLeft.setOnClickListener(view -> {
@@ -212,6 +225,7 @@ public class game extends AppCompatActivity {
                     Log.d("LocationFetch", "left true");
                     seigoText.setImageResource(R.drawable.wahhahhahha);
                     updateUserScore(10);
+                    T_Q = true;
                 } else {
                     // 不正解の処理
                     Log.d("LocationFetch", "left false");
@@ -227,6 +241,7 @@ public class game extends AppCompatActivity {
                     // 正解の処理
                     seigoText.setImageResource(R.drawable.wahhahhahha);
                     updateUserScore(10); // スコアを10加算する
+                    T_Q = true;
                 } else {
                     Log.d("LocationFetch", "right false");
                     // 不正解の処理
@@ -246,6 +261,7 @@ public class game extends AppCompatActivity {
                     // 正解の処理
                     seigoText.setImageResource(R.drawable.wahhahhahha);
                     updateUserScore(10);
+                    T_Q = true;
                 } else {
                     Log.d("LocationFetch", "left false");
                     // 不正解の処理
@@ -260,6 +276,7 @@ public class game extends AppCompatActivity {
                 if (locId!=locationId) {
                     // 正解の処理
                     seigoText.setImageResource(R.drawable.wahhahhahha);
+                    T_Q = true;
                 } else {
                     // 不正解の処理
                     seigoText.setImageResource(R.drawable.gaann);
@@ -283,6 +300,23 @@ public class game extends AppCompatActivity {
             toi.setVisibility(View.GONE);
             if (questionNumber>9){
                 next.setText("結果へ");
+                randomValue = getRandomElement(TrueQuestionIds);
+                System.out.println("ランダムに選ばれた値: " + randomValue);
+
+                apiService.getQuestionById(randomValue).enqueue(new Callback<Question>() {
+                    @Override
+                    public void onResponse(Call<Question> call, Response<Question> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            String img = response.body().getCard().replace("\"", "").trim();
+                            int card_link = getResources().getIdentifier(img, "drawable", getPackageName());
+                            get_card.setImageResource(card_link);
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<Question> call, Throwable t) {
+                        Log.e("API Request Failure", "Error: ", t);
+                    }
+                });
             }
         }
     }
@@ -304,12 +338,28 @@ public class game extends AppCompatActivity {
 
     public void onTap_takara(View view){
         button_caver = false;
+
         card_over.setVisibility(View.VISIBLE);
     }
 
     public void onTap_takara_back(View view){
         card_over.setVisibility(View.GONE);
         finish.setVisibility(View.VISIBLE);
+        apiService.getQuestionById(randomValue).enqueue(new Callback<Question>() {
+            @Override
+            public void onResponse(Call<Question> call, Response<Question> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String img = response.body().getCard().replace("\"", "").trim();
+                    int card_link = getResources().getIdentifier(img, "drawable", getPackageName());
+                    takara.setImageResource(card_link);
+                }
+            }
+            @Override
+            public void onFailure(Call<Question> call, Throwable t) {
+                Log.e("API Request Failure", "Error: ", t);
+            }
+        });
+
         button_caver = true;
     }
 
@@ -359,5 +409,9 @@ public class game extends AppCompatActivity {
             }
         });
     }
-
+    private <T> T getRandomElement(Set<T> set) {
+        List<T> list = new ArrayList<>(set);
+        Random random = new Random();
+        return list.get(random.nextInt(list.size()));
+    }
 }
