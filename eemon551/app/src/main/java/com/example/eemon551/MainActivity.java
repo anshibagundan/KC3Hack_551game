@@ -234,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
                                 Log.e("UserBackgroundId", "userbackgroundid: " + userbackgroundid);
                                 Log.e("UserBackgroundId", "user_data_id: " + response.body().get(i).getUser_data_id());
 
-                                setBackground(userbackgroundid, back_img,image_2);
+                                setBackground(userbackgroundid, background_image,background_image2);
 
                             } else {
                                 // 使用中のタイトルが見つからない場合の処理
@@ -271,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     background_image.setBackgroundResource(resourceId);
-                                    image_2.setBackgroundResource(resourceId);
+                                    background_image2.setBackgroundResource(resourceId);
                                 }
                             });
                         } else {

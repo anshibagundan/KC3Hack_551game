@@ -32,6 +32,7 @@ public class activity_home extends AppCompatActivity {
     private TextView name;
     private TextView money_num;
     private TextView shogo;
+    private ImageView image_3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,7 @@ public class activity_home extends AppCompatActivity {
        });
 
         writeTitle(shogo,userId);
+        setBackgroundid(image_3,userId);
         GetMoney();
         loadFirstQuestionGenre();
     }
@@ -71,6 +73,7 @@ public class activity_home extends AppCompatActivity {
         money_num = findViewById(R.id.money_num);
         name = findViewById(R.id.name);
         shogo = findViewById(R.id.shogo);
+        image_3 = findViewById(R.id.image_3);
     }
 
     //start button
@@ -238,6 +241,81 @@ public class activity_home extends AppCompatActivity {
             }
         });
 
+    }
+    private void setBackgroundid(ImageView background_image, int userId){
+        //DBから称号を取ってくる titleに格納
+        apiService.getUserBackgrounds(userId).enqueue(new Callback<List<UserBackground>>() {
+            @Override
+            public void onResponse(Call<List<UserBackground>> call, Response<List<UserBackground>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.e("UserBackgroundId", "userId: " + userId);
+                    int j = 0;
+                    while (j < response.body().size() && response.body().get(j).getUser_data_id() != userId) {
+                        j++;
+                    }
+                    if (j < response.body().size()) { // ユーザーIDが見つかった場合
+                        int i = j;
+                        while (i < response.body().size() && !response.body().get(i).getUse()) {
+                            i++;
+                        }
+                        if (i < response.body().size()) { // 使用中のタイトルが見つかった場合
+                            int userbackgroundid = response.body().get(i).getBackground_id();
+
+                            Log.e("UserBackgroundId", "userbackgroundid: " + userbackgroundid);
+                            Log.e("UserBackgroundId", "user_data_id: " + response.body().get(i).getUser_data_id());
+
+                            setBackground(userbackgroundid, background_image);
+
+                        } else {
+                            // 使用中のタイトルが見つからない場合の処理
+                            Log.e("UserBackgroundId", "No active background found");
+                        }
+                    } else {
+                        // ユーザーIDが見つからない場合の処理
+                        Log.e("UserBackgroundId", "User ID not found");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<UserBackground>> call, Throwable t) {
+                Log.e("UserBackgroundId", "API call failed: " + t.getMessage());
+            }
+        });
+
+
+    }
+    private void setBackground(int Userbackgroundid, ImageView background_image){
+
+
+        apiService.getBackgrounds(Userbackgroundid).enqueue(new Callback<background>() {
+            @Override
+            public void onResponse(Call<background> call, Response<background> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String img = response.body().getImg().replace("\"", "").trim();
+                    Log.e("UserBackgroundId", "img: " + img);
+                    int resourceId = getResources().getIdentifier(img, "drawable", getPackageName());
+                    if (resourceId != 0) { // リソースIDが有効な場合
+                        // UIスレッド上で背景を設定
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                background_image.setBackgroundResource(resourceId);
+                            }
+                        });
+                    } else {
+                        Log.e("UserBackgroundId", "Resource ID not found for: " + img);
+                    }
+
+                    Log.e("UserBackgroundId", "Resource ID: " + resourceId);
+
+                }
+            }
+            @Override
+            public void onFailure(Call<background> call, Throwable t) {
+                Log.e("UserBackgroundId", "API call failed: " + t.getMessage());
+            }
+        });
     }
 
     public void zukann(View view){

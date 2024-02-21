@@ -62,8 +62,8 @@ public interface ApiService {
     @GET("/userbackgrounds/")
     Call<List<UserBackground>> getUserBackgrounds(@Query("user_data_id") int user_data_id);
 
+    @PUT("/userbackgrounds/updateUseStatus")
+    Call<Void> updateUserBackgroundUseStatus(@Body UserBackgroundUseUpdateRequest request);
 
+    }
 
-
-
-}
