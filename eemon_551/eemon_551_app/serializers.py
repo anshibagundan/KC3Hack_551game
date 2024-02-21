@@ -45,7 +45,4 @@ class UserBackGroundSerializer(serializers.ModelSerializer):
         model = UserBackGround
         fields = '__all__'
 
-class UserBackgroundUseUpdateSerializer(serializers.Serializer):
-    user_data_id = serializers.IntegerField()
-    background_id = serializers.IntegerField()
 

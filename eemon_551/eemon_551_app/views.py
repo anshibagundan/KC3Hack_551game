@@ -82,7 +82,7 @@ class UserIdView(APIView):
 
 class UserBackgroundUseUpdateView(APIView):
     def put(self, request, *args, **kwargs):
-        serializer = UserBackgroundUseUpdateSerializer(data=request.data)
+        serializer = UserBackGroundSerializer(data=request.data)
         if serializer.is_valid():
             user_data_id = serializer.validated_data['user_data_id']
             background_id = serializer.validated_data['background_id']
