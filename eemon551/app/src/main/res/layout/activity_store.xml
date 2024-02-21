@@ -535,7 +535,7 @@
                             android:id="@+id/shop_back"
                             android:layout_width="150dp"
                             android:layout_height="200dp"
-                            app:srcCompat="@drawable/K1"
+                            app:srcCompat="@drawable/tobita"
                             android:layout_gravity="center"
                             />
                             <LinearLayout
