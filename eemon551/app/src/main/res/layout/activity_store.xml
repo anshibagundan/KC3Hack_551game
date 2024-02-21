@@ -7,6 +7,7 @@
     tools:context=".store">
 
     <FrameLayout
+        android:id="@+id/store"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#ffe6cc"
@@ -84,16 +85,18 @@
                         android:layout_gravity="center"
                         android:columnCount="3"
                         android:useDefaultMargins="true"
+
                         >
     <!--たこ焼き-->
-                    <LinearLayout
+                        <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_columnWeight="1"
                         android:padding="10dp"
                         android:background="#F5BF"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:onClick="go_buy_card">
 
                     <TextView
                         android:layout_width="100dp"
@@ -136,164 +139,219 @@
                     </LinearLayout>
 
                 </LinearLayout>
-                    <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_columnWeight="1"
-                    android:padding="10dp"
-                    android:background="#F5BF"
-                    android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_columnWeight="1"
+                            android:padding="10dp"
+                            android:background="#F5BF"
+                            android:orientation="vertical"
+                            android:onClick="go_buy_card">
 
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="30dp"
-                        android:text="めっちゃうまたこ焼き"
-                        android:textSize="10sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:gravity="center"
-                        android:layout_marginStart="5dp"/>
+                            <TextView
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:text="めっちゃうまたこ焼き"
+                                android:textSize="10sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                android:layout_marginStart="5dp"/>
 
-                    <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        app:srcCompat="@drawable/takoyaki"
-                        android:layout_gravity="center"
-                        android:background="@color/food"
-                        />
-                    <LinearLayout
-                        android:layout_width="100dp"
+                            <ImageView
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                app:srcCompat="@drawable/takoyaki"
+                                android:layout_gravity="center"
+                                android:background="@color/food"
+                                />
+                            <LinearLayout
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:layout_marginTop="5dp"
+                                >
+
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    app:srcCompat="@drawable/money" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="50dp"
+                                    android:text="500"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/white"
+                                    android:gravity="center"
+                                    android:layout_marginStart="5dp"/>
+                            </LinearLayout>
+
+                        </LinearLayout>
+                        <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:layout_marginTop="5dp"
-                        >
-
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            app:srcCompat="@drawable/money" />
+                        android:layout_gravity="center"
+                        android:layout_columnWeight="1"
+                        android:padding="10dp"
+                        android:background="#F5BF"
+                        android:orientation="vertical"
+                        android:onClick="go_buy_card">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="50dp"
-                            android:text="500"
-                            android:textSize="20sp"
+                            android:layout_width="100dp"
+                            android:layout_height="30dp"
+                            android:text="めっちゃうまたこ焼き"
+                            android:textSize="10sp"
                             android:textStyle="bold"
                             android:textColor="@color/white"
                             android:gravity="center"
                             android:layout_marginStart="5dp"/>
-                    </LinearLayout>
-
-                </LinearLayout>
-                    <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_columnWeight="1"
-                    android:padding="10dp"
-                    android:background="#F5BF"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="30dp"
-                        android:text="めっちゃうまたこ焼き"
-                        android:textSize="10sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:gravity="center"
-                        android:layout_marginStart="5dp"/>
-
-                    <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        app:srcCompat="@drawable/takoyaki"
-                        android:layout_gravity="center"
-                        android:background="@color/food"
-                        />
-                    <LinearLayout
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:layout_marginTop="5dp"
-                        >
 
                         <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            app:srcCompat="@drawable/money" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="50dp"
-                            android:text="500"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/white"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            app:srcCompat="@drawable/takoyaki"
+                            android:layout_gravity="center"
+                            android:background="@color/food"
+                            />
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:layout_marginStart="5dp"/>
+                            android:layout_marginTop="5dp"
+                            >
+
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                app:srcCompat="@drawable/money" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:text="500"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                android:layout_marginStart="5dp"/>
+                        </LinearLayout>
+
                     </LinearLayout>
-
-                </LinearLayout>
-                    <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_columnWeight="1"
-                    android:padding="10dp"
-                    android:background="#F5BF"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="30dp"
-                        android:text="めっちゃうまたこ焼き"
-                        android:textSize="10sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:gravity="center"
-                        android:layout_marginStart="5dp"/>
-
-                    <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        app:srcCompat="@drawable/takoyaki"
-                        android:layout_gravity="center"
-                        android:background="@color/food"
-                        />
-                    <LinearLayout
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:layout_marginTop="5dp"
-                        >
-
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            app:srcCompat="@drawable/money" />
-
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="50dp"
-                            android:text="500"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/white"
-                            android:gravity="center"
-                            android:layout_marginStart="5dp"/>
-                    </LinearLayout>
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_columnWeight="1"
+                            android:padding="10dp"
+                            android:background="#F5BF"
+                            android:orientation="vertical"
+                            android:onClick="go_buy_card">
 
-                </LinearLayout>
-                    <LinearLayout
+                            <TextView
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:text="めっちゃうまたこ焼き"
+                                android:textSize="10sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                android:layout_marginStart="5dp"/>
+
+                            <ImageView
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                app:srcCompat="@drawable/takoyaki"
+                                android:layout_gravity="center"
+                                android:background="@color/food"
+                                />
+                            <LinearLayout
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:layout_marginTop="5dp"
+                                >
+
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    app:srcCompat="@drawable/money" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="50dp"
+                                    android:text="500"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/white"
+                                    android:gravity="center"
+                                    android:layout_marginStart="5dp"/>
+                            </LinearLayout>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_columnWeight="1"
+                            android:padding="10dp"
+                            android:background="#F5BF"
+                            android:orientation="vertical"
+                            android:onClick="go_buy_card">
+
+                            <TextView
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:text="めっちゃうまたこ焼き"
+                                android:textSize="10sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                android:layout_marginStart="5dp"/>
+
+                            <ImageView
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                app:srcCompat="@drawable/takoyaki"
+                                android:layout_gravity="center"
+                                android:background="@color/food"
+                                />
+                            <LinearLayout
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:layout_marginTop="5dp"
+                                >
+
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    app:srcCompat="@drawable/money" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="50dp"
+                                    android:text="500"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/white"
+                                    android:gravity="center"
+                                    android:layout_marginStart="5dp"/>
+                            </LinearLayout>
+
+                        </LinearLayout>
+                        <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_columnWeight="1"
                     android:padding="10dp"
                     android:background="#F000"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                        >
 
                     <TextView
                         android:layout_width="100dp"
@@ -328,7 +386,8 @@
                         android:textSize="30sp"
                         android:textStyle="bold"
                         android:layout_gravity="center_horizontal"
-                        android:gravity="center_horizontal"/>
+                        android:gravity="center_horizontal"
+                        />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -336,19 +395,23 @@
                         android:orientation="vertical" >
 <!--                称号1        -->
                         <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/place"
-                        android:orientation="vertical"
-                        android:layout_marginBottom="10dp">
-                        <TextView
+                            android:id="@+id/title1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/place"
+                            android:orientation="vertical"
+                            android:layout_marginBottom="10dp"
+                            android:onClick="go_buy_title"
+                            >
+                            <TextView
                             android:id="@+id/shop_title1"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:gravity="center"
                             android:text="なにわの"
                             android:textSize="30sp"
-                            android:textColor="@color/white"/>
+                            android:textColor="@color/white"
+                            />
 
                             <LinearLayout
                                 android:layout_width="100dp"
@@ -376,11 +439,13 @@
                     </LinearLayout>
 <!--                称号2        -->
                         <LinearLayout
+                            android:id="@+id/title2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/place"
                             android:orientation="vertical"
-                            android:layout_marginBottom="10dp">
+                            android:layout_marginBottom="10dp"
+                            android:onClick="go_buy_title">
                             <TextView
                                 android:id="@+id/shop_title2"
                                 android:layout_width="match_parent"
@@ -388,7 +453,8 @@
                                 android:gravity="center"
                                 android:text="なにわの"
                                 android:textSize="30sp"
-                                android:textColor="@color/white"/>
+                                android:textColor="@color/white"
+                                />
 
                             <LinearLayout
                                 android:layout_width="100dp"
@@ -416,10 +482,12 @@
                         </LinearLayout>
 <!--                称号3        -->
                         <LinearLayout
+                            android:id="@+id/title3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/place"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:onClick="go_buy_title">
                             <TextView
                                 android:id="@+id/shop_title3"
                                 android:layout_width="match_parent"
@@ -427,7 +495,8 @@
                                 android:gravity="center"
                                 android:text="なにわの"
                                 android:textSize="30sp"
-                                android:textColor="@color/white"/>
+                                android:textColor="@color/white"
+                                />
 
                             <LinearLayout
                                 android:layout_width="100dp"
@@ -473,14 +542,20 @@
                         android:background="@color/chara"
                         android:orientation="vertical">
 
-                        <ImageView
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="vertical"
+                            android:onClick="go_buy_card">
+                            <ImageView
                             android:id="@+id/shop_back"
                             android:layout_width="150dp"
                             android:layout_height="200dp"
                             app:srcCompat="@drawable/K1"
                             android:layout_gravity="center"
                             />
-                        <LinearLayout
+                            <LinearLayout
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -494,6 +569,7 @@
                                 app:srcCompat="@drawable/money" />
 
                             <TextView
+                                android:id="@+id/title_cost"
                                 android:layout_width="wrap_content"
                                 android:layout_height="50dp"
                                 android:text="500"
@@ -502,6 +578,7 @@
                                 android:textColor="@color/white"
                                 android:gravity="center"
                                 android:layout_marginStart="5dp"/>
+                        </LinearLayout>
                         </LinearLayout>
 
                     </LinearLayout>
