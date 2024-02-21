@@ -6,4 +6,84 @@
     android:layout_height="match_parent"
     tools:context=".decoration">
 
+<!--    decoのホーム画面-->
+    <LinearLayout
+        android:id="@+id/deco_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="visible"
+        >
+
+
+    </LinearLayout>
+
+<!--    名前変更画面-->
+    <LinearLayout
+    android:id="@+id/name_change"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:visibility="gone"
+    >
+
+
+</LinearLayout>
+
+<!--    称号変更-->
+    <LinearLayout
+        android:id="@+id/title_change"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+<!--        すくろーる-->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+            </LinearLayout>
+        </ScrollView>
+
+<!--        提出-->
+        <Button
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="50dp">
+
+        </Button>
+
+    </LinearLayout>
+
+<!--    背景変更-->
+    <LinearLayout
+        android:id="@+id/back_change"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+<!--button-->
+
+<!--        「背景変更」-->
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:columnCount="2">
+
+            </GridLayout>
+        </ScrollView>
+<!--提出ボタン-->
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
