@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Location, Genre, Question, UserData, UserQuestionData, UserTitle, Title, BackGround, UserBackGround
-from .serializers import LocationSerializer, GenreSerializer, QuestionSerializer, UserDataSerializer, UserQuestionDataSerializer, UserTitleSerializer, TitleSerializer, BackGroundSerializer, UserBackGroundSerializer
+from .serializers import LocationSerializer, GenreSerializer, QuestionSerializer, UserDataSerializer, UserQuestionDataSerializer, UserTitleSerializer, TitleSerializer, BackGroundSerializer, UserBackGroundSerializer, UserBackgroundUseUpdateSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from .filters import UserQuestionDataFilter
 
@@ -80,5 +80,19 @@ class UserIdView(APIView):
         else:
             return Response({'error': 'User not found'}, status=404)
 
+class UserBackgroundUseUpdateView(APIView):
+    def put(self, request, *args, **kwargs):
+        serializer = UserBackgroundUseUpdateSerializer(data=request.data)
+        if serializer.is_valid():
+            user_data_id = serializer.validated_data['user_data_id']
+            background_id = serializer.validated_data['background_id']
 
+            # すべての背景を一旦falseに設定
+            UserBackGround.objects.filter(user_data_id=user_data_id).update(use=False)
+            # 指定された背景のみtrueに設定
+            UserBackGround.objects.filter(user_data_id=user_data_id, background_id=background_id).update(use=True)
+
+            return Response({"message": "Background use updated successfully."}, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
