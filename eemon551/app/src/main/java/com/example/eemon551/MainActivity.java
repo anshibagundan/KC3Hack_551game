@@ -3,6 +3,7 @@ package com.example.eemon551;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     // APIサービスのインスタンスを取得
     ApiService apiService = ApiClient.getApiService();
     private ImageView back_img;
+    private ImageView image_2;
 
 
     @Override
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         Button kettei = findViewById(R.id.kettei);
         TextView user_title = findViewById(R.id.user_title);
         back_img = findViewById(R.id.back_img);
+        image_2 = findViewById(R.id.image_2);
 
         // 初回起動時の処理
         if (isFirstRun) {
@@ -94,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             configureUIForReturningUser(prefs, textView, main, set_user,userId);
             //称号
             writeTitle(user_title,userId);
-            setBackgroundid(back_img,userId);
+            setBackgroundid(back_img,image_2,userId);
         }
     }
 
@@ -150,22 +153,34 @@ public class MainActivity extends AppCompatActivity {
 
     //称号
     private void writeTitle(TextView user_title, int userId){
-        //DBから称号を取ってくる titleに格納
+        // DBから称号を取ってくる titleに格納
         apiService.getUserTitles(userId).enqueue(new Callback<List<UserTitles>>() {
             @Override
             public void onResponse(Call<List<UserTitles>> call, Response<List<UserTitles>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    int i = 0;
-                    int usertitleid = 0;
-                    while (!response.body().get(i).getUse()) {
-                        i = i + 1;
+                    Log.e("UserTitleId", "userId: " + userId);
+                    int j = 0;
+                    while (j < response.body().size() && response.body().get(j).getUser_data_id() != userId) {
+                        j++;
                     }
-                    if(response.body().get(i).getUser_data_id()==userId) {
-                        usertitleid = response.body().get(i).getTitle_id();
-                        // ここでtitlesからtitle_idを取得
-                        Log.e("UserTitleId", "" + usertitleid);
-                        setTitleName(usertitleid, user_title);
-                    }else{
+                    if (j < response.body().size()) { // ユーザーIDが見つかった場合
+                        int i = j;
+                        while (i < response.body().size() && !response.body().get(i).getUse()) {
+                            i++;
+                        }
+                        if (i < response.body().size()) { // 使用中のタイトルが見つかった場合
+                            int usertitleid = response.body().get(i).getTitle_id();
+
+                            Log.e("UserTitleId", "usertitleid: " + usertitleid);
+                            Log.e("UserTitleId", "user_data_id: " + response.body().get(i).getUser_data_id());
+                            setTitleName(usertitleid, user_title);
+                        } else {
+                            // 使用中のタイトルが見つからない場合の処理
+                            Log.e("UserTitleId", "No active title found");
+                        }
+                    } else {
+                        // ユーザーIDが見つからない場合の処理
+                        Log.e("UserTitleId", "User ID not found");
                         user_title.setText("称号がないよ");
                     }
                 }
@@ -176,9 +191,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("UserTitleId", "API call failed: " + t.getMessage());
             }
         });
-
-
     }
+
     private void setTitleName(int UserTitleId,TextView user_title) {
 
 
@@ -188,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     String title = response.body().getName();
                     user_title.setText(title);
-                    Log.e("UserTitleId", "" + title);
+                    Log.e("UserTitleId", "title: " + title);
                 }
             }
 
@@ -198,33 +212,50 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-        private void setBackgroundid(ImageView background_image, int userId){
+        private void setBackgroundid(ImageView background_image,ImageView background_image2, int userId){
             //DBから称号を取ってくる titleに格納
             apiService.getUserBackgrounds(userId).enqueue(new Callback<List<UserBackground>>() {
                 @Override
                 public void onResponse(Call<List<UserBackground>> call, Response<List<UserBackground>> response) {
                     if (response.isSuccessful() && response.body() != null) {
-                        int i = 0;
-                        int userbackgroundid = 0;
-                        while (!response.body().get(i).getUse()) {
-                            i = i + 1;
+                        Log.e("UserBackgroundId", "userId: " + userId);
+                        int j = 0;
+                        while (j < response.body().size() && response.body().get(j).getUser_data_id() != userId) {
+                            j++;
                         }
-                        userbackgroundid = response.body().get(i).getBackground_id();
-                        // ここでtitlesからtitle_idを取得
-                        Log.e("UserTitleId", "" + userbackgroundid);
-                        setBackground(userbackgroundid, background_image);
+                        if (j < response.body().size()) { // ユーザーIDが見つかった場合
+                            int i = j;
+                            while (i < response.body().size() && !response.body().get(i).getUse()) {
+                                i++;
+                            }
+                            if (i < response.body().size()) { // 使用中のタイトルが見つかった場合
+                                int userbackgroundid = response.body().get(i).getBackground_id();
+
+                                Log.e("UserBackgroundId", "userbackgroundid: " + userbackgroundid);
+                                Log.e("UserBackgroundId", "user_data_id: " + response.body().get(i).getUser_data_id());
+
+                                setBackground(userbackgroundid, back_img,image_2);
+
+                            } else {
+                                // 使用中のタイトルが見つからない場合の処理
+                                Log.e("UserBackgroundId", "No active background found");
+                            }
+                        } else {
+                            // ユーザーIDが見つからない場合の処理
+                            Log.e("UserBackgroundId", "User ID not found");
+                        }
                     }
                 }
 
                 @Override
                 public void onFailure(Call<List<UserBackground>> call, Throwable t) {
-                    Log.e("UserTitleId", "API call failed: " + t.getMessage());
+                    Log.e("UserBackgroundId", "API call failed: " + t.getMessage());
                 }
             });
 
 
         }
-        private void setBackground(int Userbackgroundid, ImageView background_image){
+        private void setBackground(int Userbackgroundid, ImageView background_image, ImageView background_image2){
 
 
             apiService.getBackgrounds(Userbackgroundid).enqueue(new Callback<background>() {
@@ -232,14 +263,28 @@ public class MainActivity extends AppCompatActivity {
                 public void onResponse(Call<background> call, Response<background> response) {
                     if (response.isSuccessful() && response.body() != null) {
                         String img = response.body().getImg().replace("\"", "").trim();
-                        Log.e("UserTitleId", "" + img);
+                        Log.e("UserBackgroundId", "img: " + img);
                         int resourceId = getResources().getIdentifier(img, "drawable", getPackageName());
-                        background_image.setImageResource(resourceId);
+                        if (resourceId != 0) { // リソースIDが有効な場合
+                            // UIスレッド上で背景を設定
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    background_image.setBackgroundResource(resourceId);
+                                    image_2.setBackgroundResource(resourceId);
+                                }
+                            });
+                        } else {
+                            Log.e("UserBackgroundId", "Resource ID not found for: " + img);
+                        }
+
+                        Log.e("UserBackgroundId", "Resource ID: " + resourceId);
+
                     }
                 }
                 @Override
                 public void onFailure(Call<background> call, Throwable t) {
-                    Log.e("UserTitleId", "API call failed: " + t.getMessage());
+                    Log.e("UserBackgroundId", "API call failed: " + t.getMessage());
                 }
             });
     }
