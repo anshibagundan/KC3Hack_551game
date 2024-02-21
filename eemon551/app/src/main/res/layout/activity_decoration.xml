@@ -93,7 +93,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="#ffe6cc">
         <!--ホーム下-->
         <LinearLayout
             android:id="@+id/home"
@@ -214,6 +215,13 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/decoration_sign"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/decoration_sign" />
+
         <!--    decoのホーム画面-->
         <LinearLayout
             android:id="@+id/deco_home"
@@ -222,20 +230,96 @@
             android:orientation="vertical"
             android:visibility="visible"
             >
-
-
-
-
         </LinearLayout>
+
+        <Button
+            android:id="@+id/name_change_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="400dp"
+            android:backgroundTint="#C89696"
+
+            android:text="名前変更"
+            android:textSize="40dp"
+            android:fontFamily="@font/acme"/>
+
+        <Button
+            android:id="@+id/title_change_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="280dp"
+            android:backgroundTint="#C89696"
+
+            android:text="称号変更"
+            android:textSize="40dp"
+            android:fontFamily="@font/acme"/>
+
+        <Button
+            android:id="@+id/back_change_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="160dp"
+            android:backgroundTint="#C89696"
+
+            android:text="背景変更"
+            android:textSize="40dp"
+            android:fontFamily="@font/acme"/>
+
+
 
         <!--    名前変更画面-->
         <LinearLayout
             android:id="@+id/name_change"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:visibility="gone"
+            android:background="#ffe6cc"
+
             >
+            <TextView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="←"
+                android:textSize="70dp"
+                android:background="@color/bar" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:text="名前を変える"
+                android:textSize="50dp"
+                android:textColor="@color/white"
+                android:background="@color/bar"
+                android:textStyle="bold"/>
+
+            <LinearLayout
+                android:layout_width="350dp"
+                android:layout_height="300dp"
+                android:background="@color/bar"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_marginRight="100dp"
+                android:layout_marginTop="100dp">
+
+                <EditText
+                    android:id="@+id/user_name_change"
+                    android:layout_width="300dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="150dp"
+                    android:hint="名前を入力"
+                    android:textColor="@color/black"
+                    android:background="@color/white" />
+
+            </LinearLayout>
+
+
+
+
 
 
         </LinearLayout>
