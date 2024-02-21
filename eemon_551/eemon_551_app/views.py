@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Location, Genre, Question, UserData, UserQuestionData, UserTitle, Title, BackGround, UserBackGround
-from .serializers import LocationSerializer, GenreSerializer, QuestionSerializer, UserDataSerializer, UserQuestionDataSerializer, UserTitleSerializer, TitleSerializer, BackGroundSerializer, UserBackGroundSerializer, UserBackgroundUseUpdateSerializer
+from .serializers import LocationSerializer, GenreSerializer, QuestionSerializer, UserDataSerializer, UserQuestionDataSerializer, UserTitleSerializer, TitleSerializer, BackGroundSerializer, UserBackGroundSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from .filters import UserQuestionDataFilter
 
