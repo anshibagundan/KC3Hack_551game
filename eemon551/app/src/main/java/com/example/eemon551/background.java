@@ -1,14 +1,14 @@
 package com.example.eemon551;
 
-public class Titles {
-    private String name;
+public class background {
+    private String img;
     private int rare;
-
-    public String getName() {
-        return name;
-    }
 
     public int getRare() {
         return rare;
+    }
+
+    public String getImg() {
+        return img;
     }
 }

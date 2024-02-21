@@ -58,6 +58,7 @@ class UserQuestionData(models.Model):
         return f"{self.user_data_id.name} - {self.qes_id.name}"
 
 class UserTitle(models.Model):
+    Use = models.BooleanField()
     isOwn = models.BooleanField()
     buyOK = models.BooleanField()
     user_data_id = models.ForeignKey(UserData, on_delete=models.CASCADE, related_name='titles')  # Unique related_name
@@ -67,6 +68,7 @@ class UserTitle(models.Model):
         return f"{self.user_data_id.name} - {self.title_id.name}"
 
 class UserBackGround(models.Model):
+    Use = models.BooleanField()
     isOwn = models.BooleanField()
     buyOK = models.BooleanField()
     user_data_id = models.ForeignKey(UserData, on_delete=models.CASCADE, related_name='backgrounds')  # Unique related_name
