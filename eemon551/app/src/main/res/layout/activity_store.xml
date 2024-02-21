@@ -48,7 +48,7 @@
 <!--            購入-->
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="470dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -653,6 +653,7 @@
                 android:layout_weight="1"
                 android:background="#757575"
                 android:layout_margin="2dp"
+                android:onClick="store_deco"
                 >
                 <ImageView
                     android:id="@+id/imageView3"

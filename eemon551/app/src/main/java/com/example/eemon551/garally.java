@@ -269,6 +269,10 @@ public class garally extends AppCompatActivity {
         Intent intent = new Intent(garally.this, activity_home.class);
         startActivity(intent);
     }
+    public void zukan_deco(View view){
+        Intent intent = new Intent(garally.this, decoration.class);
+        startActivity(intent);
+    }
 }
 
 

@@ -149,4 +149,9 @@ public class store extends AppCompatActivity {
         Intent intent = new Intent(store.this, activity_home.class);
         startActivity(intent);
     }
+
+    public void store_deco(View view) {
+        Intent intent = new Intent(store.this, decoration.class);
+        startActivity(intent);
+    }
 }

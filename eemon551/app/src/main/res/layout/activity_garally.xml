@@ -428,7 +428,8 @@
                 android:orientation="vertical"
                 android:layout_weight="1"
                 android:background="#757575"
-                android:layout_margin="2dp">
+                android:layout_margin="2dp"
+                android:onClick="zukan_deco">
                 <ImageView
                     android:id="@+id/imageView3"
                     android:layout_width="wrap_content"
