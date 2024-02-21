@@ -113,4 +113,11 @@ public class store extends AppCompatActivity {
         Intent intent = new Intent(store.this, activity_home.class);
         startActivity(intent);
     }
+
+    public void buy(View view) {
+    }
+
+    public void back_store(View view) {
+
+    }
 }
