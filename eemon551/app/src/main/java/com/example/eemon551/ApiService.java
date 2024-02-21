@@ -57,6 +57,11 @@ public interface ApiService {
     @GET("/usertitles/")
     Call<List<UserTitles>> getUserTitles(@Query("user_data_id") int user_data_id);
 
+    @GET("/backgrounds/{id}/")
+    Call<background> getBackgrounds(@Path("id") int backgroundId);
+    @GET("/userbackgrounds/")
+    Call<List<UserBackground>> getUserBackgrounds(@Query("user_data_id") int user_data_id);
+
 
 
 

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     // APIサービスのインスタンスを取得
     ApiService apiService = ApiClient.getApiService();
+    private ImageView back_img;
 
 
     @Override
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         FrameLayout set_user = findViewById(R.id.set_user);
         Button kettei = findViewById(R.id.kettei);
         TextView user_title = findViewById(R.id.user_title);
+        back_img = findViewById(R.id.back_img);
 
         // 初回起動時の処理
         if (isFirstRun) {
@@ -91,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
             configureUIForReturningUser(prefs, textView, main, set_user,userId);
             //称号
             writeTitle(user_title,userId);
+            setBackgroundid(back_img,userId);
         }
     }
 
@@ -156,10 +160,14 @@ public class MainActivity extends AppCompatActivity {
                     while (!response.body().get(i).getUse()) {
                         i = i + 1;
                     }
-                    usertitleid = response.body().get(i).getTitle_id();
-                    // ここでtitlesからtitle_idを取得
-                    Log.e("UserTitleId", "" + usertitleid);
-                    setTitleName(usertitleid, user_title);
+                    if(response.body().get(i).getUser_data_id()==userId) {
+                        usertitleid = response.body().get(i).getTitle_id();
+                        // ここでtitlesからtitle_idを取得
+                        Log.e("UserTitleId", "" + usertitleid);
+                        setTitleName(usertitleid, user_title);
+                    }else{
+                        user_title.setText("称号がないよ");
+                    }
                 }
             }
 
@@ -171,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    private void setTitleName(int UserTitleId,TextView user_title){
+    private void setTitleName(int UserTitleId,TextView user_title) {
 
 
         apiService.getTitle(UserTitleId).enqueue(new Callback<Titles>() {
@@ -180,15 +188,60 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     String title = response.body().getName();
                     user_title.setText(title);
-                    Log.e("UserTitleId", "" +title);
+                    Log.e("UserTitleId", "" + title);
                 }
             }
+
             @Override
             public void onFailure(Call<Titles> call, Throwable t) {
                 Log.e("UserTitleId", "API call failed: " + t.getMessage());
             }
         });
+    }
+        private void setBackgroundid(ImageView background_image, int userId){
+            //DBから称号を取ってくる titleに格納
+            apiService.getUserBackgrounds(userId).enqueue(new Callback<List<UserBackground>>() {
+                @Override
+                public void onResponse(Call<List<UserBackground>> call, Response<List<UserBackground>> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        int i = 0;
+                        int userbackgroundid = 0;
+                        while (!response.body().get(i).getUse()) {
+                            i = i + 1;
+                        }
+                        userbackgroundid = response.body().get(i).getBackground_id();
+                        // ここでtitlesからtitle_idを取得
+                        Log.e("UserTitleId", "" + userbackgroundid);
+                        setBackground(userbackgroundid, background_image);
+                    }
+                }
 
+                @Override
+                public void onFailure(Call<List<UserBackground>> call, Throwable t) {
+                    Log.e("UserTitleId", "API call failed: " + t.getMessage());
+                }
+            });
+
+
+        }
+        private void setBackground(int Userbackgroundid, ImageView background_image){
+
+
+            apiService.getBackgrounds(Userbackgroundid).enqueue(new Callback<background>() {
+                @Override
+                public void onResponse(Call<background> call, Response<background> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        String img = response.body().getImg().replace("\"", "").trim();
+                        Log.e("UserTitleId", "" + img);
+                        int resourceId = getResources().getIdentifier(img, "drawable", getPackageName());
+                        background_image.setImageResource(resourceId);
+                    }
+                }
+                @Override
+                public void onFailure(Call<background> call, Throwable t) {
+                    Log.e("UserTitleId", "API call failed: " + t.getMessage());
+                }
+            });
     }
     private void navigateToHome() {
         Intent intent = new Intent(MainActivity.this, activity_home.class);
