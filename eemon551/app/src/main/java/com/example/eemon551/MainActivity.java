@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
             });
         } else {
             // 2回目以降の起動時のUI設定
-            int userId = prefs.getInt("UserId", 0);
+            int userId = prefs.getInt("UserId", 1);
 
             configureUIForReturningUser(prefs, textView, main, set_user,userId);
             //称号

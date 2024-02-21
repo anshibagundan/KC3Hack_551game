@@ -38,6 +38,7 @@ public class activity_home extends AppCompatActivity {
     private Button setting_button;
     private TextView name;
     private TextView money_num;
+    private TextView shogo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +46,25 @@ public class activity_home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         apiService = ApiClient.getApiService();
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
-        String username = prefs.getString("UserName", "test_user");
+        int userId = prefs.getInt("UserId", 1);
 
         initializeViews();
-        name.setText(username);
+
+        apiService.getUser(userId).enqueue(new Callback<User>() {
+           @Override
+           public void onResponse(Call<User> call, Response<User> response) {
+               if (response.isSuccessful() && response.body() != null) {
+                   name.setText(response.body().getName());
+               }
+           }
+
+           @Override
+           public void onFailure(Call<User> call, Throwable t) {
+               Log.e("API_CALL", "API call failed: " + t.getMessage());
+           }
+       });
+
+        writeTitle(shogo,userId);
         GetMoney();
         loadFirstQuestionGenre();
     }
@@ -69,6 +85,7 @@ public class activity_home extends AppCompatActivity {
         store_img=findViewById(R.id.store_img);
         money_num = findViewById(R.id.money_num);
         name = findViewById(R.id.name);
+        shogo = findViewById(R.id.shogo);
     }
 
     //start button
@@ -208,6 +225,51 @@ public class activity_home extends AppCompatActivity {
                 Log.e("API Request Failure", "Error: ", t);
             }
         });
+    }
+    private void writeTitle(TextView user_title, int userId){
+        //DBから称号を取ってくる titleに格納
+        apiService.getUserTitles(userId).enqueue(new Callback<List<UserTitles>>() {
+            @Override
+            public void onResponse(Call<List<UserTitles>> call, Response<List<UserTitles>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    int i = 0;
+                    int usertitleid = 0;
+                    while (!response.body().get(i).getUse()) {
+                        i = i + 1;
+                    }
+                    usertitleid = response.body().get(i).getTitle_id();
+                    // ここでtitlesからtitle_idを取得
+                    Log.e("UserTitleId", "" + usertitleid);
+                    setTitleName(usertitleid, user_title);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<UserTitles>> call, Throwable t) {
+                Log.e("UserTitleId", "API call failed: " + t.getMessage());
+            }
+        });
+
+
+    }
+    private void setTitleName(int UserTitleId,TextView user_title){
+
+
+        apiService.getTitle(UserTitleId).enqueue(new Callback<Titles>() {
+            @Override
+            public void onResponse(Call<Titles> call, Response<Titles> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String title = response.body().getName();
+                    user_title.setText(title);
+                    Log.e("UserTitleId", "" +title);
+                }
+            }
+            @Override
+            public void onFailure(Call<Titles> call, Throwable t) {
+                Log.e("UserTitleId", "API call failed: " + t.getMessage());
+            }
+        });
+
     }
 
     public void zukann(View view){
