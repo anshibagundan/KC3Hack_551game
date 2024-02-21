@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,6 +30,9 @@ public class store extends AppCompatActivity {
     private ApiService apiService;
     private GridLayout gridLayout_1;
     private Set<Integer> displayedQuestionIds = new HashSet<>();
+    private FrameLayout store_screen;
+    private FrameLayout card_screen;
+    private FrameLayout title_screen;
 
     private int userId;
     @Override
@@ -40,6 +44,9 @@ public class store extends AppCompatActivity {
         money =findViewById(R.id.money);
         gridLayout_1.setAlignmentMode(GridLayout.ALIGN_BOUNDS);
         gridLayout_1.setColumnCount(3);
+        store_screen = findViewById(R.id.store);
+        card_screen = findViewById(R.id.buy_card_screen);
+        title_screen = findViewById(R.id.buy_title_screen);
 
         GetMoney();
         for (int i = 0; i < 6; i++) {
@@ -117,7 +124,20 @@ public class store extends AppCompatActivity {
     public void buy(View view) {
     }
 
+    //購入画面からストアに戻る
     public void back_store(View view) {
+        store_screen.setVisibility(View.VISIBLE);
+        card_screen.setVisibility(View.GONE);
+        title_screen.setVisibility(View.GONE);
+    }
 
+    public void go_buy_title(View view) {
+        title_screen.setVisibility(View.VISIBLE);
+        store_screen.setVisibility(View.GONE);
+    }
+
+    public void go_buy_card(View view){
+        card_screen.setVisibility(View.GONE);
+        store_screen.setVisibility(View.VISIBLE);
     }
 }
