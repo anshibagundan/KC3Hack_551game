@@ -237,10 +237,14 @@ public class activity_home extends AppCompatActivity {
                     while (!response.body().get(i).getUse()) {
                         i = i + 1;
                     }
-                    usertitleid = response.body().get(i).getTitle_id();
-                    // ここでtitlesからtitle_idを取得
-                    Log.e("UserTitleId", "" + usertitleid);
-                    setTitleName(usertitleid, user_title);
+                    if(response.body().get(i).getUser_data_id()==userId) {
+                        usertitleid = response.body().get(i).getTitle_id();
+                        // ここでtitlesからtitle_idを取得
+                        Log.e("UserTitleId", "" + usertitleid);
+                        setTitleName(usertitleid, user_title);
+                    }else{
+                        user_title.setText("称号がないよ");
+                    }
                 }
             }
 
