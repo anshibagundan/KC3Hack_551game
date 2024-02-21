@@ -60,6 +60,7 @@ public class game extends AppCompatActivity {
     private FrameLayout kekka;
     private LinearLayout card_over;
     private boolean button_caver = false;
+    private Button finish;
 
 
     @Override
@@ -81,6 +82,7 @@ public class game extends AppCompatActivity {
         question_number = findViewById(R.id.question_number);
         kekka = findViewById(R.id.kekka);
         card_over = findViewById(R.id.card_over);
+        finish = findViewById(R.id.finish);
 
 
         // ApiServiceインスタンスを取得
@@ -307,6 +309,7 @@ public class game extends AppCompatActivity {
 
     public void onTap_takara_back(View view){
         card_over.setVisibility(View.GONE);
+        finish.setVisibility(View.VISIBLE);
         button_caver = true;
     }
 
