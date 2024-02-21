@@ -195,7 +195,7 @@ public class activity_home extends AppCompatActivity {
     private void GetMoney(){
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         int userId = prefs.getInt("UserId", 1);
-        apiService.getUserMoney(userId).enqueue(new Callback<User>() {
+        apiService.getUser(userId).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful() && response.body() != null) {

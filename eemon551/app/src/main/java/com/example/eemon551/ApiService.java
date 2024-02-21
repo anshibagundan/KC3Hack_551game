@@ -1,5 +1,7 @@
 package com.example.eemon551;
 
+import android.service.autofill.UserData;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -27,9 +29,11 @@ public interface ApiService {
 
     @GET("locations/{id}/")
     Call<Location> getLocationById(@Path("id") int locationId);
+    @GET()
+
 
     @GET("/userdatas/{id}/")
-    Call<User> getUserMoney(@Path("id") int money);
+    Call<User> getUser(@Path("id") int userId);
 
     @PUT("/userdatas/{id}/")
     Call<Void> updateUserData(@Path("id") int userId, @Body UserUpdateRequest userUpdateRequest);

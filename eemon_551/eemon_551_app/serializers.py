@@ -36,11 +36,6 @@ class UserQuestionDataSerializer(serializers.ModelSerializer):
         model = UserQuestionData
         fields = '__all__'
 
-class TitleSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UserTitle
-        fields = '__all__'
-
 class UserTitleSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserTitle

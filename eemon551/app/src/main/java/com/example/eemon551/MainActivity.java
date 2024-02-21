@@ -16,6 +16,9 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+    // APIサービスのインスタンスを取得
+    ApiService apiService = ApiClient.getApiService();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +36,7 @@ public class MainActivity extends AppCompatActivity {
         Button kettei = findViewById(R.id.kettei);
         TextView user_title = findViewById(R.id.user_title);
 
-        // APIサービスのインスタンスを取得
-        ApiService apiService = ApiClient.getApiService();
+
 
 
 
@@ -58,8 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
                     // ユーザー名をSharedPreferencesに保存
                     SharedPreferences.Editor editor = prefs.edit();
-                    editor.putString("UserName", name);
-                    editor.apply();
+
 
                     // ユーザーデータをサーバーに送信
                     User user = new User(name, 0, 0);
@@ -70,8 +71,6 @@ public class MainActivity extends AppCompatActivity {
                                 Log.d("first_db", "Data successfully sent to the server.");
                                 // ユーザーIDの取得とSharedPreferencesへの保存
                                 fetchAndSaveUserId(apiService, name, prefs);
-                                Log.d("isFirstRun", "onCreate: "+ isFirstRun);
-                                SharedPreferences.Editor editor = prefs.edit();
                                 editor.putBoolean("isFirstRun", false);
                             } else {
                                 Log.e("first_db", "Failed to send data. Response code: " + response.code());
@@ -125,7 +124,20 @@ public class MainActivity extends AppCompatActivity {
         main.setVisibility(View.VISIBLE);
         set_user.setVisibility(View.GONE);
         int userId = prefs.getInt("UserId", 0);
-        textView.setText(userId == 0 ? "ユーザーIDが取得できません" : "ユーザーID: " + userId);
+
+        apiService.getUser(userId).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    textView.setText(response.body().getName());
+                }
+            }
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("API_CALL", "API call failed: " + t.getMessage());
+            }
+        });
+
         findViewById(R.id.tap).setOnClickListener(v -> navigateToHome());
     }
 
