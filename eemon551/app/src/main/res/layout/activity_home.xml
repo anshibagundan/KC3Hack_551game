@@ -36,7 +36,7 @@
           android:layout_width="200dp"
           android:layout_height="100dp"
           android:layout_gravity="bottom|center_horizontal"
-          android:layout_marginBottom="100dp"
+          android:layout_marginBottom="130dp"
           android:backgroundTint="#C89696"
           android:onClick="setButtonClickListener"
           android:text="start"
@@ -217,15 +217,7 @@
           android:visibility="gone"
           android:onClick="zukann"
           />
-      <ImageView
-          android:id="@+id/zukan_img"
-          android:layout_width="150dp"
-          android:layout_height="200dp"
-          android:layout_gravity="center"
-          android:layout_marginBottom="150dp"
-          android:layout_marginRight="80dp"
-          android:visibility="gone"
-          app:srcCompat="@drawable/zukan" />
+
 <!--      説明-->
       <Button
           android:id="@+id/introduce"
@@ -238,14 +230,7 @@
           android:text="説明"
           android:textSize="30dp"
           android:visibility="gone" />
-      <ImageView
-          android:id="@+id/setsumei_img"
-          android:layout_width="130dp"
-          android:layout_height="150dp"
-          android:layout_gravity="center"
-          android:layout_marginRight="80dp"
-          android:visibility="gone"
-          app:srcCompat="@drawable/setsumei" />
+
 <!--      ショップ-->
       <Button
           android:id="@+id/store"
@@ -260,15 +245,125 @@
           android:text="ショップ"
           android:visibility="gone"
           android:textSize="30dp"/>
-      <ImageView
-          android:id="@+id/store_img"
-          android:layout_width="120dp"
-          android:layout_height="180dp"
-          android:layout_gravity="center"
-          android:layout_marginTop="150dp"
-          android:layout_marginRight="80dp"
-          android:visibility="gone"
-          app:srcCompat="@drawable/store" />
+
+
+
+        <LinearLayout
+            android:id="@+id/home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal"
+            android:background="@color/white">
+<!--ショップ-->
+            <LinearLayout
+                android:layout_width="82dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:background="#757575"
+                android:layout_margin="2dp">
+                <ImageView
+                    android:id="@+id/store_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_gravity="bottom"
+                    app:srcCompat="@drawable/store" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ショップ"
+                    android:gravity="center"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+<!--図鑑-->
+            <LinearLayout
+                android:layout_width="82dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:background="#757575"
+                android:layout_margin="2dp"
+                >
+
+                <ImageView
+                    android:id="@+id/zukan_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/zukan" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="図鑑"
+                    android:gravity="center"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+<!--ゲーム-->
+            <LinearLayout
+                android:layout_width="130dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:background="#a9a9ed"
+
+                >
+                <ImageView
+                    android:id="@+id/quizu"
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    app:srcCompat="@drawable/quiz" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ゲーム"
+                    android:gravity="center"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+<!--称号-->
+            <LinearLayout
+                android:layout_width="82dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:background="#757575"
+                android:layout_margin="2dp">
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/syougou" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="称号"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    />
+
+
+            </LinearLayout>
+<!--説明-->
+            <LinearLayout
+                android:layout_width="82dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:background="#757575"
+                android:layout_margin="2dp">
+                <ImageView
+                    android:id="@+id/setsumei_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/setsumei" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="説明"
+                    android:gravity="center"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+
+        </LinearLayout>
 
     </FrameLayout>
 
