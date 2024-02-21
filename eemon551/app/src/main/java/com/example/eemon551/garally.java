@@ -255,6 +255,20 @@ public class garally extends AppCompatActivity {
         Intent intent = new Intent(garally.this, activity_home.class);
         startActivity(intent);
     }
+
+    //    ホームデータ遷移
+    public void zukan_store(View view){
+        Intent intent = new Intent(garally.this, store.class);
+        startActivity(intent);
+    }
+    public void zukan_introduce(View view){
+        Intent intent = new Intent(garally.this, introduce.class);
+        startActivity(intent);
+    }
+    public void zukan_home(View view){
+        Intent intent = new Intent(garally.this, activity_home.class);
+        startActivity(intent);
+    }
 }
-//
+
 

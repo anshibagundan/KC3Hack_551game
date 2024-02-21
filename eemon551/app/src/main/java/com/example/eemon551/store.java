@@ -116,11 +116,6 @@ public class store extends AppCompatActivity {
 
     }
 
-    public void introduce_home(View view) {
-        Intent intent = new Intent(store.this, activity_home.class);
-        startActivity(intent);
-    }
-
     public void buy(View view) {
     }
 
@@ -139,5 +134,19 @@ public class store extends AppCompatActivity {
     public void go_buy_card(View view){
         card_screen.setVisibility(View.GONE);
         store_screen.setVisibility(View.VISIBLE);
+    }
+
+//    ホームデータ遷移
+    public void store_zukann(View view){
+    Intent intent = new Intent(store.this, garally.class);
+    startActivity(intent);
+    }
+    public void store_introduce(View view){
+        Intent intent = new Intent(store.this, introduce.class);
+        startActivity(intent);
+    }
+    public void store_home(View view){
+        Intent intent = new Intent(store.this, activity_home.class);
+        startActivity(intent);
     }
 }
