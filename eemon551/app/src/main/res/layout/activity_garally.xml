@@ -355,37 +355,6 @@
         android:layout_height="match_parent"
         android:visibility="gone">
 
-<!--    上部-->
-        <LinearLayout
-            android:id="@+id/card_bar"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@color/bar"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/back_to_zukan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:backgroundTint="@color/button"
-                android:onClick="back_zukan"
-                android:text="⇐"
-                android:textSize="20sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="30dp"
-                android:text="カード"
-                android:textColor="@color/white"
-                android:textSize="30sp" />
-
-        </LinearLayout>
-
 <!--    カード    -->
         <ImageView
             android:id="@+id/card_image"
@@ -394,6 +363,17 @@
             android:layout_margin="30dp"
             app:srcCompat="@drawable/tobita"
             />
+
+        <Button
+            android:id="@+id/back_to_zukan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:backgroundTint="@color/button"
+            android:onClick="back_zukan"
+            android:text="図鑑に戻る"
+            android:textSize="20sp" />
 
     </FrameLayout>
 

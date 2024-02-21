@@ -9,7 +9,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffe6cc">
+        android:background="#ffe6cc"
+        android:visibility="gone">
 
 
 
@@ -136,7 +137,7 @@
                         android:textStyle="bold"
                         android:textColor="@color/white"
                         android:gravity="center"
-                        android:layout_marginStart="5dp"/>
+                        />
 
                     <TextView
                         android:layout_width="100dp"
@@ -358,7 +359,45 @@
             </GridLayout>
         </LinearLayout>
 
+    </FrameLayout>
 
+    <FrameLayout
+        android:id="@+id/buy_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        android:background="#ffe6cc">
+
+        <ImageView
+            android:id="@+id/buy_card"
+            android:layout_width="wrap_content"
+            android:layout_height="500dp"
+            android:layout_marginTop="40dp"
+            app:srcCompat="@drawable/tobita">
+
+        </ImageView>
+
+        <Button
+            android:id="@+id/button_left"
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="250dp"
+            android:layout_marginStart="100dp"
+            android:backgroundTint="#CC6876"
+            android:text="買う"
+            android:textSize="20sp"/>
+
+        <Button
+            android:id="@+id/button_right"
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="250dp"
+            android:layout_marginEnd="100dp"
+            android:backgroundTint="#77AACC"
+            android:text="買わない"
+            android:textSize="20sp"/>
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
