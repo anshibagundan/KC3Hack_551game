@@ -10,7 +10,7 @@
         android:id="@+id/toi"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
+        android:visibility="gone"
         android:background="#33AA"
         >
 
@@ -72,7 +72,7 @@
             android:adjustViewBounds="true"
             app:srcCompat="@android:drawable/alert_light_frame" />
 
-        <TextView
+        <ImageView
             android:id="@+id/seigo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -82,7 +82,7 @@
             android:onClick="onTap"
             android:text="正解のイメージ画像"
             android:textColor="@color/white"
-
+            android:src="@drawable/gaann"
             android:textSize="30dp"
             android:visibility="gone" />
 
@@ -159,7 +159,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#AA2244"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="350dp"
@@ -182,6 +182,15 @@
                 android:layout_height="2dp"
                 android:layout_marginTop="20dp"
                 android:background="@color/black"/>
+
+            <TextView
+                android:id="@+id/count_true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="20dp"
+                android:text="x0"
+                android:textSize="40dp"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -209,22 +218,14 @@
                 android:gravity="center"
                 android:onClick="onTap_takara">
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:src="@drawable/takarabako0"/>
-                <TextView
-                    android:id="@+id/kekka_takarabako"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="x0"
-                    android:textSize="40dp"/>
             </LinearLayout>
 
             <Button
                 android:layout_width="150dp"
                 android:layout_height="70dp"
-                android:layout_marginTop="100dp"
                 android:onClick="game_home"
                 android:text="終了"
                 android:textSize="30dp"

@@ -32,7 +32,7 @@ public class game extends AppCompatActivity {
     private ApiService apiService;
     private TextView questionText;
 
-    private TextView seigoText;
+    private ImageView seigoText;
     private TextView touka_loading;
     private ImageView questionImage;
     private ImageView huti;
@@ -208,12 +208,12 @@ public class game extends AppCompatActivity {
                 if (currentQuestionIsKansai) {
                     // 正解の処理
                     Log.d("LocationFetch", "left true");
-                    seigoText.setText("正解！画像をセット");
+                    seigoText.setImageResource(R.drawable.wahhahhahha);
                     updateUserScore(10);
                 } else {
                     // 不正解の処理
                     Log.d("LocationFetch", "left false");
-                    seigoText.setText("不正解画像をセット");
+                    seigoText.setImageResource(R.drawable.gaann);
                 }
                 seigoText.setVisibility(View.VISIBLE);
                 seigo = true;
@@ -223,12 +223,12 @@ public class game extends AppCompatActivity {
                 if (!currentQuestionIsKansai) {
                     Log.d("LocationFetch", "right true");
                     // 正解の処理
-                    seigoText.setText("正解！画像をセット");
+                    seigoText.setImageResource(R.drawable.wahhahhahha);
                     updateUserScore(10); // スコアを10加算する
                 } else {
                     Log.d("LocationFetch", "right false");
                     // 不正解の処理
-                    seigoText.setText("不正解画像をセット");
+                    seigoText.setImageResource(R.drawable.gaann);
                 }
                 seigoText.setVisibility(View.VISIBLE);
                 seigo = true;
@@ -242,12 +242,12 @@ public class game extends AppCompatActivity {
                 if (locationId==locId) {
                     Log.d("LocationFetch", "left true");
                     // 正解の処理
-                    seigoText.setText("正解！画像をセット");
+                    seigoText.setImageResource(R.drawable.wahhahhahha);
                     updateUserScore(10);
                 } else {
                     Log.d("LocationFetch", "left false");
                     // 不正解の処理
-                    seigoText.setText("不正解画像をセット");
+                    seigoText.setImageResource(R.drawable.gaann);
                 }
                 seigoText.setVisibility(View.VISIBLE);
                 seigo = true;
@@ -257,10 +257,10 @@ public class game extends AppCompatActivity {
             buttonRight.setOnClickListener(view -> {
                 if (locId!=locationId) {
                     // 正解の処理
-                    seigoText.setText("正解！画像をセット");
+                    seigoText.setImageResource(R.drawable.wahhahhahha);
                 } else {
                     // 不正解の処理
-                    seigoText.setText("不正解画像をセット");
+                    seigoText.setImageResource(R.drawable.gaann);
                     updateUserScore(10); // スコアを10加算する
                 }
                 seigoText.setVisibility(View.VISIBLE);
