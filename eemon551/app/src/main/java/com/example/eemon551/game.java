@@ -326,6 +326,7 @@ public class game extends AppCompatActivity {
             kaisetu.setVisibility(View.VISIBLE);
             touka_loading.setVisibility(View.VISIBLE);
             toi.setVisibility(View.GONE);
+            kekka_money.setText("x" + String.valueOf(collect_money));
             if (questionNumber > 9) {
                 next.setText("結果へ");
                 System.out.println("ランダム前 空前");
@@ -354,7 +355,7 @@ public class game extends AppCompatActivity {
                     System.out.println("ランダムじゃなくてこっち？");
                     get_card.setImageResource(R.drawable.gaann);
                 }
-                kekka_money.setText("x" + String.valueOf(collect_money));
+
             }
         }
     }
@@ -385,6 +386,7 @@ public class game extends AppCompatActivity {
     public void onTap_takara_back(View view) {
         card_over.setVisibility(View.GONE);
         finish.setVisibility(View.VISIBLE);
+        runOnUiThread(() -> kekka_money.setText(String.valueOf(collect_money)));
         if (!TrueQuestionIds.isEmpty()) {
             apiService.getQuestionById(randomValue).enqueue(new Callback<Question>() {
                 @Override
@@ -429,6 +431,7 @@ public class game extends AppCompatActivity {
                     Log.e("money", String.valueOf(currentScore));
                     int newScore = currentScore + 10;
                     collect_money = collect_money + 10;
+                    Log.e("money", "collect_money"+collect_money);
                     apiService.getUser(userId).enqueue((new Callback<User>() {
                         @Override
                         public void onResponse(Call<User> call, Response<User> response) {
@@ -484,7 +487,7 @@ public class game extends AppCompatActivity {
 
             if (searchResult == 2) {
                 collect_money += 30;
-                runOnUiThread(() -> kekka_money.setText(String.valueOf(collect_money)));
+                updateUserScore(30);
             } else if (searchResult == 1) {
                 Log.d("UpdateQuestionData", "user_data_id"+ userId);
                 Log.d("UpdateQuestionData", "qes_id"+ randomValue);
