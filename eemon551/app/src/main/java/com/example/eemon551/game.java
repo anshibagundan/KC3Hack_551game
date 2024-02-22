@@ -437,73 +437,82 @@ public class game extends AppCompatActivity {
     private void SetUserQuestionData(int randomValue, Set<Integer> displayedQuestionIds) {
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         int userId = prefs.getInt("UserId", 1);
-
-        UserQuestionData data_true = new UserQuestionData(true, randomValue, userId);
-        apiService.insertUserQuestionData(data_true).enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    // 送信成功時の処理
-                    Log.e("SetUserQuestionData", "Data successfully sent to the server. ");
-
-                } else {
-                    // サーバーからのレスポンスが成功でない場合の処理
-                    Log.e("SetUserQuestionData", "Failed to send data. Response code: " + response.code());
+        if(SearchQuestionData(userId,randomValue)==2){
+            collect_money=collect_money+30;
+            kekka_money.setText(String.valueOf(collect_money));
+            return;
+        } else if (SearchQuestionData(userId,randomValue)==1) {
+            ApiService.UserQuestionDataUpdateRequest request = new ApiService.UserQuestionDataUpdateRequest(true, userId,randomValue);
+            apiService.updateUserQuestionData(request).enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    if (response.isSuccessful()) {
+                        // 更新成功時の処理。例えば、UIの更新など
+                        Log.d("UpdateUseStatus", "Background use status updated successfully.");
+                    } else {
+                        // エラー処理
+                        Log.e("UpdateUseStatus", "Failed to update the background use status.");
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                // 通信失敗時の処理
-                t.printStackTrace();
-            }
-        });
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    // 通信失敗時の処理
+                    Log.e("UpdateUseStatus", "API call failed.", t);
+                }
+            });
+        } else if (SearchQuestionData(userId,randomValue)==3||SearchQuestionData(userId,randomValue)==4) {
+            UserQuestionData data_true = new UserQuestionData(true, randomValue, userId);
+            apiService.insertUserQuestionData(data_true).enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    if (response.isSuccessful()) {
+                        // 送信成功時の処理
+                        Log.e("SetUserQuestionData", "Data successfully sent to the server. ");
+
+                    } else {
+                        // サーバーからのレスポンスが成功でない場合の処理
+                        Log.e("SetUserQuestionData", "Failed to send data. Response code: " + response.code());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    // 通信失敗時の処理
+                    t.printStackTrace();
+                }
+            });
+        }
+
         for (Integer element : displayedQuestionIds) {
-            UserQuestionData data_false = new UserQuestionData(false, element, userId);
             if (element != randomValue) {
+
                 if (SearchQuestionData(userId, element) == 3 || SearchQuestionData(userId, element) == 4) {
-                    apiService.insertUserQuestionData(data_false).enqueue(new Callback<Void>() {
-                        @Override
-                        public void onResponse(Call<Void> call, Response<Void> response) {
-                            if (response.isSuccessful()) {
-                                // 送信成功時の処理
-                                Log.e("SetUserQuestionData", "Data successfully sent to the server. ");
-
-                            } else {
-                                // サーバーからのレスポンスが成功でない場合の処理
-                                Log.e("SetUserQuestionData", "Failed to send data. Response code: " + response.code());
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<Void> call, Throwable t) {
-                            // 通信失敗時の処理
-                            t.printStackTrace();
-                        }
-                    });
-                }
-            } else if (SearchQuestionData(userId, element) == 2) {
-                break;
-            } else if (SearchQuestionData(userId, element) == 1) {
-                ApiService.UserQuestionDataUpdateRequest request = new ApiService.UserQuestionDataUpdateRequest(true, userId,element);
-                apiService.updateUserQuestionData(request).enqueue(new Callback<Void>() {
+                    UserQuestionData data_false = new UserQuestionData(false, element, userId);
+                apiService.insertUserQuestionData(data_false).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.isSuccessful()) {
-                            // 更新成功時の処理。例えば、UIの更新など
-                            Log.d("UpdateUseStatus", "Background use status updated successfully.");
+                            // 送信成功時の処理
+                            Log.e("SetUserQuestionData", "Data successfully sent to the server. ");
+
                         } else {
-                            // エラー処理
-                            Log.e("UpdateUseStatus", "Failed to update the background use status.");
+                            // サーバーからのレスポンスが成功でない場合の処理
+                            Log.e("SetUserQuestionData", "Failed to send data. Response code: " + response.code());
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
                         // 通信失敗時の処理
-                        Log.e("UpdateUseStatus", "API call failed.", t);
+                        t.printStackTrace();
                     }
                 });
+            } else if (SearchQuestionData(userId, element) == 1) {
+                    break;
+                } else if (SearchQuestionData(userId, element) == 2) {
+                    break;
+                }
             }
         }
     }
@@ -520,8 +529,7 @@ public class game extends AppCompatActivity {
                             break;
                         } else if (data.get_cor()&&data.get_qes_id()==qes_id) {
                             search = 2;//trueのデータがあった時ボーナス30コインでUserQuestionDataに追加しない
-                            collect_money=collect_money+30;
-                            kekka_money.setText(String.valueOf(collect_money));
+
                             break;
                             }
                         search = 3;//trueもfalseもなかった時POST実行
