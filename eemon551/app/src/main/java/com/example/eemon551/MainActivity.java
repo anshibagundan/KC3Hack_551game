@@ -218,7 +218,6 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<List<UserBackground>> call, Response<List<UserBackground>> response) {
                     if (response.isSuccessful() && response.body() != null) {
-                        Log.e("UserBackgroundId", "userId: " + userId);
                         int j = 0;
                         while (j < response.body().size() && response.body().get(j).getUser_data_id() != userId) {
                             j++;
@@ -230,9 +229,6 @@ public class MainActivity extends AppCompatActivity {
                             }
                             if (i < response.body().size()) { // 使用中のタイトルが見つかった場合
                                 int userbackgroundid = response.body().get(i).getBackground_id();
-
-                                Log.e("UserBackgroundId", "userbackgroundid: " + userbackgroundid);
-                                Log.e("UserBackgroundId", "user_data_id: " + response.body().get(i).getUser_data_id());
 
                                 setBackground(userbackgroundid, background_image,background_image2);
 
