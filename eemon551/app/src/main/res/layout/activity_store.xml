@@ -112,6 +112,7 @@
                             app:srcCompat="@drawable/money" />
 
                         <TextView
+                            android:id="@+id/card_cost1"
                             android:layout_width="wrap_content"
                             android:layout_height="50dp"
                             android:text="5000"
@@ -131,7 +132,7 @@
                             android:background="#F5BF"
                             android:orientation="vertical"
                             android:layout_columnWeight="1"
-                            android:onClick="go_buy_card">
+                            android:onClick="go_buy_card2">
 
                             <TextView
                                 android:layout_width="100dp"
@@ -164,6 +165,7 @@
                                     app:srcCompat="@drawable/money" />
 
                                 <TextView
+                                    android:id="@+id/card_cost2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="50dp"
                                     android:text="5000"
@@ -183,7 +185,7 @@
                             android:background="#F5BF"
                             android:orientation="vertical"
                             android:layout_columnWeight="1"
-                            android:onClick="go_buy_card">
+                            android:onClick="go_buy_card3">
 
                             <TextView
                                 android:layout_width="100dp"
@@ -216,6 +218,7 @@
                                     app:srcCompat="@drawable/money" />
 
                                 <TextView
+                                    android:id="@+id/card_cost3"
                                     android:layout_width="wrap_content"
                                     android:layout_height="50dp"
                                     android:text="5000"
@@ -235,7 +238,7 @@
                             android:background="#F5BF"
                             android:orientation="vertical"
                             android:layout_columnWeight="1"
-                            android:onClick="go_buy_card">
+                            android:onClick="go_buy_card4">
 
                             <TextView
                                 android:layout_width="100dp"
@@ -268,6 +271,7 @@
                                     app:srcCompat="@drawable/money" />
 
                                 <TextView
+                                    android:id="@+id/card_cost4"
                                     android:layout_width="wrap_content"
                                     android:layout_height="50dp"
                                     android:text="5000"
@@ -684,9 +688,10 @@
                 app:srcCompat="@drawable/money" />
 
             <TextView
+                android:id="@+id/buy_card_cost"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:text="500"
+                android:text="100"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 android:gravity="center"

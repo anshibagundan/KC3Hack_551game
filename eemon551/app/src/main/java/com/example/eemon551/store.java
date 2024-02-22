@@ -51,10 +51,8 @@ public class store extends AppCompatActivity {
     private int userId;
     private Integer randomValue;
     private int card_link;
-    private ImageView card_1;
-    private ImageView card_2;
-    private ImageView card_3;
-    private ImageView card_4;
+    private ImageView card_1,card_2,card_3,card_4,buy_card;
+    private TextView card_cost1,card_cost2,card_cost3,card_cost4,buy_card_cost;
 
 
     @Override
@@ -68,10 +66,21 @@ public class store extends AppCompatActivity {
         gridLayout_1 = findViewById(R.id.card_layout);
         money =findViewById(R.id.money);
         store_screen = findViewById(R.id.store);
+
         //カード関連
         card_screen = findViewById(R.id.buy_card_screen);
         card_layout = findViewById(R.id.card_layout);
         card_ano = findViewById(R.id.card_ano);
+        card_1 = findViewById(R.id.card_1);
+        card_2 = findViewById(R.id.card_2);
+        card_3 = findViewById(R.id.card_3);
+        card_4 = findViewById(R.id.card_4);
+        card_cost1 = findViewById(R.id.card_cost1);
+        card_cost2 = findViewById(R.id.card_cost2);
+        card_cost3 = findViewById(R.id.card_cost3);
+        card_cost4 = findViewById(R.id.card_cost4);
+        buy_card_cost = findViewById(R.id.buy_card_cost);
+        buy_card = findViewById(R.id.buy_card);
 
         //background関連
         back_screen = findViewById(R.id.buy_back_screen);
@@ -80,6 +89,7 @@ public class store extends AppCompatActivity {
         buy_back = findViewById(R.id.buy_back);
         buy_back2 = findViewById(R.id.buy_back2);
         back_ano = findViewById(R.id.back_ano);
+
         //title関連
         title_screen = findViewById(R.id.buy_title_screen);
         title = findViewById(R.id.shop_title1);
@@ -91,11 +101,6 @@ public class store extends AppCompatActivity {
         buy_title = findViewById(R.id.buy_title);
         buy_title_cost = findViewById(R.id.buy_title_cost);
         title_ano = findViewById(R.id.title_ano);
-        card_1 = findViewById(R.id.card_1);
-        card_2 = findViewById(R.id.card_2);
-        card_3 = findViewById(R.id.card_3);
-        card_4 = findViewById(R.id.card_4);
-
 
 
         GetMoney();
@@ -226,17 +231,21 @@ public class store extends AppCompatActivity {
 
     public void buy_card(View view) {
         //int cost = Integer.parseInt(buy_card.getText().toString());
+        int cost = Integer.parseInt(buy_card_cost.getText().toString());
+        buy(cost,back_ano);
+        back_store(view);
     }
 
     public void buy_back(View view) {
         int cost = Integer.parseInt(back_cost2.getText().toString());
         buy(cost,back_ano);
+        back_store(view);
     }
 
     public void buy_title(View view) {
         int cost = Integer.parseInt(buy_title_cost.getText().toString());
         buy(cost,title_ano);
-
+        back_store(view);
     }
 
     //購入
@@ -280,7 +289,7 @@ public class store extends AppCompatActivity {
             public void onFailure(Call<User> call, Throwable t) {
                 Log.e("UserMoneyFetch", "ユーザーのmoney取得失敗", t);
             }
-        });
+        });;
     }
 
     private void make_ano(LinearLayout l){
@@ -311,6 +320,29 @@ public class store extends AppCompatActivity {
 
     //card購入
     public void go_buy_card(View view){
+        buy_card_cost.setText(card_cost1.getText());
+        //buy_card.setImageResource(buy_cards[0]);
+        card_screen.setVisibility(View.GONE);
+        store_screen.setVisibility(View.VISIBLE);
+    }
+
+    public void go_buy_card2(View view){
+        buy_card_cost.setText(card_cost2.getText());
+        //buy_card.setImageResource(buy_cards[1]);
+        card_screen.setVisibility(View.GONE);
+        store_screen.setVisibility(View.VISIBLE);
+    }
+
+    public void go_buy_card3(View view){
+        buy_card_cost.setText(card_cost3.getText());
+        //buy_card.setImageResource(buy_cards[2]);
+        card_screen.setVisibility(View.GONE);
+        store_screen.setVisibility(View.VISIBLE);
+    }
+
+    public void go_buy_card4(View view){
+        buy_card_cost.setText(card_cost4.getText());
+        //buy_card.setImageResource(buy_cards[4]);
         card_screen.setVisibility(View.GONE);
         store_screen.setVisibility(View.VISIBLE);
     }
