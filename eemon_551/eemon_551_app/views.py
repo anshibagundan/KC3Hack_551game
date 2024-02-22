@@ -113,3 +113,39 @@ class UserQuestionDataUpdateView(APIView):
                 return Response({"message": "No matching records found."}, status=status.HTTP_404_NOT_FOUND)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserNameUpdateView(APIView):
+    def put(self, request, *args, **kwargs):
+        serializer = UserDataSerializer(data=request.data)
+        if serializer.is_valid():
+            name = serializer.validated_data['name']
+            money = serializer.validated_data['money']
+            level = serializer.validated_data['level']
+
+            updated_records = UserQuestionData.objects.filter(money=money, level=level).update(name=name)
+
+            if updated_records > 0:
+                return Response({"message": "Question data updated successfully."}, status=status.HTTP_200_OK)
+            else:
+                return Response({"message": "No matching records found."}, status=status.HTTP_404_NOT_FOUND)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserTitleUpdateView(APIView):
+    def put(self, request, *args, **kwargs):
+        serializer = UserDataSerializer(data=request.data)
+        if serializer.is_valid():
+            use = serializer.validated_data['use']
+            isOwn = serializer.validated_data['isOwn']
+            buyOK = serializer.validated_data['buyOK']
+            title_id = serializer.validated_data['title_id']
+            user_data_id = serializer.validated_data['user_data_id']
+
+            updated_records = UserQuestionData.objects.filter(use=use,title_id=title_id,user_data_id=user_data_id).update(isOwn=isOwn,buyOK=buyOK)
+
+            if updated_records > 0:
+                return Response({"message": "Question data updated successfully."}, status=status.HTTP_200_OK)
+            else:
+                return Response({"message": "No matching records found."}, status=status.HTTP_404_NOT_FOUND)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

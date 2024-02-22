@@ -70,8 +70,10 @@ public class decoration extends AppCompatActivity {
 
                     // ループを使用して、isOwnがtrueの全ての背景をリストに追加
                     for (UserBackground background : response.body()) {
-                        if (background.getisOwn()) { // isOwnがtrueの場合に追加
-                            background_list.add(background.getBackground_id());
+                        if (userId == background.getUser_data_id()) {
+                            if (background.getisOwn()) { // isOwnがtrueの場合に追加
+                                background_list.add(background.getBackground_id());
+                            }
                         }
                     }
 

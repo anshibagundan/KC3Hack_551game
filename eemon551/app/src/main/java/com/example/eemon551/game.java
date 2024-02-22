@@ -428,25 +428,37 @@ public class game extends AppCompatActivity {
                     int currentScore = response.body().getMoney();
                     Log.e("money", String.valueOf(currentScore));
                     int newScore = currentScore + 10;
-                    SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
-                    String name = prefs.getString("UserName", "test_user");
-                    apiService.updateUserData(userId, new ApiService.UserUpdateRequest(name, newScore)).enqueue(new Callback<Void>() {
+                    collect_money = collect_money + 10;
+                    apiService.getUser(userId).enqueue((new Callback<User>() {
                         @Override
-                        public void onResponse(Call<Void> call, Response<Void> response) {
-                            if (response.isSuccessful()) {
-                                Log.d("UserDataUpdate", "ユーザーデータ更新成功");
-                            } else {
-                                Log.e("UserDataUpdate", "ユーザーデータ更新失敗1: " + response.message());
+                        public void onResponse(Call<User> call, Response<User> response) {
+                            if (response.isSuccessful() && response.body() != null) {
+                                String name = response.body().getName();
+                                apiService.updateUserData(userId, new ApiService.UserUpdateRequest(name, newScore)).enqueue(new Callback<Void>() {
+                                    @Override
+                                    public void onResponse(Call<Void> call, Response<Void> response) {
+                                        if (response.isSuccessful()) {
+                                            Log.d("UserDataUpdate", "ユーザーデータ更新成功");
+                                        } else {
+                                            Log.e("UserDataUpdate", "ユーザーデータ更新失敗1: " + response.message());
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Void> call, Throwable t) {
+                                        Log.e("UserDataUpdate", "ユーザーデータ更新失敗2", t);
+                                    }
+                                });
                             }
                         }
 
                         @Override
-                        public void onFailure(Call<Void> call, Throwable t) {
-                            Log.e("UserDataUpdate", "ユーザーデータ更新失敗2", t);
+                        public void onFailure(Call<User> call, Throwable t) {
+
                         }
-                    });
+                    }));
                 }
-                collect_money = collect_money + 10;
+
             }
 
             @Override

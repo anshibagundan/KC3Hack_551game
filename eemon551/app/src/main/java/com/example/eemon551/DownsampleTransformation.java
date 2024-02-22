@@ -16,8 +16,8 @@ public class DownsampleTransformation extends BitmapTransformation {
     @Override
     protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
         // 解像度を半分にする例
-        int width = toTransform.getWidth() / 2;
-        int height = toTransform.getHeight() / 2;
+        int width = toTransform.getWidth() / 3;
+        int height = toTransform.getHeight() / 3;
         return Bitmap.createScaledBitmap(toTransform, width, height, false);
     }
 
