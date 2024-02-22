@@ -21,6 +21,6 @@ urlpatterns = [
     path('delete_userquestiondata/', views.UserQuestionDataDelete.as_view()),
     path('api/user-id/', UserIdView.as_view(), name='user-id'),
     path('userbackgrounds/updateUseStatus', UserBackgroundUseUpdateView.as_view(), name='update-use-status'),
-    path('userquestiondata/update/', UserQuestionDataUpdateView.as_view(), name='update_user_question_data'),
+    path('userquestiondatas/update/', UserQuestionDataUpdateView.as_view(), name='update_user_question_data'),
 ]
 

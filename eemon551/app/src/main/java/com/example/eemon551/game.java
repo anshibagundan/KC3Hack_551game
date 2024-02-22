@@ -242,6 +242,8 @@ public class game extends AppCompatActivity {
                 }
                 seigoText.setVisibility(View.VISIBLE);
                 seigo = true;
+                button_right.setVisibility(View.GONE);
+                button_left.setVisibility(View.GONE);
             });
 
             buttonRight.setOnClickListener(view -> {
@@ -259,6 +261,8 @@ public class game extends AppCompatActivity {
                 seigoText.setVisibility(View.VISIBLE);
                 seigo = true;
                 button_caver = false;
+                button_right.setVisibility(View.GONE);
+                button_left.setVisibility(View.GONE);
             });
         } else {
             Log.d("LocationFetch", "locationId" + locationId);
@@ -279,6 +283,8 @@ public class game extends AppCompatActivity {
                 seigoText.setVisibility(View.VISIBLE);
                 seigo = true;
                 button_caver = false;
+                button_right.setVisibility(View.GONE);
+                button_left.setVisibility(View.GONE);
             });
 
             buttonRight.setOnClickListener(view -> {
@@ -294,6 +300,8 @@ public class game extends AppCompatActivity {
                 seigoText.setVisibility(View.VISIBLE);
                 seigo = true;
                 button_caver = false;
+                button_right.setVisibility(View.GONE);
+                button_left.setVisibility(View.GONE);
             });
         }
     }
@@ -340,8 +348,7 @@ public class game extends AppCompatActivity {
         question_number.setText(questionNumber_Str);
         kaisetu.setVisibility(View.GONE);
         seigoText.setVisibility(View.GONE);
-        button_right.setVisibility(View.GONE);
-        button_left.setVisibility(View.GONE);
+
 
         if (questionNumber > 10) {
             kekka.setVisibility(View.VISIBLE);//あとで宝箱画面をVISIBLEにする
@@ -408,13 +415,13 @@ public class game extends AppCompatActivity {
                             if (response.isSuccessful()) {
                                 Log.d("UserDataUpdate", "ユーザーデータ更新成功");
                             } else {
-                                Log.e("UserDataUpdate", "ユーザーデータ更新失敗: " + response.message());
+                                Log.e("UserDataUpdate", "ユーザーデータ更新失敗1: " + response.message());
                             }
                         }
 
                         @Override
                         public void onFailure(Call<Void> call, Throwable t) {
-                            Log.e("UserDataUpdate", "ユーザーデータ更新失敗", t);
+                            Log.e("UserDataUpdate", "ユーザーデータ更新失敗2", t);
                         }
                     });
                 }
@@ -437,114 +444,111 @@ public class game extends AppCompatActivity {
     private void SetUserQuestionData(int randomValue, Set<Integer> displayedQuestionIds) {
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         int userId = prefs.getInt("UserId", 1);
-        if(SearchQuestionData(userId,randomValue)==2){
-            collect_money=collect_money+30;
-            kekka_money.setText(String.valueOf(collect_money));
-            return;
-        } else if (SearchQuestionData(userId,randomValue)==1) {
-            ApiService.UserQuestionDataUpdateRequest request = new ApiService.UserQuestionDataUpdateRequest(true, userId,randomValue);
-            apiService.updateUserQuestionData(request).enqueue(new Callback<Void>() {
-                @Override
-                public void onResponse(Call<Void> call, Response<Void> response) {
-                    if (response.isSuccessful()) {
-                        // 更新成功時の処理。例えば、UIの更新など
-                        Log.d("UpdateUseStatus", "Background use status updated successfully.");
-                    } else {
-                        // エラー処理
-                        Log.e("UpdateUseStatus", "Failed to update the background use status.");
-                    }
-                }
 
-                @Override
-                public void onFailure(Call<Void> call, Throwable t) {
-                    // 通信失敗時の処理
-                    Log.e("UpdateUseStatus", "API call failed.", t);
-                }
-            });
-        } else if (SearchQuestionData(userId,randomValue)==3||SearchQuestionData(userId,randomValue)==4) {
-            UserQuestionData data_true = new UserQuestionData(true, randomValue, userId);
-            apiService.insertUserQuestionData(data_true).enqueue(new Callback<Void>() {
-                @Override
-                public void onResponse(Call<Void> call, Response<Void> response) {
-                    if (response.isSuccessful()) {
-                        // 送信成功時の処理
-                        Log.e("SetUserQuestionData", "Data successfully sent to the server. ");
+        // 正解の質問データを処理
+        SearchQuestionData(userId, randomValue, searchResult -> {
+            Log.e("UpdateQuestionData", "searchResult"+searchResult);
 
-                    } else {
-                        // サーバーからのレスポンスが成功でない場合の処理
-                        Log.e("SetUserQuestionData", "Failed to send data. Response code: " + response.code());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Void> call, Throwable t) {
-                    // 通信失敗時の処理
-                    t.printStackTrace();
-                }
-            });
-        }
-
-        for (Integer element : displayedQuestionIds) {
-            if (element != randomValue) {
-
-                if (SearchQuestionData(userId, element) == 3 || SearchQuestionData(userId, element) == 4) {
-                    UserQuestionData data_false = new UserQuestionData(false, element, userId);
-                apiService.insertUserQuestionData(data_false).enqueue(new Callback<Void>() {
+            if (searchResult == 2) {
+                collect_money += 30;
+                runOnUiThread(() -> kekka_money.setText(String.valueOf(collect_money)));
+            } else if (searchResult == 1) {
+                ApiService.UserQuestionDataUpdateRequest request = new ApiService.UserQuestionDataUpdateRequest(true, randomValue, userId);
+                apiService.updateUserQuestionData(request).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.isSuccessful()) {
-                            // 送信成功時の処理
-                            Log.e("SetUserQuestionData", "Data successfully sent to the server. ");
-
+                            Log.d("UpdateQuestionData", "Question data updated successfully.");
                         } else {
-                            // サーバーからのレスポンスが成功でない場合の処理
-                            Log.e("SetUserQuestionData", "Failed to send data. Response code: " + response.code());
+                            Log.e("UpdateQuestionData", "Failed to update question data. Response code: " + response.code());
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
-                        // 通信失敗時の処理
-                        t.printStackTrace();
+                        Log.e("UpdateQuestionData", "API call failed.", t);
                     }
                 });
-            } else if (SearchQuestionData(userId, element) == 1) {
-                    break;
-                } else if (SearchQuestionData(userId, element) == 2) {
-                    break;
-                }
+            } else if (searchResult == 3 || searchResult == 4) {
+                UserQuestionData data = new UserQuestionData(true, randomValue, userId);
+                apiService.insertUserQuestionData(data).enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            Log.d("InsertQuestionData", "Question data inserted successfully.");
+                        } else {
+                            Log.e("InsertQuestionData", "Failed to insert question data. Response code: " + response.code());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Log.e("InsertQuestionData", "API call failed.", t);
+                    }
+                });
+            }
+        });
+
+        // 表示されたが選択されなかった質問データを処理
+        for (Integer questionId : displayedQuestionIds) {
+            if (!questionId.equals(randomValue)) {
+                SearchQuestionData(userId, questionId, searchResult -> {
+                    if (searchResult == 3 || searchResult == 4) {
+                        UserQuestionData data = new UserQuestionData(false, questionId, userId);
+                        apiService.insertUserQuestionData(data).enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                if (response.isSuccessful()) {
+                                    Log.d("InsertQuestionData", "Question data inserted successfully for non-selected question.");
+                                } else {
+                                    Log.e("InsertQuestionData", "Failed to insert question data for non-selected question. Response code: " + response.code());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                Log.e("InsertQuestionData", "API call failed for non-selected question.", t);
+                            }
+                        });
+                    }
+                });
             }
         }
     }
 
-    private int SearchQuestionData(int userId,int qes_id) {
+
+    interface SearchQuestionDataCallback {
+        void onResult(int searchResult);
+    }
+
+    private void SearchQuestionData(int userId, int qes_id, SearchQuestionDataCallback callback) {
         apiService.getUserQuestionData(userId).enqueue(new Callback<List<UserQuestionData>>() {
             @Override
             public void onResponse(Call<List<UserQuestionData>> call, Response<List<UserQuestionData>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<UserQuestionData> userQuestionData = response.body();
                     for (UserQuestionData data : userQuestionData) {
-                        if(!data.get_cor()&&data.get_qes_id()==qes_id){
-                            search = 1;//falseのデータがあったときPUT実行
-                            break;
-                        } else if (data.get_cor()&&data.get_qes_id()==qes_id) {
-                            search = 2;//trueのデータがあった時ボーナス30コインでUserQuestionDataに追加しない
-
-                            break;
-                            }
-                        search = 3;//trueもfalseもなかった時POST実行
+                        if (!data.get_cor() && data.get_qes_id() == qes_id) {
+                            callback.onResult(1); // falseのデータがあった場合
+                            return;
+                        } else if (data.get_cor() && data.get_qes_id() == qes_id) {
+                            callback.onResult(2); // trueのデータがあった場合
+                            return;
+                        }
                     }
-                }else{
-                    search = 4;//何もデータがなかった時POST実行
+                    callback.onResult(3); // trueもfalseもなかった場合
+                } else {
+                    callback.onResult(4); // データがなかった場合
                 }
             }
 
             @Override
             public void onFailure(Call<List<UserQuestionData>> call, Throwable t) {
                 Log.e("API Request Failure", "Error: ", t);
+                callback.onResult(0); // 通信失敗
             }
         });
-        return  search;
     }
+
 }
 
