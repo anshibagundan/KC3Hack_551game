@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from eemon_551_app import views
-from eemon_551_app.views import UserIdView, UserBackgroundUseUpdateView
+from eemon_551_app.views import UserIdView, UserBackgroundUseUpdateView ,UserQuestionDataUpdateView
 
 # ルーターの作成とビューセットの登録
 router = DefaultRouter()
@@ -21,4 +21,6 @@ urlpatterns = [
     path('delete_userquestiondata/', views.UserQuestionDataDelete.as_view()),
     path('api/user-id/', UserIdView.as_view(), name='user-id'),
     path('userbackgrounds/updateUseStatus', UserBackgroundUseUpdateView.as_view(), name='update-use-status'),
+    path('userquestiondata/update/', UserQuestionDataUpdateView.as_view(), name='update_user_question_data'),
 ]
+

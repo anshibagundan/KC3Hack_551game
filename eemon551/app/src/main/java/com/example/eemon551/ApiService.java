@@ -23,6 +23,19 @@ public interface ApiService {
     @GET("/userquestiondatas/")
     Call<List<UserQuestionData>> getUserQuestionData(@Query("user_data_id") int user_data_id);
 
+    @PUT("/userquestiondatas/{id}/")
+    Call<Void> updateUserData(@Path("id") int userId, @Body UserUpdateRequest userUpdateRequest);
+
+    class UserUpdateRequest {
+        final String name;
+        final int money;
+
+        public UserUpdateRequest(String name, int money) {
+            this.name = name;
+            this.money = money;
+        }
+    }
+
 
     @POST("/userquestiondatas/")
     Call<Void> insertUserQuestionData(@Body UserQuestionData data);
@@ -33,16 +46,21 @@ public interface ApiService {
     @GET("/userdatas/{id}/")
     Call<User> getUser(@Path("id") int userId);
 
-    @PUT("/userdatas/{id}/")
-    Call<Void> updateUserData(@Path("id") int userId, @Body UserUpdateRequest userUpdateRequest);
+    @PUT("/userquestiondatas/update/")
+    Call<Void> updateUserQuestionData(@Body UserQuestionDataUpdateRequest request);
 
-    class UserUpdateRequest {
-        final String name;
-        final int money;
+    class UserQuestionDataUpdateRequest {
+        final boolean cor;
 
-        public UserUpdateRequest(String name, int money) {
-            this.name = name;
-            this.money = money;
+        final int qes_id;
+        final int user_data_id;
+
+
+
+        public UserQuestionDataUpdateRequest(boolean cor, int user_data_id, int qes_id ) {
+            this.cor = cor;
+            this.user_data_id = user_data_id;
+            this.qes_id = qes_id;
         }
     }
 
