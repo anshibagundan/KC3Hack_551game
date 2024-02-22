@@ -48,7 +48,7 @@
 <!--            購入-->
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="470dp">
+                android:layout_height="match_parent">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -696,7 +696,7 @@
 
     </FrameLayout>
 
-<!--    カード，背景購入画面-->
+<!--    カード購入画面-->
     <FrameLayout
         android:id="@+id/buy_card_screen"
         android:layout_width="match_parent"
@@ -745,7 +745,7 @@
             android:backgroundTint="#CC6876"
             android:text="買う"
             android:textSize="20sp"
-            android:onClick="buy"/>
+            android:onClick="buy_card"/>
 
         <Button
             android:layout_width="150dp"
@@ -826,7 +826,7 @@
             android:backgroundTint="#CC6876"
             android:text="買う"
             android:textSize="20sp"
-            android:onClick="buy"/>
+            android:onClick="buy_title"/>
 
         <Button
             android:layout_width="150dp"
@@ -838,7 +838,69 @@
             android:text="買わない"
             android:textSize="20sp"
             android:onClick="back_store"/>
+    </FrameLayout>
 
+<!--背景購入画面-->
+    <FrameLayout
+        android:id="@+id/buy_back_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="#ffe6cc">
+
+        <ImageView
+            android:id="@+id/back_card"
+            android:layout_width="wrap_content"
+            android:layout_height="500dp"
+            android:layout_marginTop="40dp"
+            app:srcCompat="@drawable/tobita">
+
+        </ImageView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="220dp"
+            >
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:srcCompat="@drawable/money" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="500"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginStart="5dp"/>
+        </LinearLayout>
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="290dp"
+            android:layout_marginStart="100dp"
+            android:backgroundTint="#CC6876"
+            android:text="買う"
+            android:textSize="20sp"
+            android:onClick="buy_back"/>
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="290dp"
+            android:layout_marginEnd="100dp"
+            android:backgroundTint="#77AACC"
+            android:text="買わない"
+            android:textSize="20sp"
+            android:onClick="back_store"/>
     </FrameLayout>
 
 
