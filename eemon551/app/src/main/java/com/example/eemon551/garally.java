@@ -174,6 +174,7 @@ public class garally extends AppCompatActivity {
                                     int cardResId = getResources().getIdentifier(card, "drawable", getPackageName());
                                     Glide.with(garally.this)
                                             .load(cardResId)
+                                            .transform(new DownsampleTransformation())
                                             .into(card_image);
                             });
                             }
@@ -228,7 +229,7 @@ public class garally extends AppCompatActivity {
         ImageView imageView = new ImageView(this);
         String img = question.getImg().replace("\"", "").trim();
         int imageResId = getResources().getIdentifier(img, "drawable", getPackageName());
-        Glide.with(this).load(imageResId).into(imageView);
+        Glide.with(this).load(imageResId).transform(new DownsampleTransformation()).into(imageView);
         SetBackgroundColor(question, imageView);
         RelativeLayout card_lay = new RelativeLayout(this);
         TextView lay_txt = new TextView(this);
