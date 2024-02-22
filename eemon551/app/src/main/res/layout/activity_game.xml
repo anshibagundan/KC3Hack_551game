@@ -50,7 +50,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="230dp"
             android:layout_marginLeft="100dp"
-            android:backgroundTint="#CC6876"
+            android:backgroundTint="#7668CC"
             android:text="ないとき..."
             android:textSize="20dp"/>
 
