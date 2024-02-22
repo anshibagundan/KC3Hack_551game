@@ -141,7 +141,7 @@ class UserTitleUpdateView(APIView):
             title_id = serializer.validated_data['title_id']
             user_data_id = serializer.validated_data['user_data_id']
 
-            updated_records = UserTitle.objects.filter(use=use,title_id=title_id,user_data_id=user_data_id).update(isOwn=isOwn,buyOK=buyOK)
+            updated_records = UserTitle.objects.filter(title_id=title_id,user_data_id=user_data_id).update(use=use,isOwn=isOwn,buyOK=buyOK)
 
             if updated_records > 0:
                 return Response({"message": "Question data updated successfully."}, status=status.HTTP_200_OK)
