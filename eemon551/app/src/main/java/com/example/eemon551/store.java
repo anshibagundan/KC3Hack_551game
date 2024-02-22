@@ -116,7 +116,13 @@ public class store extends AppCompatActivity {
 
     }
 
-    public void buy(View view) {
+    public void buy_card(View view) {
+    }
+
+    public void buy_back(View view) {
+    }
+
+    public void buy_title(View view) {
     }
 
     //購入画面からストアに戻る
@@ -149,9 +155,9 @@ public class store extends AppCompatActivity {
         Intent intent = new Intent(store.this, activity_home.class);
         startActivity(intent);
     }
-
     public void store_deco(View view) {
         Intent intent = new Intent(store.this, decoration.class);
         startActivity(intent);
     }
+
 }
