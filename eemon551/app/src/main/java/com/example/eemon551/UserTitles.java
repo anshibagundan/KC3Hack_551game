@@ -1,14 +1,14 @@
 package com.example.eemon551;
 
 public class UserTitles {
-    private  Boolean Use;
+    private  Boolean use;
     private  Boolean isOwn;
     private Boolean buyOK;
     private int user_data_id;
     private int title_id;
 
     public Boolean getUse() {
-        return Use;
+        return use;
     }
 
     public Boolean getBuyOK() {

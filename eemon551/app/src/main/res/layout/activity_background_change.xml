@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".background_change">
+
+
+    <FrameLayout
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        android:background="#ffe6cc"
+        >
+
+        <!-- 上部-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="vertical">
+
+
+
+
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="120dp"
+            android:isScrollContainer="false"
+            android:id="@+id/scrollView">
+
+            <LinearLayout
+                android:id="@+id/LinearLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
+                <!--    大阪-->
+                <LinearLayout
+                    android:id="@+id/genre1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <!-- View -->
+                    <View
+                        android:layout_width="45dp"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@color/black"/>
+
+                    <!-- TextView -->
+                    <TextView
+                        android:id="@+id/genre1_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="装飾"
+                        android:textSize="30sp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@color/black"/>
+
+                </LinearLayout>
+
+                <!--        大阪の画像    -->
+                <GridLayout
+                    android:id="@+id/background_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="3"
+                    android:layout_gravity="center"
+                    android:useDefaultMargins="true">
+
+
+                </GridLayout>
+            </LinearLayout>
+        </ScrollView>
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

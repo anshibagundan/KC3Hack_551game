@@ -1,7 +1,7 @@
 package com.example.eemon551;
 
 public class UserBackground {
-    private Boolean Use;
+    private Boolean use;
 
     private Boolean isOwn;
     private Boolean buyOK;
@@ -9,7 +9,7 @@ public class UserBackground {
     private int user_data_id;
 
     public Boolean getUse() {
-        return Use;
+        return use;
     }
 
     public Boolean getBuyOK() {
