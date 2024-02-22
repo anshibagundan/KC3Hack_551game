@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -39,6 +40,9 @@ public class store extends AppCompatActivity {
     private TextView back_cost,back_cost2;
     private ImageView buy_back,buy_back2;
     private TextView title,title2,title3,title_cost,title_cost2,title_cost3,buy_title,buy_title_cost;
+    private LinearLayout card_ano,title_ano,back_ano;
+
+    private int collect_money;
 
     private int userId;
     @Override
@@ -57,12 +61,15 @@ public class store extends AppCompatActivity {
         //カード関連
         card_screen = findViewById(R.id.buy_card_screen);
 
+        card_ano = findViewById(R.id.card_ano);
+
         //background関連
         back_screen = findViewById(R.id.buy_back_screen);
         back_cost = findViewById(R.id.back_cost1);
         back_cost2 = findViewById(R.id.back_cost2);
         buy_back = findViewById(R.id.buy_back);
         buy_back2 = findViewById(R.id.buy_back2);
+        back_ano = findViewById(R.id.back_ano);
         //title関連
         title_screen = findViewById(R.id.buy_title_screen);
         title = findViewById(R.id.shop_title1);
@@ -73,6 +80,8 @@ public class store extends AppCompatActivity {
         title_cost3 = findViewById(R.id.title_cost3);
         buy_title = findViewById(R.id.buy_title);
         buy_title_cost = findViewById(R.id.buy_title_cost);
+        title_ano = findViewById(R.id.title_ano);
+
 
 
         GetMoney();
@@ -143,14 +152,76 @@ public class store extends AppCompatActivity {
 //    }
 
     public void buy_card(View view) {
-
+        //int cost = Integer.parseInt(buy_card.getText().toString());
     }
 
     public void buy_back(View view) {
-        
+        int cost = Integer.parseInt(back_cost2.getText().toString());
+        buy(cost,back_ano);
     }
 
     public void buy_title(View view) {
+        int cost = Integer.parseInt(buy_title_cost.getText().toString());
+        buy(cost,title_ano);
+    }
+
+    //購入
+    private void buy(int cost, LinearLayout linearLayout) {
+        SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        int userId = prefs.getInt("UserId", 1);
+
+        // 現在のユーザースコアを取得するAPIリクエストを想定
+        apiService.getUser(userId).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    int currentMoney = response.body().getMoney();
+                    Log.e("money", String.valueOf(currentMoney));
+                    if(currentMoney < cost){
+                        make_ano(linearLayout);
+                    }
+                    else {
+                        //お金更新
+                        int newMoney = currentMoney - cost;
+                        SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+                        String name = prefs.getString("UserName", "test_user");
+                        apiService.updateUserData(userId, new ApiService.UserUpdateRequest(name, newMoney)).enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                if (response.isSuccessful()) {
+                                    Log.d("UserDataUpdate", "ユーザーデータ更新成功");
+                                } else {
+                                    Log.e("UserDataUpdate", "ユーザーデータ更新失敗1: " + response.message());
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                Log.e("UserDataUpdate", "ユーザーデータ更新失敗2", t);
+                            }
+                        });
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("UserMoneyFetch", "ユーザーのmoney取得失敗", t);
+            }
+        });
+    }
+
+    private void make_ano(LinearLayout l){
+        // TextViewを新しく作成
+        TextView textView = new TextView(this);
+        textView.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+        textView.setGravity(android.view.Gravity.CENTER);
+        textView.setText("お金が足りていません！！");
+        textView.setTextSize(30);
+        textView.setTextColor(0xFFFF0000); // 赤色
+
+        // LinearLayoutにTextViewを追加
+        l.addView(textView);
     }
 
     //購入画面からストアに戻る
@@ -158,6 +229,10 @@ public class store extends AppCompatActivity {
         store_screen.setVisibility(View.VISIBLE);
         card_screen.setVisibility(View.GONE);
         title_screen.setVisibility(View.GONE);
+        back_screen.setVisibility(View.GONE);
+        card_ano.removeAllViews();
+        title_ano.removeAllViews();
+        back_ano.removeAllViews();
     }
 
     //card購入

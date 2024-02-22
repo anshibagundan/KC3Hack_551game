@@ -658,6 +658,15 @@
             android:text="買わない"
             android:textSize="20sp"
             android:onClick="back_store"/>
+
+        <LinearLayout
+            android:id="@+id/card_ano"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+        </LinearLayout>
     </FrameLayout>
 
 <!--    称号購入画面-->
@@ -739,6 +748,16 @@
             android:text="買わない"
             android:textSize="20sp"
             android:onClick="back_store"/>
+
+        <LinearLayout
+            android:id="@+id/title_ano"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+        </LinearLayout>
+
     </FrameLayout>
 
 <!--背景購入画面-->
@@ -802,7 +821,17 @@
             android:text="買わない"
             android:textSize="20sp"
             android:onClick="back_store"/>
+
+        <LinearLayout
+            android:id="@+id/back_ano"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+        </LinearLayout>
     </FrameLayout>
+
 
 
 
