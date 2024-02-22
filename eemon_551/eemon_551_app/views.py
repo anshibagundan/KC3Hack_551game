@@ -96,6 +96,22 @@ class UserBackgroundUseUpdateView(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class UserTitleUseUpdateView(APIView):
+    def put(self, request, *args, **kwargs):
+        serializer = UserTitleSerializer(data=request.data)
+        if serializer.is_valid():
+            user_data_id = serializer.validated_data['user_data_id']
+            title_id = serializer.validated_data['title_id']
+
+            # すべての背景を一旦falseに設定
+            UserTitle.objects.filter(user_data_id=user_data_id).update(use=False)
+            # 指定された背景のみtrueに設定
+            UserTitle.objects.filter(user_data_id=user_data_id, background_id=title_id).update(use=True)
+
+            return Response({"message": "Background use updated successfully."}, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 class UserQuestionDataUpdateView(APIView):
     def put(self, request, *args, **kwargs):
         serializer = UserQuestionDataSerializer(data=request.data)
@@ -135,13 +151,30 @@ class UserTitleUpdateView(APIView):
     def put(self, request, *args, **kwargs):
         serializer = UserDataSerializer(data=request.data)
         if serializer.is_valid():
-            use = serializer.validated_data['use']
             isOwn = serializer.validated_data['isOwn']
             buyOK = serializer.validated_data['buyOK']
             title_id = serializer.validated_data['title_id']
             user_data_id = serializer.validated_data['user_data_id']
 
-            updated_records = UserTitle.objects.filter(title_id=title_id,user_data_id=user_data_id).update(use=use,isOwn=isOwn,buyOK=buyOK)
+            updated_records = UserTitle.objects.filter(title_id=title_id,user_data_id=user_data_id).update(isOwn=isOwn,buyOK=buyOK)
+
+            if updated_records > 0:
+                return Response({"message": "Question data updated successfully."}, status=status.HTTP_200_OK)
+            else:
+                return Response({"message": "No matching records found."}, status=status.HTTP_404_NOT_FOUND)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserBackGroundUpdateView(APIView):
+    def put(self, request, *args, **kwargs):
+        serializer = UserBackGroundSerializer(data=request.data)
+        if serializer.is_valid():
+            isOwn = serializer.validated_data['isOwn']
+            buyOK = serializer.validated_data['buyOK']
+            background_id = serializer.validated_data['background_id']
+            user_data_id = serializer.validated_data['user_data_id']
+
+            updated_records = UserBackGround.objects.filter(title_id=background_id,user_data_id=user_data_id).update(isOwn=isOwn,buyOK=buyOK)
 
             if updated_records > 0:
                 return Response({"message": "Question data updated successfully."}, status=status.HTTP_200_OK)
