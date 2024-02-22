@@ -230,6 +230,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="新しい名前を入力してください。"
+                    android:inputType="text"
                     android:textSize="23dp"
                     android:textColor="@color/white"
                     android:layout_gravity="center"
