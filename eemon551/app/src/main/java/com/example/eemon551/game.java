@@ -114,7 +114,7 @@ public class game extends AppCompatActivity {
 
     private void loadQuestion() {
         Random random = new Random();
-        int questionNo = random.nextInt(10); // 仮定する質問の数に応じて調整
+        int questionNo = random.nextInt(26); // 仮定する質問の数に応じて調整
 
         // APIリクエストを実行して質問をロード
         if (genreId == 0) {
