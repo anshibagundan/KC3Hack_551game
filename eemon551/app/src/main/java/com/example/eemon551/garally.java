@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat;
 
 import android.app.ActionBar;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.content.Intent;
 import android.util.Log;
@@ -53,6 +54,7 @@ public class garally extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_garally);
 
         apiService = ApiClient.getApiService();
