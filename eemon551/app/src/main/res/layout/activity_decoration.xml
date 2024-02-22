@@ -245,7 +245,9 @@
                     android:layout_marginTop="60dp"
                     android:hint="名前を入力"
                     android:textColor="@color/black"
-                    android:background="@color/white" />
+                    android:background="@color/white"
+                    
+                    android:inputType="text"/>
 <!--                決定ボタン-->
                 <Button
                     android:layout_width="wrap_content"
