@@ -48,7 +48,7 @@
 <!--            購入-->
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="450dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:columnCount="3"
+                        android:columnCount="2"
                         android:useDefaultMargins="true"
                         >
     <!--たこ焼き-->
@@ -78,6 +78,7 @@
                         android:padding="10dp"
                         android:background="#F5BF"
                         android:orientation="vertical"
+                            android:layout_columnWeight="1"
                         android:onClick="go_buy_card">
 
                     <TextView
@@ -128,6 +129,7 @@
                             android:padding="10dp"
                             android:background="#F5BF"
                             android:orientation="vertical"
+                            android:layout_columnWeight="1"
                             android:onClick="go_buy_card">
 
                             <TextView
@@ -178,6 +180,7 @@
                             android:padding="10dp"
                             android:background="#F5BF"
                             android:orientation="vertical"
+                            android:layout_columnWeight="1"
                             android:onClick="go_buy_card">
 
                             <TextView
@@ -228,6 +231,7 @@
                             android:padding="10dp"
                             android:background="#F5BF"
                             android:orientation="vertical"
+                            android:layout_columnWeight="1"
                             android:onClick="go_buy_card">
 
                             <TextView
@@ -278,6 +282,7 @@
                             android:padding="10dp"
                             android:background="#F5BF"
                             android:orientation="vertical"
+                            android:layout_columnWeight="1"
                             android:onClick="go_buy_card">
 
                             <TextView
@@ -321,7 +326,7 @@
                             </LinearLayout>
 
                         </LinearLayout>
-                        
+
 
                         <LinearLayout
                     android:layout_width="wrap_content"
@@ -525,14 +530,14 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:orientation="vertical"
-                            android:onClick="go_buy_card">
+                            android:onClick="go_buy_back">
                             <ImageView
-                            android:id="@+id/shop_back"
-                            android:layout_width="150dp"
-                            android:layout_height="200dp"
-                            app:srcCompat="@drawable/tobita"
-                            android:layout_gravity="center"
-                            />
+                                android:id="@+id/buy_back"
+                                android:layout_width="150dp"
+                                android:layout_height="200dp"
+                                app:srcCompat="@drawable/tobita"
+                                android:layout_gravity="center"
+                                />
                             <LinearLayout
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
@@ -547,7 +552,7 @@
                                 app:srcCompat="@drawable/money" />
 
                             <TextView
-                                android:id="@+id/title_cost"
+                                android:id="@+id/back_cost1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="50dp"
                                 android:text="500"
@@ -701,7 +706,7 @@
 
         <ImageView
             android:id="@+id/buy_card"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="500dp"
             android:layout_marginTop="40dp"
             app:srcCompat="@drawable/tobita">
@@ -844,12 +849,11 @@
         android:background="#ffe6cc">
 
         <ImageView
-            android:id="@+id/back_card"
+            android:id="@+id/buy_back2"
             android:layout_width="wrap_content"
             android:layout_height="500dp"
             android:layout_marginTop="40dp"
             app:srcCompat="@drawable/tobita">
-
         </ImageView>
 
         <LinearLayout
@@ -866,6 +870,7 @@
                 app:srcCompat="@drawable/money" />
 
             <TextView
+                android:id="@+id/back_cost2"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:text="500"

@@ -2,8 +2,10 @@ package com.example.eemon551;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -34,11 +36,15 @@ public class store extends AppCompatActivity {
     private FrameLayout card_screen;
     private FrameLayout title_screen;
     private FrameLayout back_screen;
+    private TextView back_cost,back_cost2;
+    private ImageView buy_back,buy_back2;
 
     private int userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // アクティビティの方向を縦向きに設定する
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_store);
         apiService = ApiClient.getApiService();
         gridLayout_1 = findViewById(R.id.card_layout);
@@ -49,6 +55,10 @@ public class store extends AppCompatActivity {
         card_screen = findViewById(R.id.buy_card_screen);
         title_screen = findViewById(R.id.buy_title_screen);
         back_screen = findViewById(R.id.buy_back_screen);
+        back_cost = findViewById(R.id.back_cost1);
+        back_cost2 = findViewById(R.id.back_cost2);
+        buy_back = findViewById(R.id.buy_back);
+        buy_back2 = findViewById(R.id.buy_back2);
 
         GetMoney();
 //        for (int i = 0; i < 6; i++) {
@@ -143,9 +153,12 @@ public class store extends AppCompatActivity {
         card_screen.setVisibility(View.GONE);
         store_screen.setVisibility(View.VISIBLE);
     }
+    @SuppressLint("ResourceType")
     public void go_buy_back(View view){
         back_screen.setVisibility(View.GONE);
         store_screen.setVisibility(View.VISIBLE);
+        buy_back2.setImageResource(buy_back.getSourceLayoutResId());
+        back_cost2.setText(back_cost.getText());
     }
 
 //    ホームデータ遷移
