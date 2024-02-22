@@ -46,7 +46,7 @@ public interface ApiService {
     @GET("/userdatas/{id}/")
     Call<User> getUser(@Path("id") int userId);
 
-    @PUT("/userquestiondatas/update/")
+    @PUT("/userquestiondatas/update")
     Call<Void> updateUserQuestionData(@Body UserQuestionDataUpdateRequest request);
 
     class UserQuestionDataUpdateRequest {
