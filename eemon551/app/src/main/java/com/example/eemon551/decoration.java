@@ -32,6 +32,9 @@ public class decoration extends AppCompatActivity {
     private LinearLayout name_change;
     private LinearLayout title_change;
     private  LinearLayout background_change;
+    private Button name_chnage_button;
+    private Button title_chnage_button;
+    private Button background_chnage_button;
     private List<Integer> background_list = new ArrayList<>();
 
     @Override
@@ -43,6 +46,9 @@ public class decoration extends AppCompatActivity {
         name_change=findViewById(R.id.name_change);
         title_change=findViewById(R.id.title_change);
         background_change=findViewById(R.id.background_change);
+        name_chnage_button=findViewById(R.id.name_change_button);
+        title_chnage_button=findViewById(R.id.title_change_button);
+        background_chnage_button=findViewById(R.id.background_change_button);
         background_layout.setAlignmentMode(GridLayout.ALIGN_BOUNDS);
         background_layout.setColumnCount(3);
         fetchbackground();
@@ -158,24 +164,43 @@ public class decoration extends AppCompatActivity {
 
 
 
+
 //変更画面のオーバーレイ
     public void overlay_name(View view){
             name_change.setVisibility(View.VISIBLE);
+            name_chnage_button.setVisibility(View.GONE);
+            title_chnage_button.setVisibility(View.GONE);
+            background_chnage_button.setVisibility(View.GONE);
     }
     public void overlay_title(View view){
         title_change.setVisibility(View.VISIBLE);
+        name_chnage_button.setVisibility(View.GONE);
+        title_chnage_button.setVisibility(View.GONE);
+        background_chnage_button.setVisibility(View.GONE);
     }
     public void overlay_background(View view){
         background_change.setVisibility(View.VISIBLE);
+        name_chnage_button.setVisibility(View.GONE);
+        title_chnage_button.setVisibility(View.GONE);
+        background_chnage_button.setVisibility(View.GONE);
     }
     public void overlay_name_back(View view){
         name_change.setVisibility(View.GONE);
+        name_chnage_button.setVisibility(View.VISIBLE);
+        title_chnage_button.setVisibility(View.VISIBLE);
+        background_chnage_button.setVisibility(View.VISIBLE);
     }
     public void overlay_title_back(View view){
         title_change.setVisibility(View.GONE);
+        name_chnage_button.setVisibility(View.VISIBLE);
+        title_chnage_button.setVisibility(View.VISIBLE);
+        background_chnage_button.setVisibility(View.VISIBLE);
     }
     public void overlay_background_back(View view){
         background_change.setVisibility(View.GONE);
+        name_chnage_button.setVisibility(View.VISIBLE);
+        title_chnage_button.setVisibility(View.VISIBLE);
+        background_chnage_button.setVisibility(View.VISIBLE);
     }
 
 
