@@ -25,8 +25,6 @@ class BackGround(models.Model):
     img = models.CharField(max_length=255, null=False)
     rare = models.IntegerField(default=0)
 
-    def __str__(self):
-        return self.name
 
 class Question(models.Model):
     name = models.CharField(max_length=255, null=False)
