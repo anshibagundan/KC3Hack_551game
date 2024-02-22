@@ -92,12 +92,13 @@
                         android:layout_marginStart="5dp"/>
 
                             <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    app:srcCompat="@drawable/takoyaki"
-                    android:layout_gravity="center"
-                    android:background="@color/food"
-                    />
+                                android:id="@+id/card_1"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                app:srcCompat="@drawable/takoyaki"
+                                android:layout_gravity="center"
+                                android:background="@color/food"
+                                />
                             <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -143,6 +144,7 @@
                                 android:layout_marginStart="5dp"/>
 
                             <ImageView
+                                android:id="@+id/card_2"
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
                                 app:srcCompat="@drawable/takoyaki"
@@ -194,6 +196,59 @@
                                 android:layout_marginStart="5dp"/>
 
                             <ImageView
+                                android:id="@+id/card_3"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                app:srcCompat="@drawable/takoyaki"
+                                android:layout_gravity="center"
+                                android:background="@color/food"
+                                />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:layout_marginTop="5dp"
+                                >
+
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    app:srcCompat="@drawable/money" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="50dp"
+                                    android:text="5000"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/white"
+                                    android:gravity="center"
+                                    android:layout_marginStart="5dp"/>
+                            </LinearLayout>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:padding="10dp"
+                            android:background="#F5BF"
+                            android:orientation="vertical"
+                            android:layout_columnWeight="1"
+                            android:onClick="go_buy_card">
+
+                            <TextView
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:text="めっちゃうまたこ焼き"
+                                android:textSize="10sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                android:layout_marginStart="5dp"/>
+
+                            <ImageView
+                                android:id="@+id/card_4"
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
                                 app:srcCompat="@drawable/takoyaki"
@@ -225,14 +280,15 @@
 
                         </LinearLayout>
 
+
                         <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:padding="10dp"
-                    android:background="#F000"
-                    android:orientation="vertical"
-                        >
+                            android:visibility="gone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:padding="10dp"
+                            android:background="#F000"
+                            android:orientation="vertical">
 
                     <TextView
                         android:layout_width="100dp"
