@@ -455,7 +455,9 @@ public class game extends AppCompatActivity {
                 collect_money += 30;
                 runOnUiThread(() -> kekka_money.setText(String.valueOf(collect_money)));
             } else if (searchResult == 1) {
-                ApiService.UserQuestionDataUpdateRequest request = new ApiService.UserQuestionDataUpdateRequest(true, randomValue, userId);
+                Log.d("UpdateQuestionData", "user_data_id"+ userId);
+                Log.d("UpdateQuestionData", "qes_id"+ randomValue);
+                UserQuestionDataUpdateRequest request = new UserQuestionDataUpdateRequest(true ,userId,randomValue);
                 apiService.updateUserQuestionData(request).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {

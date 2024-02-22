@@ -49,21 +49,6 @@ public interface ApiService {
     @PUT("/userquestiondatas/update")
     Call<Void> updateUserQuestionData(@Body UserQuestionDataUpdateRequest request);
 
-    class UserQuestionDataUpdateRequest {
-        final boolean cor;
-
-        final int qes_id;
-        final int user_data_id;
-
-
-
-        public UserQuestionDataUpdateRequest(boolean cor, int user_data_id, int qes_id ) {
-            this.cor = cor;
-            this.user_data_id = user_data_id;
-            this.qes_id = qes_id;
-        }
-    }
-
     @POST("/userdatas/")
     Call<Void> insertUserData(@Body User data);
 
