@@ -55,8 +55,6 @@ public class store extends AppCompatActivity {
         apiService = ApiClient.getApiService();
         gridLayout_1 = findViewById(R.id.card_layout);
         money =findViewById(R.id.money);
-        gridLayout_1.setAlignmentMode(GridLayout.ALIGN_BOUNDS);
-        gridLayout_1.setColumnCount(3);
         store_screen = findViewById(R.id.store);
         //カード関連
         card_screen = findViewById(R.id.buy_card_screen);
@@ -163,6 +161,7 @@ public class store extends AppCompatActivity {
     public void buy_title(View view) {
         int cost = Integer.parseInt(buy_title_cost.getText().toString());
         buy(cost,title_ano);
+
     }
 
     //購入
