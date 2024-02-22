@@ -246,7 +246,7 @@
                     android:hint="名前を入力"
                     android:textColor="@color/black"
                     android:background="@color/white"
-                    
+
                     android:inputType="text"/>
 <!--                決定ボタン-->
                 <Button
