@@ -189,21 +189,23 @@ public class game extends AppCompatActivity {
         currentQuestionLoc_id = question.getLoc_id();
 
         // locationデータを取得
-        loadLocationData(currentQuestionLoc_id);
+        loadLocationData(currentQuestionLoc_id,question);
 
+        Log.e("T_Q", "3" + T_Q);
+        if (T_Q) {
+//            TrueQuestionIds.add(question.getId());
+            T_Q = false;
+        }
         //出題済みidを格納
         displayedQuestionIds.add(question.getId());
 
         button_right.setVisibility(View.VISIBLE);
         button_left.setVisibility(View.VISIBLE);
 
-        if (T_Q) {
-            TrueQuestionIds.add(question.getId());
-            T_Q = false;
-        }
+
     }
 
-    private void loadLocationData(int locId) {
+    private void loadLocationData(int locId, Question question) {
         apiService.getLocationById(locId).enqueue(new Callback<Location>() {
             @Override
             public void onResponse(Call<Location> call, Response<Location> response) {
@@ -214,8 +216,9 @@ public class game extends AppCompatActivity {
                     Button buttonRight = findViewById(R.id.button_right);
 
                     if (touka_loading.getVisibility() == View.GONE) {
-                        setupButtonListeners(buttonLeft, buttonRight, currentQuestionIsKansai, locId);
+                        setupButtonListeners(buttonLeft, buttonRight, currentQuestionIsKansai, locId, question);
                     }
+                    Log.e("T_Q", "2" + T_Q);
                 }
             }
 
@@ -228,7 +231,7 @@ public class game extends AppCompatActivity {
 
 
     //buttomと正誤判定
-    private void setupButtonListeners(Button buttonLeft, Button buttonRight, Boolean currentQuestionIsKansai, int locId) {
+    private void setupButtonListeners(Button buttonLeft, Button buttonRight, Boolean currentQuestionIsKansai, int locId, Question question) {
         if (locationId == 0) {
             buttonLeft.setOnClickListener(view -> {
                 if (currentQuestionIsKansai) {
@@ -237,6 +240,7 @@ public class game extends AppCompatActivity {
                     seigoText.setImageResource(R.drawable.wahhahhahha);
                     updateUserScore(10);
                     T_Q = true;
+                    TrueQuestionIds.add(question.getId());
                 } else {
                     // 不正解の処理
                     Log.d("LocationFetch", "left false");
@@ -255,6 +259,7 @@ public class game extends AppCompatActivity {
                     seigoText.setImageResource(R.drawable.wahhahhahha);
                     updateUserScore(10); // スコアを10加算する
                     T_Q = true;
+                    TrueQuestionIds.add(question.getId());
                 } else {
                     Log.d("LocationFetch", "right false");
                     // 不正解の処理
@@ -277,6 +282,7 @@ public class game extends AppCompatActivity {
                     seigoText.setImageResource(R.drawable.wahhahhahha);
                     updateUserScore(10);
                     T_Q = true;
+                    TrueQuestionIds.add(question.getId());
                 } else {
                     Log.d("LocationFetch", "left false");
                     // 不正解の処理
@@ -294,6 +300,7 @@ public class game extends AppCompatActivity {
                     // 正解の処理
                     seigoText.setImageResource(R.drawable.wahhahhahha);
                     T_Q = true;
+                    TrueQuestionIds.add(question.getId());
                 } else {
                     // 不正解の処理
                     seigoText.setImageResource(R.drawable.gaann);
@@ -306,6 +313,7 @@ public class game extends AppCompatActivity {
                 button_left.setVisibility(View.GONE);
             });
         }
+        Log.e("T_Q", "1" + T_Q);
     }
 
 
@@ -320,26 +328,33 @@ public class game extends AppCompatActivity {
             toi.setVisibility(View.GONE);
             if (questionNumber > 9) {
                 next.setText("結果へ");
-                randomValue = getRandomElement(TrueQuestionIds);
-                System.out.println("ランダムに選ばれた値: " + randomValue);
-                kekka_money.setText("x" + String.valueOf(collect_money));
-                SetUserQuestionData(randomValue, displayedQuestionIds);
+                System.out.println("ランダム前 空前");
+                if (!TrueQuestionIds.isEmpty()) {
+                    System.out.println("ランダム前 空後");
+                    randomValue = getRandomElement(TrueQuestionIds);
+                    System.out.println("ランダムに選ばれた値: " + randomValue);
+                    SetUserQuestionData(randomValue, displayedQuestionIds);
 
-                apiService.getQuestionById(randomValue).enqueue(new Callback<Question>() {
-                    @Override
-                    public void onResponse(Call<Question> call, Response<Question> response) {
-                        if (response.isSuccessful() && response.body() != null) {
-                            String img = response.body().getCard().replace("\"", "").trim();
-                            int card_link = getResources().getIdentifier(img, "drawable", getPackageName());
-                            get_card.setImageResource(card_link);
+                    apiService.getQuestionById(randomValue).enqueue(new Callback<Question>() {
+                        @Override
+                        public void onResponse(Call<Question> call, Response<Question> response) {
+                            if (response.isSuccessful() && response.body() != null) {
+                                String img = response.body().getCard().replace("\"", "").trim();
+                                int card_link = getResources().getIdentifier(img, "drawable", getPackageName());
+                                get_card.setImageResource(card_link);
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<Question> call, Throwable t) {
-                        Log.e("API Request Failure", "Error: ", t);
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<Question> call, Throwable t) {
+                            Log.e("API Request Failure", "Error: ", t);
+                        }
+                    });
+                }else{
+                    System.out.println("ランダムじゃなくてこっち？");
+                    get_card.setImageResource(R.drawable.gaann);
+                }
+                kekka_money.setText("x" + String.valueOf(collect_money));
             }
         }
     }
@@ -370,21 +385,25 @@ public class game extends AppCompatActivity {
     public void onTap_takara_back(View view) {
         card_over.setVisibility(View.GONE);
         finish.setVisibility(View.VISIBLE);
-        apiService.getQuestionById(randomValue).enqueue(new Callback<Question>() {
-            @Override
-            public void onResponse(Call<Question> call, Response<Question> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    String img = response.body().getCard().replace("\"", "").trim();
-                    int card_link = getResources().getIdentifier(img, "drawable", getPackageName());
-                    takara.setImageResource(card_link);
+        if (!TrueQuestionIds.isEmpty()) {
+            apiService.getQuestionById(randomValue).enqueue(new Callback<Question>() {
+                @Override
+                public void onResponse(Call<Question> call, Response<Question> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        String img = response.body().getCard().replace("\"", "").trim();
+                        int card_link = getResources().getIdentifier(img, "drawable", getPackageName());
+                        takara.setImageResource(card_link);
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<Question> call, Throwable t) {
-                Log.e("API Request Failure", "Error: ", t);
-            }
-        });
+                @Override
+                public void onFailure(Call<Question> call, Throwable t) {
+                    Log.e("API Request Failure", "Error: ", t);
+                }
+            });
+        }else {
+            takara.setImageResource(R.drawable.gaann);
+        }
 
         button_caver = true;
     }
