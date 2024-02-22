@@ -43,9 +43,10 @@
                 android:textSize="15sp"/>
 
             <FrameLayout
-                android:layout_width="290dp"
+                android:layout_width="match_parent"
                 android:layout_height="20dp"
                 android:background="@drawable/border">
+
                 <View
                     android:id="@+id/kansai"
                     android:layout_width="26dp"
