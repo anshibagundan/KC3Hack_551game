@@ -135,22 +135,14 @@
             </LinearLayout>
 
         </LinearLayout>
-
+        <!--看板-->
         <ImageView
             android:id="@+id/decoration_sign"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/decoration_sign" />
 
-        <!--    decoのホーム画面-->
-        <LinearLayout
-            android:id="@+id/deco_home"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="visible"
-            >
-        </LinearLayout>
+
 
         <Button
             android:id="@+id/name_change_button"
@@ -159,7 +151,7 @@
             android:layout_gravity="bottom|center_horizontal"
             android:layout_marginBottom="400dp"
             android:backgroundTint="#C89696"
-
+            android:onClick="overlay_name"
             android:text="名前変更"
             android:textSize="40dp"
             android:fontFamily="@font/acme"/>
@@ -171,20 +163,19 @@
             android:layout_gravity="bottom|center_horizontal"
             android:layout_marginBottom="280dp"
             android:backgroundTint="#C89696"
-
+            android:onClick="overlay_title"
             android:text="称号変更"
             android:textSize="40dp"
             android:fontFamily="@font/acme"/>
 
         <Button
-            android:id="@+id/back_change_button"
+            android:id="@+id/background_change_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
             android:layout_marginBottom="160dp"
             android:backgroundTint="#C89696"
-            android:onClick="decoration_background"
-
+            android:onClick="overlay_background"
             android:text="背景変更"
             android:textSize="40dp"
             android:fontFamily="@font/acme"/>
@@ -212,7 +203,8 @@
                     android:text="←"
                     android:textSize="70dp"
                     android:background="#9C573E"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/white"
+                    android:onClick="overlay_name_back"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -267,13 +259,13 @@
 
         </LinearLayout>
 
-        <!--    称号変更-->
+        <!--    称号変更画面-->
         <LinearLayout
             android:id="@+id/title_change"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility=""
+            android:visibility="gone"
             android:background="#ffe6cc">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -287,7 +279,8 @@
                     android:text="←"
                     android:textSize="70dp"
                     android:background="#9C573E"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/white"
+                    android:onClick="overlay_title_back"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -324,14 +317,40 @@
 
         </LinearLayout>
 
-        <!--    背景変更-->
+        <!--    背景変更画面-->
         <LinearLayout
-            android:id="@+id/back_change"
+            android:id="@+id/background_change"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:visibility="gone"
-            >
+            android:background="#ffe6cc">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:orientation="horizontal"
+                android:background="@color/bar">
+
+                <TextView
+                    android:id="@+id/back_from_background"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="←"
+                    android:textSize="70dp"
+                    android:background="#9C573E"
+                    android:textColor="@color/white"
+                    android:onClick="overlay_background_back"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="背景変更"
+                    android:textSize="50dp"
+                    android:textColor="@color/white"
+                    android:background="@color/bar"
+                    android:textStyle="bold"/>
+            </LinearLayout>
             <!--button-->
 
             <!--        「背景変更」-->
@@ -339,11 +358,55 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <GridLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:columnCount="2">
-                </GridLayout>
+                <LinearLayout
+                    android:id="@+id/LinearLayout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/genre1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="30dp">
+
+                        <!-- View -->
+                        <View
+                            android:layout_width="45dp"
+                            android:layout_height="2dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@color/black"/>
+
+                        <!-- TextView -->
+                        <TextView
+                            android:id="@+id/genre1_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="背景"
+                            android:textSize="30sp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@color/black"/>
+
+                    </LinearLayout>
+
+                    <!--        大阪の画像    -->
+                    <GridLayout
+                        android:id="@+id/background_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:columnCount="2"
+                        android:layout_gravity="center"
+                        android:useDefaultMargins="true">
+
+
+                    </GridLayout>
+                </LinearLayout>
+
             </ScrollView>
             <!--提出ボタン-->
         </LinearLayout>
