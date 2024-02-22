@@ -38,6 +38,7 @@ public class store extends AppCompatActivity {
     private FrameLayout back_screen;
     private TextView back_cost,back_cost2;
     private ImageView buy_back,buy_back2;
+    private TextView title,title2,title3,title_cost,title_cost2,title_cost3,buy_title,buy_title_cost;
 
     private int userId;
     @Override
@@ -45,6 +46,7 @@ public class store extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // アクティビティの方向を縦向きに設定する
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         setContentView(R.layout.activity_store);
         apiService = ApiClient.getApiService();
         gridLayout_1 = findViewById(R.id.card_layout);
@@ -52,13 +54,26 @@ public class store extends AppCompatActivity {
         gridLayout_1.setAlignmentMode(GridLayout.ALIGN_BOUNDS);
         gridLayout_1.setColumnCount(3);
         store_screen = findViewById(R.id.store);
+        //カード関連
         card_screen = findViewById(R.id.buy_card_screen);
-        title_screen = findViewById(R.id.buy_title_screen);
+
+        //background関連
         back_screen = findViewById(R.id.buy_back_screen);
         back_cost = findViewById(R.id.back_cost1);
         back_cost2 = findViewById(R.id.back_cost2);
         buy_back = findViewById(R.id.buy_back);
         buy_back2 = findViewById(R.id.buy_back2);
+        //title関連
+        title_screen = findViewById(R.id.buy_title_screen);
+        title = findViewById(R.id.shop_title1);
+        title2 = findViewById(R.id.shop_title2);
+        title3 = findViewById(R.id.shop_title3);
+        title_cost = findViewById(R.id.title_cost);
+        title_cost2 = findViewById(R.id.title_cost2);
+        title_cost3 = findViewById(R.id.title_cost3);
+        buy_title = findViewById(R.id.buy_title);
+        buy_title_cost = findViewById(R.id.buy_title_cost);
+
 
         GetMoney();
 //        for (int i = 0; i < 6; i++) {
@@ -125,13 +140,14 @@ public class store extends AppCompatActivity {
 //                    .into(imageView);
 //            gridLayout_1.addView(imageView);
 //
-//
 //    }
 
     public void buy_card(View view) {
+
     }
 
     public void buy_back(View view) {
+        
     }
 
     public void buy_title(View view) {
@@ -144,21 +160,40 @@ public class store extends AppCompatActivity {
         title_screen.setVisibility(View.GONE);
     }
 
-    public void go_buy_title(View view) {
-        title_screen.setVisibility(View.VISIBLE);
-        store_screen.setVisibility(View.GONE);
-    }
-
+    //card購入
     public void go_buy_card(View view){
         card_screen.setVisibility(View.GONE);
         store_screen.setVisibility(View.VISIBLE);
     }
-    @SuppressLint("ResourceType")
+
+    //title購入
+    public void go_buy_title(View view) {
+        buy_title_cost.setText(title_cost.getText());
+        buy_title.setText(title.getText());
+        title_screen.setVisibility(View.VISIBLE);
+        store_screen.setVisibility(View.GONE);
+    }
+
+    public void go_buy_title2(View view) {
+        buy_title_cost.setText(title_cost2.getText());
+        buy_title.setText(title2.getText());
+        title_screen.setVisibility(View.VISIBLE);
+        store_screen.setVisibility(View.GONE);
+    }
+
+    public void go_buy_title3(View view) {
+        buy_title_cost.setText(title_cost3.getText());
+        buy_title.setText(title3.getText());
+        title_screen.setVisibility(View.VISIBLE);
+        store_screen.setVisibility(View.GONE);
+    }
+
+    //背景購入
     public void go_buy_back(View view){
+        buy_back2.setImageResource(buy_back.getImageAlpha());
+        back_cost2.setText(back_cost.getText());
         back_screen.setVisibility(View.GONE);
         store_screen.setVisibility(View.VISIBLE);
-        buy_back2.setImageResource(buy_back.getSourceLayoutResId());
-        back_cost2.setText(back_cost.getText());
     }
 
 //    ホームデータ遷移
