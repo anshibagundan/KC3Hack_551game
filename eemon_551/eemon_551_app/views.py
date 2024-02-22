@@ -96,3 +96,20 @@ class UserBackgroundUseUpdateView(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class UserQuestionDataUpdateView(APIView):
+    def put(self, request, *args, **kwargs):
+        serializer = UserQuestionDataSerializer(data=request.data)
+        if serializer.is_valid():
+            cor = serializer.validated_data['cor']
+            qes_id = serializer.validated_data['qes_id']
+            user_data_id = serializer.validated_data['user_data_id']
+
+            # qes_idとuser_data_idが一致するレコードを検索し、corを更新
+            updated_records = UserQuestionData.objects.filter(qes_id=qes_id, user_data_id=user_data_id).update(cor=cor)
+
+            if updated_records > 0:
+                return Response({"message": "Question data updated successfully."}, status=status.HTTP_200_OK)
+            else:
+                return Response({"message": "No matching records found."}, status=status.HTTP_404_NOT_FOUND)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
