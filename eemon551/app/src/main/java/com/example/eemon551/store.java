@@ -416,6 +416,7 @@ public class store extends AppCompatActivity {
                                 if (response.isSuccessful()) {
                                     // 更新成功時の処理。例えば、UIの更新など
                                     Log.d("UpdateUseStatus", "Background use status updated successfully.");
+                                    back_store(view);
                                 } else {
                                     // エラー処理
                                     Log.e("UpdateUseStatus", "Failed to update the background use status.");
@@ -437,8 +438,10 @@ public class store extends AppCompatActivity {
             public void onFailure(Call<User> call, Throwable t) {
                 Log.e("UserMoneyFetch", "ユーザーのmoney取得失敗", t);
             }
-        }); ;
-        back_store(view);
+        });
+
+
+
     }
 
 
