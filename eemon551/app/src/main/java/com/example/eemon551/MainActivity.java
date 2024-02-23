@@ -116,6 +116,41 @@ public class MainActivity extends AppCompatActivity {
                     editor.putInt("UserId", userId);
                     editor.putBoolean("isFirstRun", false);
                     editor.apply();
+                    UserTitles data = new UserTitles(true, true, false, userId, 1);
+                    apiService.insertUserTitle(data).enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if (response.isSuccessful()) {
+                                Log.d("first_db", "Data successfully sent to the server.");
+                            } else {
+                                Log.e("first_db", "Failed to send data. Response code: " + response.code());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Log.e("first_db", "Failed to send data. Error: " + t.getMessage());
+                        }
+                    });
+
+                    for (int i = 2; i<52; i++) {
+                        UserTitles data2 = new UserTitles(false, false, false, userId, i);
+                        apiService.insertUserTitle(data2).enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                if (response.isSuccessful()) {
+                                    Log.d("first_db", "Data successfully sent to the server.");
+                                } else {
+                                    Log.e("first_db", "Failed to send data. Response code: " + response.code());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                Log.e("first_db", "Failed to send data. Error: " + t.getMessage());
+                            }
+                        });
+                    }
 
                     navigateToHome(); // この行をコールバック内に移動
                 } else {
@@ -128,7 +163,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("API_CALL", "API call failed: " + t.getMessage());
             }
         });
-        // navigateToHome(); この行を削除
+
+
     }
 
 

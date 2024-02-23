@@ -149,7 +149,7 @@ class UserNameUpdateView(APIView):
 
 class UserTitleUpdateView(APIView):
     def put(self, request, *args, **kwargs):
-        serializer = UserDataSerializer(data=request.data)
+        serializer = UserTitleSerializer(data=request.data)
         if serializer.is_valid():
             isOwn = serializer.validated_data['isOwn']
             buyOK = serializer.validated_data['buyOK']
