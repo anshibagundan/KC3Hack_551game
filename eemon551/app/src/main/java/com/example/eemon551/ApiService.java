@@ -63,6 +63,9 @@ public interface ApiService {
     @POST("/usertitles/")
     Call<Void> insertUserTitle(@Body UserTitles data);
 
+    @POST("/userbackgrounds/")
+    Call<Void> insertUserbackground(@Body UserBackground data);
+
     @GET("api/user-id/")
     Call<User> getUserId(@Query("name") String name, @Query("level") int level, @Query("money") int money);
 

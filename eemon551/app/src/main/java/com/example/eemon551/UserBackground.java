@@ -8,6 +8,14 @@ public class UserBackground {
     private int background_id;
     private int user_data_id;
 
+    public UserBackground(boolean use, boolean isOwn, boolean buyOK,int background_id, int user_data_id) {
+        this.use = use;
+        this.isOwn = isOwn;
+        this.buyOK = buyOK;
+        this.background_id = background_id;
+        this.user_data_id = user_data_id;
+
+    }
     public Boolean getUse() {
         return use;
     }

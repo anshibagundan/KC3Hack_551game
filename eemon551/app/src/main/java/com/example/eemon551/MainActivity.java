@@ -152,6 +152,42 @@ public class MainActivity extends AppCompatActivity {
                         });
                     }
 
+                    UserBackground data_back = new UserBackground(true, true, false, 1, userId);
+                    apiService.insertUserbackground(data_back).enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if (response.isSuccessful()) {
+                                Log.d("first_db", "Data successfully sent to the server.");
+                            } else {
+                                Log.e("first_db", "Failed to send data. Response code: " + response.code());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Log.e("first_db", "Failed to send data. Error: " + t.getMessage());
+                        }
+                    });
+
+                    for (int i = 2; i<3; i++) {
+                        UserBackground data2_back = new UserBackground(false, false, false, i, userId);
+                        apiService.insertUserbackground(data2_back).enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                if (response.isSuccessful()) {
+                                    Log.d("first_db", "Data successfully sent to the server.");
+                                } else {
+                                    Log.e("first_db", "Failed to send data. Response code: " + response.code());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                Log.e("first_db", "Failed to send data. Error: " + t.getMessage());
+                            }
+                        });
+                    }
+
                     navigateToHome(); // この行をコールバック内に移動
                 } else {
                     Log.e("API_CALL", "User not found or error in API");
