@@ -35,7 +35,7 @@ public class store extends AppCompatActivity {
     private ApiService apiService;
     private GridLayout gridLayout_1;
     private Set<Integer> displayedQuestionIds = new HashSet<>();
-    private List<Question> all_QuestionList = new ArrayList<>();
+    private List<Integer> all_QuestionList = new ArrayList<>();
     private FrameLayout store_screen;
     private FrameLayout card_screen;
     private FrameLayout title_screen;
@@ -47,8 +47,6 @@ public class store extends AppCompatActivity {
     private LinearLayout card_ano,title_ano,back_ano;
 
     private int collect_money;
-
-    private int userId;
     private Integer randomValue;
     private int card_link;
     private ImageView card_1,card_2,card_3,card_4,buy_card;
@@ -107,29 +105,23 @@ public class store extends AppCompatActivity {
         fetchQuestions();
     }
     private void fetchQuestions() {
-        apiService.getAllQuestions().enqueue(new Callback<List<Question>>() {
+        SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        int userId = prefs.getInt("UserId", 1);
+        apiService.getUserQuestionData(userId).enqueue(new Callback<List<UserQuestionData>>() {
             @Override
-            public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
+            public void onResponse(Call<List<UserQuestionData>> call, Response<List<UserQuestionData>> response) {
                 if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
                     all_QuestionList.clear();
-                    Log.d("API Request Failure", "all_be");
-                    for (Question question : response.body()) {
-                        Log.d("API Request Failure", "all_in");
-                        all_QuestionList.add(question);
+                    for (UserQuestionData u_q : response.body()) {
+                        if(!u_q.get_cor() && u_q.getUser_data_id() == userId)
+                            all_QuestionList.add(u_q.get_qes_id());
                     }
-                    Log.d("API Request Failure", "all_af");
-                    for (Question question : all_QuestionList) {
-                        Log.d("API Request Failure", "false_in" + ":question.getId()="+ question.getId() +" :userId=" + userId);
-                        applyOverlayBasedOnUserQuestionData(question.getId(), 10);
-                    }
-                    Log.d("API Request Failure", "false_af");
-                    Log.d("API Request Failure", "card_deco_in_be");
                     card_deco();
                 }
 
             }
             @Override
-            public void onFailure(Call<List<Question>> call, Throwable t) {
+            public void onFailure(Call<List<UserQuestionData>> call, Throwable t) {
                 Log.e("API Request Failure", "Error: ", t);
             }
         });
@@ -153,43 +145,9 @@ public class store extends AppCompatActivity {
         });
     }
 
-    private void applyOverlayBasedOnUserQuestionData(int questionId, int userId) {
-        Log.d("API Request Failure", "false_tuika001");
-
-        //----ここから下が動作してない。。。。。もう無理
-        apiService.getUserQuestionData(userId).enqueue(new Callback<List<UserQuestionData>>() {
-            @Override
-            public void onResponse(Call<List<UserQuestionData>> call, Response<List<UserQuestionData>> response) {
-                Log.d("API Request Failure", "false_tuika00");
-                try
-                {if (response.isSuccessful() && response.body() != null) {
-                    List<UserQuestionData> userQuestionData = response.body();
-                    Log.d("API Request Failure", "false_tuika0");
-                    for (UserQuestionData data : userQuestionData) {
-                        Log.d("API Request Failure", "false_tuika1");
-                        if (data.get_qes_id() == questionId && data.getUser_data_id() == userId) {
-                            Log.d("API Request Failure", "false_tuika2");
-                            if (!data.get_cor()) {
-                                displayedQuestionIds.add(questionId);
-                                Log.d("API Request Failure", "false_tuika3");
-                            }
-                        }
-                    }
-                }} catch (Exception e) {
-                Log.e("API Request Failure", "Error in onResponse", e);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<UserQuestionData>> call, Throwable t) {
-                Log.e("API Request Failure", "Error: ", t);
-            }
-        });
-    }
-
     private int Res_cardId(){
         Log.d("API Request Failure", "random_be");
-        randomValue = getRandomElement(displayedQuestionIds);
+        randomValue = getRandomIntElement(all_QuestionList);
         Log.d("API Request Failure", "random_af");
         apiService.getQuestionById(randomValue).enqueue(new Callback<Question>() {
             @Override
@@ -208,8 +166,8 @@ public class store extends AppCompatActivity {
         Log.d("API Request Failure", "all_af" + card_link);
         return card_link;
     }
-    private <T> T getRandomElement(Set<T> set) {
-        List<T> list = new ArrayList<>(set);
+    private int getRandomIntElement(List<Integer> set) {
+        List<Integer> list = new ArrayList<>(set);
         Random random = new Random();
         return list.get(random.nextInt(list.size()));
     }
