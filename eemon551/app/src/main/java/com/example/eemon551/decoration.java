@@ -48,7 +48,6 @@ public class decoration extends AppCompatActivity {
     private TextView pretitle;
     private int usertitleid,selectID;
     private List<TextView> titleList = new ArrayList<>();
-    private List<Integer> titleOwn = new ArrayList<>();
 
 
     @Override
@@ -264,38 +263,32 @@ public class decoration extends AppCompatActivity {
 
     //titleの図鑑
     private void titles() {
-        apiService.getUserBackgrounds(userId).enqueue(new Callback<List<UserBackground>>() {
+        apiService.getUserTitles(userId).enqueue(new Callback<List<UserTitles>>() {
             @Override
-            public void onResponse(Call<List<UserBackground>> call, Response<List<UserBackground>> response) {
+            public void onResponse(Call<List<UserTitles>> call, Response<List<UserTitles>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    titleOwn.clear(); // 既存のリストをクリアして新しいデータで更新
-
-                    // ループを使用して、isOwnがtrueの全ての背景をリストに追加
-                    for (UserBackground background : response.body()) {
-                        if (userId == background.getUser_data_id()) {
-                            if (background.getisOwn()) { // isOwnがtrueの場合に追加
-                                background_list.add(background.getBackground_id());
-                            }
+                    for(UserTitles title: response.body()) {
+                        if (title.getisOwn()) {
+                            apiService.getTitle(title.getTitle_id()).enqueue(new Callback<Titles>() {
+                                @Override
+                                public void onResponse(Call<Titles> call, Response<Titles> response) {
+                                    if (response.isSuccessful() && response.body() != null) {
+                                        String txt =response.body().getName();
+                                        create_title(title.getTitle_id(),txt);
+                                    }
+                                }
+                                @Override
+                                public void onFailure(Call<Titles> call, Throwable t) {
+                                }
+                            });
                         }
-                    }
 
-                    if (background_list.isEmpty()) {
-                        // 使用中のタイトルが1つも見つからない場合の処理
-                        Log.e("UserBackground", "No active backgrounds found");
-                    } else {
-                        // UIスレッドでビューを更新
-                        runOnUiThread(() -> {
-                            // ここでbackground_listを使って背景を設定するロジックを実装
-                            background_layout.removeAllViews();
-                            SetImage(background_list);
-                        });
                     }
                 }
             }
-
             @Override
-            public void onFailure(Call<List<UserBackground>> call, Throwable t) {
-                Log.e("API Request Failure", "Error: ", t);
+            public void onFailure(Call<List<UserTitles>> call, Throwable t) {
+
             }
         });
     }
