@@ -60,6 +60,8 @@ public interface ApiService {
 
     @POST("/userdatas/")
     Call<Void> insertUserData(@Body User data);
+    @POST("/usertitles/")
+    Call<Void> insertUserTitle(@Body UserTitles data);
 
     @GET("api/user-id/")
     Call<User> getUserId(@Query("name") String name, @Query("level") int level, @Query("money") int money);
