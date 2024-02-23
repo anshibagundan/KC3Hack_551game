@@ -11,43 +11,22 @@
      android:layout_width="match_parent"
      android:layout_height="match_parent"
      android:visibility="visible"
+     android:background="#ffe6cc"
         >
 
+        <!-- 上部-->
         <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="110dp"
         app:layout_constraintTop_toTopOf="parent"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/zukan_title"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@color/bar"
-            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/zukann_to_home"
+            <ImageView
+                android:id="@+id/imageView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:backgroundTint="@color/button"
-                android:onClick="back_home"
-                android:text="⇐"
-                android:textSize="20sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="30dp"
-                android:text="カード図鑑"
-                android:textColor="@color/white"
-                android:textSize="30sp" />
-
-        </LinearLayout>
+                android:layout_height="80dp"
+                app:srcCompat="@drawable/zukan_sign" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -63,12 +42,28 @@
                 android:text="関西ゲージ: 　"
                 android:textSize="15sp"/>
 
-            <View
-                android:id="@+id/kansai"
-                android:layout_width="300dp"
-                android:layout_height="match_parent"
-                android:background="@color/food">
-            </View>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@drawable/border">
+
+                <View
+                    android:id="@+id/kansai"
+                    android:layout_width="26dp"
+                    android:layout_height="16dp"
+                    android:layout_margin="2dp"
+                    android:background="@color/food">
+                </View>
+
+                <TextView
+                    android:id="@+id/gage_per"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="10%"
+                    android:textStyle="bold"/>
+
+            </FrameLayout>
 
         </LinearLayout>
 
@@ -77,7 +72,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="120dp"
         android:isScrollContainer="false"
         android:id="@+id/scrollView">
 
@@ -86,7 +81,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:orientation="vertical">
-
+<!--    大阪-->
             <LinearLayout
                 android:id="@+id/genre1"
                 android:layout_width="match_parent"
@@ -122,8 +117,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="3"
-                android:rowCount="50"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:useDefaultMargins="true">
 
                 <!-- レイアウト内のコンポーネントを追加 -->
 
@@ -136,7 +131,6 @@
 <!--                    >-->
 
 <!--                    <ImageView-->
-<!--                        android:id="@+id/imageButton3"-->
 <!--                        android:layout_width="100dp"-->
 <!--                        android:layout_height="100dp"-->
 <!--                        app:srcCompat="@drawable/takoyaki"-->
@@ -155,55 +149,9 @@
 <!--                        />-->
 <!--                </RelativeLayout>-->
 
-<!--                <RelativeLayout-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:layout_columnWeight="1"-->
-<!--                    >-->
-
-<!--                    <ImageView-->
-<!--                        android:id="@+id/imageButton"-->
-<!--                        android:layout_width="100dp"-->
-<!--                        android:layout_height="100dp"-->
-<!--                        app:srcCompat="@drawable/doutonnbori"-->
-<!--                        android:layout_gravity="center"-->
-<!--                        android:layout_columnWeight="1"-->
-<!--                        android:background="@color/place"/>-->
-
-<!--                    <TextView-->
-<!--                        android:layout_width="100dp"-->
-<!--                        android:layout_height="100dp"-->
-<!--                        android:background="#FF000000"-->
-<!--                        android:text="?"-->
-<!--                        android:textColor="@color/white"-->
-<!--                        android:textSize="40sp"-->
-<!--                        android:gravity="center"-->
-<!--                        />-->
-<!--                </RelativeLayout>-->
-
-
-<!--&lt;!&ndash;                <ImageView&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:id="@+id/imageButton3"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_width="100dp"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_height="100dp"&ndash;&gt;-->
-<!--&lt;!&ndash;                    app:srcCompat="@drawable/takoyaki"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_gravity="center"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_columnWeight="1"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:background="@color/food"/>&ndash;&gt;-->
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/imageButton"-->
-<!--                    android:layout_width="100dp"-->
-<!--                    android:layout_height="100dp"-->
-<!--                    app:srcCompat="@drawable/doutonnbori"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:layout_columnWeight="1"-->
-<!--                    android:background="@color/place"/>-->
-
             </GridLayout>
 
-
+<!--    京都-->
             <LinearLayout
                 android:id="@+id/genre2"
                 android:layout_width="match_parent"
@@ -234,17 +182,17 @@
             </LinearLayout>
 
 <!--            京都の画像-->
-
             <GridLayout
                 android:id="@+id/genre2_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="3"
-                android:rowCount="50"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:useDefaultMargins="true">
 
             </GridLayout>
 
+<!--    滋賀-->
             <LinearLayout
                 android:id="@+id/genre3"
                 android:layout_width="match_parent"
@@ -272,17 +220,18 @@
 
             </LinearLayout>
 
-<!--            奈良の画像-->
+<!--            滋賀の画像-->
             <GridLayout
                 android:id="@+id/genre3_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="3"
-                android:rowCount="50"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:useDefaultMargins="true">
 
             </GridLayout>
 
+<!--    奈良-->
             <LinearLayout
                 android:id="@+id/genre4"
                 android:layout_width="match_parent"
@@ -309,17 +258,18 @@
                     android:background="@color/black"/>
             </LinearLayout>
 
-<!--            兵庫の画像-->
+<!--            奈良の画像-->
             <GridLayout
                 android:id="@+id/genre4_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="3"
-                android:rowCount="50"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:useDefaultMargins="true">
 
             </GridLayout>
 
+<!--    兵庫-->
             <LinearLayout
                 android:id="@+id/genre5"
                 android:layout_width="match_parent"
@@ -346,17 +296,18 @@
                     android:background="@color/black"/>
             </LinearLayout>
 
-<!--            和歌山の画像-->
+<!--            兵庫の画像-->
             <GridLayout
                 android:id="@+id/genre5_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="3"
-                android:rowCount="50"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:useDefaultMargins="true">
 
             </GridLayout>
 
+<!--    和歌山        -->
             <LinearLayout
                 android:id="@+id/genre6"
                 android:layout_width="match_parent"
@@ -383,58 +334,151 @@
                     android:background="@color/black"/>
             </LinearLayout>
 
-<!--            滋賀の画像-->
+<!--            和歌山の画像-->
             <GridLayout
                 android:id="@+id/genre6_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="3"
-                android:rowCount="50"
+                android:useDefaultMargins="true"
                 android:layout_gravity="center">
 
             </GridLayout>
 
         </LinearLayout>
     </ScrollView>
+
+<!--        ホーム-->
+        <LinearLayout
+            android:id="@+id/home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal"
+            android:background="@color/white">
+            <!--ショップ-->
+            <LinearLayout
+                android:layout_width="82dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:background="#757575"
+                android:layout_margin="2dp"
+                android:onClick="zukan_store">
+                <ImageView
+                    android:id="@+id/store_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_gravity="bottom"
+                    app:srcCompat="@drawable/store" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ショップ"
+                    android:gravity="center"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+            <!--図鑑-->
+            <LinearLayout
+                android:layout_width="130dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:background="#a9a9ed"
+                >
+
+                <ImageView
+                    android:id="@+id/zukan_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/zukan" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="図鑑"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+            <!--ゲーム-->
+            <LinearLayout
+                android:layout_width="82dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:background="#757575"
+                android:layout_margin="2dp"
+                android:onClick="zukan_home"
+                >
+                <ImageView
+                    android:id="@+id/quizu"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/quiz" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ゲーム"
+                    android:gravity="center"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+            <!--称号-->
+            <LinearLayout
+                android:layout_width="82dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:background="#757575"
+                android:layout_margin="2dp"
+                android:onClick="zukan_deco">
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/syougou" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="装飾"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    />
+
+
+            </LinearLayout>
+            <!--説明-->
+            <LinearLayout
+                android:layout_width="82dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:background="#757575"
+                android:layout_margin="2dp"
+                android:onClick="zukan_introduce">
+                <ImageView
+                    android:id="@+id/setsumei_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/setsumei" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="説明"
+                    android:gravity="center"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+
+        </LinearLayout>
  </FrameLayout>
 
+<!--    カード画面-->
     <FrameLayout
         android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
 
-        <LinearLayout
-            android:id="@+id/card_bar"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@color/bar"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/back_to_zukan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:backgroundTint="@color/button"
-                android:onClick="back_zukan"
-                android:text="⇐"
-                android:textSize="20sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="30dp"
-                android:text="カード"
-                android:textColor="@color/white"
-                android:textSize="30sp" />
-
-        </LinearLayout>
-
-
+<!--    カード    -->
         <ImageView
             android:id="@+id/card_image"
             android:layout_width="match_parent"
@@ -442,6 +486,17 @@
             android:layout_margin="30dp"
             app:srcCompat="@drawable/tobita"
             />
+
+        <Button
+            android:id="@+id/back_to_zukan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:backgroundTint="@color/button"
+            android:onClick="back_zukan"
+            android:text="図鑑に戻る"
+            android:textSize="20sp" />
 
     </FrameLayout>
 

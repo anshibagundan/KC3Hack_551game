@@ -56,6 +56,32 @@ REFERENCES question(id)
 ON DELETE CASCADE
 ON UPDATE CASCADE;
 
+/* user_title テーブル*/
+CREATE TABLE UserTitle (
+  id SERIAL PRIMARY KEY,
+  isOwn BOOLEAN,
+  user_data_id INT,
+  title_id INT
+);
+
+/*user_titleとuser_dataの外部キー制約設定*/
+ALTER TABLE UserTitle
+ADD CONSTRAINT fk_user_title_user_data
+FOREIGN KEY (user_data_id)
+REFERENCES user_data(id)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+/*title_idの外部キー制約設定*/
+ALTER TABLE UserTitle
+ADD CONSTRAINT fk_user_title_title
+FOREIGN KEY (title_id)
+REFERENCES title(id)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+
+
 /* location テーブル*/
 CREATE TABLE Location (
   id SERIAL PRIMARY KEY,
@@ -68,4 +94,11 @@ CREATE TABLE Location (
 CREATE TABLE Genre (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
+);
+
+/*titleテーブル*/
+CREATE TABLE Title (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  rare INT DEFAULT 0,
 );

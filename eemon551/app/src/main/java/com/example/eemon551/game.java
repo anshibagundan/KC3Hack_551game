@@ -4,15 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -24,16 +27,16 @@ import retrofit2.Response;
 
 public class game extends AppCompatActivity {
 
-    private int currentQuestionId; // 現在表示されている質問のID
     private int currentQuestionLoc_id;
     private boolean currentQuestionIsKansai;
 
     private ApiService apiService;
     private TextView questionText;
 
-    private TextView seigoText;
+    private ImageView seigoText;
     private TextView touka_loading;
     private ImageView questionImage;
+    private ImageView huti;
     private boolean seigo = false;
 
     private FrameLayout kaisetu;
@@ -45,6 +48,8 @@ public class game extends AppCompatActivity {
     private ImageView kaisetu_img;
     private TextView kaisetu_text;
     private Button next;
+    private Button button_left;
+    private Button button_right;
 
     private TextView question_number;
 
@@ -52,31 +57,51 @@ public class game extends AppCompatActivity {
 
     private String questionNumber_Str = "第1問";
     private Set<Integer> displayedQuestionIds = new HashSet<>();
+    private Set<Integer> TrueQuestionIds = new HashSet<>();
 
     private int genreId;
+    private int locationId;
     private FrameLayout kekka;
     private LinearLayout card_over;
+    private boolean button_caver = false;
+    private Button finish;
+    private ImageView takara;
+    private boolean T_Q = false;
+    private Integer randomValue;
+    private ImageView get_card;
+    private int collect_money;
+
+    private TextView kekka_money;
+
+    private int search;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_game);
 
         questionText = findViewById(R.id.question_text);
         seigoText = findViewById(R.id.seigo);
         touka_loading = findViewById(R.id.touka_loading);
         questionImage = findViewById(R.id.Question_image);
+        huti = findViewById(R.id.huti);
         kaisetu = findViewById(R.id.kaisetu);
         toi = findViewById(R.id.toi);
         kaisetu_name = findViewById(R.id.kaisetu_name);
         kaisetu_img = findViewById(R.id.kaisetu_img);
         kaisetu_text = findViewById(R.id.kaisetu_text);
         next = findViewById(R.id.next);
+        button_left = findViewById(R.id.button_left);
+        button_right = findViewById(R.id.button_right);
         question_number = findViewById(R.id.question_number);
         kekka = findViewById(R.id.kekka);
         card_over = findViewById(R.id.card_over);
-
+        finish = findViewById(R.id.finish);
+        takara = findViewById(R.id.takara);
+        get_card = findViewById(R.id.get_card);
+        kekka_money = findViewById(R.id.kekka_money);
 
         // ApiServiceインスタンスを取得
         apiService = ApiClient.getApiService();
@@ -84,17 +109,17 @@ public class game extends AppCompatActivity {
         // IntentからgenreIdとlocationIdを取得
         Intent intent = getIntent();
         genreId = intent.getIntExtra("genreId", 0);
+        locationId = intent.getIntExtra("locationId", 0);
 
         loadQuestion();
     }
 
     private void loadQuestion() {
-        Log.e("genreId", "genreId"+genreId );
         Random random = new Random();
-        int questionNo = random.nextInt(10); // 仮定する質問の数に応じて調整
+        int questionNo = random.nextInt(26); // 仮定する質問の数に応じて調整
 
         // APIリクエストを実行して質問をロード
-        if(genreId == 0) {
+        if (genreId == 0) {
             apiService.getAllQuestions().enqueue(new Callback<List<Question>>() {
                 @Override
                 public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
@@ -115,7 +140,7 @@ public class game extends AppCompatActivity {
                     Log.e("LocationFetch", "APIリクエスト失敗: ", t);
                 }
             });
-        } else{
+        } else {
             apiService.getAllQuestions().enqueue(new Callback<List<Question>>() {
                 @Override
                 public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
@@ -125,10 +150,10 @@ public class game extends AppCompatActivity {
                         questionText.setText("question Loading...");
                         //ここにloadingのフレーム入れて
                         Question question = response.body().get(questionNo);
-                        if (!displayedQuestionIds.contains(question.getId())){
-                            if((question.getGenre_id()==genreId)) {
+                        if (!displayedQuestionIds.contains(question.getId())) {
+                            if ((question.getGenre_id() == genreId)) {
                                 DisplayQuestion(question);
-                            }else{
+                            } else {
                                 loadQuestion();
                             }
                         } else {
@@ -144,13 +169,12 @@ public class game extends AppCompatActivity {
                 }
             });
         }
-
     }
 
-    private void DisplayQuestion(Question question){
+    private void DisplayQuestion(Question question) {
         touka_loading.setVisibility(View.GONE);
-        String name = question.getName() + "が～？";
-        questionText.setText(name);
+        String name = question.getName();
+        questionText.setText(name + "が～？");
         kaisetu_name.setText(name);
 
 
@@ -162,19 +186,26 @@ public class game extends AppCompatActivity {
         String txt = question.getTxt();
         kaisetu_text.setText(txt);
 
-
-        currentQuestionId = question.getId();
         currentQuestionLoc_id = question.getLoc_id();
 
         // locationデータを取得
-        loadLocationData(currentQuestionLoc_id);
+        loadLocationData(currentQuestionLoc_id,question);
 
+        Log.e("T_Q", "3" + T_Q);
+        if (T_Q) {
+//            TrueQuestionIds.add(question.getId());
+            T_Q = false;
+        }
         //出題済みidを格納
         displayedQuestionIds.add(question.getId());
 
+        button_right.setVisibility(View.VISIBLE);
+        button_left.setVisibility(View.VISIBLE);
+
+
     }
 
-    private void loadLocationData(int locId) {
+    private void loadLocationData(int locId, Question question) {
         apiService.getLocationById(locId).enqueue(new Callback<Location>() {
             @Override
             public void onResponse(Call<Location> call, Response<Location> response) {
@@ -183,7 +214,11 @@ public class game extends AppCompatActivity {
                     Log.e("LocationFetch", String.valueOf(currentQuestionIsKansai));
                     Button buttonLeft = findViewById(R.id.button_left);
                     Button buttonRight = findViewById(R.id.button_right);
-                    setupButtonListeners(buttonLeft, buttonRight, currentQuestionIsKansai);
+
+                    if (touka_loading.getVisibility() == View.GONE) {
+                        setupButtonListeners(buttonLeft, buttonRight, currentQuestionIsKansai, locId, question);
+                    }
+                    Log.e("T_Q", "2" + T_Q);
                 }
             }
 
@@ -194,75 +229,194 @@ public class game extends AppCompatActivity {
         });
     }
 
-    private void setupButtonListeners(Button buttonLeft, Button buttonRight,Boolean currentQuestionIsKansai) {
-        Log.e("LocationFetch", "button" +currentQuestionIsKansai);
-        buttonLeft.setOnClickListener(view -> {
-            if (currentQuestionIsKansai) {
-                // 正解の処理
-                Log.d("LocationFetch", "left true");
-                seigoText.setText("正解！画像をセット");
-                updateUserScore(10);
-            } else {
-                // 不正解の処理
-                Log.d("LocationFetch", "left false");
-                seigoText.setText("不正解画像をセット");
-            }
-            seigoText.setVisibility(View.VISIBLE);
-            seigo = true;
-        });
 
-        buttonRight.setOnClickListener(view -> {
-            if (!currentQuestionIsKansai) {
-                Log.d("LocationFetch", "right true");
-                // 正解の処理
-                seigoText.setText("正解！画像をセット");
-                updateUserScore(10); // スコアを10加算する
-            } else {
-                Log.d("LocationFetch", "right false");
-                // 不正解の処理
-                seigoText.setText("不正解画像をセット");
-            }
-            seigoText.setVisibility(View.VISIBLE);
-            seigo = true;
-        });
+    //buttomと正誤判定
+    private void setupButtonListeners(Button buttonLeft, Button buttonRight, Boolean currentQuestionIsKansai, int locId, Question question) {
+        if (locationId == 0) {
+            buttonLeft.setOnClickListener(view -> {
+                if (currentQuestionIsKansai) {
+                    // 正解の処理
+                    Log.d("LocationFetch", "left true");
+                    seigoText.setImageResource(R.drawable.wahhahhahha);
+                    updateUserScore(10);
+                    T_Q = true;
+                    TrueQuestionIds.add(question.getId());
+                } else {
+                    // 不正解の処理
+                    Log.d("LocationFetch", "left false");
+                    seigoText.setImageResource(R.drawable.gaann);
+                }
+                seigoText.setVisibility(View.VISIBLE);
+                seigo = true;
+                button_right.setVisibility(View.GONE);
+                button_left.setVisibility(View.GONE);
+            });
+
+            buttonRight.setOnClickListener(view -> {
+                if (!currentQuestionIsKansai) {
+                    Log.d("LocationFetch", "right true");
+                    // 正解の処理
+                    seigoText.setImageResource(R.drawable.wahhahhahha);
+                    updateUserScore(10); // スコアを10加算する
+                    T_Q = true;
+                    TrueQuestionIds.add(question.getId());
+                } else {
+                    Log.d("LocationFetch", "right false");
+                    // 不正解の処理
+                    seigoText.setImageResource(R.drawable.gaann);
+                }
+                seigoText.setVisibility(View.VISIBLE);
+                seigo = true;
+                button_caver = false;
+                button_right.setVisibility(View.GONE);
+                button_left.setVisibility(View.GONE);
+            });
+        } else {
+            Log.d("LocationFetch", "locationId" + locationId);
+            Log.d("LocationFetch", "locid" + locId);
+            buttonLeft.setOnClickListener(view -> {
+
+                if (locationId == locId) {
+                    Log.d("LocationFetch", "left true");
+                    // 正解の処理
+                    seigoText.setImageResource(R.drawable.wahhahhahha);
+                    updateUserScore(10);
+                    T_Q = true;
+                    TrueQuestionIds.add(question.getId());
+                } else {
+                    Log.d("LocationFetch", "left false");
+                    // 不正解の処理
+                    seigoText.setImageResource(R.drawable.gaann);
+                }
+                seigoText.setVisibility(View.VISIBLE);
+                seigo = true;
+                button_caver = false;
+                button_right.setVisibility(View.GONE);
+                button_left.setVisibility(View.GONE);
+            });
+
+            buttonRight.setOnClickListener(view -> {
+                if (locId != locationId) {
+                    // 正解の処理
+                    seigoText.setImageResource(R.drawable.wahhahhahha);
+                    T_Q = true;
+                    TrueQuestionIds.add(question.getId());
+                } else {
+                    // 不正解の処理
+                    seigoText.setImageResource(R.drawable.gaann);
+                    updateUserScore(10); // スコアを10加算する
+                }
+                seigoText.setVisibility(View.VISIBLE);
+                seigo = true;
+                button_caver = false;
+                button_right.setVisibility(View.GONE);
+                button_left.setVisibility(View.GONE);
+            });
+        }
+        Log.e("T_Q", "1" + T_Q);
     }
 
-    public void onTap(View view){
-        if(seigo){
+
+    public void on(View view) {
+
+    }
+
+    public void onTap(View view) {
+
+        if (seigo) {
             kaisetu.setVisibility(View.VISIBLE);
             touka_loading.setVisibility(View.VISIBLE);
             toi.setVisibility(View.GONE);
-            if (questionNumber>9){
+
+            if (questionNumber > 9) {
                 next.setText("結果へ");
+                System.out.println("ランダム前 空前");
+                if (!TrueQuestionIds.isEmpty()) {
+                    System.out.println("ランダム前 空後");
+                    randomValue = getRandomElement(TrueQuestionIds);
+                    System.out.println("ランダムに選ばれた値: " + randomValue);
+                    SetUserQuestionData(randomValue, displayedQuestionIds);
+                    runOnUiThread(() -> kekka_money.setText("x　???\n宝箱Tap！"));
+
+                    apiService.getQuestionById(randomValue).enqueue(new Callback<Question>() {
+                        @Override
+                        public void onResponse(Call<Question> call, Response<Question> response) {
+                            if (response.isSuccessful() && response.body() != null) {
+                                String img = response.body().getCard().replace("\"", "").trim();
+                                int card_link = getResources().getIdentifier(img, "drawable", getPackageName());
+                                get_card.setImageResource(card_link);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Question> call, Throwable t) {
+                            Log.e("API Request Failure", "Error: ", t);
+                        }
+                    });
+                }else{
+                    System.out.println("ランダムじゃなくてこっち？");
+                    get_card.setImageResource(R.drawable.gaann);
+                }
+
             }
         }
     }
 
-    public void onTap_next(View view){
-        questionNumber ++;
-        questionNumber_Str = "第" +questionNumber+"問";
+    public void onTap_next(View view) {
+        questionNumber++;
+        questionNumber_Str = "第" + questionNumber + "問";
         question_number.setText(questionNumber_Str);
         kaisetu.setVisibility(View.GONE);
         seigoText.setVisibility(View.GONE);
-        if(questionNumber>10){
+
+
+        if (questionNumber > 10) {
             kekka.setVisibility(View.VISIBLE);//あとで宝箱画面をVISIBLEにする
-        }else{
+        } else {
             toi.setVisibility(View.VISIBLE);
             loadQuestion();
         }
+        button_caver = false;
     }
 
-    public void onTap_takara(View view){
+    public void onTap_takara(View view) {
+        button_caver = false;
+
         card_over.setVisibility(View.VISIBLE);
     }
 
-    public void onTap_takara_back(View view){
+    public void onTap_takara_back(View view) {
         card_over.setVisibility(View.GONE);
+        finish.setVisibility(View.VISIBLE);
+        runOnUiThread(() -> kekka_money.setText("x"+String.valueOf(collect_money)));
+        if (!TrueQuestionIds.isEmpty()) {
+            apiService.getQuestionById(randomValue).enqueue(new Callback<Question>() {
+                @Override
+                public void onResponse(Call<Question> call, Response<Question> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        String img = response.body().getCard().replace("\"", "").trim();
+                        int card_link = getResources().getIdentifier(img, "drawable", getPackageName());
+                        takara.setImageResource(card_link);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Question> call, Throwable t) {
+                    Log.e("API Request Failure", "Error: ", t);
+                }
+            });
+        }else {
+            takara.setImageResource(R.drawable.gaann);
+        }
+
+        button_caver = true;
     }
 
-    public void game_home(View view){
-        Intent intent = new Intent(game.this, activity_home.class);
-        startActivity(intent);
+    public void game_home(View view) {
+        if (button_caver) {
+            Intent intent = new Intent(game.this, activity_home.class);
+            startActivity(intent);
+        }
     }
 
 
@@ -271,31 +425,45 @@ public class game extends AppCompatActivity {
         int userId = prefs.getInt("UserId", 1);
 
         // 現在のユーザースコアを取得するAPIリクエストを想定
-        apiService.getUserMoney(userId).enqueue(new Callback<User>() {
+        apiService.getUser(userId).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     int currentScore = response.body().getMoney();
                     Log.e("money", String.valueOf(currentScore));
-                    int newScore = currentScore +10;
-                    SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
-                    String name = prefs.getString("UserName", "test_user");
-                    apiService.updateUserData(userId,  new ApiService.UserUpdateRequest(name,newScore)).enqueue(new Callback<Void>() {
+                    int newScore = currentScore + 10;
+                    collect_money = collect_money + 10;
+                    Log.e("money", "collect_money"+collect_money);
+                    apiService.getUser(userId).enqueue((new Callback<User>() {
                         @Override
-                        public void onResponse(Call<Void> call, Response<Void> response) {
-                            if (response.isSuccessful()) {
-                                Log.d("UserDataUpdate", "ユーザーデータ更新成功");
-                            } else {
-                                Log.e("UserDataUpdate", "ユーザーデータ更新失敗: " + response.message());
+                        public void onResponse(Call<User> call, Response<User> response) {
+                            if (response.isSuccessful() && response.body() != null) {
+                                String name = response.body().getName();
+                                apiService.updateUserData(userId, new ApiService.UserUpdateRequest(name, newScore)).enqueue(new Callback<Void>() {
+                                    @Override
+                                    public void onResponse(Call<Void> call, Response<Void> response) {
+                                        if (response.isSuccessful()) {
+                                            Log.d("UserDataUpdate", "ユーザーデータ更新成功");
+                                        } else {
+                                            Log.e("UserDataUpdate", "ユーザーデータ更新失敗1: " + response.message());
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Void> call, Throwable t) {
+                                        Log.e("UserDataUpdate", "ユーザーデータ更新失敗2", t);
+                                    }
+                                });
                             }
                         }
 
                         @Override
-                        public void onFailure(Call<Void> call, Throwable t) {
-                            Log.e("UserDataUpdate", "ユーザーデータ更新失敗", t);
+                        public void onFailure(Call<User> call, Throwable t) {
+
                         }
-                    });
+                    }));
                 }
+
             }
 
             @Override
@@ -305,4 +473,122 @@ public class game extends AppCompatActivity {
         });
     }
 
+    private <T> T getRandomElement(Set<T> set) {
+        List<T> list = new ArrayList<>(set);
+        Random random = new Random();
+        return list.get(random.nextInt(list.size()));
+    }
+
+    private void SetUserQuestionData(int randomValue, Set<Integer> displayedQuestionIds) {
+        SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        int userId = prefs.getInt("UserId", 1);
+
+        // 正解の質問データを処理
+        SearchQuestionData(userId, randomValue, searchResult -> {
+            Log.e("UpdateQuestionData", "searchResult"+searchResult);
+
+            if (searchResult == 2) {
+                collect_money += 30;
+                updateUserScore(30);
+            } else if (searchResult == 1) {
+                Log.d("UpdateQuestionData", "user_data_id"+ userId);
+                Log.d("UpdateQuestionData", "qes_id"+ randomValue);
+                UserQuestionDataUpdateRequest request = new UserQuestionDataUpdateRequest(true ,userId,randomValue);
+                apiService.updateUserQuestionData(request).enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            Log.d("UpdateQuestionData", "Question data updated successfully.");
+                        } else {
+                            Log.e("UpdateQuestionData", "Failed to update question data. Response code: " + response.code());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Log.e("UpdateQuestionData", "API call failed.", t);
+                    }
+                });
+            } else if (searchResult == 3 || searchResult == 4) {
+                UserQuestionData data = new UserQuestionData(true, randomValue, userId);
+                apiService.insertUserQuestionData(data).enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            Log.d("InsertQuestionData", "Question data inserted successfully.");
+                        } else {
+                            Log.e("InsertQuestionData", "Failed to insert question data. Response code: " + response.code());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Log.e("InsertQuestionData", "API call failed.", t);
+                    }
+                });
+            }
+        });
+
+        // 表示されたが選択されなかった質問データを処理
+        for (Integer questionId : displayedQuestionIds) {
+            if (!questionId.equals(randomValue)) {
+                SearchQuestionData(userId, questionId, searchResult -> {
+                    if (searchResult == 3 || searchResult == 4) {
+                        UserQuestionData data = new UserQuestionData(false, questionId, userId);
+                        apiService.insertUserQuestionData(data).enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                if (response.isSuccessful()) {
+                                    Log.d("InsertQuestionData", "Question data inserted successfully for non-selected question.");
+                                } else {
+                                    Log.e("InsertQuestionData", "Failed to insert question data for non-selected question. Response code: " + response.code());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                Log.e("InsertQuestionData", "API call failed for non-selected question.", t);
+                            }
+                        });
+                    }
+                });
+            }
+        }
+    }
+
+
+    interface SearchQuestionDataCallback {
+        void onResult(int searchResult);
+    }
+
+    private void SearchQuestionData(int userId, int qes_id, SearchQuestionDataCallback callback) {
+        apiService.getUserQuestionData(userId).enqueue(new Callback<List<UserQuestionData>>() {
+            @Override
+            public void onResponse(Call<List<UserQuestionData>> call, Response<List<UserQuestionData>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<UserQuestionData> userQuestionData = response.body();
+                    for (UserQuestionData data : userQuestionData) {
+                        if (!data.get_cor() && data.get_qes_id() == qes_id) {
+                            callback.onResult(1); // falseのデータがあった場合
+                            return;
+                        } else if (data.get_cor() && data.get_qes_id() == qes_id) {
+                            callback.onResult(2); // trueのデータがあった場合
+                            return;
+                        }
+                    }
+                    callback.onResult(3); // trueもfalseもなかった場合
+                } else {
+                    callback.onResult(4); // データがなかった場合
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<UserQuestionData>> call, Throwable t) {
+                Log.e("API Request Failure", "Error: ", t);
+                callback.onResult(0); // 通信失敗
+            }
+        });
+    }
+
 }
+

@@ -2,29 +2,10 @@ from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework import generics
-from .models import Location, Genre, Question, UserData, UserQuestionData
-from .serializers import LocationSerializer, GenreSerializer, QuestionSerializer, UserDataSerializer, UserQuestionDataSerializer
+from .models import Location, Genre, Question, UserData, UserQuestionData, UserTitle, Title, BackGround, UserBackGround
+from .serializers import LocationSerializer, GenreSerializer, QuestionSerializer, UserDataSerializer, UserQuestionDataSerializer, UserTitleSerializer, TitleSerializer, BackGroundSerializer, UserBackGroundSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from .filters import UserQuestionDataFilter
-import logging
-
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
-
-def get_queryset(self):
-    genre_id = self.request.query_params.get('genre_id', None)
-    logger.debug(f"Genre ID: {genre_id}")  # genre_idの値をログに出力
-
-    if genre_id is not None:
-        queryset = Question.objects.filter(genre_id=genre_id)
-        logger.debug(f"Filtered queryset count: {queryset.count()}")  # フィルタリング後のクエリセットの数
-        return queryset
-    else:
-        queryset = Question.objects.all()
-        logger.debug("Returning all questions.")  # 全てのQuestionオブジェクトを返すことをログに出力
-        return queryset
-
 
 class LocationViewSet(viewsets.ModelViewSet):
     queryset = Location.objects.all()
@@ -33,6 +14,14 @@ class LocationViewSet(viewsets.ModelViewSet):
 class GenreViewSet(viewsets.ModelViewSet):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
+
+class TitleViewSet(viewsets.ModelViewSet):
+    queryset = Title.objects.all()
+    serializer_class = TitleSerializer
+
+class BackGroundViewSet(viewsets.ModelViewSet):
+    queryset = BackGround.objects.all()
+    serializer_class = BackGroundSerializer
 
 class QuestionViewSet(viewsets.ModelViewSet):
     queryset = Question.objects.all()
@@ -48,6 +37,13 @@ class UserQuestionDataViewSet(viewsets.ModelViewSet):
     filter_backends = (DjangoFilterBackend,)
     filterset_class = UserQuestionDataFilter
 
+class UserTitleViewSet(viewsets.ModelViewSet):
+    queryset = UserTitle.objects.all()
+    serializer_class = UserTitleSerializer
+
+class UserBackGroundViewSet(viewsets.ModelViewSet):
+    queryset = UserBackGround.objects.all()
+    serializer_class = UserBackGroundSerializer
 class UserQuestionDataDelete(APIView):
     def delete(self, request, *args, **kwargs):
         # クエリパラメータから qes_id と user_data_id を取得
@@ -84,5 +80,105 @@ class UserIdView(APIView):
         else:
             return Response({'error': 'User not found'}, status=404)
 
+class UserBackgroundUseUpdateView(APIView):
+    def put(self, request, *args, **kwargs):
+        serializer = UserBackGroundSerializer(data=request.data)
+        if serializer.is_valid():
+            user_data_id = serializer.validated_data['user_data_id']
+            background_id = serializer.validated_data['background_id']
 
+            # すべての背景を一旦falseに設定
+            UserBackGround.objects.filter(user_data_id=user_data_id).update(use=False)
+            # 指定された背景のみtrueに設定
+            UserBackGround.objects.filter(user_data_id=user_data_id, background_id=background_id).update(use=True)
 
+            return Response({"message": "Background use updated successfully."}, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserTitleUseUpdateView(APIView):
+    def put(self, request, *args, **kwargs):
+        serializer = UserTitleSerializer(data=request.data)
+        if serializer.is_valid():
+            user_data_id = serializer.validated_data['user_data_id']
+            title_id = serializer.validated_data['title_id']
+
+            # すべての背景を一旦falseに設定
+            UserTitle.objects.filter(user_data_id=user_data_id).update(use=False)
+            # 指定された背景のみtrueに設定
+            UserTitle.objects.filter(user_data_id=user_data_id, background_id=title_id).update(use=True)
+
+            return Response({"message": "Background use updated successfully."}, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserQuestionDataUpdateView(APIView):
+    def put(self, request, *args, **kwargs):
+        serializer = UserQuestionDataSerializer(data=request.data)
+        if serializer.is_valid():
+            cor = serializer.validated_data['cor']
+            qes_id = serializer.validated_data['qes_id']
+            user_data_id = serializer.validated_data['user_data_id']
+
+            # qes_idとuser_data_idが一致するレコードを検索し、corを更新
+            updated_records = UserQuestionData.objects.filter(qes_id=qes_id, user_data_id=user_data_id).update(cor=cor)
+
+            if updated_records > 0:
+                return Response({"message": "Question data updated successfully."}, status=status.HTTP_200_OK)
+            else:
+                return Response({"message": "No matching records found."}, status=status.HTTP_404_NOT_FOUND)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserNameUpdateView(APIView):
+    def put(self, request, *args, **kwargs):
+        serializer = UserDataSerializer(data=request.data)
+        if serializer.is_valid():
+            name = serializer.validated_data['name']
+            money = serializer.validated_data['money']
+            level = serializer.validated_data['level']
+
+            updated_records = UserData.objects.filter(money=money, level=level).update(name=name)
+
+            if updated_records > 0:
+                return Response({"message": "Question data updated successfully."}, status=status.HTTP_200_OK)
+            else:
+                return Response({"message": "No matching records found."}, status=status.HTTP_404_NOT_FOUND)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserTitleUpdateView(APIView):
+    def put(self, request, *args, **kwargs):
+        serializer = UserDataSerializer(data=request.data)
+        if serializer.is_valid():
+            isOwn = serializer.validated_data['isOwn']
+            buyOK = serializer.validated_data['buyOK']
+            title_id = serializer.validated_data['title_id']
+            user_data_id = serializer.validated_data['user_data_id']
+
+            updated_records = UserTitle.objects.filter(title_id=title_id,user_data_id=user_data_id).update(isOwn=isOwn,buyOK=buyOK)
+
+            if updated_records > 0:
+                return Response({"message": "Question data updated successfully."}, status=status.HTTP_200_OK)
+            else:
+                return Response({"message": "No matching records found."}, status=status.HTTP_404_NOT_FOUND)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserBackGroundUpdateView(APIView):
+    def put(self, request, *args, **kwargs):
+        serializer = UserBackGroundSerializer(data=request.data)
+        if serializer.is_valid():
+            isOwn = serializer.validated_data['isOwn']
+            buyOK = serializer.validated_data['buyOK']
+            background_id = serializer.validated_data['background_id']
+            user_data_id = serializer.validated_data['user_data_id']
+
+            updated_records = UserBackGround.objects.filter(title_id=background_id,user_data_id=user_data_id).update(isOwn=isOwn,buyOK=buyOK)
+
+            if updated_records > 0:
+                return Response({"message": "Question data updated successfully."}, status=status.HTTP_200_OK)
+            else:
+                return Response({"message": "No matching records found."}, status=status.HTTP_404_NOT_FOUND)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

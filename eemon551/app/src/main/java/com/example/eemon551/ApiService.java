@@ -1,5 +1,7 @@
 package com.example.eemon551;
 
+import android.service.autofill.UserData;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -17,14 +19,9 @@ public interface ApiService {
     @GET("/questions/{id}")
     Call<Question> getQuestionById(@Path("id") int questionId);
 
-    @POST("/userquestiondatas/")
-    Call<Void> insertUserQuestionData(@Body UserQuestionData data);
 
-    @GET("locations/{id}/")
-    Call<Location> getLocationById(@Path("id") int locationId);
-
-    @GET("/userdatas/{id}/")
-    Call<User> getUserMoney(@Path("id") int money);
+    @GET("/userquestiondatas/")
+    Call<List<UserQuestionData>> getUserQuestionData(@Query("user_data_id") int user_data_id);
 
     @PUT("/userdatas/{id}/")
     Call<Void> updateUserData(@Path("id") int userId, @Body UserUpdateRequest userUpdateRequest);
@@ -39,15 +36,49 @@ public interface ApiService {
         }
     }
 
+
+    @POST("/userquestiondatas/")
+    Call<Void> insertUserQuestionData(@Body UserQuestionData data);
+
+    @GET("locations/{id}/")
+    Call<Location> getLocationById(@Path("id") int locationId);
+
+    @GET("/userdatas/{id}/")
+    Call<User> getUser(@Path("id") int userId);
+
+    @PUT("/userquestiondatas/update")
+    Call<Void> updateUserQuestionData(@Body UserQuestionDataUpdateRequest request);
+
+    @PUT("/userdatas/update")
+    Call<Void> updateUserDataName(@Body UserDataNameUpdateRequest request);
+
+    @PUT("/usertitles/update")
+    Call<Void> updateUserTitleData(@Body UserTitleUpdateRequest request);
+
+    @PUT("/userbackgrounds/update")
+    Call<Void> updateUserBackgroundData(@Body UserBackgroundUpdateRequest request);
+
     @POST("/userdatas/")
     Call<Void> insertUserData(@Body User data);
 
     @GET("api/user-id/")
     Call<User> getUserId(@Query("name") String name, @Query("level") int level, @Query("money") int money);
 
+    @GET("/titles/{id}/")
+    Call<Titles> getTitle(@Path("id") int titleId);
+    @GET("/usertitles/")
+    Call<List<UserTitles>> getUserTitles(@Query("user_data_id") int user_data_id);
 
+    @GET("/backgrounds/{id}/")
+    Call<background> getBackgrounds(@Path("id") int backgroundId);
+    @GET("/userbackgrounds/")
+    Call<List<UserBackground>> getUserBackgrounds(@Query("user_data_id") int user_data_id);
 
+    @PUT("/userbackgrounds/updateUseStatus")
+    Call<Void> updateUserBackgroundUseStatus(@Body UserBackgroundUpdateRequest request);
 
-
+    @PUT("/usertitles/updateUseStatus")
+    Call<Void> updateUserTitleUseStatus(@Body UserTitleUpdateRequest request);
 
 }
+

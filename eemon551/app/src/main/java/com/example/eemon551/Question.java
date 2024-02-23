@@ -6,6 +6,7 @@ public class Question {
     private String card;
     private String txt;
     private String link;
+    private int rare;
     private int loc_id;
     private int genre_id;
 
@@ -21,6 +22,11 @@ public class Question {
     public String getTxt(){return txt;}
 
     public String grtLink(){return link;}
+
+    public int getRare() {
+        return rare;
+    }
+
     public int getLoc_id(){return loc_id;}
     public int getGenre_id(){return genre_id;}
 }
