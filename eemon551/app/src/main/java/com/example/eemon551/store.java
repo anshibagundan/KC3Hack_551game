@@ -36,6 +36,7 @@ public class store extends AppCompatActivity {
     private GridLayout gridLayout_1;
     private Set<Integer> displayedQuestionIds = new HashSet<>();
     private List<Integer> all_QuestionList = new ArrayList<>();
+    private List<Integer> randomvalueList = new ArrayList<>();
     private FrameLayout store_screen;
     private FrameLayout card_screen;
     private FrameLayout title_screen;
@@ -107,14 +108,17 @@ public class store extends AppCompatActivity {
     private void fetchQuestions() {
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         int userId = prefs.getInt("UserId", 1);
+
         apiService.getUserQuestionData(userId).enqueue(new Callback<List<UserQuestionData>>() {
             @Override
             public void onResponse(Call<List<UserQuestionData>> call, Response<List<UserQuestionData>> response) {
+                Log.e("API Request Failure", "userId "+ userId);
                 if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
                     all_QuestionList.clear();
                     for (UserQuestionData u_q : response.body()) {
                         if(!u_q.get_cor() && u_q.getUser_data_id() == userId)
                             all_QuestionList.add(u_q.get_qes_id());
+                        Log.e("API Request Failure", "u_q.get_qes_id() "+ u_q.get_qes_id());
                     }
                     card_deco();
                 }
@@ -147,16 +151,75 @@ public class store extends AppCompatActivity {
 
     private int Res_cardId(){
         Log.d("API Request Failure", "random_be");
-        randomValue = getRandomIntElement(all_QuestionList);
+
         Log.d("API Request Failure", "random_af");
-        apiService.getQuestionById(randomValue).enqueue(new Callback<Question>() {
+        for (int i = 0; i < 4; i++) {
+            randomValue = getRandomIntElement(all_QuestionList);
+            randomvalueList.add(randomValue);
+        }
+
+            apiService.getQuestionById(randomvalueList.get(0)).enqueue(new Callback<Question>() {
+                @Override
+                public void onResponse(Call<Question> call, Response<Question> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        String img = response.body().getCard().replace("\"", "").trim();
+                        Log.d("API Request Failure", "img" + img);
+                        card_link = getResources().getIdentifier(img, "drawable", getPackageName());
+                        card_1.setImageResource(card_link);
+                    }
+                }
+
+
+                @Override
+                public void onFailure(Call<Question> call, Throwable t) {
+                    Log.e("API Request Failure", "Error: ", t);
+                }
+            });
+        apiService.getQuestionById(randomvalueList.get(1)).enqueue(new Callback<Question>() {
             @Override
             public void onResponse(Call<Question> call, Response<Question> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     String img = response.body().getCard().replace("\"", "").trim();
+                    Log.d("API Request Failure", "img" + img);
                     card_link = getResources().getIdentifier(img, "drawable", getPackageName());
+                    card_2.setImageResource(card_link);
                 }
             }
+
+
+            @Override
+            public void onFailure(Call<Question> call, Throwable t) {
+                Log.e("API Request Failure", "Error: ", t);
+            }
+        });
+        apiService.getQuestionById(randomvalueList.get(2)).enqueue(new Callback<Question>() {
+            @Override
+            public void onResponse(Call<Question> call, Response<Question> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String img = response.body().getCard().replace("\"", "").trim();
+                    Log.d("API Request Failure", "img" + img);
+                    card_link = getResources().getIdentifier(img, "drawable", getPackageName());
+                    card_3.setImageResource(card_link);
+                }
+            }
+
+
+            @Override
+            public void onFailure(Call<Question> call, Throwable t) {
+                Log.e("API Request Failure", "Error: ", t);
+            }
+        });
+        apiService.getQuestionById(randomvalueList.get(3)).enqueue(new Callback<Question>() {
+            @Override
+            public void onResponse(Call<Question> call, Response<Question> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String img = response.body().getCard().replace("\"", "").trim();
+                    Log.d("API Request Failure", "img" + img);
+                    card_link = getResources().getIdentifier(img, "drawable", getPackageName());
+                    card_4.setImageResource(card_link);
+                }
+            }
+
 
             @Override
             public void onFailure(Call<Question> call, Throwable t) {
