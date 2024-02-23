@@ -316,8 +316,9 @@ public class store extends AppCompatActivity {
             @Override
             public void onResponse(Call<Titles> call, Response<Titles> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    int cost = response.body().getRare() * 5000;
+                    int cost = response.body().getRare() * 1000;
                     String name = response.body().getName();
+                    titleList.add(response.body().getId());
                     title2.setText(name);
                     title_cost2.setText(String.valueOf(cost));
                 }
@@ -333,8 +334,9 @@ public class store extends AppCompatActivity {
             @Override
             public void onResponse(Call<Titles> call, Response<Titles> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    int cost = response.body().getRare() * 5000;
+                    int cost = response.body().getRare() * 1000;
                     String name = response.body().getName();
+                    titleList.add(response.body().getId());
                     title3.setText(name);
                     title_cost3.setText(String.valueOf(cost));
                 }
@@ -416,6 +418,8 @@ public class store extends AppCompatActivity {
                                 if (response.isSuccessful()) {
                                     // 更新成功時の処理。例えば、UIの更新など
                                     Log.d("UpdateUseStatus", "Background use status updated successfully.");
+                                    GetMoney();
+                                    fetchTitles();
                                     back_store(view);
                                 } else {
                                     // エラー処理
