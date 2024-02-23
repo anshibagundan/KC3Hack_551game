@@ -147,7 +147,7 @@ public class decoration extends AppCompatActivity {
         boolean isOwn = true;
         boolean buyOK = false;
         boolean use = true;
-        UserBackgroundUseUpdateRequest request = new UserBackgroundUseUpdateRequest(userId, backgroundId, isOwn, buyOK,use);
+        UserBackgroundUpdateRequest request = new UserBackgroundUpdateRequest(userId, backgroundId, isOwn, buyOK,use);
         apiService.updateUserBackgroundUseStatus(request).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
