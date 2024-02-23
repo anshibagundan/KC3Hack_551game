@@ -2,14 +2,14 @@ package com.example.eemon551;
 
 
 public class UserDataNameUpdateRequest {
-    private String name;
-    private int level;
-    private int money;
 
-    public UserDataNameUpdateRequest(String name, int level, int money) {
+    private int id;
+    private String name;
+
+
+    public UserDataNameUpdateRequest(int id,String name) {
+        this.id = id;
         this.name = name;
-        this.level = level;
-        this.money = money;
     }
 
     // Getter and Setter
