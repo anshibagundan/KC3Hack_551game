@@ -46,6 +46,9 @@ public class decoration extends AppCompatActivity {
     private int userId;
     private LinearLayout titles;
     private TextView pretitle;
+    private int usertitleid,selectID;
+    private List<TextView> titleList = new ArrayList<>();
+    private List<Integer> titleOwn = new ArrayList<>();
 
 
     @Override
@@ -71,6 +74,10 @@ public class decoration extends AppCompatActivity {
 
         fetchbackground();
 
+        //userid
+        SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        userId = prefs.getInt("UserId", 1);
+
         //名前の表示
         apiService.getUser(userId).enqueue(new Callback<User>() {
             @Override
@@ -87,13 +94,12 @@ public class decoration extends AppCompatActivity {
         });
         //使っているtitleを書く
         writeTitle(user_title,userId);
-        //持っているtitleを
+        //持っているtitleを並べる
+        titles();
     }
 
+    //back
     private void fetchbackground() {
-        SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
-        int userId = prefs.getInt("UserId", 1);
-
         apiService.getUserBackgrounds(userId).enqueue(new Callback<List<UserBackground>>() {
             @Override
             public void onResponse(Call<List<UserBackground>> call, Response<List<UserBackground>> response) {
@@ -129,7 +135,6 @@ public class decoration extends AppCompatActivity {
             }
         });
     }
-
 
     private void SetImage(List<Integer> userbackgroundid) {
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
@@ -217,7 +222,7 @@ public class decoration extends AppCompatActivity {
             public void onResponse(Call<List<UserTitles>> call, Response<List<UserTitles>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     int i = 0;
-                    int usertitleid = 0;
+                    usertitleid = 0;
                     while (!response.body().get(i).getUse()) {
                         i = i + 1;
                     }
@@ -258,45 +263,127 @@ public class decoration extends AppCompatActivity {
     }
 
     //titleの図鑑
-    private void titles(String title){
-        LinearLayout linearLayout = new LinearLayout(this);
-        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                100 // 高さ 100dp
-        ));
-        linearLayout.setBackgroundColor(Color.parseColor("#FF5722")); // @color/place の色
+    private void titles() {
+        apiService.getUserBackgrounds(userId).enqueue(new Callback<List<UserBackground>>() {
+            @Override
+            public void onResponse(Call<List<UserBackground>> call, Response<List<UserBackground>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    titleOwn.clear(); // 既存のリストをクリアして新しいデータで更新
 
+                    // ループを使用して、isOwnがtrueの全ての背景をリストに追加
+                    for (UserBackground background : response.body()) {
+                        if (userId == background.getUser_data_id()) {
+                            if (background.getisOwn()) { // isOwnがtrueの場合に追加
+                                background_list.add(background.getBackground_id());
+                            }
+                        }
+                    }
+
+                    if (background_list.isEmpty()) {
+                        // 使用中のタイトルが1つも見つからない場合の処理
+                        Log.e("UserBackground", "No active backgrounds found");
+                    } else {
+                        // UIスレッドでビューを更新
+                        runOnUiThread(() -> {
+                            // ここでbackground_listを使って背景を設定するロジックを実装
+                            background_layout.removeAllViews();
+                            SetImage(background_list);
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<UserBackground>> call, Throwable t) {
+                Log.e("API Request Failure", "Error: ", t);
+            }
+        });
+    }
+
+    private void create_title(final int titleid,String txt){
         // TextViewを作成
-        TextView textView = new TextView(this);
-        textView.setLayoutParams(new LinearLayout.LayoutParams(
+        TextView preTitleTextView = new TextView(this);
+        preTitleTextView.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
-                50 // 高さ 50dp
-        ));
-        textView.setGravity(Gravity.CENTER);
-        textView.setText(title);
-        textView.setTextSize(30);
-        textView.setTypeface(null, Typeface.BOLD);
-        textView.setTextColor(Color.WHITE);
-
+                100)); // 高さを100dpに設定
+        preTitleTextView.setGravity(Gravity.CENTER);
+        preTitleTextView.setText(txt);
+        preTitleTextView.setTextSize(30);
+        preTitleTextView.setTypeface(null, Typeface.BOLD);
+        preTitleTextView.setTextColor(Color.WHITE);
+        preTitleTextView.setBackgroundColor(getResources().getColor(R.color.place)); // R.color.placeはcolors.xmlで定義された色のリソース
+        preTitleTextView.setPadding(0, 20, 0, 0); // marginTopを設定
+        preTitleTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // タップされたときの処理
+                preChangeTitle(preTitleTextView,titleid);
+                selectID = titleid;
+            }
+        });
         // LinearLayoutにTextViewを追加
-        linearLayout.addView(textView);
-
-        // 余白を追加
-        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) linearLayout.getLayoutParams();
-        layoutParams.setMargins(0, 20, 0, 0); // 上部に20dpの余白を追加
-        linearLayout.setLayoutParams(layoutParams);
-
-        titles.addView(linearLayout);
+        titles.addView(preTitleTextView);
+        titleList.add(preTitleTextView);
     }
 
     //title変更
-    private void preChangeTitle(LinearLayout layout,TextView title){
+    private void preChangeTitle(TextView title, int selectedIndex){
         user_title.setText(title.getText());
+        // 全てのTextViewの背景色をもとに戻す
+        for (int i = 0; i < titleList.size(); i++) {
+            TextView textView = titleList.get(i);
+            textView.setBackgroundColor(getResources().getColor(R.color.place));
+        }
+
+        // タップされたTextViewの背景色を変更
+        TextView selectedTextView = titleList.get(selectedIndex);
+        selectedTextView.setBackgroundColor(getResources().getColor(R.color.selected));
+
     }
 
     //変更ボタン
-    public void cangeTitle(View v){
-        //DB格納
+    public void changeTitle(View v){
+        //DB格納(前のをオフ）
+        UserTitleUpdateRequest request = new UserTitleUpdateRequest(true, true, false, selectID, userId);
+        apiService.updateUserTitleData(request).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    // 更新成功時の処理。例えば、UIの更新など
+                    Log.d("UpdateUseStatus", "Background use status updated successfully.");
+                } else {
+                    // エラー処理
+                    Log.e("UpdateUseStatus", "Failed to update the background use status.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                // 通信失敗時の処理
+                Log.e("UpdateUseStatus", "API call failed.", t);
+            }
+        });
+
+        //DB格納（今のをおん）
+        UserTitleUpdateRequest request1 = new UserTitleUpdateRequest(false, true, false, usertitleid, userId);
+        apiService.updateUserTitleData(request1).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    // 更新成功時の処理。例えば、UIの更新など
+                    Log.d("UpdateUseStatus", "Background use status updated successfully.");
+                } else {
+                    // エラー処理
+                    Log.e("UpdateUseStatus", "Failed to update the background use status.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                // 通信失敗時の処理
+                Log.e("UpdateUseStatus", "API call failed.", t);
+            }
+        });
 
         //戻る
         overlay_title_back(v);
