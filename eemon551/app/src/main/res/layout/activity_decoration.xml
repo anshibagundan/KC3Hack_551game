@@ -338,9 +338,8 @@
                 <LinearLayout
                     android:id="@+id/titles"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
-
 
                     <TextView
                         android:id="@+id/pretitle"
@@ -367,7 +366,8 @@
                 android:text="変更"
                 android:textSize="30sp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="50dp">
+                android:layout_marginTop="50dp"
+                android:onClick="changeTitle">
 
             </Button>
 
@@ -464,7 +464,6 @@
                 </LinearLayout>
 
             </ScrollView>
-            <!--提出ボタン-->
         </LinearLayout>
 
 

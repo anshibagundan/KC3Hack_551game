@@ -9,4 +9,5 @@
     <color name="culture">#7769B8</color>
     <color name="bar">#91A600</color>
     <color name="button">#6A3300</color>
+    <color name="selected">#005550</color>
 </resources>
