@@ -134,19 +134,21 @@ class UserNameUpdateView(APIView):
     def put(self, request, *args, **kwargs):
         serializer = UserDataSerializer(data=request.data)
         if serializer.is_valid():
+            # 検証済みデータからidとnameを取得
+            id = serializer.validated_data['id']
             name = serializer.validated_data['name']
-            money = serializer.validated_data['money']
-            level = serializer.validated_data['level']
 
-            updated_records = UserData.objects.filter(money=money, level=level).update(name=name)
+            # 指定されたidを持つUserDataオブジェクトを検索し、nameフィールドを更新
+            updated_records = UserData.objects.filter(id=id).update(name=name)
 
+            # 更新されたレコードがあれば成功レスポンスを、そうでなければ404エラーを返す
             if updated_records > 0:
-                return Response({"message": "Question data updated successfully."}, status=status.HTTP_200_OK)
+                return Response({"message": "User data updated successfully."}, status=status.HTTP_200_OK)
             else:
                 return Response({"message": "No matching records found."}, status=status.HTTP_404_NOT_FOUND)
 
+        # データ検証に失敗した場合はエラーレスポンスを返す
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 class UserTitleUpdateView(APIView):
     def put(self, request, *args, **kwargs):
         serializer = UserTitleSerializer(data=request.data)
