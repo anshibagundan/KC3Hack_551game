@@ -118,7 +118,9 @@
                 android:layout_height="wrap_content"
                 android:columnCount="3"
                 android:layout_gravity="center"
-                android:useDefaultMargins="true">
+                android:useDefaultMargins="true"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true">
 
                 <!-- レイアウト内のコンポーネントを追加 -->
 
@@ -188,7 +190,9 @@
                 android:layout_height="wrap_content"
                 android:columnCount="3"
                 android:layout_gravity="center"
-                android:useDefaultMargins="true">
+                android:useDefaultMargins="true"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true">
 
             </GridLayout>
 
@@ -227,7 +231,9 @@
                 android:layout_height="wrap_content"
                 android:columnCount="3"
                 android:layout_gravity="center"
-                android:useDefaultMargins="true">
+                android:useDefaultMargins="true"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true">
 
             </GridLayout>
 
@@ -265,7 +271,9 @@
                 android:layout_height="wrap_content"
                 android:columnCount="3"
                 android:layout_gravity="center"
-                android:useDefaultMargins="true">
+                android:useDefaultMargins="true"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true">
 
             </GridLayout>
 
@@ -303,7 +311,9 @@
                 android:layout_height="wrap_content"
                 android:columnCount="3"
                 android:layout_gravity="center"
-                android:useDefaultMargins="true">
+                android:useDefaultMargins="true"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true">
 
             </GridLayout>
 
@@ -341,7 +351,9 @@
                 android:layout_height="wrap_content"
                 android:columnCount="3"
                 android:useDefaultMargins="true"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true">
 
             </GridLayout>
 

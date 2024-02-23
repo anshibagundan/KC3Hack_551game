@@ -45,6 +45,7 @@ public class decoration extends AppCompatActivity {
     private TextView user_name,user_title;
     private int userId;
     private LinearLayout titles;
+    private TextView pretitle;
 
 
     @Override
@@ -66,6 +67,7 @@ public class decoration extends AppCompatActivity {
         user_name = findViewById(R.id.user_name);
         user_title = findViewById(R.id.user_title);
         titles = findViewById(R.id.titles);
+        pretitle = findViewById(R.id.pretitle);
 
         fetchbackground();
 
@@ -288,7 +290,7 @@ public class decoration extends AppCompatActivity {
     }
 
     //title変更
-    private void preChangeTitle(TextView title){
+    private void preChangeTitle(LinearLayout layout,TextView title){
         user_title.setText(title.getText());
     }
 
@@ -356,5 +358,10 @@ public class decoration extends AppCompatActivity {
     public void decoration_introduce(View view){
         Intent intent = new Intent(decoration.this, introduce.class);
         startActivity(intent);
+    }
+
+    public void title_tap(View view) {
+        pretitle.setBackgroundColor(Color.rgb(0,100,200));
+        user_title.setText(pretitle.getText());
     }
 }

@@ -353,7 +353,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:gravity="center"
-                            android:text="大阪の"
+                            android:text="1"
                             android:textSize="30sp"
                             android:textColor="@color/white"
                             />
@@ -397,7 +397,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:gravity="center"
-                                android:text="なにわの"
+                                android:text="2"
                                 android:textSize="30sp"
                                 android:textColor="@color/white"
                                 />
@@ -441,7 +441,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:gravity="center"
-                                android:text="いてまえ！"
+                                android:text="3"
                                 android:textSize="30sp"
                                 android:textColor="@color/white"
                                 />

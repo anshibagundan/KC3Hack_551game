@@ -341,27 +341,20 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <LinearLayout
+
+                    <TextView
+                        android:id="@+id/pretitle"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
-                        android:background="@color/place"
-                        android:orientation="vertical"
-                        android:layout_marginTop="20dp"
                         android:gravity="center"
-                        >
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:gravity="center"
-                            android:text="なにわの"
-                            android:textSize="30sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/white"
-                            />
-
-                    </LinearLayout>
-
+                        android:text="なにわの"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:background="@color/place"
+                        android:layout_marginTop="20dp"
+                        android:onClick="title_tap"
+                        />
 
 
                 </LinearLayout>
