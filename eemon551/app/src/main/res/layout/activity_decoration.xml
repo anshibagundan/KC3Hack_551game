@@ -268,7 +268,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility="gone"
+            android:visibility=""
             android:background="#ffe6cc">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -296,25 +296,85 @@
                     android:textStyle="bold"/>
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                >
+
+                <TextView
+                    android:id="@+id/user_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="やっぱすっきゃねん"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    />
+
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="namae"
+                    android:textSize="30sp"
+                    android:gravity="right"
+                    />
+
+            </LinearLayout>
+
+
+
+
+
 
             <!--        すくろーる-->
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="400dp">
+
                 <LinearLayout
+                    android:id="@+id/titles"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:background="@color/place"
+                        android:orientation="vertical"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center"
+                        >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:gravity="center"
+                            android:text="なにわの"
+                            android:textSize="30sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            />
+
+                    </LinearLayout>
+
+
 
                 </LinearLayout>
             </ScrollView>
 
             <!--        提出-->
             <Button
-                android:layout_width="400dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginBottom="50dp">
+                android:text="変更"
+                android:textSize="30sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp">
 
             </Button>
 

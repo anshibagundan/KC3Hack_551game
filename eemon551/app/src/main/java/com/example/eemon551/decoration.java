@@ -7,6 +7,8 @@ import android.content.Intent;
 
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -17,6 +19,7 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -39,6 +42,10 @@ public class decoration extends AppCompatActivity {
     private Button title_chnage_button;
     private Button background_chnage_button;
     private List<Integer> background_list = new ArrayList<>();
+    private TextView user_name,user_title;
+    private int userId;
+    private LinearLayout titles;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +62,30 @@ public class decoration extends AppCompatActivity {
         background_chnage_button=findViewById(R.id.background_change_button);
         background_layout.setAlignmentMode(GridLayout.ALIGN_BOUNDS);
         background_layout.setColumnCount(3);
+        //称号
+        user_name = findViewById(R.id.user_name);
+        user_title = findViewById(R.id.user_title);
+        titles = findViewById(R.id.titles);
+
         fetchbackground();
+
+        //名前の表示
+        apiService.getUser(userId).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    user_name.setText(response.body().getName());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("API_CALL", "API call failed: " + t.getMessage());
+            }
+        });
+        //使っているtitleを書く
+        writeTitle(user_title,userId);
+        //持っているtitleを
     }
 
     private void fetchbackground() {
@@ -177,8 +207,101 @@ public class decoration extends AppCompatActivity {
 //        }
 //    });
 
+    //usertitle表示
+    private void writeTitle(TextView user_title, int userId){
+        //DBから称号を取ってくる titleに格納
+        apiService.getUserTitles(userId).enqueue(new Callback<List<UserTitles>>() {
+            @Override
+            public void onResponse(Call<List<UserTitles>> call, Response<List<UserTitles>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    int i = 0;
+                    int usertitleid = 0;
+                    while (!response.body().get(i).getUse()) {
+                        i = i + 1;
+                    }
+                    if(response.body().get(i).getUser_data_id()==userId) {
+                        usertitleid = response.body().get(i).getTitle_id();
+                        // ここでtitlesからtitle_idを取得
+                        Log.e("UserTitleId", "" + usertitleid);
+                        setTitleName(usertitleid, user_title);
+                    }else{
+                        user_title.setText("");
+                    }
+                }
+            }
 
-//変更画面のオーバーレイ
+            @Override
+            public void onFailure(Call<List<UserTitles>> call, Throwable t) {
+                Log.e("UserTitleId", "API call failed: " + t.getMessage());
+            }
+        });
+
+
+    }
+    private void setTitleName(int UserTitleId, TextView user_title){
+        apiService.getTitle(UserTitleId).enqueue(new Callback<Titles>() {
+            @Override
+            public void onResponse(Call<Titles> call, Response<Titles> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String title = response.body().getName();
+                    user_title.setText(title);
+                    Log.e("UserTitleId", "" +title);
+                }
+            }
+            @Override
+            public void onFailure(Call<Titles> call, Throwable t) {
+                Log.e("UserTitleId", "API call failed: " + t.getMessage());
+            }
+        });
+    }
+
+    //titleの図鑑
+    private void titles(String title){
+        LinearLayout linearLayout = new LinearLayout(this);
+        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                100 // 高さ 100dp
+        ));
+        linearLayout.setBackgroundColor(Color.parseColor("#FF5722")); // @color/place の色
+
+        // TextViewを作成
+        TextView textView = new TextView(this);
+        textView.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                50 // 高さ 50dp
+        ));
+        textView.setGravity(Gravity.CENTER);
+        textView.setText(title);
+        textView.setTextSize(30);
+        textView.setTypeface(null, Typeface.BOLD);
+        textView.setTextColor(Color.WHITE);
+
+        // LinearLayoutにTextViewを追加
+        linearLayout.addView(textView);
+
+        // 余白を追加
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) linearLayout.getLayoutParams();
+        layoutParams.setMargins(0, 20, 0, 0); // 上部に20dpの余白を追加
+        linearLayout.setLayoutParams(layoutParams);
+
+        titles.addView(linearLayout);
+    }
+
+    //title変更
+    private void preChangeTitle(TextView title){
+        user_title.setText(title.getText());
+    }
+
+    //変更ボタン
+    public void cangeTitle(View v){
+        //DB格納
+
+        //戻る
+        overlay_title_back(v);
+    }
+
+
+    //変更画面のオーバーレイ
     public void overlay_name(View view){
             name_change.setVisibility(View.VISIBLE);
             name_chnage_button.setVisibility(View.GONE);
