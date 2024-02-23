@@ -244,7 +244,7 @@
                 android:layout_width="350dp"
                 android:layout_height="700dp"
                 android:layout_gravity="center"
-                android:src="@drawable/tobita"/>
+                android:src="@drawable/takarabako1"/>
         </LinearLayout>
 
 
