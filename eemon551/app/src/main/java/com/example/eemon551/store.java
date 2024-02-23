@@ -47,12 +47,14 @@ public class store extends AppCompatActivity {
     private TextView title,title2,title3,title_cost,title_cost2,title_cost3,buy_title,buy_title_cost;
     private LinearLayout card_ano,title_ano,back_ano;
 
+
     private int collect_money;
     private Integer randomValue;
     private int card_link;
     private ImageView card_1,card_2,card_3,card_4,buy_card;
     private TextView card_cost1,card_cost2,card_cost3,card_cost4,buy_card_cost;
 
+    private TextView cardname1,cardname2,cardname3,cardname4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,12 @@ public class store extends AppCompatActivity {
         card_cost4 = findViewById(R.id.card_cost4);
         buy_card_cost = findViewById(R.id.buy_card_cost);
         buy_card = findViewById(R.id.buy_card);
+        cardname1=findViewById(R.id.cardname1);
+        cardname2=findViewById(R.id.cardname2);
+        cardname3=findViewById(R.id.cardname3);
+        cardname4=findViewById(R.id.cardname4);
+
+
 
         //background関連
         back_screen = findViewById(R.id.buy_back_screen);
@@ -104,6 +112,24 @@ public class store extends AppCompatActivity {
 
         GetMoney();
         fetchQuestions();
+    }
+
+    private void GetMoney(){
+        SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        int userId = prefs.getInt("UserId", 1);
+        apiService.getUser(userId).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    int currentScore = response.body().getMoney();
+                    money.setText(String.valueOf(currentScore));
+                }
+            }
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("API Request Failure", "Error: ", t);
+            }
+        });
     }
     private void fetchQuestions() {
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
@@ -131,23 +157,7 @@ public class store extends AppCompatActivity {
         });
     }
 
-    private void GetMoney(){
-        SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
-        int userId = prefs.getInt("UserId", 1);
-        apiService.getUser(userId).enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    int currentScore = response.body().getMoney();
-                    money.setText(String.valueOf(currentScore));
-                }
-            }
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Log.e("API Request Failure", "Error: ", t);
-            }
-        });
-    }
+
 
     private int Res_cardId(){
         Log.d("API Request Failure", "random_be");
@@ -163,9 +173,12 @@ public class store extends AppCompatActivity {
                 public void onResponse(Call<Question> call, Response<Question> response) {
                     if (response.isSuccessful() && response.body() != null) {
                         String img = response.body().getCard().replace("\"", "").trim();
-                        Log.d("API Request Failure", "img" + img);
                         card_link = getResources().getIdentifier(img, "drawable", getPackageName());
+                        int cost = response.body().getRare()* 5000;
+                        String name = response.body().getName();
+                        cardname1.setText(name);
                         card_1.setImageResource(card_link);
+                        card_cost1.setText(String.valueOf(cost));
                     }
                 }
 
@@ -180,9 +193,12 @@ public class store extends AppCompatActivity {
             public void onResponse(Call<Question> call, Response<Question> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     String img = response.body().getCard().replace("\"", "").trim();
-                    Log.d("API Request Failure", "img" + img);
+                    int cost = response.body().getRare()* 5000;
                     card_link = getResources().getIdentifier(img, "drawable", getPackageName());
+                    String name = response.body().getName();
+                    cardname2.setText(name);
                     card_2.setImageResource(card_link);
+                    card_cost2.setText(String.valueOf(cost));
                 }
             }
 
@@ -197,9 +213,12 @@ public class store extends AppCompatActivity {
             public void onResponse(Call<Question> call, Response<Question> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     String img = response.body().getCard().replace("\"", "").trim();
-                    Log.d("API Request Failure", "img" + img);
+                    int cost = response.body().getRare()* 5000;
                     card_link = getResources().getIdentifier(img, "drawable", getPackageName());
                     card_3.setImageResource(card_link);
+                    String name = response.body().getName();
+                    cardname3.setText(name);
+                    card_cost3.setText(String.valueOf(cost));
                 }
             }
 
@@ -214,9 +233,12 @@ public class store extends AppCompatActivity {
             public void onResponse(Call<Question> call, Response<Question> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     String img = response.body().getCard().replace("\"", "").trim();
-                    Log.d("API Request Failure", "img" + img);
+                    int cost = response.body().getRare()* 5000;
                     card_link = getResources().getIdentifier(img, "drawable", getPackageName());
                     card_4.setImageResource(card_link);
+                    String name = response.body().getName();
+                    cardname4.setText(name);
+                    card_cost4.setText(String.valueOf(cost));
                 }
             }
 
@@ -250,6 +272,146 @@ public class store extends AppCompatActivity {
         }
     }
 
+    private void fetchTitles() {
+        SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        int userId = prefs.getInt("UserId", 1);
+
+        apiService.getUserQuestionData(userId).enqueue(new Callback<List<UserQuestionData>>() {
+            @Override
+            public void onResponse(Call<List<UserQuestionData>> call, Response<List<UserQuestionData>> response) {
+                Log.e("API Request Failure", "userId "+ userId);
+                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
+                    all_QuestionList.clear();
+                    for (UserQuestionData u_q : response.body()) {
+                        if(!u_q.get_cor() && u_q.getUser_data_id() == userId)
+                            all_QuestionList.add(u_q.get_qes_id());
+                        Log.e("API Request Failure", "u_q.get_qes_id() "+ u_q.get_qes_id());
+                    }
+                    card_deco();
+                }
+
+            }
+            @Override
+            public void onFailure(Call<List<UserQuestionData>> call, Throwable t) {
+                Log.e("API Request Failure", "Error: ", t);
+            }
+        });
+    }
+
+
+
+    private int Res_cardId(){
+        Log.d("API Request Failure", "random_be");
+
+        Log.d("API Request Failure", "random_af");
+        for (int i = 0; i < 4; i++) {
+            randomValue = getRandomIntElement(all_QuestionList);
+            randomvalueList.add(randomValue);
+        }
+
+        apiService.getQuestionById(randomvalueList.get(0)).enqueue(new Callback<Question>() {
+            @Override
+            public void onResponse(Call<Question> call, Response<Question> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String img = response.body().getCard().replace("\"", "").trim();
+                    card_link = getResources().getIdentifier(img, "drawable", getPackageName());
+                    int cost = response.body().getRare()* 5000;
+                    String name = response.body().getName();
+                    cardname1.setText(name);
+                    card_1.setImageResource(card_link);
+                    card_cost1.setText(String.valueOf(cost));
+                }
+            }
+
+
+            @Override
+            public void onFailure(Call<Question> call, Throwable t) {
+                Log.e("API Request Failure", "Error: ", t);
+            }
+        });
+        apiService.getQuestionById(randomvalueList.get(1)).enqueue(new Callback<Question>() {
+            @Override
+            public void onResponse(Call<Question> call, Response<Question> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String img = response.body().getCard().replace("\"", "").trim();
+                    int cost = response.body().getRare()* 5000;
+                    card_link = getResources().getIdentifier(img, "drawable", getPackageName());
+                    String name = response.body().getName();
+                    cardname2.setText(name);
+                    card_2.setImageResource(card_link);
+                    card_cost2.setText(String.valueOf(cost));
+                }
+            }
+
+
+            @Override
+            public void onFailure(Call<Question> call, Throwable t) {
+                Log.e("API Request Failure", "Error: ", t);
+            }
+        });
+        apiService.getQuestionById(randomvalueList.get(2)).enqueue(new Callback<Question>() {
+            @Override
+            public void onResponse(Call<Question> call, Response<Question> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String img = response.body().getCard().replace("\"", "").trim();
+                    int cost = response.body().getRare()* 5000;
+                    card_link = getResources().getIdentifier(img, "drawable", getPackageName());
+                    card_3.setImageResource(card_link);
+                    String name = response.body().getName();
+                    cardname3.setText(name);
+                    card_cost3.setText(String.valueOf(cost));
+                }
+            }
+
+
+            @Override
+            public void onFailure(Call<Question> call, Throwable t) {
+                Log.e("API Request Failure", "Error: ", t);
+            }
+        });
+        apiService.getQuestionById(randomvalueList.get(3)).enqueue(new Callback<Question>() {
+            @Override
+            public void onResponse(Call<Question> call, Response<Question> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String img = response.body().getCard().replace("\"", "").trim();
+                    int cost = response.body().getRare()* 5000;
+                    card_link = getResources().getIdentifier(img, "drawable", getPackageName());
+                    card_4.setImageResource(card_link);
+                    String name = response.body().getName();
+                    cardname4.setText(name);
+                    card_cost4.setText(String.valueOf(cost));
+                }
+            }
+
+
+            @Override
+            public void onFailure(Call<Question> call, Throwable t) {
+                Log.e("API Request Failure", "Error: ", t);
+            }
+        });
+        Log.d("API Request Failure", "all_af" + card_link);
+        return card_link;
+    }
+    private int getRandomIntElement(List<Integer> set) {
+        List<Integer> list = new ArrayList<>(set);
+        Random random = new Random();
+        return list.get(random.nextInt(list.size()));
+    }
+    private void card_deco(){
+        Log.d("API Request Failure", "card_deco_in");
+        for (int i = 0; i < 4; i++) {
+            if (i == 0) {
+                Log.d("API Request Failure", "card_deco1");
+                card_1.setImageResource(Res_cardId());
+            } else if (i == 1) {
+                card_2.setImageResource(Res_cardId());
+            } else if (i == 2) {
+                card_3.setImageResource(Res_cardId());
+            } else if (i == 3) {
+                card_4.setImageResource(Res_cardId());
+            }
+        }
+    }
     public void buy_card(View view) {
         //int cost = Integer.parseInt(buy_card.getText().toString());
         int cost = Integer.parseInt(buy_card_cost.getText().toString());

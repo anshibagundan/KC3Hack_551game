@@ -82,6 +82,7 @@
                             android:onClick="go_buy_card">
 
                             <TextView
+                                android:id="@+id/cardname1"
                         android:layout_width="100dp"
                         android:layout_height="30dp"
                         android:text="めっちゃうまたこ焼き"
@@ -135,6 +136,7 @@
                             android:onClick="go_buy_card2">
 
                             <TextView
+                                android:id="@+id/cardname2"
                                 android:layout_width="100dp"
                                 android:layout_height="30dp"
                                 android:text="めっちゃうまたこ焼き"
@@ -188,6 +190,7 @@
                             android:onClick="go_buy_card3">
 
                             <TextView
+                                android:id="@+id/cardname3"
                                 android:layout_width="100dp"
                                 android:layout_height="30dp"
                                 android:text="めっちゃうまたこ焼き"
@@ -241,6 +244,7 @@
                             android:onClick="go_buy_card4">
 
                             <TextView
+                                android:id="@+id/cardname4"
                                 android:layout_width="100dp"
                                 android:layout_height="30dp"
                                 android:text="めっちゃうまたこ焼き"
