@@ -322,11 +322,12 @@ public class game extends AppCompatActivity {
     }
 
     public void onTap(View view) {
+
         if (seigo) {
             kaisetu.setVisibility(View.VISIBLE);
             touka_loading.setVisibility(View.VISIBLE);
             toi.setVisibility(View.GONE);
-            kekka_money.setText("x" + String.valueOf(collect_money));
+
             if (questionNumber > 9) {
                 next.setText("結果へ");
                 System.out.println("ランダム前 空前");
@@ -335,6 +336,7 @@ public class game extends AppCompatActivity {
                     randomValue = getRandomElement(TrueQuestionIds);
                     System.out.println("ランダムに選ばれた値: " + randomValue);
                     SetUserQuestionData(randomValue, displayedQuestionIds);
+                    runOnUiThread(() -> kekka_money.setText("x　???\n宝箱Tap！"));
 
                     apiService.getQuestionById(randomValue).enqueue(new Callback<Question>() {
                         @Override
@@ -386,7 +388,7 @@ public class game extends AppCompatActivity {
     public void onTap_takara_back(View view) {
         card_over.setVisibility(View.GONE);
         finish.setVisibility(View.VISIBLE);
-        runOnUiThread(() -> kekka_money.setText(String.valueOf(collect_money)));
+        runOnUiThread(() -> kekka_money.setText("x"+String.valueOf(collect_money)));
         if (!TrueQuestionIds.isEmpty()) {
             apiService.getQuestionById(randomValue).enqueue(new Callback<Question>() {
                 @Override

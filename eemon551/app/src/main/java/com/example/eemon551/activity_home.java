@@ -43,6 +43,7 @@ public class activity_home extends AppCompatActivity {
         apiService = ApiClient.getApiService();
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         int userId = prefs.getInt("UserId", 1);
+        Log.e("userId2", "userId: "+userId );
 
         initializeViews();
 

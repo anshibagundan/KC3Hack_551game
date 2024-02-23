@@ -55,6 +55,9 @@ public interface ApiService {
     @PUT("/usertitles/update")
     Call<Void> updateUserTitleData(@Body UserTitleUpdateRequest request);
 
+    @PUT("/userbackgrounds/update")
+    Call<Void> updateUserBackgroundData(@Body UserBackgroundUpdateRequest request);
+
     @POST("/userdatas/")
     Call<Void> insertUserData(@Body User data);
 
@@ -72,7 +75,10 @@ public interface ApiService {
     Call<List<UserBackground>> getUserBackgrounds(@Query("user_data_id") int user_data_id);
 
     @PUT("/userbackgrounds/updateUseStatus")
-    Call<Void> updateUserBackgroundUseStatus(@Body UserBackgroundUseUpdateRequest request);
+    Call<Void> updateUserBackgroundUseStatus(@Body UserBackgroundUpdateRequest request);
 
-    }
+    @PUT("/usertitles/updateUseStatus")
+    Call<Void> updateUserTitleUseStatus(@Body UserTitleUpdateRequest request);
+
+}
 

@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     // ユーザー名をSharedPreferencesに保存
-                    SharedPreferences.Editor editor = prefs.edit();
+
 
 
                     // ユーザーデータをサーバーに送信
@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                                 Log.d("first_db", "Data successfully sent to the server.");
                                 // ユーザーIDの取得とSharedPreferencesへの保存
                                 fetchAndSaveUserId(apiService, name, prefs);
+                                SharedPreferences.Editor editor = prefs.edit();
                                 editor.putBoolean("isFirstRun", false);
                             } else {
                                 Log.e("first_db", "Failed to send data. Response code: " + response.code());
@@ -115,9 +116,8 @@ public class MainActivity extends AppCompatActivity {
                     editor.putInt("UserId", userId);
                     editor.putBoolean("isFirstRun", false);
                     editor.apply();
-                    Log.d("API_CALL", "User ID: " + userId);
-                    // 別のActivityへ遷移
 
+                    navigateToHome(); // この行をコールバック内に移動
                 } else {
                     Log.e("API_CALL", "User not found or error in API");
                 }
@@ -128,8 +128,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("API_CALL", "API call failed: " + t.getMessage());
             }
         });
-        navigateToHome();
+        // navigateToHome(); この行を削除
     }
+
 
     // 2回目以降の起動時のUI設定を行うメソッド
     private void configureUIForReturningUser(SharedPreferences prefs, TextView textView, FrameLayout main, FrameLayout set_user, int userId) {
@@ -289,6 +290,10 @@ public class MainActivity extends AppCompatActivity {
     }
     private void navigateToHome() {
         Intent intent = new Intent(MainActivity.this, activity_home.class);
+        SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        int userId = prefs.getInt("UserId", 1);
+        intent.putExtra("userId",userId);
         startActivity(intent);
+        Log.e("userId2", "Main userId: "+userId );
     }
 }
