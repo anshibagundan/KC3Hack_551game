@@ -330,6 +330,7 @@ public class store extends AppCompatActivity {
                 Log.e("API Request Failure", "Error: ", t);
             }
         });
+
         apiService.getTitle(randomvalueList.get(2)).enqueue(new Callback<Titles>() {
             @Override
             public void onResponse(Call<Titles> call, Response<Titles> response) {

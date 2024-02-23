@@ -134,11 +134,10 @@ class UserNameUpdateView(APIView):
     def put(self, request, *args, **kwargs):
         serializer = UserDataSerializer(data=request.data)
         if serializer.is_valid():
+            id = serializer.validated_data["id"]
             name = serializer.validated_data['name']
-            money = serializer.validated_data['money']
-            level = serializer.validated_data['level']
 
-            updated_records = UserData.objects.filter(money=money, level=level).update(name=name)
+            updated_records = UserData.objects.filter(id=id).update(name=name)
 
             if updated_records > 0:
                 return Response({"message": "Question data updated successfully."}, status=status.HTTP_200_OK)
