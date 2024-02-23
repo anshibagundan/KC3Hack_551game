@@ -23,7 +23,7 @@ urlpatterns = [
     path('userbackgrounds/updateUseStatus', UserBackgroundUseUpdateView.as_view(), name='update-background-use-status'),
     path('usertitles/updateUseStatus', UserTitleUseUpdateView.as_view(), name='update-title-use-status'),
     path('userquestiondatas/update', UserQuestionDataUpdateView.as_view(), name='update_user_question_data'),
-    path('userdatas/update', UserNameUpdateView.as_view(), name='update_user_data'),
+    path('userdatas/update/<int:userid>', UserNameUpdateView.as_view(), name='update_user_data'),
     path('usertitles/update', UserTitleUpdateView.as_view(), name='update_user_title'),
     path('usertbackgrounds/update', UserBackGroundUpdateView.as_view(), name='update_user_background'),
 ]
