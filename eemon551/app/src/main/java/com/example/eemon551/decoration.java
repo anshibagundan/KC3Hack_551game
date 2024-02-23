@@ -69,14 +69,24 @@ public class decoration extends AppCompatActivity {
         user_name = findViewById(R.id.user_name);
         user_title = findViewById(R.id.user_title);
         titles = findViewById(R.id.titles);
-        pretitle = findViewById(R.id.pretitle);
+//        pretitle = findViewById(R.id.pretitle);
 
-        fetchbackground();
 
         //userid
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         userId = prefs.getInt("UserId", 1);
+        //名前
+        setName();
+        //使っているtitleを書く
+        writeTitle(user_title,userId);
+        //持っているtitleを並べる
+        titles();
+        //背景
+        fetchbackground();
+    }
 
+    //setName
+    private void setName(){
         //名前の表示
         apiService.getUser(userId).enqueue(new Callback<User>() {
             @Override
@@ -85,18 +95,12 @@ public class decoration extends AppCompatActivity {
                     user_name.setText(response.body().getName());
                 }
             }
-
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 Log.e("API_CALL", "API call failed: " + t.getMessage());
             }
         });
-        //使っているtitleを書く
-        writeTitle(user_title,userId);
-        //持っているtitleを並べる
-        titles();
     }
-
     //back
     private void fetchbackground() {
         apiService.getUserBackgrounds(userId).enqueue(new Callback<List<UserBackground>>() {
@@ -260,6 +264,8 @@ public class decoration extends AppCompatActivity {
             }
         });
     }
+
+
 
     //titleの図鑑
     private void titles() {
@@ -440,8 +446,32 @@ public class decoration extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void title_tap(View view) {
-        pretitle.setBackgroundColor(Color.rgb(0,100,200));
-        user_title.setText(pretitle.getText());
+    public void changeName(View view) {
+        String name = user_name.getText().toString();
+        if(name.isEmpty()) {
+            return;
+        }
+        UserDataNameUpdateRequest data = new UserDataNameUpdateRequest(userId,name);
+        apiService.updateUserDataName(data).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.isSuccessful()){
+                    //何もなくていい　　
+                    // 変更成功ログを書くといいかも
+                }else{
+                    //変更できなかった時用のログ
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                //DB接続失敗用ログ
+            }
+        });
     }
+
+//    public void title_tap(View view) {
+//        pretitle.setBackgroundColor(Color.rgb(0,100,200));
+//        user_title.setText(pretitle.getText());
+//    }
 }
