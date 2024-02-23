@@ -451,8 +451,9 @@ public class decoration extends AppCompatActivity {
         if(name.isEmpty()) {
             return;
         }
-        UserDataNameUpdateRequest data = new UserDataNameUpdateRequest(userId,name);
-        apiService.updateUserDataName(data).enqueue(new Callback<Void>() {
+
+        UserDataNameUpdateRequest data = new UserDataNameUpdateRequest(name);
+        apiService.updateUserDataName(userId,data).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.isSuccessful()){

@@ -49,8 +49,8 @@ public interface ApiService {
     @PUT("/userquestiondatas/update")
     Call<Void> updateUserQuestionData(@Body UserQuestionDataUpdateRequest request);
 
-    @PUT("/userdatas/update")
-    Call<Void> updateUserDataName(@Body UserDataNameUpdateRequest request);
+    @PUT("/userdatas/update/{id}")
+    Call<Void> updateUserDataName(@Path("id") int userId,@Body UserDataNameUpdateRequest request);
 
     @PUT("/usertitles/update")
     Call<Void> updateUserTitleData(@Body UserTitleUpdateRequest request);
