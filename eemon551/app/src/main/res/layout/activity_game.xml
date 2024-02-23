@@ -86,17 +86,35 @@
             android:textSize="30dp"
             android:visibility="gone" />
 
-        <TextView
+<!--        <TextView-->
+<!--            android:id="@+id/touka_loading"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:background="#CC000000"-->
+<!--            android:visibility="gone"-->
+<!--            android:text="Now loading..."-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="30dp"-->
+<!--            android:gravity="center"-->
+<!--            android:onClick="on" />-->
+
+<!--        ちょっとまってな画面-->
+        <LinearLayout
             android:id="@+id/touka_loading"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#CC000000"
-            android:visibility="gone"
-            android:text="Now loading..."
-            android:textColor="@color/white"
-            android:textSize="30dp"
-            android:gravity="center"
-            android:onClick="on" />
+            android:gravity="right">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="300dp"
+                android:layout_height="500dp"
+                android:layout_gravity="bottom"
+                app:srcCompat="@drawable/tyottomattena" />
+
+        </LinearLayout>
+
     </FrameLayout>
 
 

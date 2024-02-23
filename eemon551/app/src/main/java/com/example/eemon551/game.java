@@ -34,7 +34,7 @@ public class game extends AppCompatActivity {
     private TextView questionText;
 
     private ImageView seigoText;
-    private TextView touka_loading;
+    private LinearLayout touka_loading;
     private ImageView questionImage;
     private ImageView huti;
     private boolean seigo = false;
