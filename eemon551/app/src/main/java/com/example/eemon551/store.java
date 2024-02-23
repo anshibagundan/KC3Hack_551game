@@ -406,6 +406,8 @@ public class store extends AppCompatActivity {
                             }
                         });
                         Log.e("titleNum", "TitleNum: "+TitleNum);
+                        Log.e("titleNum", "titleList: "+titleList);
+
 
                         UserTitleUpdateRequest request = new UserTitleUpdateRequest(false, true, false, TitleNum, userId);
                         apiService.updateUserTitleData(request).enqueue(new Callback<Void>() {
