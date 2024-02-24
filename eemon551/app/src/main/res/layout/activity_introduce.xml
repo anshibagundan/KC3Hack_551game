@@ -28,17 +28,6 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/introduce_back" />
 
-
-            <TextView
-                android:id="@+id/introduction"
-                android:layout_width="358dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="200dp"
-                android:background="@color/white"
-                android:text="\nこのゲームは，クイズ形式のゲームです。\n問題は写真とその名称が表示され、\nそれが関西のものかを答える○✕ゲームです。\n表示されたものが関西のものの時は，\n\n「あるとき～！」ボタンを押し、違う場合は「ないとき...」ボタンを押してください。\n\n　あるとき～！ボタン→\n\n\n　ないとき...ボタン→\n\n正解例）\n551の蓬莱が〜：あるとき！\nもんじゃ焼きが〜：ないとき！\n"
-                android:textSize="17dp" />
-
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
@@ -49,6 +38,23 @@
                 android:textSize="70dp"
                 android:textColor="@color/white"
                 android:textStyle="bold"/>
+
+            <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="200dp">
+                <TextView
+                    android:id="@+id/introduction"
+                    android:layout_width="358dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:text="\nこのゲームは，クイズ形式のゲームです。\n問題は写真とその名称が表示され、\nそれが関西のものかを答える○✕ゲームです。\n表示されたものが関西のものの時は，\n\n「あるとき～！」ボタンを押し、違う場合は「ないとき...」ボタンを押してください。\n\n　あるとき～！ボタン→\n\n\n　ないとき...ボタン→\n\n正解例）\n551の蓬莱が〜：あるとき！\nもんじゃ焼きが〜：ないとき！\n"
+                    android:textSize="17dp" />
+
+            </ScrollView>
+
+
 
             <Button
                 android:id="@+id/arutoki"
