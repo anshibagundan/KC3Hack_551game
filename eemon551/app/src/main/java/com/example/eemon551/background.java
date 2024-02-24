@@ -1,6 +1,7 @@
 package com.example.eemon551;
 
 public class background {
+    private int id;
     private String img;
     private int rare;
 
@@ -10,5 +11,9 @@ public class background {
 
     public String getImg() {
         return img;
+    }
+
+    public int getId() {
+        return id;
     }
 }
