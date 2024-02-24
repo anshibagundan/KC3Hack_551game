@@ -40,17 +40,19 @@ public class decoration extends AppCompatActivity {
     private GridLayout background_layout;
     private LinearLayout name_change;
     private LinearLayout title_change;
-    private  LinearLayout background_change;
+    private LinearLayout background_change;
     private List<Integer> background_list = new ArrayList<>();
-    private TextView user_name,user_title;
+    private TextView user_name, user_title;
     private int userId;
     private LinearLayout titles;
-    private int usertitleid,selectID;
+    private int usertitleid, selectID;
     private List<TitleClass> titleList = new ArrayList<>();
     private int title_num = 0;
 
     private EditText user_name_change;
     private FrameLayout decoration;
+    private int pendingAsyncTasks = 0;
+    private final Object lock = new Object();
 
 
 
@@ -61,9 +63,9 @@ public class decoration extends AppCompatActivity {
         setContentView(R.layout.activity_decoration);
         apiService = ApiClient.getApiService();
         background_layout = findViewById(R.id.background_layout);
-        name_change=findViewById(R.id.name_change);
-        title_change=findViewById(R.id.title_change);
-        background_change=findViewById(R.id.background_change);
+        name_change = findViewById(R.id.name_change);
+        title_change = findViewById(R.id.title_change);
+        background_change = findViewById(R.id.background_change);
         //画面
         decoration = findViewById(R.id.decoration);
         //称号
@@ -80,108 +82,97 @@ public class decoration extends AppCompatActivity {
         //名前
         setName();
         //使っているtitleを書く
-        writeTitle(user_title,userId);
+        writeTitle(user_title, userId);
         //持っているtitleを並べる
         titles();
         //背景
         fetchbackground();
 
 
-
     }
 
     //setName
-    private void setName(){
-        //名前の表示
+    private void setName() {
+        incrementPendingAsyncTasks(); // 非同期タスク開始
         apiService.getUser(userId).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     user_name.setText(response.body().getName());
                 }
+                decrementPendingAsyncTasks(); // 非同期タスク完了
             }
+
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 Log.e("API_CALL", "API call failed: " + t.getMessage());
+                decrementPendingAsyncTasks(); // 非同期タスク完了
             }
         });
     }
+
+
     //back
     private void fetchbackground() {
+        incrementPendingAsyncTasks(); // 非同期タスク開始
         apiService.getUserBackgrounds(userId).enqueue(new Callback<List<UserBackground>>() {
             @Override
             public void onResponse(Call<List<UserBackground>> call, Response<List<UserBackground>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     background_list.clear(); // 既存のリストをクリアして新しいデータで更新
 
-                    // ループを使用して、isOwnがtrueの全ての背景をリストに追加
                     for (UserBackground background : response.body()) {
-                        if (userId == background.getUser_data_id()) {
-                            if (background.getisOwn()) { // isOwnがtrueの場合に追加
-                                background_list.add(background.getBackground_id());
-                            }
+                        if (background.getisOwn()) { // isOwnがtrueの場合に追加
+                            background_list.add(background.getBackground_id());
                         }
                     }
 
-                    if (background_list.isEmpty()) {
-                        // 使用中のタイトルが1つも見つからない場合の処理
-                        Log.e("UserBackground", "No active backgrounds found");
-                    } else {
-                        // UIスレッドでビューを更新
-                        runOnUiThread(() -> {
-                            // ここでbackground_listを使って背景を設定するロジックを実装
-                            background_layout.removeAllViews();
-                            SetImage(background_list);
-                            decoration.setVisibility(View.VISIBLE);
-                        });
-                    }
+                    runOnUiThread(() -> {
+                        background_layout.removeAllViews();
+                        SetImage(background_list);
+                    });
                 }
+                decrementPendingAsyncTasks(); // 非同期タスク完了
             }
 
             @Override
             public void onFailure(Call<List<UserBackground>> call, Throwable t) {
                 Log.e("API Request Failure", "Error: ", t);
+                decrementPendingAsyncTasks(); // 非同期タスク完了
             }
         });
     }
 
+
     private void SetImage(List<Integer> userbackgroundid) {
-        SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
-        int userId = prefs.getInt("UserId", 1);
-        for (int i = 0; i < userbackgroundid.size(); i++) {
-            int backgroundId = userbackgroundid.get(i);
+        for (int backgroundId : userbackgroundid) {
+            incrementPendingAsyncTasks(); // ここで非同期タスクのカウントを増やす
             apiService.getBackgrounds(backgroundId).enqueue(new Callback<background>() {
                 @Override
                 public void onResponse(Call<background> call, Response<background> response) {
                     if (response.isSuccessful() && response.body() != null) {
-                        // 各背景画像に対して新しいImageViewを生成
                         ImageView imageView = new ImageView(decoration.this);
                         String img = response.body().getImg().replace("\"", "").trim();
                         int imageResId = getResources().getIdentifier(img, "drawable", getPackageName());
                         Glide.with(decoration.this).load(imageResId).into(imageView);
 
-                        imageView.setOnClickListener(v -> {
-                            // クリックされた背景のuseをtrueに更新し、他をfalseにする
-                            updateUserBackgroundStatus(userId, backgroundId);
-                            Intent intent = new Intent(decoration.this, activity_home.class);
-                            startActivity(intent);
-                        });
-
-                        // ImageViewにレイアウトパラメータを設定してから追加
                         GridLayout.LayoutParams params = SetGridLayout();
                         background_layout.addView(imageView, params);
                     }
+                    decrementPendingAsyncTasks(); // 非同期タスク完了
                 }
 
                 @Override
                 public void onFailure(Call<background> call, Throwable t) {
                     Log.e("UserBackgroundId", "API call failed: " + t.getMessage());
+                    decrementPendingAsyncTasks(); // 非同期タスク完了
                 }
             });
         }
-
     }
-    private GridLayout.LayoutParams SetGridLayout(){
+
+
+    private GridLayout.LayoutParams SetGridLayout() {
         GridLayout.LayoutParams params = new GridLayout.LayoutParams();
         params.width = 300;  // 画像の幅
         params.height = 300; // 画像の高さ
@@ -189,11 +180,12 @@ public class decoration extends AppCompatActivity {
         return params;
 
     }
+
     private void updateUserBackgroundStatus(int userId, int backgroundId) {
         boolean isOwn = true;
         boolean buyOK = false;
         boolean use = true;
-        UserBackgroundUpdateRequest request = new UserBackgroundUpdateRequest(userId, backgroundId, isOwn, buyOK,use);
+        UserBackgroundUpdateRequest request = new UserBackgroundUpdateRequest(userId, backgroundId, isOwn, buyOK, use);
         apiService.updateUserBackgroundUseStatus(request).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -224,24 +216,24 @@ public class decoration extends AppCompatActivity {
 //    });
 
     //usertitle表示
-    private void writeTitle(TextView user_title, int userId){
+    private void writeTitle(TextView user_title, int userId) {
         //DBから称号を取ってくる titleに格納
         apiService.getUserTitles(userId).enqueue(new Callback<List<UserTitles>>() {
             @Override
             public void onResponse(Call<List<UserTitles>> call, Response<List<UserTitles>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     int i = 0;
-                    while(response.body().get(i).getUser_data_id()!=userId){
-                        i = i +1;
+                    while (response.body().get(i).getUser_data_id() != userId) {
+                        i = i + 1;
                     }
                     while (!response.body().get(i).getUse()) {
                         i = i + 1;
                     }
 
                     int usertitleid = response.body().get(i).getTitle_id();
-                        setTitleName(usertitleid, user_title);
-                    }
+                    setTitleName(usertitleid, user_title);
                 }
+            }
 
 
             @Override
@@ -252,16 +244,18 @@ public class decoration extends AppCompatActivity {
 
 
     }
-    private void setTitleName(int UserTitleId, TextView user_title){
+
+    private void setTitleName(int UserTitleId, TextView user_title) {
         apiService.getTitle(UserTitleId).enqueue(new Callback<Titles>() {
             @Override
             public void onResponse(Call<Titles> call, Response<Titles> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     String title = response.body().getName();
                     user_title.setText(title);
-                    Log.e("UserTitleId", "" +title);
+                    Log.e("UserTitleId", "" + title);
                 }
             }
+
             @Override
             public void onFailure(Call<Titles> call, Throwable t) {
                 Log.e("UserTitleId", "API call failed: " + t.getMessage());
@@ -270,23 +264,23 @@ public class decoration extends AppCompatActivity {
     }
 
 
-
     //titleの図鑑
     private void titles() {
         apiService.getUserTitles(userId).enqueue(new Callback<List<UserTitles>>() {
             @Override
             public void onResponse(Call<List<UserTitles>> call, Response<List<UserTitles>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    for(UserTitles title: response.body()) {
+                    for (UserTitles title : response.body()) {
                         if (title.getisOwn() && title.getUser_data_id() == userId) {
                             apiService.getTitle(title.getTitle_id()).enqueue(new Callback<Titles>() {
                                 @Override
                                 public void onResponse(Call<Titles> call, Response<Titles> response) {
                                     if (response.isSuccessful() && response.body() != null) {
-                                        String txt =response.body().getName();
-                                        create_title(title.getTitle_id(),txt);
+                                        String txt = response.body().getName();
+                                        create_title(title.getTitle_id(), txt);
                                     }
                                 }
+
                                 @Override
                                 public void onFailure(Call<Titles> call, Throwable t) {
                                 }
@@ -296,6 +290,7 @@ public class decoration extends AppCompatActivity {
                     }
                 }
             }
+
             @Override
             public void onFailure(Call<List<UserTitles>> call, Throwable t) {
 
@@ -303,7 +298,7 @@ public class decoration extends AppCompatActivity {
         });
     }
 
-    private void create_title(final int titleid,String txt){
+    private void create_title(final int titleid, String txt) {
         // TextViewを作成
 //        TextView preTitleTextView = new TextView(this);
 //        ViewGroup.LayoutParams = new ViewGroup.LayoutParams(
@@ -348,10 +343,10 @@ public class decoration extends AppCompatActivity {
             public void onClick(View view) {
                 // タップされたときの処理
                 selectID = titleid;
-                preChangeTitle(dynamicTextView,number);
+                preChangeTitle(dynamicTextView, number);
             }
         });
-        TitleClass titleClass = new TitleClass(dynamicTextView,number);
+        TitleClass titleClass = new TitleClass(dynamicTextView, number);
         // LinearLayoutにTextViewを追加
         titles.addView(dynamicTextView);
         titleList.add(titleClass);
@@ -359,10 +354,10 @@ public class decoration extends AppCompatActivity {
     }
 
     //title変更
-    private void preChangeTitle(TextView title,int selectnum){
+    private void preChangeTitle(TextView title, int selectnum) {
         user_title.setText(title.getText());
         // 全てのTextViewの背景色をもとに戻す
-        for (TitleClass t:titleList) {
+        for (TitleClass t : titleList) {
             TextView textView = t.getText();
             textView.setBackgroundColor(getResources().getColor(R.color.place));
         }
@@ -374,7 +369,7 @@ public class decoration extends AppCompatActivity {
     }
 
     //変更ボタン
-    public void changeTitle(View v){
+    public void changeTitle(View v) {
         //DB格納(前のをオフ）
         UserTitleUpdateRequest request = new UserTitleUpdateRequest(true, true, false, selectID, userId);
         apiService.updateUserTitleUseStatus(request).enqueue(new Callback<Void>() {
@@ -401,27 +396,30 @@ public class decoration extends AppCompatActivity {
 
 
     //変更画面のオーバーレイ
-    public void overlay(View view){
+    public void overlay(View view) {
 //        loading.setVisibility(View.VISIBLE);
         decoration.setVisibility(View.GONE);
     }
-    public void overlay_name(View view){
+
+    public void overlay_name(View view) {
         name_change.setVisibility(View.VISIBLE);
 //        loading.setVisibility(View.GONE);
         decoration.setVisibility(View.GONE);
     }
-    public void overlay_title(View view){
+
+    public void overlay_title(View view) {
         title_change.setVisibility(View.VISIBLE);
 //        loading.setVisibility(View.GONE);
         decoration.setVisibility(View.GONE);
     }
-    public void overlay_background(View view){
+
+    public void overlay_background(View view) {
         background_change.setVisibility(View.VISIBLE);
 //        loading.setVisibility(View.GONE);
         decoration.setVisibility(View.GONE);
     }
 
-    public void overlay_back(View view){
+    public void overlay_back(View view) {
         decoration.setVisibility(View.VISIBLE);
         name_change.setVisibility(View.GONE);
         title_change.setVisibility(View.GONE);
@@ -429,42 +427,44 @@ public class decoration extends AppCompatActivity {
     }
 
 
-
     //ホーム下の画面遷移
-    public void decoration_home(View view){
+    public void decoration_home(View view) {
         Intent intent = new Intent(decoration.this, activity_home.class);
         startActivity(intent);
     }
-    public void decoration_zukann(View view){
+
+    public void decoration_zukann(View view) {
         Intent intent = new Intent(decoration.this, garally.class);
         startActivity(intent);
     }
-    public void decoration_store(View view){
+
+    public void decoration_store(View view) {
         Intent intent = new Intent(decoration.this, store.class);
         startActivity(intent);
     }
+
     //a
-    public void decoration_introduce(View view){
+    public void decoration_introduce(View view) {
         Intent intent = new Intent(decoration.this, introduce.class);
         startActivity(intent);
     }
 
     public void changeName(View view) {
         String name = user_name_change.getText().toString();
-        Log.e("user_name", "changeName: "+ user_name);
-        if(name.isEmpty()) {
+        Log.e("user_name", "changeName: " + user_name);
+        if (name.isEmpty()) {
             return;
         }
 
         UserDataNameUpdateRequest data = new UserDataNameUpdateRequest(name);
-        apiService.updateUserDataName(userId,data).enqueue(new Callback<Void>() {
+        apiService.updateUserDataName(userId, data).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Intent intent = new Intent(decoration.this, activity_home.class);
                     startActivity(intent);
                     // 変更成功ログを書くといいかも
-                }else{
+                } else {
                     //変更できなかった時用のログ
                 }
             }
@@ -476,9 +476,19 @@ public class decoration extends AppCompatActivity {
         });
 
     }
+    private void incrementPendingAsyncTasks() {
+        synchronized (lock) {
+            pendingAsyncTasks++;
+        }
+    }
 
-//    public void title_tap(View view) {
-//        pretitle.setBackgroundColor(Color.rgb(0,100,200));
-//        user_title.setText(pretitle.getText());
-//    }
+    private void decrementPendingAsyncTasks() {
+        synchronized (lock) {
+            pendingAsyncTasks--;
+            if (pendingAsyncTasks == 0) {
+                runOnUiThread(() -> decoration.setVisibility(View.VISIBLE));
+            }
+        }
+    }
+
 }
