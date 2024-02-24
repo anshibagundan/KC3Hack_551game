@@ -563,20 +563,20 @@ public class store extends AppCompatActivity {
                             public void onResponse(Call<Void> call, Response<Void> response) {
                                 if (response.isSuccessful()) {
                                     // 更新成功時の処理。例えば、UIの更新など
-                                    Log.d("UpdateUseStatus", "Background use status updated successfully.");
+                                    Log.d("UpdateBackStatus", "Background use status updated successfully.");
                                     GetMoney();
                                     fetchTitles();
                                     back_store(view);
                                 } else {
                                     // エラー処理
-                                    Log.e("UpdateUseStatus", "Failed to update the background use status."+ response.message());
+                                    Log.e("UpdateBackStatus", "Failed to update the background use status."+ response.message());
                                 }
                             }
 
                             @Override
                             public void onFailure(Call<Void> call, Throwable t) {
                                 // 通信失敗時の処理
-                                Log.e("UpdateUseStatus", "API call failed.", t);
+                                Log.e("UpdateBackStatus", "API call failed.", t);
                             }
                         });
                     }

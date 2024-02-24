@@ -25,6 +25,6 @@ urlpatterns = [
     path('userquestiondatas/update', UserQuestionDataUpdateView.as_view(), name='update_user_question_data'),
     path('userdatas/update/<int:userid>', UserNameUpdateView.as_view(), name='update_user_data'),
     path('usertitles/update', UserTitleUpdateView.as_view(), name='update_user_title'),
-    path('usertbackgrounds/update', UserBackGroundUpdateView.as_view(), name='update_user_background'),
+    path('userbackgrounds/update', UserBackGroundUpdateView.as_view(), name='update_user_background'),
 ]
 
