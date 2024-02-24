@@ -178,7 +178,9 @@ public class store extends AppCompatActivity {
                     cardList.clear();
                     for (UserQuestionData u_q : response.body()) {
                         if (!u_q.get_cor() && u_q.getUser_data_id() == userId) {
-                            all_QuestionList.add(u_q.get_qes_id());
+                            if(all_QuestionList.size()<5) {
+                                all_QuestionList.add(u_q.get_qes_id());
+                            }
                             Log.e("API Request Failure2", "allQuestionList " + all_QuestionList);
                         }
 
