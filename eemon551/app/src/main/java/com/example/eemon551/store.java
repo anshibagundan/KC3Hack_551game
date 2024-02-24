@@ -509,10 +509,6 @@ public class store extends AppCompatActivity {
                 Log.e("UserMoneyFetch", "ユーザーのmoney取得失敗", t);
             }
         });
-
-
-
-        back_store(view);
     }
 
     public void buy_back(View view) {
@@ -593,7 +589,6 @@ public class store extends AppCompatActivity {
                 Log.e("UserMoneyFetch", "ユーザーのmoney取得失敗", t);
             }
         });
-        back_store(view);
     }
 
     public void buy_title(View view) {
