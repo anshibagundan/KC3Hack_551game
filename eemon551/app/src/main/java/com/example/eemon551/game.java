@@ -258,8 +258,6 @@ public class game extends AppCompatActivity {
                     // 正解の処理
                     seigoText.setImageResource(R.drawable.wahhahhahha);
                     updateUserScore(10); // スコアを10加算する
-                    T_Q = true;
-                    TrueQuestionIds.add(question.getId());
                 } else {
                     Log.d("LocationFetch", "right false");
                     // 不正解の処理
@@ -299,12 +297,10 @@ public class game extends AppCompatActivity {
                 if (locId != locationId) {
                     // 正解の処理
                     seigoText.setImageResource(R.drawable.wahhahhahha);
-                    T_Q = true;
-                    TrueQuestionIds.add(question.getId());
+                    updateUserScore(10); // スコアを10加算する
                 } else {
                     // 不正解の処理
                     seigoText.setImageResource(R.drawable.gaann);
-                    updateUserScore(10); // スコアを10加算する
                 }
                 seigoText.setVisibility(View.VISIBLE);
                 seigo = true;
