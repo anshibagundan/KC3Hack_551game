@@ -22,6 +22,7 @@ import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -53,7 +54,7 @@ public class decoration extends AppCompatActivity {
     private FrameLayout decoration;
     private int pendingAsyncTasks = 0;
     private final Object lock = new Object();
-
+    private ProgressBar progressBar;
 
 
     @Override
@@ -74,6 +75,11 @@ public class decoration extends AppCompatActivity {
         titles = findViewById(R.id.titles);
 //        pretitle = findViewById(R.id.pretitle);
         user_name_change = findViewById(R.id.user_name_change);
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setMax(100); // 進行状況の最大値を設定（例: 非同期タスクの総数に基づく）
+        progressBar.setProgress(0); // 初期進行状況を0に設定
+
+
 
 
         //userid
@@ -476,19 +482,32 @@ public class decoration extends AppCompatActivity {
         });
 
     }
+    private int totalAsyncTasks = 0; // 非同期タスクの総数
+    private int completedAsyncTasks = 0; // 完了した非同期タスクの数
+
+    private void updateProgressBar() {
+        runOnUiThread(() -> {
+            int progress = (int) (((double) completedAsyncTasks / totalAsyncTasks) * 100);
+            progressBar.setProgress(progress);
+        });
+    }
+
     private void incrementPendingAsyncTasks() {
-        synchronized (lock) {
-            pendingAsyncTasks++;
+        synchronized (this) {
+            totalAsyncTasks++;
+            updateProgressBar();
         }
     }
 
     private void decrementPendingAsyncTasks() {
-        synchronized (lock) {
-            pendingAsyncTasks--;
-            if (pendingAsyncTasks == 0) {
+        synchronized (this) {
+            completedAsyncTasks++;
+            updateProgressBar();
+            if (completedAsyncTasks == totalAsyncTasks) {
                 runOnUiThread(() -> decoration.setVisibility(View.VISIBLE));
             }
         }
     }
+
 
 }

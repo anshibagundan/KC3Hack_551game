@@ -11,9 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,6 +39,9 @@ public class activity_home extends AppCompatActivity {
     private ImageView image_3;
     private LinearLayout home_layout;
 
+    private AtomicInteger pendingAsyncTasks = new AtomicInteger(0);
+
+    private ProgressBar progressBar;
 
 
     @Override
@@ -46,6 +51,9 @@ public class activity_home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         apiService = ApiClient.getApiService();
         home_layout = findViewById(R.id.homeLayout);
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
+
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         int userId = prefs.getInt("UserId", 1);
         Log.e("userId2", "userId: "+userId );
@@ -186,6 +194,7 @@ public class activity_home extends AppCompatActivity {
     }
 
     private void GetMoney(){
+        incrementPendingAsyncTasks();
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         int userId = prefs.getInt("UserId", 1);
         apiService.getUser(userId).enqueue(new Callback<User>() {
@@ -194,15 +203,18 @@ public class activity_home extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     int currentScore = response.body().getMoney();
                     money_num.setText(String.valueOf(currentScore));
+                    decrementPendingAsyncTasks();
                 }
             }
             @Override
             public void onFailure(Call<User> call, Throwable t) {
+                decrementPendingAsyncTasks();
                 Log.e("API Request Failure", "Error: ", t);
             }
         });
     }
     private void writeTitle(TextView user_title){
+        incrementPendingAsyncTasks();
         //DBから称号を取ってくる titleに格納
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         int userId = prefs.getInt("UserId", 1);
@@ -220,12 +232,14 @@ public class activity_home extends AppCompatActivity {
                     Log.e("UserTitleId2", "" + i);
                     int usertitleid = response.body().get(i).getTitle_id();
                     setTitleName(usertitleid, user_title);
+                    decrementPendingAsyncTasks();
                     }
                 }
 
 
             @Override
             public void onFailure(Call<List<UserTitles>> call, Throwable t) {
+                decrementPendingAsyncTasks();
                 Log.e("UserTitleId", "API call failed: " + t.getMessage());
             }
         });
@@ -252,6 +266,7 @@ public class activity_home extends AppCompatActivity {
 
     }
     private void setBackgroundid(ImageView background_image){
+        incrementPendingAsyncTasks();
         //DBから称号を取ってくる titleに格納
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         int userId = prefs.getInt("UserId", 1);
@@ -285,11 +300,13 @@ public class activity_home extends AppCompatActivity {
                         // ユーザーIDが見つからない場合の処理
                         Log.e("UserBackgroundId", "User ID not found");
                     }
+                    decrementPendingAsyncTasks();
                 }
             }
 
             @Override
             public void onFailure(Call<List<UserBackground>> call, Throwable t) {
+                decrementPendingAsyncTasks();
                 Log.e("UserBackgroundId", "API call failed: " + t.getMessage());
             }
         });
@@ -345,5 +362,25 @@ public class activity_home extends AppCompatActivity {
         Intent intent = new Intent(activity_home.this, decoration.class);
         startActivity(intent);
     }
+    
+    private void incrementPendingAsyncTasks() {
+        int count = pendingAsyncTasks.incrementAndGet();
+        if (count == 1) {
+            // 非同期処理が開始されたのでプログレスバーを表示
+            runOnUiThread(() -> progressBar.setVisibility(View.VISIBLE));
+        }
+    }
+
+    private void decrementPendingAsyncTasks() {
+        int count = pendingAsyncTasks.decrementAndGet();
+        if (count == 0) {
+            // すべての非同期処理が完了したのでプログレスバーを非表示
+            runOnUiThread(() -> {
+                progressBar.setVisibility(View.GONE);
+                home_layout.setVisibility(View.VISIBLE); // すべてのデータがロードされたのでメインのレイアウトを表示
+            });
+        }
+    }
+
 
 }

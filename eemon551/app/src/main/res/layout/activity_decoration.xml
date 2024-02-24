@@ -13,8 +13,17 @@
         android:background="#FF000000"
         android:visibility="visible"
         >
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:progress="0"
+            android:max="100" />
 
-<!--        <ImageView-->
+
+        <!--        <ImageView-->
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="match_parent"-->
 <!--            app:srcCompat="@drawable/tiger"/>-->
