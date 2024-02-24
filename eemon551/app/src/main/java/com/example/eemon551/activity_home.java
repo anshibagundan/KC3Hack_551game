@@ -35,6 +35,7 @@ public class activity_home extends AppCompatActivity {
     private TextView shogo;
     private ImageView image_3;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
