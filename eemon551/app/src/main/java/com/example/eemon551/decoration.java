@@ -86,7 +86,7 @@ public class decoration extends AppCompatActivity {
         //背景
         fetchbackground();
 
-        decoration.setVisibility(View.GONE);
+
 
     }
 
@@ -132,6 +132,7 @@ public class decoration extends AppCompatActivity {
                             // ここでbackground_listを使って背景を設定するロジックを実装
                             background_layout.removeAllViews();
                             SetImage(background_list);
+                            decoration.setVisibility(View.VISIBLE);
                         });
                     }
                 }

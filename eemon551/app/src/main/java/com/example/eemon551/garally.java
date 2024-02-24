@@ -82,6 +82,7 @@ public class garally extends AppCompatActivity {
         card_image = findViewById(R.id.card_image);
 
         fetchQuestions();
+
     }
 
     private void fetchQuestions() {
@@ -126,7 +127,7 @@ public class garally extends AppCompatActivity {
 
                     // UIを更新するためのメソッドをメインスレッドで実行
                     runOnUiThread(() -> addImagesToGridLayout());
-                    zukan.setVisibility(View.VISIBLE);
+
                 }
             }
             @Override
@@ -188,8 +189,10 @@ public class garally extends AppCompatActivity {
                     }
                     // qes_idがUserQuestionDataに存在しない場合は"?"オーバーレイを適用
                     displayTextOverlay(new TextView(garally.this), "?", 0xFF000000, card_lay);
+
                 }
             }
+
 
             @Override
             public void onFailure(Call<List<UserQuestionData>> call, Throwable t) {
@@ -206,6 +209,8 @@ public class garally extends AppCompatActivity {
         lay_txt.setHeight(300);
         lay_txt.setBackgroundColor(backgroundColor);
         parent.addView(lay_txt);
+        zukan.setVisibility(View.VISIBLE);
+
     }
 
     private void SetBackgroundColor(Question question, ImageView imageView){

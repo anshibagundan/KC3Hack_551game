@@ -141,6 +141,7 @@ public class store extends AppCompatActivity {
         fetchQuestions();
         fetchTitles();
         fetchBackgrounds();
+
     }
 
     private void GetMoney() {
@@ -480,6 +481,7 @@ public class store extends AppCompatActivity {
                             all_BackgroundsList.add(background.getBackground_id());
                     }
                     Res_BackgroundId();
+                    store_screen.setVisibility(View.VISIBLE);
                 }
 
             }
