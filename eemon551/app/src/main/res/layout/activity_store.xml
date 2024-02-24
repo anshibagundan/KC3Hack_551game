@@ -14,6 +14,17 @@
         android:visibility="visible"
         android:gravity="right">
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:max="100"
+            android:progress="0"
+            android:translationX="300dp"
+            android:translationY="100dp" />
+
         <ImageView
             android:layout_width="300dp"
             android:layout_height="500dp"
@@ -28,6 +39,12 @@
         android:layout_height="match_parent"
         android:background="#ffe6cc"
         android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/image_3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/img" />
 
         <LinearLayout
             android:layout_width="match_parent"

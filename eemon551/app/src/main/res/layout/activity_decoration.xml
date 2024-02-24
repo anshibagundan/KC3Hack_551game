@@ -44,8 +44,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="#ffe6cc"
+        android:background="#89B2F0"
         android:visibility="gone">
+        <ImageView
+            android:id="@+id/image_3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/img" />
         <!--ホーム下-->
 
         <LinearLayout
@@ -348,7 +353,6 @@
                     android:id="@+id/user_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="やっぱすっきゃねん"
                     android:textSize="30sp"
                     android:textStyle="bold"
                     />

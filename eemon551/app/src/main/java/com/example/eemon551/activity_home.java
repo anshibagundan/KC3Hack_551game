@@ -43,6 +43,8 @@ public class activity_home extends AppCompatActivity {
 
     private ProgressBar progressBar;
 
+    private int userbackgroundid;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +119,7 @@ public class activity_home extends AppCompatActivity {
 
                     String location = getLocationName(locationId);
                     textLocation.setText(location);
-                    home_layout.setVisibility(View.VISIBLE);
+
                 }
             }
 
@@ -275,31 +277,17 @@ public class activity_home extends AppCompatActivity {
             public void onResponse(Call<List<UserBackground>> call, Response<List<UserBackground>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.e("UserBackgroundId", "userId: " + userId);
-                    int j = 0;
-                    while (j < response.body().size() && response.body().get(j).getUser_data_id() != userId) {
-                        j++;
-                    }
-                    if (j < response.body().size()) { // ユーザーIDが見つかった場合
-                        int i = j;
-                        while (i < response.body().size() && !response.body().get(i).getUse()) {
-                            i++;
+                    for(UserBackground data:response.body()){
+                            if (data.getUse()&&data.getUser_data_id()==userId) {
+                                userbackgroundid = data.getBackground_id();
+                                setBackground(userbackgroundid, background_image);
+                                Log.e("UserBackgroundId", "userbackgroundid: " + userbackgroundid);
+                                Log.e("UserBackgroundId", "user_data_id: " + data.getUser_data_id());
+                                break;
+                            }
+
                         }
-                        if (i < response.body().size()) { // 使用中のタイトルが見つかった場合
-                            int userbackgroundid = response.body().get(i).getBackground_id();
 
-                            Log.e("UserBackgroundId", "userbackgroundid: " + userbackgroundid);
-                            Log.e("UserBackgroundId", "user_data_id: " + response.body().get(i).getUser_data_id());
-
-                            setBackground(userbackgroundid, background_image);
-
-                        } else {
-                            // 使用中のタイトルが見つからない場合の処理
-                            Log.e("UserBackgroundId", "No active background found");
-                        }
-                    } else {
-                        // ユーザーIDが見つからない場合の処理
-                        Log.e("UserBackgroundId", "User ID not found");
-                    }
                     decrementPendingAsyncTasks();
                 }
             }
@@ -313,38 +301,37 @@ public class activity_home extends AppCompatActivity {
 
 
     }
-    private void setBackground(int Userbackgroundid, ImageView background_image){
-
-
+    private void setBackground(int Userbackgroundid, ImageView background_image) {
+        incrementPendingAsyncTasks();
         apiService.getBackgrounds(Userbackgroundid).enqueue(new Callback<background>() {
             @Override
             public void onResponse(Call<background> call, Response<background> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     String img = response.body().getImg().replace("\"", "").trim();
-                    Log.e("UserBackgroundId", "img: " + img);
                     int resourceId = getResources().getIdentifier(img, "drawable", getPackageName());
-                    if (resourceId != 0) { // リソースIDが有効な場合
-                        // UIスレッド上で背景を設定
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                background_image.setBackgroundResource(resourceId);
-                            }
+                    if (resourceId != 0) {
+                        runOnUiThread(() -> {
+                            background_image.setBackgroundResource(resourceId);
+                            decrementPendingAsyncTasks(); // ここに移動
                         });
                     } else {
-                        Log.e("UserBackgroundId", "Resource ID not found for: " + img);
+                        runOnUiThread(() -> {
+                            // 背景設定に失敗した場合のフォールバック処理
+                            // 例えばデフォルト背景を設定するなど
+                            decrementPendingAsyncTasks(); // ここに移動
+                        });
                     }
-
-                    Log.e("UserBackgroundId", "Resource ID: " + resourceId);
-
+                } else {
+                    decrementPendingAsyncTasks();
                 }
             }
             @Override
             public void onFailure(Call<background> call, Throwable t) {
-                Log.e("UserBackgroundId", "API call failed: " + t.getMessage());
+                decrementPendingAsyncTasks();
             }
         });
     }
+
 
     public void zukann(View view){
         Intent intent = new Intent(activity_home.this, garally.class);
@@ -362,7 +349,7 @@ public class activity_home extends AppCompatActivity {
         Intent intent = new Intent(activity_home.this, decoration.class);
         startActivity(intent);
     }
-    
+
     private void incrementPendingAsyncTasks() {
         int count = pendingAsyncTasks.incrementAndGet();
         if (count == 1) {

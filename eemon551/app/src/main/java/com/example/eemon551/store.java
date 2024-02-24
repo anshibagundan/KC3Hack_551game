@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -76,6 +77,9 @@ public class store extends AppCompatActivity {
     private LinearLayout title_table_1;
     private LinearLayout title_table_2;
     private LinearLayout title_table_3;
+    private int userbackgroundid;
+    private ImageView image_3;
+    private ProgressBar progressBar;
 
 
     @Override
@@ -89,6 +93,10 @@ public class store extends AppCompatActivity {
         gridLayout_1 = findViewById(R.id.card_layout);
         money = findViewById(R.id.money);
         store_screen = findViewById(R.id.store);
+        image_3 = findViewById(R.id.image_3);
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setMax(100); // 進行状況の最大値を設定（例: 非同期タスクの総数に基づく）
+        progressBar.setProgress(0); // 初期進行状況を0に設定
 
         //カード関連
         card_screen = findViewById(R.id.buy_card_screen);
@@ -141,11 +149,13 @@ public class store extends AppCompatActivity {
         fetchQuestions();
         fetchTitles();
         fetchBackgrounds();
+        setBackgroundid(image_3);
 
 
     }
 
     private void GetMoney() {
+        incrementPendingAsyncTasks();
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         int userId = prefs.getInt("UserId", 1);
         apiService.getUser(userId).enqueue(new Callback<User>() {
@@ -154,17 +164,20 @@ public class store extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     int currentScore = response.body().getMoney();
                     money.setText(String.valueOf(currentScore));
+                    decrementPendingAsyncTasks();
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
+                decrementPendingAsyncTasks();
                 Log.e("API Request Failure", "Error: ", t);
             }
         });
     }
 
     private void fetchQuestions() {
+        incrementPendingAsyncTasks();
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         int userId = prefs.getInt("UserId", 1);
 
@@ -185,6 +198,7 @@ public class store extends AppCompatActivity {
                         }
 
                     }
+                    decrementPendingAsyncTasks();
                     Log.e("kansai", "all_QuestionList "+all_QuestionList);
                     Res_cardId();
                 }
@@ -193,6 +207,7 @@ public class store extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<UserQuestionData>> call, Throwable t) {
+                decrementPendingAsyncTasks();
                 Log.e("API Request Failure", "Error: ", t);
             }
         });
@@ -200,6 +215,7 @@ public class store extends AppCompatActivity {
 
 
     private void Res_cardId() {
+        incrementPendingAsyncTasks();
         Log.d("API Request Failure", "random_be");
         for (int i = 0; i < 4; i++) {
             randomValue = getRandomIntElement(all_QuestionList);
@@ -340,11 +356,13 @@ public class store extends AppCompatActivity {
                     Log.e("API Request Failure", "Error: ", t);
                 }
             });
+            decrementPendingAsyncTasks();
         }
     }
 
 
     private void fetchTitles() {
+        incrementPendingAsyncTasks();
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         int userId = prefs.getInt("UserId", 1);
 
@@ -359,6 +377,7 @@ public class store extends AppCompatActivity {
                         if (!title.getisOwn() && title.getUser_data_id() == userId)
                             all_TitlesList.add(title.getTitle_id());
                     }
+                    decrementPendingAsyncTasks();
                     Res_titleId();
                 }
 
@@ -367,12 +386,14 @@ public class store extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<UserTitles>> call, Throwable t) {
                 Log.e("API Request Failure", "Error: ", t);
+                decrementPendingAsyncTasks();
             }
         });
     }
 
 
     private void Res_titleId() {
+        incrementPendingAsyncTasks();
         for (int i = 0; i < 3; i++) {
             randomValue = getRandomIntElement(all_TitlesList);
             randomvalueList.add(randomValue);
@@ -466,10 +487,13 @@ public class store extends AppCompatActivity {
                     Log.e("API Request Failure", "Error: ", t);
                 }
             });
+
         }
+        decrementPendingAsyncTasks();
     }
 
     private void fetchBackgrounds() {
+        incrementPendingAsyncTasks();
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         int userId = prefs.getInt("UserId", 1);
 
@@ -484,14 +508,15 @@ public class store extends AppCompatActivity {
                         if (!background.getisOwn() && background.getUser_data_id() == userId)
                             all_BackgroundsList.add(background.getBackground_id());
                     }
+                    decrementPendingAsyncTasks();
                     Res_BackgroundId();
-                    store_screen.setVisibility(View.VISIBLE);
                 }
 
             }
 
             @Override
             public void onFailure(Call<List<UserBackground>> call, Throwable t) {
+                decrementPendingAsyncTasks();
                 Log.e("API Request Failure", "Error: ", t);
             }
         });
@@ -500,6 +525,7 @@ public class store extends AppCompatActivity {
 
 
     private void Res_BackgroundId() {
+        incrementPendingAsyncTasks();
         for (int i = 0; i < 4; i++) {
             randomValue = getRandomIntElement(all_BackgroundsList);
             randomvalueList.add(randomValue);
@@ -539,19 +565,25 @@ public class store extends AppCompatActivity {
                     Log.e("API Request Failure", "Error: ", t);
                 }
             });
+
         }
+        decrementPendingAsyncTasks();
     }
 
 
     private int getRandomIntElement(List<Integer> set) {
+        incrementPendingAsyncTasks();
         List<Integer> list = new ArrayList<>(set);
         if (list == null || list.isEmpty()) {
             // リストが空の場合、適切な処理を行うか、例外を投げる
+            decrementPendingAsyncTasks();
             return -1;
         }else {
             Random random = new Random();
+            decrementPendingAsyncTasks();
             return list.get(random.nextInt(list.size()));
         }
+
     }
 
     public void buy_card(View view) {
@@ -916,6 +948,104 @@ public class store extends AppCompatActivity {
     public void store_deco(View view) {
         Intent intent = new Intent(store.this, decoration.class);
         startActivity(intent);
+    }
+
+    private void setBackgroundid(ImageView background_image){
+        incrementPendingAsyncTasks();
+        //DBから称号を取ってくる titleに格納
+        SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        int userId = prefs.getInt("UserId", 1);
+        apiService.getUserBackgrounds(userId).enqueue(new Callback<List<UserBackground>>() {
+            @Override
+            public void onResponse(Call<List<UserBackground>> call, Response<List<UserBackground>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.e("UserBackgroundId", "userId: " + userId);
+                    for(UserBackground data:response.body()){
+                        if (data.getUse()&&data.getUser_data_id()==userId) {
+                            userbackgroundid = data.getBackground_id();
+                            setBackground(userbackgroundid, background_image);
+                            Log.e("UserBackgroundId", "userbackgroundid: " + userbackgroundid);
+                            Log.e("UserBackgroundId", "user_data_id: " + data.getUser_data_id());
+                            decrementPendingAsyncTasks();
+                            break;
+                        }
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<UserBackground>> call, Throwable t) {
+                decrementPendingAsyncTasks();
+                Log.e("UserBackgroundId", "API call failed: " + t.getMessage());
+            }
+        });
+
+
+    }
+    private void setBackground(int Userbackgroundid, ImageView background_image){
+        incrementPendingAsyncTasks();
+
+        apiService.getBackgrounds(Userbackgroundid).enqueue(new Callback<background>() {
+            @Override
+            public void onResponse(Call<background> call, Response<background> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String img = response.body().getImg().replace("\"", "").trim();
+                    Log.e("UserBackgroundId", "img: " + img);
+                    int resourceId = getResources().getIdentifier(img, "drawable", getPackageName());
+                    if (resourceId != 0) { // リソースIDが有効な場合
+                        // UIスレッド上で背景を設定
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                background_image.setBackgroundResource(resourceId);
+                                decrementPendingAsyncTasks();
+                            }
+                        });
+
+                    } else {
+                        String img2 = "img".replace("\"", "").trim();
+                        background_image.setImageResource(getResources().getIdentifier(img2, "drawable", getPackageName()));
+                        Log.e("UserBackgroundId", "Resource ID not found for: " + img);
+                        decrementPendingAsyncTasks();
+                    }
+
+                    Log.e("UserBackgroundId", "Resource ID: " + resourceId);
+
+                }
+            }
+            @Override
+            public void onFailure(Call<background> call, Throwable t) {
+                decrementPendingAsyncTasks();
+                Log.e("UserBackgroundId", "API call failed: " + t.getMessage());
+            }
+        });
+    }
+    private int totalAsyncTasks = 0; // 非同期タスクの総数
+    private int completedAsyncTasks = 0; // 完了した非同期タスクの数
+
+    private void updateProgressBar() {
+        runOnUiThread(() -> {
+            int progress = (int) (((double) completedAsyncTasks / totalAsyncTasks) * 100);
+            progressBar.setProgress(progress);
+        });
+    }
+
+    private void incrementPendingAsyncTasks() {
+        synchronized (this) {
+            totalAsyncTasks++;
+            updateProgressBar();
+        }
+    }
+
+    private void decrementPendingAsyncTasks() {
+        synchronized (this) {
+            completedAsyncTasks++;
+            updateProgressBar();
+            if (completedAsyncTasks == totalAsyncTasks) {
+                runOnUiThread(() -> store_screen.setVisibility(View.VISIBLE));
+            }
+        }
     }
 
 }

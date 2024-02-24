@@ -101,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
             configureUIForReturningUser(prefs, textView, main, set_user,userId);
             //称号
             writeTitle(user_title,userId);
-            setBackgroundid(back_img,image_2,userId);
         }
     }
 
@@ -288,78 +287,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-        private void setBackgroundid(ImageView background_image,ImageView background_image2, int userId){
-            //DBから称号を取ってくる titleに格納
-            apiService.getUserBackgrounds(userId).enqueue(new Callback<List<UserBackground>>() {
-                @Override
-                public void onResponse(Call<List<UserBackground>> call, Response<List<UserBackground>> response) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        int j = 0;
-                        while (j < response.body().size() && response.body().get(j).getUser_data_id() != userId) {
-                            j++;
-                        }
-                        if (j < response.body().size()) { // ユーザーIDが見つかった場合
-                            int i = j;
-                            while (i < response.body().size() && !response.body().get(i).getUse()) {
-                                i++;
-                            }
-                            if (i < response.body().size()) { // 使用中のタイトルが見つかった場合
-                                int userbackgroundid = response.body().get(i).getBackground_id();
 
-                                setBackground(userbackgroundid, background_image,background_image2);
-
-                            } else {
-                                // 使用中のタイトルが見つからない場合の処理
-                                Log.e("UserBackgroundId", "No active background found");
-                            }
-                        } else {
-                            // ユーザーIDが見つからない場合の処理
-                            Log.e("UserBackgroundId", "User ID not found");
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<List<UserBackground>> call, Throwable t) {
-                    Log.e("UserBackgroundId", "API call failed: " + t.getMessage());
-                }
-            });
-
-
-        }
-        private void setBackground(int Userbackgroundid, ImageView background_image, ImageView background_image2){
-
-
-            apiService.getBackgrounds(Userbackgroundid).enqueue(new Callback<background>() {
-                @Override
-                public void onResponse(Call<background> call, Response<background> response) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        String img = response.body().getImg().replace("\"", "").trim();
-                        Log.e("UserBackgroundId", "img: " + img);
-                        int resourceId = getResources().getIdentifier(img, "drawable", getPackageName());
-                        if (resourceId != 0) { // リソースIDが有効な場合
-                            // UIスレッド上で背景を設定
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    background_image.setBackgroundResource(resourceId);
-                                    background_image2.setBackgroundResource(resourceId);
-                                }
-                            });
-                        } else {
-                            Log.e("UserBackgroundId", "Resource ID not found for: " + img);
-                        }
-
-                        Log.e("UserBackgroundId", "Resource ID: " + resourceId);
-
-                    }
-                }
-                @Override
-                public void onFailure(Call<background> call, Throwable t) {
-                    Log.e("UserBackgroundId", "API call failed: " + t.getMessage());
-                }
-            });
-    }
     private void navigateToHome() {
         Intent intent = new Intent(MainActivity.this, activity_home.class);
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
