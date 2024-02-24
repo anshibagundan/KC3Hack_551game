@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,6 +29,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
+import kotlin.io.LineReader;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,6 +54,8 @@ public class decoration extends AppCompatActivity {
     private int title_num = 0;
 
     private EditText user_name_change;
+    private FrameLayout decoration;
+    private LinearLayout loading;
 
 
     @Override
@@ -64,9 +68,10 @@ public class decoration extends AppCompatActivity {
         name_change=findViewById(R.id.name_change);
         title_change=findViewById(R.id.title_change);
         background_change=findViewById(R.id.background_change);
-        name_chnage_button=findViewById(R.id.name_change_button);
-        title_chnage_button=findViewById(R.id.title_change_button);
-        background_chnage_button=findViewById(R.id.background_change_button);
+        //画面
+        decoration = findViewById(R.id.decoration);
+        //ちょっと待ってな
+        loading = findViewById(R.id.loading);
         //称号
         user_name = findViewById(R.id.user_name);
         user_title = findViewById(R.id.user_title);
@@ -395,47 +400,38 @@ public class decoration extends AppCompatActivity {
             }
         });
         //戻る
-        overlay_title_back(v);
+        overlay_back(v);
     }
 
 
     //変更画面のオーバーレイ
+    public void overlay(View view){
+        loading.setVisibility(View.VISIBLE);
+        decoration.setVisibility(View.GONE);
+    }
     public void overlay_name(View view){
-            name_change.setVisibility(View.VISIBLE);
-            name_chnage_button.setVisibility(View.GONE);
-            title_chnage_button.setVisibility(View.GONE);
-            background_chnage_button.setVisibility(View.GONE);
+        name_change.setVisibility(View.VISIBLE);
+        loading.setVisibility(View.GONE);
+        decoration.setVisibility(View.GONE);
     }
     public void overlay_title(View view){
         title_change.setVisibility(View.VISIBLE);
-        name_chnage_button.setVisibility(View.GONE);
-        title_chnage_button.setVisibility(View.GONE);
-        background_chnage_button.setVisibility(View.GONE);
+        loading.setVisibility(View.GONE);
+        decoration.setVisibility(View.GONE);
     }
     public void overlay_background(View view){
         background_change.setVisibility(View.VISIBLE);
-        name_chnage_button.setVisibility(View.GONE);
-        title_chnage_button.setVisibility(View.GONE);
-        background_chnage_button.setVisibility(View.GONE);
+        loading.setVisibility(View.GONE);
+        decoration.setVisibility(View.GONE);
     }
-    public void overlay_name_back(View view){
+
+    public void overlay_back(View view){
+        decoration.setVisibility(View.VISIBLE);
         name_change.setVisibility(View.GONE);
-        name_chnage_button.setVisibility(View.VISIBLE);
-        title_chnage_button.setVisibility(View.VISIBLE);
-        background_chnage_button.setVisibility(View.VISIBLE);
-    }
-    public void overlay_title_back(View view){
         title_change.setVisibility(View.GONE);
-        name_chnage_button.setVisibility(View.VISIBLE);
-        title_chnage_button.setVisibility(View.VISIBLE);
-        background_chnage_button.setVisibility(View.VISIBLE);
-    }
-    public void overlay_background_back(View view){
         background_change.setVisibility(View.GONE);
-        name_chnage_button.setVisibility(View.VISIBLE);
-        title_chnage_button.setVisibility(View.VISIBLE);
-        background_chnage_button.setVisibility(View.VISIBLE);
     }
+
 
 
 //ホーム下の画面遷移

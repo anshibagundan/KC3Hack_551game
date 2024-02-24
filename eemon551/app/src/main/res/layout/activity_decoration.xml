@@ -7,6 +7,7 @@
     tools:context=".decoration">
 
     <FrameLayout
+        android:id="@+id/decoration"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -180,6 +181,11 @@
             android:text="背景変更"
             android:textSize="40dp"
             android:fontFamily="@font/acme"/>
+
+
+
+    </FrameLayout>
+
 
 
 
@@ -484,8 +490,22 @@
             </ScrollView>
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FF000000"
+            android:visibility="gone"
+            android:gravity="right">
 
-    </FrameLayout>
+            <ImageView
+                android:layout_width="300dp"
+                android:layout_height="500dp"
+                android:layout_gravity="bottom"
+                app:srcCompat="@drawable/tyottomattena" />
+
+        </LinearLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
