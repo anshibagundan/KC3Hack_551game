@@ -86,7 +86,7 @@
                                 android:id="@+id/cardname1"
                         android:layout_width="100dp"
                         android:layout_height="30dp"
-                        android:text="めっちゃうまたこ焼き"
+                        android:text=" "
                         android:textSize="10sp"
                         android:textStyle="bold"
                         android:textColor="@color/white"
@@ -97,7 +97,7 @@
                                 android:id="@+id/card_1"
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
-                                app:srcCompat="@drawable/takoyaki_card"
+                                app:srcCompat="@drawable/card_backside"
                                 android:layout_gravity="center"
                                 />
                             <LinearLayout
@@ -140,7 +140,7 @@
                                 android:id="@+id/cardname2"
                                 android:layout_width="100dp"
                                 android:layout_height="30dp"
-                                android:text="めっちゃうまたこ焼き"
+                                android:text=" "
                                 android:textSize="10sp"
                                 android:textStyle="bold"
                                 android:textColor="@color/white"
@@ -151,7 +151,7 @@
                                 android:id="@+id/card_2"
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
-                                app:srcCompat="@drawable/takoyaki_card"
+                                app:srcCompat="@drawable/card_backside"
                                 android:layout_gravity="center"
                                 />
                             <LinearLayout
@@ -194,7 +194,7 @@
                                 android:id="@+id/cardname3"
                                 android:layout_width="100dp"
                                 android:layout_height="30dp"
-                                android:text="めっちゃうまたこ焼き"
+                                android:text=" "
                                 android:textSize="10sp"
                                 android:textStyle="bold"
                                 android:textColor="@color/white"
@@ -205,7 +205,7 @@
                                 android:id="@+id/card_3"
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
-                                app:srcCompat="@drawable/takoyaki_card"
+                                app:srcCompat="@drawable/card_backside"
                                 android:layout_gravity="center"
                                 />
                             <LinearLayout
@@ -248,7 +248,7 @@
                                 android:id="@+id/cardname4"
                                 android:layout_width="100dp"
                                 android:layout_height="30dp"
-                                android:text="めっちゃうまたこ焼き"
+                                android:text=" "
                                 android:textSize="10sp"
                                 android:textStyle="bold"
                                 android:textColor="@color/white"
@@ -259,7 +259,7 @@
                                 android:id="@+id/card_4"
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
-                                app:srcCompat="@drawable/takoyaki_card"
+                                app:srcCompat="@drawable/card_backside"
                                 android:layout_gravity="center"
                                 />
                             <LinearLayout
