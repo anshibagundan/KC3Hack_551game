@@ -240,7 +240,34 @@ public class game extends AppCompatActivity {
                     seigoText.setImageResource(R.drawable.wahhahhahha);
                     updateUserScore(10);
                     T_Q = true;
-                    TrueQuestionIds.add(question.getId());
+                    apiService.getQuestionById(question.getId()).enqueue(new Callback<Question>() {
+                        @Override
+                        public void onResponse(Call<Question> call, Response<Question> response) {
+                            if (response.isSuccessful()&&response.body()!=null){
+                                apiService.getLocationById(response.body().getLoc_id()).enqueue(new Callback<Location>() {
+                                    @Override
+                                    public void onResponse(Call<Location> call, Response<Location> response) {
+                                        if (response.isSuccessful()&&response.body()!=null){
+                                            if (response.body().isIskansai()){
+                                                TrueQuestionIds.add(question.getId());
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Location> call, Throwable t) {
+
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Question> call, Throwable t) {
+
+                        }
+                    });
+
                 } else {
                     // 不正解の処理
                     Log.d("LocationFetch", "left false");
@@ -262,6 +289,33 @@ public class game extends AppCompatActivity {
                     Log.d("LocationFetch", "right false");
                     // 不正解の処理
                     seigoText.setImageResource(R.drawable.gaann);
+                    apiService.getQuestionById(question.getId()).enqueue(new Callback<Question>() {
+                        @Override
+                        public void onResponse(Call<Question> call, Response<Question> response) {
+                            if (response.isSuccessful()&&response.body()!=null){
+                                apiService.getLocationById(response.body().getLoc_id()).enqueue(new Callback<Location>() {
+                                    @Override
+                                    public void onResponse(Call<Location> call, Response<Location> response) {
+                                        if (response.isSuccessful()&&response.body()!=null){
+                                            if (response.body().isIskansai()){
+                                                TrueQuestionIds.add(question.getId());
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Location> call, Throwable t) {
+
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Question> call, Throwable t) {
+
+                        }
+                    });
                 }
                 seigoText.setVisibility(View.VISIBLE);
                 seigo = true;
@@ -269,6 +323,7 @@ public class game extends AppCompatActivity {
                 button_right.setVisibility(View.GONE);
                 button_left.setVisibility(View.GONE);
             });
+            Log.d("kansai", "TrueQuestionIds" + TrueQuestionIds);
         } else {
             Log.d("LocationFetch", "locationId" + locationId);
             Log.d("LocationFetch", "locid" + locId);
@@ -280,11 +335,64 @@ public class game extends AppCompatActivity {
                     seigoText.setImageResource(R.drawable.wahhahhahha);
                     updateUserScore(10);
                     T_Q = true;
-                    TrueQuestionIds.add(question.getId());
+                    apiService.getQuestionById(question.getId()).enqueue(new Callback<Question>() {
+                        @Override
+                        public void onResponse(Call<Question> call, Response<Question> response) {
+                            if (response.isSuccessful()&&response.body()!=null){
+                                apiService.getLocationById(response.body().getLoc_id()).enqueue(new Callback<Location>() {
+                                    @Override
+                                    public void onResponse(Call<Location> call, Response<Location> response) {
+                                        if (response.isSuccessful()&&response.body()!=null){
+                                            if (response.body().isIskansai()){
+                                                TrueQuestionIds.add(question.getId());
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Location> call, Throwable t) {
+
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Question> call, Throwable t) {
+
+                        }
+                    });
                 } else {
                     Log.d("LocationFetch", "left false");
                     // 不正解の処理
                     seigoText.setImageResource(R.drawable.gaann);
+                    apiService.getQuestionById(question.getId()).enqueue(new Callback<Question>() {
+                        @Override
+                        public void onResponse(Call<Question> call, Response<Question> response) {
+                            if (response.isSuccessful()&&response.body()!=null){
+                                apiService.getLocationById(response.body().getLoc_id()).enqueue(new Callback<Location>() {
+                                    @Override
+                                    public void onResponse(Call<Location> call, Response<Location> response) {
+                                        if (response.isSuccessful()&&response.body()!=null){
+                                            if (response.body().isIskansai()){
+                                                TrueQuestionIds.add(question.getId());
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Location> call, Throwable t) {
+
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Question> call, Throwable t) {
+
+                        }
+                    });
                 }
                 seigoText.setVisibility(View.VISIBLE);
                 seigo = true;
@@ -298,9 +406,63 @@ public class game extends AppCompatActivity {
                     // 正解の処理
                     seigoText.setImageResource(R.drawable.wahhahhahha);
                     updateUserScore(10); // スコアを10加算する
+                    apiService.getQuestionById(question.getId()).enqueue(new Callback<Question>() {
+                        @Override
+                        public void onResponse(Call<Question> call, Response<Question> response) {
+                            if (response.isSuccessful()&&response.body()!=null){
+                                apiService.getLocationById(response.body().getLoc_id()).enqueue(new Callback<Location>() {
+                                    @Override
+                                    public void onResponse(Call<Location> call, Response<Location> response) {
+                                        if (response.isSuccessful()&&response.body()!=null){
+                                            if (response.body().isIskansai()){
+                                                TrueQuestionIds.add(question.getId());
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Location> call, Throwable t) {
+
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Question> call, Throwable t) {
+
+                        }
+                    });
                 } else {
                     // 不正解の処理
                     seigoText.setImageResource(R.drawable.gaann);
+                    apiService.getQuestionById(question.getId()).enqueue(new Callback<Question>() {
+                        @Override
+                        public void onResponse(Call<Question> call, Response<Question> response) {
+                            if (response.isSuccessful()&&response.body()!=null){
+                                apiService.getLocationById(response.body().getLoc_id()).enqueue(new Callback<Location>() {
+                                    @Override
+                                    public void onResponse(Call<Location> call, Response<Location> response) {
+                                        if (response.isSuccessful()&&response.body()!=null){
+                                            if (response.body().isIskansai()){
+                                                TrueQuestionIds.add(question.getId());
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Location> call, Throwable t) {
+
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Question> call, Throwable t) {
+
+                        }
+                    });
                 }
                 seigoText.setVisibility(View.VISIBLE);
                 seigo = true;
@@ -308,6 +470,7 @@ public class game extends AppCompatActivity {
                 button_right.setVisibility(View.GONE);
                 button_left.setVisibility(View.GONE);
             });
+            Log.d("kansai", "TrueQuestionIds" + TrueQuestionIds);
         }
         Log.e("T_Q", "1" + T_Q);
     }

@@ -220,7 +220,7 @@ public class store extends AppCompatActivity {
                     if (response.isSuccessful() && response.body() != null) {
                         String img = response.body().getCard().replace("\"", "").trim();
                         card_res1 = getResources().getIdentifier(img, "drawable", getPackageName());
-                        int cost = response.body().getRare() * 5000;
+                        int cost = response.body().getRare() * 300;
                         String name = response.body().getName();
                         cardname1.setText(name);
                         cardList.add(response.body().getId());
@@ -254,7 +254,7 @@ public class store extends AppCompatActivity {
                 public void onResponse(Call<Question> call, Response<Question> response) {
                     if (response.isSuccessful() && response.body() != null) {
                         String img = response.body().getCard().replace("\"", "").trim();
-                        int cost = response.body().getRare() * 5000;
+                        int cost = response.body().getRare() * 300;
                         card_res2 = getResources().getIdentifier(img, "drawable", getPackageName());
                         String name = response.body().getName();
                         cardList.add(response.body().getId());
@@ -287,7 +287,7 @@ public class store extends AppCompatActivity {
                 public void onResponse(Call<Question> call, Response<Question> response) {
                     if (response.isSuccessful() && response.body() != null) {
                         String img = response.body().getCard().replace("\"", "").trim();
-                        int cost = response.body().getRare() * 5000;
+                        int cost = response.body().getRare() * 300;
                         card_res3 = getResources().getIdentifier(img, "drawable", getPackageName());
                         card_3.setImageResource(card_res3);
                         String name = response.body().getName();
@@ -320,7 +320,7 @@ public class store extends AppCompatActivity {
                 public void onResponse(Call<Question> call, Response<Question> response) {
                     if (response.isSuccessful() && response.body() != null) {
                         String img = response.body().getCard().replace("\"", "").trim();
-                        int cost = response.body().getRare() * 5000;
+                        int cost = response.body().getRare() * 300;
                         card_res4 = getResources().getIdentifier(img, "drawable", getPackageName());
                         card_4.setImageResource(card_res4);
                         String name = response.body().getName();
@@ -517,7 +517,7 @@ public class store extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<background> call, Response<background> response) {
                     if (response.isSuccessful() && response.body() != null) {
-                        int cost = response.body().getRare() * 10000;
+                        int cost = response.body().getRare() * 5000;
                         backgroundList.add(response.body().getId());
                         String img = response.body().getImg()
 
