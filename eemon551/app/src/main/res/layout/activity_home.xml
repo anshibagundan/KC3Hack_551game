@@ -7,13 +7,30 @@
     android:layout_height="match_parent"
     tools:context=".activity_home">
 
+    <LinearLayout
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FF000000"
+        android:visibility="visible"
+        android:gravity="right">
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="500dp"
+            android:layout_gravity="bottom"
+            app:srcCompat="@drawable/tyottomattena" />
+
+    </LinearLayout>
+
 
   <LinearLayout
+      android:id="@+id/homeLayout"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      tools:context=".MainActivity"
       android:orientation="vertical"
-      android:background="#89B2F0">
+      android:background="#89B2F0"
+      android:visibility="gone">
 
     <FrameLayout
         android:layout_width="match_parent"

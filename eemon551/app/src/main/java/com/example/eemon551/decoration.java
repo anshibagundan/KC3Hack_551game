@@ -41,9 +41,6 @@ public class decoration extends AppCompatActivity {
     private LinearLayout name_change;
     private LinearLayout title_change;
     private  LinearLayout background_change;
-    private Button name_chnage_button;
-    private Button title_chnage_button;
-    private Button background_chnage_button;
     private List<Integer> background_list = new ArrayList<>();
     private TextView user_name,user_title;
     private int userId;
@@ -54,7 +51,7 @@ public class decoration extends AppCompatActivity {
 
     private EditText user_name_change;
     private FrameLayout decoration;
-    private LinearLayout loading;
+
 
 
     @Override
@@ -69,8 +66,6 @@ public class decoration extends AppCompatActivity {
         background_change=findViewById(R.id.background_change);
         //画面
         decoration = findViewById(R.id.decoration);
-        //ちょっと待ってな
-        loading = findViewById(R.id.loading);
         //称号
         user_name = findViewById(R.id.user_name);
         user_title = findViewById(R.id.user_title);
@@ -91,23 +86,7 @@ public class decoration extends AppCompatActivity {
         //背景
         fetchbackground();
 
-        //名前の表示
-        apiService.getUser(userId).enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    user_name.setText(response.body().getName());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Log.e("API_CALL", "API call failed: " + t.getMessage());
-            }
-        });
-        //使っているtitleを書く
-        writeTitle(user_title,userId);
-        //持っているtitleを
+        decoration.setVisibility(View.GONE);
 
     }
 

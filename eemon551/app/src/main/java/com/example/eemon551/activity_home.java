@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -34,6 +35,8 @@ public class activity_home extends AppCompatActivity {
     private TextView money_num;
     private TextView shogo;
     private ImageView image_3;
+    private LinearLayout home_layout;
+
 
 
     @Override
@@ -42,6 +45,7 @@ public class activity_home extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_home);
         apiService = ApiClient.getApiService();
+        home_layout = findViewById(R.id.homeLayout);
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         int userId = prefs.getInt("UserId", 1);
         Log.e("userId2", "userId: "+userId );
@@ -61,11 +65,11 @@ public class activity_home extends AppCompatActivity {
                Log.e("API_CALL", "API call failed: " + t.getMessage());
            }
        });
-
         writeTitle(shogo);
         setBackgroundid(image_3);
         GetMoney();
         loadFirstQuestionGenre();
+        home_layout.setVisibility(View.VISIBLE);
     }
 
     //ここにIDの呼び出しかいてね
