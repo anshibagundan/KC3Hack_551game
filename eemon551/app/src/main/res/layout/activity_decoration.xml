@@ -15,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:background="#ffe6cc">
         <!--ホーム下-->
+
         <LinearLayout
             android:id="@+id/home"
             android:layout_width="match_parent"
@@ -325,6 +326,7 @@
                     />
 
             </LinearLayout>
+
 
 
 

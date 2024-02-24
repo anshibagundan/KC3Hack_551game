@@ -205,17 +205,18 @@ public class activity_home extends AppCompatActivity {
             public void onResponse(Call<List<UserTitles>> call, Response<List<UserTitles>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     int i = 0;
+                    while(response.body().get(i).getUser_data_id()!=userId){
+                        i = i +1;
+                    }
                     while (!response.body().get(i).getUse()) {
                         i = i + 1;
                     }
-                    if(response.body().get(i).getUser_data_id()==userId) {
-                        int usertitleid = response.body().get(i).getTitle_id();
-                        // ここでtitlesからtitle_idを取得
-                        Log.e("UserTitleId", "" + usertitleid);
-                        setTitleName(usertitleid, user_title);
+                    Log.e("UserTitleId2", "" + i);
+                    int usertitleid = response.body().get(i).getTitle_id();
+                    setTitleName(usertitleid, user_title);
                     }
                 }
-            }
+
 
             @Override
             public void onFailure(Call<List<UserTitles>> call, Throwable t) {
