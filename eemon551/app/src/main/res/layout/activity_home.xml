@@ -7,14 +7,13 @@
     android:layout_height="match_parent"
     tools:context=".activity_home">
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FF000000"
         android:visibility="visible"
-        android:gravity="right">
-
+        >
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyleHorizontal"
@@ -25,13 +24,18 @@
             android:max="100" />
 
 
+        <!--        <ImageView-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            app:srcCompat="@drawable/tiger"/>-->
+
         <ImageView
             android:layout_width="300dp"
             android:layout_height="500dp"
-            android:layout_gravity="bottom"
+            android:layout_gravity="bottom|right"
             app:srcCompat="@drawable/tyottomattena" />
 
-    </LinearLayout>
+    </FrameLayout>
 
 
   <LinearLayout
