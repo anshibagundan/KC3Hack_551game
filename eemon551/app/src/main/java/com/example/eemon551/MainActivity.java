@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
 
-                    for (int i = 2; i<3; i++) {
+                    for (int i = 2; i<16; i++) {
                         UserBackground data2_back = new UserBackground(false, false, false, i, userId);
                         apiService.insertUserbackground(data2_back).enqueue(new Callback<Void>() {
                             @Override
