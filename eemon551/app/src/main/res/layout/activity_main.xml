@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"
+        android:visibility="visible"
         >
 
         <ImageView
@@ -45,12 +45,12 @@
 
         <TextView
             android:id="@+id/user_title"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="title loading"
             android:textSize="20sp"
             android:gravity="center_vertical"
-            android:layout_marginStart="20dp"/>
+            android:paddingStart="30dp"/>
 
         <TextView
             android:id="@+id/app_name"
