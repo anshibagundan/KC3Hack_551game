@@ -142,6 +142,7 @@ public class store extends AppCompatActivity {
         fetchTitles();
         fetchBackgrounds();
 
+
     }
 
     private void GetMoney() {
@@ -182,6 +183,7 @@ public class store extends AppCompatActivity {
                         }
 
                     }
+                    Log.e("kansai", "all_QuestionList "+all_QuestionList);
                     Res_cardId();
                 }
 

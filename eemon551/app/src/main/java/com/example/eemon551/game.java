@@ -689,7 +689,7 @@ public class game extends AppCompatActivity {
         });
 
         // 表示されたが選択されなかった質問データを処理
-        for (Integer questionId : displayedQuestionIds) {
+        for (Integer questionId : TrueQuestionIds) {
             if (!questionId.equals(randomValue)) {
                 SearchQuestionData(userId, questionId, searchResult -> {
                     if (searchResult == 3 || searchResult == 4) {
