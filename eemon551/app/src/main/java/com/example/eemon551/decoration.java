@@ -49,6 +49,7 @@ public class decoration extends AppCompatActivity {
     private TextView user_name,user_title;
     private int userId;
     private LinearLayout titles;
+<<<<<<< Updated upstream
     private int usertitleid,selectID;
     private List<TitleClass> titleList = new ArrayList<>();
     private int title_num = 0;
@@ -57,6 +58,8 @@ public class decoration extends AppCompatActivity {
     private FrameLayout decoration;
     private LinearLayout loading;
 
+=======
+>>>>>>> Stashed changes
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,14 +71,23 @@ public class decoration extends AppCompatActivity {
         name_change=findViewById(R.id.name_change);
         title_change=findViewById(R.id.title_change);
         background_change=findViewById(R.id.background_change);
+<<<<<<< Updated upstream
         //画面
         decoration = findViewById(R.id.decoration);
         //ちょっと待ってな
         loading = findViewById(R.id.loading);
+=======
+        name_chnage_button=findViewById(R.id.name_change_button);
+        title_chnage_button=findViewById(R.id.title_change_button);
+        background_chnage_button=findViewById(R.id.background_change_button);
+        background_layout.setAlignmentMode(GridLayout.ALIGN_BOUNDS);
+        background_layout.setColumnCount(3);
+>>>>>>> Stashed changes
         //称号
         user_name = findViewById(R.id.user_name);
         user_title = findViewById(R.id.user_title);
         titles = findViewById(R.id.titles);
+<<<<<<< Updated upstream
 //        pretitle = findViewById(R.id.pretitle);
         user_name_change = findViewById(R.id.user_name_change);
 
@@ -90,7 +102,29 @@ public class decoration extends AppCompatActivity {
         //持っているtitleを並べる
         titles();
         //背景
+=======
+
+>>>>>>> Stashed changes
         fetchbackground();
+
+        //名前の表示
+        apiService.getUser(userId).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    user_name.setText(response.body().getName());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("API_CALL", "API call failed: " + t.getMessage());
+            }
+        });
+        //使っているtitleを書く
+        writeTitle(user_title,userId);
+        //持っているtitleを
+
     }
 
     //setName
@@ -233,7 +267,11 @@ public class decoration extends AppCompatActivity {
             public void onResponse(Call<List<UserTitles>> call, Response<List<UserTitles>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     int i = 0;
+<<<<<<< Updated upstream
                     usertitleid = 0;
+=======
+                    int usertitleid = 0;
+>>>>>>> Stashed changes
                     while (!response.body().get(i).getUse()) {
                         i = i + 1;
                     }
@@ -247,6 +285,78 @@ public class decoration extends AppCompatActivity {
                     }
                 }
             }
+<<<<<<< Updated upstream
+=======
+
+            @Override
+            public void onFailure(Call<List<UserTitles>> call, Throwable t) {
+                Log.e("UserTitleId", "API call failed: " + t.getMessage());
+            }
+        });
+
+
+    }
+    private void setTitleName(int UserTitleId, TextView user_title){
+        apiService.getTitle(UserTitleId).enqueue(new Callback<Titles>() {
+            @Override
+            public void onResponse(Call<Titles> call, Response<Titles> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String title = response.body().getName();
+                    user_title.setText(title);
+                    Log.e("UserTitleId", "" +title);
+                }
+            }
+            @Override
+            public void onFailure(Call<Titles> call, Throwable t) {
+                Log.e("UserTitleId", "API call failed: " + t.getMessage());
+            }
+        });
+    }
+
+    //titleの図鑑
+    private void titles(String title){
+        LinearLayout linearLayout = new LinearLayout(this);
+        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                100 // 高さ 100dp
+        ));
+        linearLayout.setBackgroundColor(Color.parseColor("#FF5722")); // @color/place の色
+
+        // TextViewを作成
+        TextView textView = new TextView(this);
+        textView.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                50 // 高さ 50dp
+        ));
+        textView.setGravity(Gravity.CENTER);
+        textView.setText(title);
+        textView.setTextSize(30);
+        textView.setTypeface(null, Typeface.BOLD);
+        textView.setTextColor(Color.WHITE);
+
+        // LinearLayoutにTextViewを追加
+        linearLayout.addView(textView);
+
+        // 余白を追加
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) linearLayout.getLayoutParams();
+        layoutParams.setMargins(0, 20, 0, 0); // 上部に20dpの余白を追加
+        linearLayout.setLayoutParams(layoutParams);
+
+        titles.addView(linearLayout);
+    }
+
+    //title変更
+    private void preChangeTitle(TextView title){
+        user_title.setText(title.getText());
+    }
+
+    //変更ボタン
+    public void cangeTitle(View v){
+        //DB格納
+        overlay_title_back(v);
+    }
+
+>>>>>>> Stashed changes
 
             @Override
             public void onFailure(Call<List<UserTitles>> call, Throwable t) {
