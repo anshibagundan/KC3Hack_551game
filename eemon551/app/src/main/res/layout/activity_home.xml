@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FF000000"
-        android:visibility="visible"
+        android:visibility="gone"
         android:gravity="right">
 
         <ImageView
@@ -30,7 +30,7 @@
       android:layout_height="match_parent"
       android:orientation="vertical"
       android:background="#89B2F0"
-      android:visibility="gone">
+      android:visibility="">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -154,7 +154,7 @@
                     android:id="@+id/shogo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="なにわの"
+                    android:text=""
                     android:textSize="30sp"
                     />
 <!--        名前-->
@@ -162,7 +162,7 @@
                     android:id="@+id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ユーザーName"
+                    android:text=""
                     android:textSize="25sp" />
 
             </LinearLayout>

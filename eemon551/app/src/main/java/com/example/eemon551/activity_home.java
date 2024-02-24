@@ -69,7 +69,7 @@ public class activity_home extends AppCompatActivity {
         setBackgroundid(image_3);
         GetMoney();
         loadFirstQuestionGenre();
-        home_layout.setVisibility(View.VISIBLE);
+
     }
 
     //ここにIDの呼び出しかいてね
@@ -109,6 +109,7 @@ public class activity_home extends AppCompatActivity {
 
                     String location = getLocationName(locationId);
                     textLocation.setText(location);
+                    home_layout.setVisibility(View.VISIBLE);
                 }
             }
 

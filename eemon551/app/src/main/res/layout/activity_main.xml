@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:visibility="visible"
+        android:visibility="gone"
         >
 
         <ImageView
@@ -47,7 +47,7 @@
             android:id="@+id/user_title"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="title loading"
+            android:text=""
             android:textSize="20sp"
             android:gravity="center_vertical"
             android:paddingStart="30dp"/>
@@ -59,7 +59,7 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:textSize="20sp"
-            android:text="eemonn database loading..." />
+            android:text="" />
 
         </LinearLayout>
 
