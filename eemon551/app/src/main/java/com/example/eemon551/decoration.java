@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -47,7 +48,9 @@ public class decoration extends AppCompatActivity {
     private LinearLayout titles;
     private TextView pretitle;
     private int usertitleid,selectID;
-    private List<TextView> titleList = new ArrayList<>();
+    private List<TitleClass> titleList = new ArrayList<>();
+    private int title_num = 0;
+
 
 
     @Override
@@ -301,41 +304,71 @@ public class decoration extends AppCompatActivity {
 
     private void create_title(final int titleid,String txt){
         // TextViewを作成
-        TextView preTitleTextView = new TextView(this);
-        preTitleTextView.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                100)); // 高さを100dpに設定
-        preTitleTextView.setGravity(Gravity.CENTER);
-        preTitleTextView.setText(txt);
-        preTitleTextView.setTextSize(30);
-        preTitleTextView.setTypeface(null, Typeface.BOLD);
-        preTitleTextView.setTextColor(Color.WHITE);
-        preTitleTextView.setBackgroundColor(getResources().getColor(R.color.place)); // R.color.placeはcolors.xmlで定義された色のリソース
-        preTitleTextView.setPadding(0, 20, 0, 0); // marginTopを設定
-        preTitleTextView.setOnClickListener(new View.OnClickListener() {
+//        TextView preTitleTextView = new TextView(this);
+//        ViewGroup.LayoutParams = new ViewGroup.LayoutParams(
+//                LinearLayout.LayoutParams.MATCH_PARENT,
+//                100); // 高さを100dpに設定
+//        preTitleTextView.setGravity(Gravity.CENTER);
+//        preTitleTextView.setText(txt);
+//        preTitleTextView.setTextSize(30);
+//        preTitleTextView.setTypeface(null, Typeface.BOLD);
+//        preTitleTextView.setTextColor(Color.WHITE);
+//        preTitleTextView.setBackgroundColor(getResources().getColor(R.color.place)); // R.color.placeはcolors.xmlで定義された色のリソース
+
+        // TextViewのインスタンスを生成
+        TextView dynamicTextView = new TextView(this);
+        // レイアウトパラメータを設定（match_parent, wrap_content）
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+
+        dynamicTextView.setLayoutParams(layoutParams);
+
+        // テキストを設定
+        dynamicTextView.setText(txt);
+
+        // テキストのサイズ、スタイル、色を設定
+        dynamicTextView.setTextSize(30);
+        dynamicTextView.setTypeface(null, Typeface.BOLD);
+        dynamicTextView.setTextColor(Color.WHITE);
+
+        // 背景色を設定
+        dynamicTextView.setBackgroundColor(getResources().getColor(R.color.place)); // 例: @color/place の代わりに実際の色を指定
+
+        // 文字を中央に配置
+        dynamicTextView.setGravity(Gravity.CENTER);
+
+
+        // パディングを設定
+        dynamicTextView.setPadding(20, 20, 20, 20);
+
+        final int number = title_num;
+        dynamicTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // タップされたときの処理
-                preChangeTitle(preTitleTextView,titleid);
-                selectID = titleid;
+                preChangeTitle(dynamicTextView,number);
             }
         });
+        TitleClass titleClass = new TitleClass(dynamicTextView,number);
         // LinearLayoutにTextViewを追加
-        titles.addView(preTitleTextView);
-        titleList.add(preTitleTextView);
+        titles.addView(dynamicTextView);
+        titleList.add(titleClass);
+        title_num++;
     }
 
     //title変更
-    private void preChangeTitle(TextView title, int selectedIndex){
+    private void preChangeTitle(TextView title,int selectID){
         user_title.setText(title.getText());
         // 全てのTextViewの背景色をもとに戻す
-        for (int i = 0; i < titleList.size(); i++) {
-            TextView textView = titleList.get(i);
+        for (TitleClass t:titleList) {
+            TextView textView = t.getText();
             textView.setBackgroundColor(getResources().getColor(R.color.place));
         }
 
         // タップされたTextViewの背景色を変更
-        TextView selectedTextView = titleList.get(selectedIndex);
+        TextView selectedTextView = titleList.get(selectID).getText();
         selectedTextView.setBackgroundColor(getResources().getColor(R.color.selected));
 
     }
@@ -469,6 +502,7 @@ public class decoration extends AppCompatActivity {
                 //DB接続失敗用ログ
             }
         });
+
     }
 
 //    public void title_tap(View view) {
