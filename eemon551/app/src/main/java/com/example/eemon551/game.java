@@ -333,7 +333,7 @@ public class game extends AppCompatActivity {
                     Log.d("LocationFetch", "left true");
                     // 正解の処理
                     seigoText.setImageResource(R.drawable.wahhahhahha);
-                    updateUserScore(10);
+                    updateUserScore(30);
                     T_Q = true;
                     apiService.getQuestionById(question.getId()).enqueue(new Callback<Question>() {
                         @Override
@@ -648,7 +648,7 @@ public class game extends AppCompatActivity {
 
             if (searchResult == 2) {
                 collect_money += 30;
-                updateUserScore(30);
+                updateUserScore(300);
             } else if (searchResult == 1) {
                 Log.d("UpdateQuestionData", "user_data_id"+ userId);
                 Log.d("UpdateQuestionData", "qes_id"+ randomValue);
