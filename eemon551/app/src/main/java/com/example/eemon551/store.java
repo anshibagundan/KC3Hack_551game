@@ -368,7 +368,7 @@ public class store extends AppCompatActivity {
 
 
     private void Res_titleId() {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             randomValue = getRandomIntElement(all_TitlesList);
             randomvalueList.add(randomValue);
         }
@@ -382,6 +382,7 @@ public class store extends AppCompatActivity {
                 }
             });
         }else {
+            Log.e("randomvalueList", "randomvalueList: "+ randomvalueList);
 
             apiService.getTitle(randomvalueList.get(0)).enqueue(new Callback<Titles>() {
                 @Override
@@ -680,9 +681,11 @@ public class store extends AppCompatActivity {
                                 if (response.isSuccessful()) {
                                     // 更新成功時の処理。例えば、UIの更新など
                                     Log.d("UpdateBackStatus", "Background use status updated successfully.");
+
                                     GetMoney();
-                                    fetchTitles();
+                                    fetchBackgrounds();
                                     back_store(view);
+
                                 } else {
                                     // エラー処理
                                     Log.e("UpdateBackStatus", "Failed to update the background use status."+ response.message());
