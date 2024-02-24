@@ -170,17 +170,17 @@ public class store extends AppCompatActivity {
         apiService.getUserQuestionData(userId).enqueue(new Callback<List<UserQuestionData>>() {
             @Override
             public void onResponse(Call<List<UserQuestionData>> call, Response<List<UserQuestionData>> response) {
-                Log.e("API Request Failure", "userId " + userId);
+                Log.e("API Request Failure2", "userId " + userId);
                 if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
                     all_QuestionList.clear();
                     randomvalueList.clear();
                     cardList.clear();
-                    //a
-                    ///b
                     for (UserQuestionData u_q : response.body()) {
-                        if (!u_q.get_cor() && u_q.getUser_data_id() == userId)
+                        if (!u_q.get_cor() && u_q.getUser_data_id() == userId) {
                             all_QuestionList.add(u_q.get_qes_id());
-                        Log.e("API Request Failure", "u_q.get_qes_id() " + u_q.get_qes_id());
+                            Log.e("API Request Failure2", "allQuestionList " + all_QuestionList);
+                        }
+
                     }
                     Res_cardId();
                 }
