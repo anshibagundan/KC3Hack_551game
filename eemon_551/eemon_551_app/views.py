@@ -106,7 +106,7 @@ class UserTitleUseUpdateView(APIView):
             # すべての背景を一旦falseに設定
             UserTitle.objects.filter(user_data_id=user_data_id).update(use=False)
             # 指定された背景のみtrueに設定
-            UserTitle.objects.filter(user_data_id=user_data_id, background_id=title_id).update(use=True)
+            UserTitle.objects.filter(user_data_id=user_data_id, title_id=title_id).update(use=True)
 
             return Response({"message": "Background use updated successfully."}, status=status.HTTP_200_OK)
 
