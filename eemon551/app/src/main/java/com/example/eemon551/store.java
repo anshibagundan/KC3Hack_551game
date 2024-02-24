@@ -442,7 +442,8 @@ public class store extends AppCompatActivity {
 
         if(randomvalueList.get(0) == -1) {
             back_res = getResources().getIdentifier(back_img, "drawable", getPackageName());
-            buy_back.setImageResource(card_res4);
+            buy_back.setImageResource(back_res);
+            //ここで飛ばないようにしたい
             back_cost.setText("売り切れ！");
         }else {
             apiService.getBackgrounds(randomvalueList.get(0)).enqueue(new Callback<background>() {

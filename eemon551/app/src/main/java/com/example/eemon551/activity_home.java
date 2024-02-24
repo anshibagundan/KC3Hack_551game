@@ -61,8 +61,8 @@ public class activity_home extends AppCompatActivity {
            }
        });
 
-        writeTitle(shogo,userId);
-        setBackgroundid(image_3,userId);
+        writeTitle(shogo);
+        setBackgroundid(image_3);
         GetMoney();
         loadFirstQuestionGenre();
     }
@@ -196,24 +196,23 @@ public class activity_home extends AppCompatActivity {
             }
         });
     }
-    private void writeTitle(TextView user_title, int userId){
+    private void writeTitle(TextView user_title){
         //DBから称号を取ってくる titleに格納
+        SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        int userId = prefs.getInt("UserId", 1);
         apiService.getUserTitles(userId).enqueue(new Callback<List<UserTitles>>() {
             @Override
             public void onResponse(Call<List<UserTitles>> call, Response<List<UserTitles>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     int i = 0;
-                    int usertitleid = 0;
                     while (!response.body().get(i).getUse()) {
                         i = i + 1;
                     }
                     if(response.body().get(i).getUser_data_id()==userId) {
-                        usertitleid = response.body().get(i).getTitle_id();
+                        int usertitleid = response.body().get(i).getTitle_id();
                         // ここでtitlesからtitle_idを取得
                         Log.e("UserTitleId", "" + usertitleid);
                         setTitleName(usertitleid, user_title);
-                    }else{
-                        user_title.setText("称号がないよ");
                     }
                 }
             }
@@ -245,8 +244,10 @@ public class activity_home extends AppCompatActivity {
         });
 
     }
-    private void setBackgroundid(ImageView background_image, int userId){
+    private void setBackgroundid(ImageView background_image){
         //DBから称号を取ってくる titleに格納
+        SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        int userId = prefs.getInt("UserId", 1);
         apiService.getUserBackgrounds(userId).enqueue(new Callback<List<UserBackground>>() {
             @Override
             public void onResponse(Call<List<UserBackground>> call, Response<List<UserBackground>> response) {
