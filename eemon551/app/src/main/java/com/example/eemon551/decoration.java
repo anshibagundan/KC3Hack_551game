@@ -230,20 +230,18 @@ public class decoration extends AppCompatActivity {
             public void onResponse(Call<List<UserTitles>> call, Response<List<UserTitles>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     int i = 0;
-                    usertitleid = 0;
+                    while(response.body().get(i).getUser_data_id()!=userId){
+                        i = i +1;
+                    }
                     while (!response.body().get(i).getUse()) {
                         i = i + 1;
                     }
-                    if(response.body().get(i).getUser_data_id()==userId) {
-                        usertitleid = response.body().get(i).getTitle_id();
-                        // ここでtitlesからtitle_idを取得
-                        Log.e("UserTitleId", "" + usertitleid);
+
+                    int usertitleid = response.body().get(i).getTitle_id();
                         setTitleName(usertitleid, user_title);
-                    }else{
-                        user_title.setText("");
                     }
                 }
-            }
+
 
             @Override
             public void onFailure(Call<List<UserTitles>> call, Throwable t) {
@@ -403,22 +401,22 @@ public class decoration extends AppCompatActivity {
 
     //変更画面のオーバーレイ
     public void overlay(View view){
-        loading.setVisibility(View.VISIBLE);
+//        loading.setVisibility(View.VISIBLE);
         decoration.setVisibility(View.GONE);
     }
     public void overlay_name(View view){
         name_change.setVisibility(View.VISIBLE);
-        loading.setVisibility(View.GONE);
+//        loading.setVisibility(View.GONE);
         decoration.setVisibility(View.GONE);
     }
     public void overlay_title(View view){
         title_change.setVisibility(View.VISIBLE);
-        loading.setVisibility(View.GONE);
+//        loading.setVisibility(View.GONE);
         decoration.setVisibility(View.GONE);
     }
     public void overlay_background(View view){
         background_change.setVisibility(View.VISIBLE);
-        loading.setVisibility(View.GONE);
+//        loading.setVisibility(View.GONE);
         decoration.setVisibility(View.GONE);
     }
 
