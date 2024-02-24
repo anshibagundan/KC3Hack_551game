@@ -232,6 +232,8 @@ public class garally extends AppCompatActivity {
         int imageResId = getResources().getIdentifier(img, "drawable", getPackageName());
         Glide.with(this).load(imageResId).transform(new DownsampleTransformation()).diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView);
         SetBackgroundColor(question, imageView);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        imageView.setAdjustViewBounds(true);
         RelativeLayout card_lay = new RelativeLayout(this);
         TextView lay_txt = new TextView(this);
         card_lay.addView(imageView);
