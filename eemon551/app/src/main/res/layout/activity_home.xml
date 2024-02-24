@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FF000000"
-        android:visibility="gone"
+        android:visibility="visible"
         android:gravity="right">
 
         <ImageView
@@ -30,7 +30,7 @@
       android:layout_height="match_parent"
       android:orientation="vertical"
       android:background="#89B2F0"
-      android:visibility="">
+      android:visibility="gone">
 
     <FrameLayout
         android:layout_width="match_parent"
