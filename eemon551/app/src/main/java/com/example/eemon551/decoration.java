@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -51,6 +52,7 @@ public class decoration extends AppCompatActivity {
     private List<TitleClass> titleList = new ArrayList<>();
     private int title_num = 0;
 
+    private EditText user_name_change;
 
 
     @Override
@@ -73,6 +75,7 @@ public class decoration extends AppCompatActivity {
         user_title = findViewById(R.id.user_title);
         titles = findViewById(R.id.titles);
 //        pretitle = findViewById(R.id.pretitle);
+        user_name_change = findViewById(R.id.user_name_change);
 
 
         //userid
@@ -480,7 +483,8 @@ public class decoration extends AppCompatActivity {
     }
 
     public void changeName(View view) {
-        String name = user_name.getText().toString();
+        String name = user_name_change.getText().toString();
+        Log.e("user_name", "changeName: "+ user_name);
         if(name.isEmpty()) {
             return;
         }
@@ -490,7 +494,8 @@ public class decoration extends AppCompatActivity {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.isSuccessful()){
-                    //何もなくていい　　
+                    Intent intent = new Intent(decoration.this, activity_home.class);
+                    startActivity(intent);
                     // 変更成功ログを書くといいかも
                 }else{
                     //変更できなかった時用のログ
