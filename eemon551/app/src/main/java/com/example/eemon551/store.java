@@ -69,6 +69,14 @@ public class store extends AppCompatActivity {
     private TextView cardname1, cardname2, cardname3, cardname4;
 
     private int back_res, card_res1,card_res2,card_res3,card_res4;
+    private LinearLayout card_table_1;
+    private LinearLayout card_table_2;
+    private LinearLayout card_table_3;
+    private LinearLayout card_table_4;
+    private LinearLayout title_table_1;
+    private LinearLayout title_table_2;
+    private LinearLayout title_table_3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +108,10 @@ public class store extends AppCompatActivity {
         cardname2 = findViewById(R.id.cardname2);
         cardname3 = findViewById(R.id.cardname3);
         cardname4 = findViewById(R.id.cardname4);
-
+        card_table_1 = findViewById(R.id.card_table_1);
+        card_table_2 = findViewById(R.id.card_table_2);
+        card_table_3 = findViewById(R.id.card_table_3);
+        card_table_4 = findViewById(R.id.card_table_4);
 
         //background関連
         back_screen = findViewById(R.id.buy_back_screen);
@@ -122,7 +133,9 @@ public class store extends AppCompatActivity {
         buy_title = findViewById(R.id.buy_title);
         buy_title_cost = findViewById(R.id.buy_title_cost);
         title_ano = findViewById(R.id.title_ano);
-
+        title_table_1 = findViewById(R.id.title1);
+        title_table_2 = findViewById(R.id.title2);
+        title_table_3 = findViewById(R.id.title3);
 
         GetMoney();
         fetchQuestions();
@@ -160,6 +173,9 @@ public class store extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
                     all_QuestionList.clear();
                     randomvalueList.clear();
+                    cardList.clear();
+                    //a
+                    ///b
                     for (UserQuestionData u_q : response.body()) {
                         if (!u_q.get_cor() && u_q.getUser_data_id() == userId)
                             all_QuestionList.add(u_q.get_qes_id());
@@ -189,6 +205,12 @@ public class store extends AppCompatActivity {
             card_res1 = getResources().getIdentifier(back_img, "drawable", getPackageName());
             card_1.setImageResource(card_res1);
             card_cost1.setText("売り切れ！");
+            card_table_1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Do nothing (none)
+                }
+            });
         }else {
 
             apiService.getQuestionById(randomvalueList.get(0)).enqueue(new Callback<Question>() {
@@ -219,6 +241,12 @@ public class store extends AppCompatActivity {
             card_res2 = getResources().getIdentifier(back_img, "drawable", getPackageName());
             card_2.setImageResource(card_res2);
             card_cost2.setText("売り切れ！");
+            card_table_2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Do nothing (none)
+                }
+            });
         }else {
             apiService.getQuestionById(randomvalueList.get(1)).enqueue(new Callback<Question>() {
                 @Override
@@ -246,6 +274,12 @@ public class store extends AppCompatActivity {
             card_res3 = getResources().getIdentifier(back_img, "drawable", getPackageName());
             card_3.setImageResource(card_res3);
             card_cost3.setText("売り切れ！");
+            card_table_3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Do nothing (none)
+                }
+            });
         }else {
             apiService.getQuestionById(randomvalueList.get(2)).enqueue(new Callback<Question>() {
                 @Override
@@ -273,6 +307,12 @@ public class store extends AppCompatActivity {
             card_res4 = getResources().getIdentifier(back_img, "drawable", getPackageName());
             card_4.setImageResource(card_res4);
             card_cost4.setText("売り切れ！");
+            card_table_4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Do nothing (none)
+                }
+            });
         }else {
             apiService.getQuestionById(randomvalueList.get(3)).enqueue(new Callback<Question>() {
                 @Override
@@ -335,6 +375,12 @@ public class store extends AppCompatActivity {
         if(randomvalueList.get(0) == -1) {
             title.setText("称号売り切れ！");
             title_cost.setText("売り切れ！");
+            title_table_1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Do nothing (none)
+                }
+            });
         }else {
 
             apiService.getTitle(randomvalueList.get(0)).enqueue(new Callback<Titles>() {
@@ -359,6 +405,12 @@ public class store extends AppCompatActivity {
         if(randomvalueList.get(1) == -1) {
             title.setText("称号売り切れ！");
             title_cost2.setText("売り切れ！");
+            title_table_2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Do nothing (none)
+                }
+            });
         }else {
             apiService.getTitle(randomvalueList.get(1)).enqueue(new Callback<Titles>() {
                 @Override
@@ -382,6 +434,12 @@ public class store extends AppCompatActivity {
         if(randomvalueList.get(2) == -1) {
             title.setText("称号売り切れ！");
             title_cost3.setText("売り切れ！");
+            title_table_3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Do nothing (none)
+                }
+            });
         }else {
 
             apiService.getTitle(randomvalueList.get(2)).enqueue(new Callback<Titles>() {
@@ -443,6 +501,12 @@ public class store extends AppCompatActivity {
         if(randomvalueList.get(0) == -1) {
             back_res = getResources().getIdentifier(back_img, "drawable", getPackageName());
             buy_back.setImageResource(back_res);
+            buy_back.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Do nothing (none)
+                }
+            });
             //ここで飛ばないようにしたい
             back_cost.setText("売り切れ！");
         }else {
@@ -818,6 +882,10 @@ public class store extends AppCompatActivity {
         back_cost2.setText(back_cost.getText());
         back_screen.setVisibility(View.VISIBLE);
         store_screen.setVisibility(View.GONE);
+    }
+
+    public void none(View view){
+
     }
 
 //    ホームデータ遷移
