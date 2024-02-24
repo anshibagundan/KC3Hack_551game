@@ -188,6 +188,7 @@ public class store extends AppCompatActivity {
         if(randomvalueList.get(0) == -1) {
             card_res1 = getResources().getIdentifier(back_img, "drawable", getPackageName());
             card_1.setImageResource(card_res1);
+            card_cost1.setText("売り切れ！");
         }else {
 
             apiService.getQuestionById(randomvalueList.get(0)).enqueue(new Callback<Question>() {
@@ -217,6 +218,7 @@ public class store extends AppCompatActivity {
         if(randomvalueList.get(1) == -1) {
             card_res2 = getResources().getIdentifier(back_img, "drawable", getPackageName());
             card_2.setImageResource(card_res2);
+            card_cost2.setText("売り切れ！");
         }else {
             apiService.getQuestionById(randomvalueList.get(1)).enqueue(new Callback<Question>() {
                 @Override
@@ -243,6 +245,7 @@ public class store extends AppCompatActivity {
         if(randomvalueList.get(2) == -1) {
             card_res3 = getResources().getIdentifier(back_img, "drawable", getPackageName());
             card_3.setImageResource(card_res3);
+            card_cost3.setText("売り切れ！");
         }else {
             apiService.getQuestionById(randomvalueList.get(2)).enqueue(new Callback<Question>() {
                 @Override
@@ -269,6 +272,7 @@ public class store extends AppCompatActivity {
         if(randomvalueList.get(3) == -1) {
             card_res4 = getResources().getIdentifier(back_img, "drawable", getPackageName());
             card_4.setImageResource(card_res4);
+            card_cost4.setText("売り切れ！");
         }else {
             apiService.getQuestionById(randomvalueList.get(3)).enqueue(new Callback<Question>() {
                 @Override
@@ -330,6 +334,7 @@ public class store extends AppCompatActivity {
         }
         if(randomvalueList.get(0) == -1) {
             title.setText("称号売り切れ！");
+            title_cost.setText("売り切れ！");
         }else {
 
             apiService.getTitle(randomvalueList.get(0)).enqueue(new Callback<Titles>() {
@@ -353,6 +358,7 @@ public class store extends AppCompatActivity {
         }
         if(randomvalueList.get(1) == -1) {
             title.setText("称号売り切れ！");
+            title_cost2.setText("売り切れ！");
         }else {
             apiService.getTitle(randomvalueList.get(1)).enqueue(new Callback<Titles>() {
                 @Override
@@ -375,6 +381,7 @@ public class store extends AppCompatActivity {
         }
         if(randomvalueList.get(2) == -1) {
             title.setText("称号売り切れ！");
+            title_cost3.setText("売り切れ！");
         }else {
 
             apiService.getTitle(randomvalueList.get(2)).enqueue(new Callback<Titles>() {
@@ -436,6 +443,7 @@ public class store extends AppCompatActivity {
         if(randomvalueList.get(0) == -1) {
             back_res = getResources().getIdentifier(back_img, "drawable", getPackageName());
             buy_back.setImageResource(card_res4);
+            back_cost.setText("売り切れ！");
         }else {
             apiService.getBackgrounds(randomvalueList.get(0)).enqueue(new Callback<background>() {
                 @Override
