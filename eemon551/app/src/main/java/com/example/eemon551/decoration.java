@@ -325,32 +325,31 @@ public class decoration extends AppCompatActivity {
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
         );
-
         dynamicTextView.setLayoutParams(layoutParams);
-
         // テキストを設定
         dynamicTextView.setText(txt);
-
         // テキストのサイズ、スタイル、色を設定
         dynamicTextView.setTextSize(30);
         dynamicTextView.setTypeface(null, Typeface.BOLD);
         dynamicTextView.setTextColor(Color.WHITE);
-
         // 背景色を設定
         dynamicTextView.setBackgroundColor(getResources().getColor(R.color.place)); // 例: @color/place の代わりに実際の色を指定
-
         // 文字を中央に配置
         dynamicTextView.setGravity(Gravity.CENTER);
-
-
         // パディングを設定
         dynamicTextView.setPadding(20, 20, 20, 20);
+        // マージンを設定
+        ViewGroup.MarginLayoutParams marginParams = new ViewGroup.MarginLayoutParams(dynamicTextView.getLayoutParams());
+        marginParams.setMargins(20, 20, 20, 20);
+        dynamicTextView.setLayoutParams(marginParams);
+
 
         final int number = title_num;
         dynamicTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // タップされたときの処理
+                selectID = titleid;
                 preChangeTitle(dynamicTextView,number);
             }
         });
@@ -362,7 +361,7 @@ public class decoration extends AppCompatActivity {
     }
 
     //title変更
-    private void preChangeTitle(TextView title,int selectID){
+    private void preChangeTitle(TextView title,int selectnum){
         user_title.setText(title.getText());
         // 全てのTextViewの背景色をもとに戻す
         for (TitleClass t:titleList) {
@@ -371,7 +370,7 @@ public class decoration extends AppCompatActivity {
         }
 
         // タップされたTextViewの背景色を変更
-        TextView selectedTextView = titleList.get(selectID).getText();
+        TextView selectedTextView = titleList.get(selectnum).getText();
         selectedTextView.setBackgroundColor(getResources().getColor(R.color.selected));
 
     }
