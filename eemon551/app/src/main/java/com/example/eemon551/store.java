@@ -178,8 +178,6 @@ public class store extends AppCompatActivity {
 
     private void Res_cardId() {
         Log.d("API Request Failure", "random_be");
-
-        Log.d("API Request Failure", "random_af");
         for (int i = 0; i < 4; i++) {
             randomValue = getRandomIntElement(all_QuestionList);
             randomvalueList.add(randomValue);
@@ -197,6 +195,8 @@ public class store extends AppCompatActivity {
                     cardList.add(response.body().getId());
                     card_1.setImageResource(card_res1);
                     card_cost1.setText(String.valueOf(cost));
+                }else{
+                    Log.d("API Request Failure", "エラー");
                 }
             }
 
@@ -569,7 +569,7 @@ public class store extends AppCompatActivity {
                                     back_store(view);
                                 } else {
                                     // エラー処理
-                                    Log.e("UpdateUseStatus", "Failed to update the background use status.");
+                                    Log.e("UpdateUseStatus", "Failed to update the background use status."+ response.message());
                                 }
                             }
 

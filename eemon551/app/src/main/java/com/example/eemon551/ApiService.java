@@ -16,7 +16,7 @@ public interface ApiService {
     @GET("/questions/")
     Call<List<Question>> getAllQuestions();
 
-    @GET("/questions/{id}")
+    @GET("/questions/{id}/")
     Call<Question> getQuestionById(@Path("id") int questionId);
 
 
