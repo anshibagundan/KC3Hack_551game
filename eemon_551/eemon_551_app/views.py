@@ -173,7 +173,7 @@ class UserBackGroundUpdateView(APIView):
             background_id = serializer.validated_data['background_id']
             user_data_id = serializer.validated_data['user_data_id']
 
-            updated_records = UserBackGround.objects.filter(title_id=background_id,user_data_id=user_data_id).update(isOwn=isOwn,buyOK=buyOK)
+            updated_records = UserBackGround.objects.filter(background_id=background_id,user_data_id=user_data_id).update(isOwn=isOwn,buyOK=buyOK)
 
             if updated_records > 0:
                 return Response({"message": "Question data updated successfully."}, status=status.HTTP_200_OK)
