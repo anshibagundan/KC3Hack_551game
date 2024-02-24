@@ -211,7 +211,7 @@
                     android:textSize="70dp"
                     android:background="#9C573E"
                     android:textColor="@color/white"
-                    android:onClick="overlay_name_back"/>
+                    android:onClick="overlay_back"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -276,7 +276,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility=""
+            android:visibility="gone"
             android:background="#ffe6cc">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -291,7 +291,7 @@
                     android:textSize="70dp"
                     android:background="#9C573E"
                     android:textColor="@color/white"
-                    android:onClick="overlay_title_back"/>
+                    android:onClick="overlay_back"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -335,12 +335,6 @@
 
 
 
-
-
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 
             <!--        すくろーる-->
             <ScrollView
@@ -416,13 +410,8 @@
                 android:text="変更"
                 android:textSize="30sp"
                 android:layout_gravity="center_horizontal"
-<<<<<<< Updated upstream
                 android:layout_marginTop="50dp"
                 android:onClick="changeTitle">
-=======
-                android:layout_marginTop="50dp">
->>>>>>> Stashed changes
-
             </Button>
 
         </LinearLayout>
@@ -449,7 +438,7 @@
                     android:textSize="70dp"
                     android:background="#9C573E"
                     android:textColor="@color/white"
-                    android:onClick="overlay_background_back"/>
+                    android:onClick="overlay_back"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
