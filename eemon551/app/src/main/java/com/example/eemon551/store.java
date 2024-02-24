@@ -209,7 +209,7 @@ public class store extends AppCompatActivity {
         if(randomvalueList.get(0) == -1) {
             card_res1 = getResources().getIdentifier(back_img, "drawable", getPackageName());
             card_1.setImageResource(card_res1);
-            card_cost1.setText("売り切れ！");
+            card_cost1.setText("完売");
             card_table_1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -245,7 +245,7 @@ public class store extends AppCompatActivity {
         if(randomvalueList.get(1) == -1) {
             card_res2 = getResources().getIdentifier(back_img, "drawable", getPackageName());
             card_2.setImageResource(card_res2);
-            card_cost2.setText("売り切れ！");
+            card_cost2.setText("完売");
             card_table_2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -278,7 +278,7 @@ public class store extends AppCompatActivity {
         if(randomvalueList.get(2) == -1) {
             card_res3 = getResources().getIdentifier(back_img, "drawable", getPackageName());
             card_3.setImageResource(card_res3);
-            card_cost3.setText("売り切れ！");
+            card_cost3.setText("完売");
             card_table_3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -311,7 +311,7 @@ public class store extends AppCompatActivity {
         if(randomvalueList.get(3) == -1) {
             card_res4 = getResources().getIdentifier(back_img, "drawable", getPackageName());
             card_4.setImageResource(card_res4);
-            card_cost4.setText("売り切れ！");
+            card_cost4.setText("完売");
             card_table_4.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -379,7 +379,7 @@ public class store extends AppCompatActivity {
         }
         if(randomvalueList.get(0) == -1) {
             title.setText("称号売り切れ！");
-            title_cost.setText("売り切れ！");
+            title_cost.setText("完売");
             title_table_1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -410,7 +410,7 @@ public class store extends AppCompatActivity {
         }
         if(randomvalueList.get(1) == -1) {
             title.setText("称号売り切れ！");
-            title_cost2.setText("売り切れ！");
+            title_cost2.setText("完売");
             title_table_2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -439,7 +439,7 @@ public class store extends AppCompatActivity {
         }
         if(randomvalueList.get(2) == -1) {
             title.setText("称号売り切れ！");
-            title_cost3.setText("売り切れ！");
+            title_cost3.setText("完売！");
             title_table_3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -515,7 +515,7 @@ public class store extends AppCompatActivity {
                 }
             });
             //ここで飛ばないようにしたい
-            back_cost.setText("売り切れ！");
+            back_cost.setText("完売");
         }else {
             apiService.getBackgrounds(randomvalueList.get(0)).enqueue(new Callback<background>() {
                 @Override
@@ -555,6 +555,9 @@ public class store extends AppCompatActivity {
     }
 
     public void buy_card(View view) {
+        card_screen.setVisibility(View.GONE);
+        title_screen.setVisibility(View.GONE);
+        back_screen.setVisibility(View.GONE);
         int cost = Integer.parseInt(buy_card_cost.getText().toString());
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         int userId = prefs.getInt("UserId", 1);
@@ -818,13 +821,13 @@ public class store extends AppCompatActivity {
 
     //購入画面からストアに戻る
     public void back_store(View view) {
-        store_screen.setVisibility(View.VISIBLE);
         card_screen.setVisibility(View.GONE);
         title_screen.setVisibility(View.GONE);
         back_screen.setVisibility(View.GONE);
         card_ano.removeAllViews();
         title_ano.removeAllViews();
         back_ano.removeAllViews();
+        store_screen.setVisibility(View.VISIBLE);
     }
 
     //card購入
