@@ -58,7 +58,7 @@ public class store extends AppCompatActivity {
     private TextView title, title2, title3, title_cost, title_cost2, title_cost3, buy_title, buy_title_cost;
     private LinearLayout card_ano, title_ano, back_ano;
 
-    private String back_img = "card_backside";
+    private String back_img = "card_backside".replace("\"", "").trim();
 
 
     private int collect_money;
