@@ -173,6 +173,7 @@ public class store extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
                     all_QuestionList.clear();
                     randomvalueList.clear();
+                    cardList.clear();
                     for (UserQuestionData u_q : response.body()) {
                         if (!u_q.get_cor() && u_q.getUser_data_id() == userId)
                             all_QuestionList.add(u_q.get_qes_id());
