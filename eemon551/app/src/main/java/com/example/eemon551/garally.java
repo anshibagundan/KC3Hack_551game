@@ -23,6 +23,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,6 +49,12 @@ public class garally extends AppCompatActivity {
     private FrameLayout card;
     private FrameLayout zukan;
     private ImageView card_image;
+    private AtomicInteger pendingOverlays = new AtomicInteger(0);
+    private TextView last;
+
+    private int trueNum;
+    private int falseNum;
+
 
 
 
@@ -80,6 +87,7 @@ public class garally extends AppCompatActivity {
         card = findViewById(R.id.card);
         zukan = findViewById(R.id.zukan);
         card_image = findViewById(R.id.card_image);
+        last = findViewById(R.id.last);
 
         fetchQuestions();
 
@@ -162,14 +170,19 @@ public class garally extends AppCompatActivity {
     }
 
     private void applyOverlayBasedOnUserQuestionData(int questionId, int userId, RelativeLayout card_lay, TextView lay_txt, ImageView imageView, Question question) {
+        pendingOverlays.incrementAndGet();
+        Log.d("OverlayTracking", "Pending overlays after increment: " + pendingOverlays.get()); // インクリメント直後
+
         apiService.getUserQuestionData(userId).enqueue(new Callback<List<UserQuestionData>>() {
             @Override
             public void onResponse(Call<List<UserQuestionData>> call, Response<List<UserQuestionData>> response) {
                 if (response.isSuccessful() && response.body() != null) {
+                    boolean found = false;
                     List<UserQuestionData> userQuestionData = response.body();
                     for (UserQuestionData data : userQuestionData) {
                         if (data.get_qes_id() == questionId && data.getUser_data_id() == userId) {
                             if(data.get_cor()){
+                                trueNum=trueNum +5;//trueのかず
                                 imageView.setOnClickListener(v -> {
                                     card.setVisibility(View.VISIBLE);
                                     zukan.setVisibility(View.GONE);
@@ -177,26 +190,37 @@ public class garally extends AppCompatActivity {
                                     int cardResId = getResources().getIdentifier(card, "drawable", getPackageName());
                                     Glide.with(garally.this)
                                             .load(cardResId)
-
                                             .into(card_image);
-                            });
+                                });
                             }
                             else if (!data.get_cor()) {
+                                falseNum = falseNum + 1;//falseのかず
                                 displayTextOverlay(lay_txt, "?", 0xAA000000, card_lay);
                             }
-                            return;
+                            found = true;
+                            break;
                         }
+
                     }
-                    // qes_idがUserQuestionDataに存在しない場合は"?"オーバーレイを適用
-                    displayTextOverlay(new TextView(garally.this), "?", 0xFF000000, card_lay);
-
+                    if (!found) {
+                        // qes_idがUserQuestionDataに存在しない場合は"?"オーバーレイを適用
+                        displayTextOverlay(new TextView(garally.this), "?", 0xFF000000, card_lay);
+                    }
                 }
+                last.setText(String.valueOf(67-pendingOverlays.get())+"/67");
+                if (pendingOverlays.decrementAndGet() == 0) {
+                    runOnUiThread(() -> zukan.setVisibility(View.VISIBLE));
+                }
+                Log.d("OverlayTracking", "Pending overlays after decrement: " + pendingOverlays.get()); // デクリメント直後
             }
-
 
             @Override
             public void onFailure(Call<List<UserQuestionData>> call, Throwable t) {
                 Log.e("API Request Failure", "Error: ", t);
+                if (pendingOverlays.decrementAndGet() == 0) {
+                    runOnUiThread(() -> zukan.setVisibility(View.VISIBLE));
+                }
+                Log.d("OverlayTracking", "Pending overlays after decrement: " + pendingOverlays.get()); // デクリメント直後（失敗時）
             }
         });
     }
@@ -209,8 +233,6 @@ public class garally extends AppCompatActivity {
         lay_txt.setHeight(300);
         lay_txt.setBackgroundColor(backgroundColor);
         parent.addView(lay_txt);
-        zukan.setVisibility(View.VISIBLE);
-
     }
 
     private void SetBackgroundColor(Question question, ImageView imageView){
