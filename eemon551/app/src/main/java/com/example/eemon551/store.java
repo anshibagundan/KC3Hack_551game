@@ -39,10 +39,13 @@ public class store extends AppCompatActivity {
     private List<Integer> all_TitlesList = new ArrayList<>();
     private List<Integer> all_BackgroundsList = new ArrayList<>();
     private List<Integer> randomvalueList = new ArrayList<>();
+    private List<Integer> cardList = new ArrayList<>();
     private List<Integer> titleList = new ArrayList<>();
     private List<Integer> backgroundList = new ArrayList<>();
 
     private int TitleNum = 0;
+    private int questionId = 0;
+    private int backgroundId = 0;
 
 
     private FrameLayout store_screen;
@@ -58,11 +61,12 @@ public class store extends AppCompatActivity {
 
     private int collect_money;
     private Integer randomValue;
-    private int card_link;
     private ImageView card_1, card_2, card_3, card_4, buy_card;
     private TextView card_cost1, card_cost2, card_cost3, card_cost4, buy_card_cost;
 
     private TextView cardname1, cardname2, cardname3, cardname4;
+
+    private int back_res, card_res1,card_res2,card_res3,card_res4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,11 +190,12 @@ public class store extends AppCompatActivity {
             public void onResponse(Call<Question> call, Response<Question> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     String img = response.body().getCard().replace("\"", "").trim();
-                    card_link = getResources().getIdentifier(img, "drawable", getPackageName());
+                    card_res1 = getResources().getIdentifier(img, "drawable", getPackageName());
                     int cost = response.body().getRare() * 5000;
                     String name = response.body().getName();
                     cardname1.setText(name);
-                    card_1.setImageResource(card_link);
+                    cardList.add(response.body().getId());
+                    card_1.setImageResource(card_res1);
                     card_cost1.setText(String.valueOf(cost));
                 }
             }
@@ -207,10 +212,11 @@ public class store extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     String img = response.body().getCard().replace("\"", "").trim();
                     int cost = response.body().getRare() * 5000;
-                    card_link = getResources().getIdentifier(img, "drawable", getPackageName());
+                    card_res2 = getResources().getIdentifier(img, "drawable", getPackageName());
                     String name = response.body().getName();
+                    cardList.add(response.body().getId());
                     cardname2.setText(name);
-                    card_2.setImageResource(card_link);
+                    card_2.setImageResource(card_res2);
                     card_cost2.setText(String.valueOf(cost));
                 }
             }
@@ -227,9 +233,10 @@ public class store extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     String img = response.body().getCard().replace("\"", "").trim();
                     int cost = response.body().getRare() * 5000;
-                    card_link = getResources().getIdentifier(img, "drawable", getPackageName());
-                    card_3.setImageResource(card_link);
+                    card_res3 = getResources().getIdentifier(img, "drawable", getPackageName());
+                    card_3.setImageResource(card_res3);
                     String name = response.body().getName();
+                    cardList.add(response.body().getId());
                     cardname3.setText(name);
                     card_cost3.setText(String.valueOf(cost));
                 }
@@ -247,9 +254,10 @@ public class store extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     String img = response.body().getCard().replace("\"", "").trim();
                     int cost = response.body().getRare() * 5000;
-                    card_link = getResources().getIdentifier(img, "drawable", getPackageName());
-                    card_4.setImageResource(card_link);
+                    card_res4 = getResources().getIdentifier(img, "drawable", getPackageName());
+                    card_4.setImageResource(card_res4);
                     String name = response.body().getName();
+                    cardList.add(response.body().getId());
                     cardname4.setText(name);
                     card_cost4.setText(String.valueOf(cost));
                 }
@@ -395,8 +403,12 @@ public class store extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     int cost = response.body().getRare() * 10000;
                     backgroundList.add(response.body().getId());
-                    String img = response.body().getImg().replace("\"", "").trim();
-                    buy_back.setImageResource(getResources().getIdentifier(img, "drawable", getPackageName()));
+                    String img = response.body().getImg()
+
+                            .replace("\"", "").trim();
+                    back_res = getResources().getIdentifier(img, "drawable", getPackageName());
+                    backgroundId = response.body().getId();
+                    buy_back.setImageResource(back_res);
                     back_cost.setText(String.valueOf(cost));
                 }
             }
@@ -420,15 +432,167 @@ public class store extends AppCompatActivity {
     }
 
     public void buy_card(View view) {
-        //int cost = Integer.parseInt(buy_card.getText().toString());
         int cost = Integer.parseInt(buy_card_cost.getText().toString());
-//        buy(cost, back_ano);
+        SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        int userId = prefs.getInt("UserId", 1);
+
+        // 現在のユーザースコアを取得するAPIリクエストを想定
+        apiService.getUser(userId).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    int currentMoney = response.body().getMoney();
+                    Log.e("money", String.valueOf(currentMoney));
+                    if (currentMoney < cost) {
+                        make_ano(title_ano);
+                    } else {
+                        //お金更新
+                        int newMoney = currentMoney - cost;
+                        apiService.getUser(userId).enqueue(new Callback<User>() {
+                            @Override
+                            public void onResponse(Call<User> call, Response<User> response) {
+                                if(response.isSuccessful()&&response.body()!=null){
+                                    String name = response.body().getName();
+                                    apiService.updateUserData(userId, new ApiService.UserUpdateRequest(name, newMoney)).enqueue(new Callback<Void>() {
+                                        @Override
+                                        public void onResponse(Call<Void> call, Response<Void> response) {
+                                            if (response.isSuccessful()) {
+                                                Log.d("UserDataUpdate", "ユーザーデータ更新成功");
+                                            } else {
+                                                Log.e("UserDataUpdate", "ユーザーデータ更新失敗1: " + response.message());
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<Void> call, Throwable t) {
+                                            Log.e("UserDataUpdate", "ユーザーデータ更新失敗2", t);
+                                        }
+                                    });
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<User> call, Throwable t) {
+
+                            }
+                        });
+
+                        UserQuestionDataUpdateRequest request = new UserQuestionDataUpdateRequest(true, userId, questionId);
+                        apiService.updateUserQuestionData(request).enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                if (response.isSuccessful()) {
+                                    // 更新成功時の処理。例えば、UIの更新など
+                                    Log.d("UpdateUseStatus", "Background use status updated successfully.");
+                                    GetMoney();
+                                    fetchQuestions();
+                                    back_store(view);
+                                } else {
+                                    // エラー処理
+                                    Log.e("UpdateUseStatus", "Failed to update the background use status.");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                // 通信失敗時の処理
+                                Log.e("UpdateUseStatus", "API call failed.", t);
+                            }
+                        });
+                    }
+                }
+            }
+
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("UserMoneyFetch", "ユーザーのmoney取得失敗", t);
+            }
+        });
+
+
+
         back_store(view);
     }
 
     public void buy_back(View view) {
         int cost = Integer.parseInt(back_cost2.getText().toString());
-//        buy(cost, back_ano);
+        SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        int userId = prefs.getInt("UserId", 1);
+
+        // 現在のユーザースコアを取得するAPIリクエストを想定
+        apiService.getUser(userId).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    int currentMoney = response.body().getMoney();
+                    Log.e("money", String.valueOf(currentMoney));
+                    if (currentMoney < cost) {
+                        make_ano(title_ano);
+                    } else {
+                        //お金更新
+                        int newMoney = currentMoney - cost;
+                        apiService.getUser(userId).enqueue(new Callback<User>() {
+                            @Override
+                            public void onResponse(Call<User> call, Response<User> response) {
+                                if(response.isSuccessful()&&response.body()!=null){
+                                    String name = response.body().getName();
+                                    apiService.updateUserData(userId, new ApiService.UserUpdateRequest(name, newMoney)).enqueue(new Callback<Void>() {
+                                        @Override
+                                        public void onResponse(Call<Void> call, Response<Void> response) {
+                                            if (response.isSuccessful()) {
+                                                Log.d("UserDataUpdate", "ユーザーデータ更新成功");
+                                            } else {
+                                                Log.e("UserDataUpdate", "ユーザーデータ更新失敗1: " + response.message());
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<Void> call, Throwable t) {
+                                            Log.e("UserDataUpdate", "ユーザーデータ更新失敗2", t);
+                                        }
+                                    });
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<User> call, Throwable t) {
+
+                            }
+                        });
+
+                        UserBackgroundUpdateRequest request = new UserBackgroundUpdateRequest(userId, backgroundId, true,false,false);
+                        apiService.updateUserBackgroundData(request).enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                if (response.isSuccessful()) {
+                                    // 更新成功時の処理。例えば、UIの更新など
+                                    Log.d("UpdateUseStatus", "Background use status updated successfully.");
+                                    GetMoney();
+                                    fetchTitles();
+                                    back_store(view);
+                                } else {
+                                    // エラー処理
+                                    Log.e("UpdateUseStatus", "Failed to update the background use status.");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                // 通信失敗時の処理
+                                Log.e("UpdateUseStatus", "API call failed.", t);
+                            }
+                        });
+                    }
+                }
+            }
+
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("UserMoneyFetch", "ユーザーのmoney取得失敗", t);
+            }
+        });
         back_store(view);
     }
 
@@ -546,30 +710,34 @@ public class store extends AppCompatActivity {
     //card購入
     public void go_buy_card(View view){
         buy_card_cost.setText(card_cost1.getText());
-        //buy_card.setImageResource(buy_cards[0]);
-        card_screen.setVisibility(View.GONE);
-        store_screen.setVisibility(View.VISIBLE);
+        buy_card.setImageResource(card_res1);
+        card_screen.setVisibility(View.VISIBLE);
+        store_screen.setVisibility(View.GONE);
+        questionId = cardList.get(0);
     }
 
     public void go_buy_card2(View view){
         buy_card_cost.setText(card_cost2.getText());
-        //buy_card.setImageResource(buy_cards[1]);
-        card_screen.setVisibility(View.GONE);
-        store_screen.setVisibility(View.VISIBLE);
+        buy_card.setImageResource(card_res2);
+        card_screen.setVisibility(View.VISIBLE);
+        store_screen.setVisibility(View.GONE);
+        questionId = cardList.get(1);
     }
 
     public void go_buy_card3(View view){
         buy_card_cost.setText(card_cost3.getText());
-        //buy_card.setImageResource(buy_cards[2]);
-        card_screen.setVisibility(View.GONE);
-        store_screen.setVisibility(View.VISIBLE);
+        buy_card.setImageResource(card_res3);
+        card_screen.setVisibility(View.VISIBLE);
+        store_screen.setVisibility(View.GONE);
+        questionId = cardList.get(2);
     }
 
     public void go_buy_card4(View view){
         buy_card_cost.setText(card_cost4.getText());
-        //buy_card.setImageResource(buy_cards[4]);
-        card_screen.setVisibility(View.GONE);
-        store_screen.setVisibility(View.VISIBLE);
+        buy_card.setImageResource(card_res4);
+        card_screen.setVisibility(View.VISIBLE);
+        store_screen.setVisibility(View.GONE);
+        questionId = cardList.get(3);
     }
 
     //title購入
@@ -599,10 +767,10 @@ public class store extends AppCompatActivity {
 
     //背景購入
     public void go_buy_back(View view){
-        buy_back2.setImageResource(buy_back.getImageAlpha());
+        buy_back2.setImageResource(back_res);
         back_cost2.setText(back_cost.getText());
-        back_screen.setVisibility(View.GONE);
-        store_screen.setVisibility(View.VISIBLE);
+        back_screen.setVisibility(View.VISIBLE);
+        store_screen.setVisibility(View.GONE);
     }
 
 //    ホームデータ遷移
