@@ -230,10 +230,19 @@ public class garally extends AppCompatActivity {
         ImageView imageView = new ImageView(this);
         String img = question.getImg().replace("\"", "").trim();
         int imageResId = getResources().getIdentifier(img, "drawable", getPackageName());
-        Glide.with(this).load(imageResId).transform(new DownsampleTransformation()).diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView);
-        SetBackgroundColor(question, imageView);
+//        Glide.with(this).load(imageResId).transform(new DownsampleTransformation()).diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView);
+        imageView.setImageResource(imageResId);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setAdjustViewBounds(true);
+        // Set width and height
+        int widthInPixels = 300/* set your desired width in pixels */;
+        int heightInPixels = 300/* set your desired height in pixels */;
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(widthInPixels, heightInPixels);
+        imageView.setLayoutParams(layoutParams);
+
+        // Set gravity
+        layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+        SetBackgroundColor(question, imageView);
         RelativeLayout card_lay = new RelativeLayout(this);
         TextView lay_txt = new TextView(this);
         card_lay.addView(imageView);
