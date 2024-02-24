@@ -37,8 +37,10 @@ public class store extends AppCompatActivity {
     private Set<Integer> displayedQuestionIds = new HashSet<>();
     private List<Integer> all_QuestionList = new ArrayList<>();
     private List<Integer> all_TitlesList = new ArrayList<>();
+    private List<Integer> all_BackgroundsList = new ArrayList<>();
     private List<Integer> randomvalueList = new ArrayList<>();
     private List<Integer> titleList = new ArrayList<>();
+    private List<Integer> backgroundList = new ArrayList<>();
 
     private int TitleNum = 0;
 
@@ -102,6 +104,7 @@ public class store extends AppCompatActivity {
         buy_back2 = findViewById(R.id.buy_back2);
         back_ano = findViewById(R.id.back_ano);
 
+
         //title関連
         title_screen = findViewById(R.id.buy_title_screen);
         title = findViewById(R.id.shop_title1);
@@ -118,6 +121,7 @@ public class store extends AppCompatActivity {
         GetMoney();
         fetchQuestions();
         fetchTitles();
+        fetchBackgrounds();
     }
 
     private void GetMoney() {
@@ -351,6 +355,60 @@ public class store extends AppCompatActivity {
         });
     }
 
+    private void fetchBackgrounds() {
+        SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        int userId = prefs.getInt("UserId", 1);
+
+        apiService.getUserBackgrounds(userId).enqueue(new Callback<List<UserBackground>>() {
+            @Override
+            public void onResponse(Call<List<UserBackground>> call, Response<List<UserBackground>> response) {
+                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
+                    all_BackgroundsList.clear();
+                    backgroundList.clear();
+                    randomvalueList.clear();
+                    for (UserBackground background : response.body()) {
+                        if (!background.getisOwn() && background.getUser_data_id() == userId)
+                            all_BackgroundsList.add(background.getBackground_id());
+                    }
+                    Res_BackgroundId();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<UserBackground>> call, Throwable t) {
+                Log.e("API Request Failure", "Error: ", t);
+            }
+        });
+    }
+
+
+    private void Res_BackgroundId() {
+        for (int i = 0; i < 4; i++) {
+            randomValue = getRandomIntElement(all_BackgroundsList);
+            randomvalueList.add(randomValue);
+        }
+
+        apiService.getBackgrounds(randomvalueList.get(0)).enqueue(new Callback<background>() {
+            @Override
+            public void onResponse(Call<background> call, Response<background> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    int cost = response.body().getRare() * 10000;
+                    backgroundList.add(response.body().getId());
+                    String img = response.body().getImg().replace("\"", "").trim();
+                    buy_back.setImageResource(getResources().getIdentifier(img, "drawable", getPackageName()));
+                    back_cost.setText(String.valueOf(cost));
+                }
+            }
+
+
+            @Override
+            public void onFailure(Call<background> call, Throwable t) {
+                Log.e("API Request Failure", "Error: ", t);
+            }
+        });
+    }
+
     private int getRandomIntElement(List<Integer> set) {
         List<Integer> list = new ArrayList<>(set);
         if (list == null || list.isEmpty()) {
@@ -419,7 +477,7 @@ public class store extends AppCompatActivity {
 
                             }
                         });
-                        
+
                         UserTitleUpdateRequest request = new UserTitleUpdateRequest(false, true, false, TitleNum, userId);
                         apiService.updateUserTitleData(request).enqueue(new Callback<Void>() {
                             @Override
