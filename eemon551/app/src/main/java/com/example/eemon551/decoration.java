@@ -451,6 +451,7 @@ public class decoration extends AppCompatActivity {
         Intent intent = new Intent(decoration.this, store.class);
         startActivity(intent);
     }
+    //a
     public void decoration_introduce(View view){
         Intent intent = new Intent(decoration.this, introduce.class);
         startActivity(intent);
