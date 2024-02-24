@@ -277,7 +277,7 @@ public class decoration extends AppCompatActivity {
             public void onResponse(Call<List<UserTitles>> call, Response<List<UserTitles>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     for(UserTitles title: response.body()) {
-                        if (title.getisOwn()) {
+                        if (title.getisOwn() && title.getUser_data_id() == userId) {
                             apiService.getTitle(title.getTitle_id()).enqueue(new Callback<Titles>() {
                                 @Override
                                 public void onResponse(Call<Titles> call, Response<Titles> response) {
@@ -376,7 +376,7 @@ public class decoration extends AppCompatActivity {
     public void changeTitle(View v){
         //DB格納(前のをオフ）
         UserTitleUpdateRequest request = new UserTitleUpdateRequest(true, true, false, selectID, userId);
-        apiService.updateUserTitleData(request).enqueue(new Callback<Void>() {
+        apiService.updateUserTitleUseStatus(request).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
@@ -394,28 +394,6 @@ public class decoration extends AppCompatActivity {
                 Log.e("UpdateUseStatus", "API call failed.", t);
             }
         });
-
-        //DB格納（今のをおん）
-        UserTitleUpdateRequest request1 = new UserTitleUpdateRequest(false, true, false, usertitleid, userId);
-        apiService.updateUserTitleData(request1).enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    // 更新成功時の処理。例えば、UIの更新など
-                    Log.d("UpdateUseStatus", "Background use status updated successfully.");
-                } else {
-                    // エラー処理
-                    Log.e("UpdateUseStatus", "Failed to update the background use status.");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                // 通信失敗時の処理
-                Log.e("UpdateUseStatus", "API call failed.", t);
-            }
-        });
-
         //戻る
         overlay_title_back(v);
     }
