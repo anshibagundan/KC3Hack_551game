@@ -201,14 +201,7 @@
                 android:layout_marginTop="20dp"
                 android:background="@color/black"/>
 
-            <TextView
-                android:id="@+id/count_true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="20dp"
-                android:text="x0"
-                android:textSize="40dp"/>
+
 
             <LinearLayout
                 android:layout_width="wrap_content"

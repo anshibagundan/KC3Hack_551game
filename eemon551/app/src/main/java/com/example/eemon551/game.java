@@ -590,8 +590,8 @@ public class game extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     int currentScore = response.body().getMoney();
                     Log.e("money", String.valueOf(currentScore));
-                    int newScore = currentScore + 10;
-                    collect_money = collect_money + 10;
+                    int newScore = currentScore + 30;
+                    collect_money = collect_money + 30;
                     Log.e("money", "collect_money"+collect_money);
                     apiService.getUser(userId).enqueue((new Callback<User>() {
                         @Override
@@ -647,7 +647,7 @@ public class game extends AppCompatActivity {
             Log.e("UpdateQuestionData", "searchResult"+searchResult);
 
             if (searchResult == 2) {
-                collect_money += 30;
+                collect_money += 300;
                 updateUserScore(300);
             } else if (searchResult == 1) {
                 Log.d("UpdateQuestionData", "user_data_id"+ userId);
