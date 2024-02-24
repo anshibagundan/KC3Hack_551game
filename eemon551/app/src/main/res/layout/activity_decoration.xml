@@ -6,6 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".decoration">
 
+    <LinearLayout
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FF000000"
+        android:visibility="visible"
+        android:gravity="right">
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="500dp"
+            android:layout_gravity="bottom"
+            app:srcCompat="@drawable/tyottomattena" />
+
+    </LinearLayout>
+
     <FrameLayout
         android:id="@+id/decoration"
         android:layout_width="match_parent"
@@ -14,7 +30,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="#ffe6cc">
+        android:background="#ffe6cc"
+        android:visibility="gone">
         <!--ホーム下-->
 
         <LinearLayout
@@ -509,21 +526,6 @@
             </ScrollView>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/loading"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#FF000000"
-            android:visibility="gone"
-            android:gravity="right">
-
-            <ImageView
-                android:layout_width="300dp"
-                android:layout_height="500dp"
-                android:layout_gravity="bottom"
-                app:srcCompat="@drawable/tyottomattena" />
-
-        </LinearLayout>
 
 
 
