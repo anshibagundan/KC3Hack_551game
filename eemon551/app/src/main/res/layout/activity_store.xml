@@ -76,7 +76,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:padding="10dp"
-                            android:background="#F5BF"
+                            android:background="#775E2B"
                             android:orientation="vertical"
                             android:layout_columnWeight="1"
                             android:onClick="go_buy_card">
@@ -130,7 +130,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:padding="10dp"
-                            android:background="#F5BF"
+                            android:background="#775E2B"
                             android:orientation="vertical"
                             android:layout_columnWeight="1"
                             android:onClick="go_buy_card2">
@@ -184,7 +184,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:padding="10dp"
-                            android:background="#F5BF"
+                            android:background="#775E2B"
                             android:orientation="vertical"
                             android:layout_columnWeight="1"
                             android:onClick="go_buy_card3">
@@ -238,7 +238,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:padding="10dp"
-                            android:background="#F5BF"
+                            android:background="#775E2B"
                             android:orientation="vertical"
                             android:layout_columnWeight="1"
                             android:onClick="go_buy_card4">
