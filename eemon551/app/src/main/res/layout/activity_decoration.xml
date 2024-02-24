@@ -10,12 +10,14 @@
         android:id="@+id/loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#FF000000"
         android:visibility="visible"
         >
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:srcCompat="@drawable/tiger"/>
+
+<!--        <ImageView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            app:srcCompat="@drawable/tiger"/>-->
 
         <ImageView
             android:layout_width="300dp"
