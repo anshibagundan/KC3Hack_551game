@@ -126,6 +126,7 @@ public class garally extends AppCompatActivity {
 
                     // UIを更新するためのメソッドをメインスレッドで実行
                     runOnUiThread(() -> addImagesToGridLayout());
+                    zukan.setVisibility(View.VISIBLE);
                 }
             }
             @Override
