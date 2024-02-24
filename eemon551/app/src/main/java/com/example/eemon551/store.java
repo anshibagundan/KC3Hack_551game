@@ -180,6 +180,10 @@ public class store extends AppCompatActivity {
         Log.d("API Request Failure", "random_be");
         for (int i = 0; i < 4; i++) {
             randomValue = getRandomIntElement(all_QuestionList);
+            if(randomValue==-1){
+                
+                break;
+            }
             randomvalueList.add(randomValue);
         }
 
@@ -425,10 +429,11 @@ public class store extends AppCompatActivity {
         List<Integer> list = new ArrayList<>(set);
         if (list == null || list.isEmpty()) {
             // リストが空の場合、適切な処理を行うか、例外を投げる
-            throw new IllegalArgumentException("List must not be empty");
+            return -1;
+        }else {
+            Random random = new Random();
+            return list.get(random.nextInt(list.size()));
         }
-        Random random = new Random();
-        return list.get(random.nextInt(list.size()));
     }
 
     public void buy_card(View view) {
