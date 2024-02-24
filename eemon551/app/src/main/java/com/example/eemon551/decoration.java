@@ -47,7 +47,6 @@ public class decoration extends AppCompatActivity {
     private TextView user_name,user_title;
     private int userId;
     private LinearLayout titles;
-    private TextView pretitle;
     private int usertitleid,selectID;
     private List<TitleClass> titleList = new ArrayList<>();
     private int title_num = 0;
@@ -68,8 +67,6 @@ public class decoration extends AppCompatActivity {
         name_chnage_button=findViewById(R.id.name_change_button);
         title_chnage_button=findViewById(R.id.title_change_button);
         background_chnage_button=findViewById(R.id.background_change_button);
-        background_layout.setAlignmentMode(GridLayout.ALIGN_BOUNDS);
-        background_layout.setColumnCount(3);
         //称号
         user_name = findViewById(R.id.user_name);
         user_title = findViewById(R.id.user_title);
