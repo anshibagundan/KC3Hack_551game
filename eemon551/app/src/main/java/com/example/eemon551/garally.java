@@ -52,9 +52,12 @@ public class garally extends AppCompatActivity {
     private ImageView card_image;
     private AtomicInteger pendingOverlays = new AtomicInteger(0);
 
-    private int trueNum;
-    private int falseNum;
+    private int trueNum=0;
+    private int falseNum=0;
     private ProgressBar progressBar;
+    private ProgressBar kansaigage;
+    private  TextView gage_per;
+    private TextView last;
 
 
 
@@ -91,8 +94,14 @@ public class garally extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         progressBar.setMax(100); // 進行状況の最大値を設定（例: 非同期タスクの総数に基づく）
         progressBar.setProgress(0); // 初期進行状況を0に設定
+        kansaigage= findViewById(R.id.kansaigage);
+        kansaigage.setMax(100); // 進行状況の最大値を設定（例: 非同期タスクの総数に基づく）
+        kansaigage.setProgress(0); // 初期進行状況を0に設定
+        gage_per = findViewById(R.id.gage_per);
+        last = findViewById(R.id.last);
 
         fetchQuestions();
+
 
     }
 
@@ -216,9 +225,11 @@ public class garally extends AppCompatActivity {
                         displayTextOverlay(new TextView(garally.this), "?", 0xFF000000, card_lay);
                     }
                 }
+                last.setText(String.valueOf(67-pendingOverlays.get())+"/67");
                 if (pendingOverlays.decrementAndGet() == 0) {
                     runOnUiThread(() -> zukan.setVisibility(View.VISIBLE));
                 }
+                updatekansaigage();
                 decrementPendingAsyncTasks();
                 Log.d("OverlayTracking", "Pending overlays after decrement: " + pendingOverlays.get()); // デクリメント直後
             }
@@ -328,6 +339,15 @@ public class garally extends AppCompatActivity {
         Intent intent = new Intent(garally.this, decoration.class);
         startActivity(intent);
     }
+
+    private void updatekansaigage() {
+        runOnUiThread(() -> {
+            int progress_kansai = (int) ((((double) (trueNum + falseNum)) / (67*5)) * 100);
+            kansaigage.setProgress(progress_kansai);
+            gage_per.setText(progress_kansai + "%");
+        });
+    }
+
     private int totalAsyncTasks = 0; // 非同期タスクの総数
     private int completedAsyncTasks = 0; // 完了した非同期タスクの数
 
