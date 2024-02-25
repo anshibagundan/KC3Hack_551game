@@ -71,7 +71,6 @@ public class decoration extends AppCompatActivity {
         user_name = findViewById(R.id.user_name);
         user_title = findViewById(R.id.user_title);
         titles = findViewById(R.id.titles);
-//        pretitle = findViewById(R.id.pretitle);
         user_name_change = findViewById(R.id.user_name_change);
         progressBar = findViewById(R.id.progressBar);
         progressBar.setMax(100); // 進行状況の最大値を設定（例: 非同期タスクの総数に基づく）

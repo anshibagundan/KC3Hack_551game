@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -51,17 +51,10 @@ public class garally extends AppCompatActivity {
     private FrameLayout zukan;
     private ImageView card_image;
     private AtomicInteger pendingOverlays = new AtomicInteger(0);
-    private TextView last;
 
     private int trueNum;
     private int falseNum;
-    private View loading_gauge;
-    private final int gauge_max = 385;
-    private LinearLayout.LayoutParams gaugeParams,kansaiParams;
-    private final int kansai_maxView = 290;
-    private final int kansai_max = 67*5;
-    private TextView kansai_per;
-    private View kansai;
+    private ProgressBar progressBar;
 
 
 
@@ -95,25 +88,16 @@ public class garally extends AppCompatActivity {
         card = findViewById(R.id.card);
         zukan = findViewById(R.id.zukan);
         card_image = findViewById(R.id.card_image);
-        last = findViewById(R.id.last);
-        loading_gauge = findViewById(R.id.loading_gauge);
-
-        kansai = findViewById(R.id.kansai);
-        kansai_per = findViewById(R.id.gage_per);
-
-        //関西ゲージ
-        // 新しい幅を設定
-        int newWidth = (trueNum+falseNum) / kansai_max * kansai_maxView;
-        int newWidthPixels = (int) (newWidth * getResources().getDisplayMetrics().density);
-        kansaiParams.width = newWidthPixels;
-        // TextView のレイアウトパラメータを更新
-        kansai.setLayoutParams(gaugeParams);
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setMax(100); // 進行状況の最大値を設定（例: 非同期タスクの総数に基づく）
+        progressBar.setProgress(0); // 初期進行状況を0に設定
 
         fetchQuestions();
 
     }
 
     private void fetchQuestions() {
+        incrementPendingAsyncTasks();
         apiService.getAllQuestions().enqueue(new Callback<List<Question>>() {
             @Override
             public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
@@ -155,18 +139,21 @@ public class garally extends AppCompatActivity {
 
                     // UIを更新するためのメソッドをメインスレッドで実行
                     runOnUiThread(() -> addImagesToGridLayout());
+                    decrementPendingAsyncTasks();
 
                 }
             }
             @Override
             public void onFailure(Call<List<Question>> call, Throwable t) {
                 Log.e("API Request Failure", "Error: ", t);
+                decrementPendingAsyncTasks();
             }
         });
     }
 
 
     private void addImagesToGridLayout() {
+        incrementPendingAsyncTasks();
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         int userId = prefs.getInt("UserId", 1);
         for (Question question : Osaka_QuestionList) {
@@ -187,9 +174,11 @@ public class garally extends AppCompatActivity {
         for (Question question : Wakayama_QuestionList) {
             gridLayout_6.addView(SetImage(question,userId), SetGridLayout());
         }
+        decrementPendingAsyncTasks();
     }
 
     private void applyOverlayBasedOnUserQuestionData(int questionId, int userId, RelativeLayout card_lay, TextView lay_txt, ImageView imageView, Question question) {
+        incrementPendingAsyncTasks();
         pendingOverlays.incrementAndGet();
         Log.d("OverlayTracking", "Pending overlays after increment: " + pendingOverlays.get()); // インクリメント直後
 
@@ -227,17 +216,10 @@ public class garally extends AppCompatActivity {
                         displayTextOverlay(new TextView(garally.this), "?", 0xFF000000, card_lay);
                     }
                 }
-                last.setText(String.valueOf(67-pendingOverlays.get())+"/67");
-                // 新しい幅を設定
-                int newWidthInDp = pendingOverlays.get() / 67 * gauge_max;
-                int newWidthInPixels = (int) (newWidthInDp * getResources().getDisplayMetrics().density);
-                gaugeParams.width = newWidthInPixels;
-                // TextView のレイアウトパラメータを更新
-                loading_gauge.setLayoutParams(gaugeParams);
-
                 if (pendingOverlays.decrementAndGet() == 0) {
                     runOnUiThread(() -> zukan.setVisibility(View.VISIBLE));
                 }
+                decrementPendingAsyncTasks();
                 Log.d("OverlayTracking", "Pending overlays after decrement: " + pendingOverlays.get()); // デクリメント直後
             }
 
@@ -247,12 +229,14 @@ public class garally extends AppCompatActivity {
                 if (pendingOverlays.decrementAndGet() == 0) {
                     runOnUiThread(() -> zukan.setVisibility(View.VISIBLE));
                 }
+                decrementPendingAsyncTasks();
                 Log.d("OverlayTracking", "Pending overlays after decrement: " + pendingOverlays.get()); // デクリメント直後（失敗時）
             }
         });
     }
 
     private void displayTextOverlay(TextView lay_txt, String text, int backgroundColor, ViewGroup parent) {
+        incrementPendingAsyncTasks();
         lay_txt.setText(text);
         lay_txt.setTextSize(40);
         lay_txt.setGravity(Gravity.CENTER);
@@ -260,9 +244,11 @@ public class garally extends AppCompatActivity {
         lay_txt.setHeight(300);
         lay_txt.setBackgroundColor(backgroundColor);
         parent.addView(lay_txt);
+        decrementPendingAsyncTasks();
     }
 
     private void SetBackgroundColor(Question question, ImageView imageView){
+        incrementPendingAsyncTasks();
         switch (question.getGenre_id()) {
             case 1:
                 imageView.setBackgroundColor(ContextCompat.getColor(garally.this, R.color.food));
@@ -280,8 +266,10 @@ public class garally extends AppCompatActivity {
                 imageView.setBackgroundColor(ContextCompat.getColor(garally.this, R.color.culture));
                 break;
         }
+        decrementPendingAsyncTasks();
     }
     private RelativeLayout SetImage (Question question, int userId){
+        incrementPendingAsyncTasks();
         ImageView imageView = new ImageView(this);
         String img = question.getImg().replace("\"", "").trim();
         int imageResId = getResources().getIdentifier(img, "drawable", getPackageName());
@@ -302,14 +290,17 @@ public class garally extends AppCompatActivity {
         TextView lay_txt = new TextView(this);
         card_lay.addView(imageView);
         applyOverlayBasedOnUserQuestionData(question.getId(), userId, card_lay,lay_txt,imageView,question);
+        decrementPendingAsyncTasks();
         return card_lay;
     }
 
     private GridLayout.LayoutParams SetGridLayout(){
+        incrementPendingAsyncTasks();
         GridLayout.LayoutParams params = new GridLayout.LayoutParams();
         params.width = 300;  // 画像の幅
         params.height = 300; // 画像の高さ
         params.setGravity(Gravity.CENTER);
+        decrementPendingAsyncTasks();
         return params;
 
     }
@@ -337,6 +328,31 @@ public class garally extends AppCompatActivity {
         Intent intent = new Intent(garally.this, decoration.class);
         startActivity(intent);
     }
-}
+    private int totalAsyncTasks = 0; // 非同期タスクの総数
+    private int completedAsyncTasks = 0; // 完了した非同期タスクの数
 
+    private void updateProgressBar() {
+        runOnUiThread(() -> {
+            int progress = (int) (((double) completedAsyncTasks / totalAsyncTasks) * 100);
+            progressBar.setProgress(progress);
+        });
+    }
+
+    private void incrementPendingAsyncTasks() {
+        synchronized (this) {
+            totalAsyncTasks++;
+            updateProgressBar();
+        }
+    }
+
+    private void decrementPendingAsyncTasks() {
+        synchronized (this) {
+            completedAsyncTasks++;
+            updateProgressBar();
+            if (completedAsyncTasks == totalAsyncTasks) {
+                runOnUiThread(() -> zukan.setVisibility(View.VISIBLE));
+            }
+        }
+    }
+}
 
