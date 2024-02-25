@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -54,6 +55,9 @@ public class garally extends AppCompatActivity {
 
     private int trueNum;
     private int falseNum;
+    private View loading_gauge;
+    private final int gauge_max = 385;
+    private LinearLayout.LayoutParams gaugeParams;
 
 
 
@@ -88,6 +92,7 @@ public class garally extends AppCompatActivity {
         zukan = findViewById(R.id.zukan);
         card_image = findViewById(R.id.card_image);
         last = findViewById(R.id.last);
+        loading_gauge = findViewById(R.id.loading_gauge);
 
         fetchQuestions();
 
@@ -208,6 +213,13 @@ public class garally extends AppCompatActivity {
                     }
                 }
                 last.setText(String.valueOf(67-pendingOverlays.get())+"/67");
+                // 新しい幅を設定（例: 400dp）
+                int newWidthInDp = pendingOverlays.get() / 67 * gauge_max;
+                int newWidthInPixels = (int) (newWidthInDp * getResources().getDisplayMetrics().density);
+                gaugeParams.width = newWidthInPixels;
+                // TextView のレイアウトパラメータを更新
+                loading_gauge.setLayoutParams(gaugeParams);
+
                 if (pendingOverlays.decrementAndGet() == 0) {
                     runOnUiThread(() -> zukan.setVisibility(View.VISIBLE));
                 }
