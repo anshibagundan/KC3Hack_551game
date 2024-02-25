@@ -225,7 +225,7 @@ public class garally extends AppCompatActivity {
                         displayTextOverlay(new TextView(garally.this), "?", 0xFF000000, card_lay);
                     }
                 }
-                last.setText(String.valueOf(67-pendingOverlays.get())+"/67");
+                last.setText(String.valueOf(((67-pendingOverlays.get()))*100/67)+"%/100%");
                 if (pendingOverlays.decrementAndGet() == 0) {
                     runOnUiThread(() -> zukan.setVisibility(View.VISIBLE));
                 }

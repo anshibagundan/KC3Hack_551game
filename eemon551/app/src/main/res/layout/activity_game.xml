@@ -60,16 +60,6 @@
             android:text="ないとき..."
             android:textSize="20dp"/>
 
-        <TextView
-            android:id="@+id/question_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Question loading..."
-            android:textSize="30dp"
-            android:background="@color/white"
-            android:layout_gravity="center"
-            android:layout_marginBottom="240dp" />
-
         <ImageView
             android:id="@+id/Question_image"
             android:layout_gravity="center"
@@ -132,6 +122,16 @@
                 android:layout_height="500dp"
                 android:layout_gravity="bottom"
                 app:srcCompat="@drawable/tyottomattena" />
+
+            <TextView
+                android:id="@+id/question_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="240dp"
+                android:background="@color/white"
+                android:text="Question loading..."
+                android:textSize="30dp" />
 
         </LinearLayout>
 
