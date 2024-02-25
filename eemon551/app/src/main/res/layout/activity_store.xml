@@ -12,7 +12,8 @@
         android:layout_height="match_parent"
         android:background="#FF000000"
         android:visibility="visible"
-        android:gravity="right">
+        android:gravity="right"
+        >
 
         <ProgressBar
             android:id="@+id/progressBar"
