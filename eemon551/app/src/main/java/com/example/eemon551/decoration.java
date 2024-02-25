@@ -496,7 +496,6 @@ public class decoration extends AppCompatActivity {
 
                     }
 
-                    decrementPendingAsyncTasks();
                 }
             }
 
@@ -510,7 +509,6 @@ public class decoration extends AppCompatActivity {
 
     }
     private void setBackground(int Userbackgroundid, ImageView background_image){
-        incrementPendingAsyncTasks();
 
         apiService.getBackgrounds(Userbackgroundid).enqueue(new Callback<background>() {
             @Override
