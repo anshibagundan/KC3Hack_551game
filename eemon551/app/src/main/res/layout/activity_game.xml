@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".game">
+
+    <FrameLayout
+        android:id="@+id/toi"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        android:background="#33AA"
+        >
+        <ImageView
+            android:id="@+id/image_3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/img" />
+
+        <ImageView
+            android:id="@+id/huti"
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:layout_gravity="center"
+            android:src="@drawable/gakubuti" />
+
+
+        <TextView
+            android:id="@+id/question_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|right"
+            android:layout_marginBottom="240dp"
+            android:layout_margin="20dp"
+            android:background="@color/white"
+            android:text="第1問"
+            android:textSize="30dp" />
+
+        <Button
+            android:id="@+id/button_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="230dp"
+            android:layout_marginRight="100dp"
+            android:backgroundTint="#CC6876"
+            android:text="あるとき~!"
+            android:textSize="20dp"/>
+
+        <Button
+            android:id="@+id/button_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="230dp"
+            android:layout_marginLeft="100dp"
+            android:backgroundTint="#7668CC"
+            android:text="ないとき..."
+            android:textSize="20dp"/>
+
+        <ImageView
+            android:id="@+id/Question_image"
+            android:layout_gravity="center"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            app:srcCompat="@android:drawable/alert_light_frame" />
+
+        <ImageView
+            android:id="@+id/seigo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="#AA000000"
+            android:gravity="center"
+            android:onClick="onTap"
+            android:text="正解のイメージ画像"
+            android:textColor="@color/white"
+            android:src="@drawable/gaann"
+            android:textSize="30dp"
+            android:visibility="gone" />
+
+<!--        <TextView-->
+<!--            android:id="@+id/touka_loading"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:background="#CC000000"-->
+<!--            android:visibility="gone"-->
+<!--            android:text="Now loading..."-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="30dp"-->
+<!--            android:gravity="center"-->
+<!--            android:onClick="on" />-->
+
+<!--        ちょっとまってな画面-->
+        <LinearLayout
+            android:id="@+id/touka_loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FF000000"
+            android:gravity="right">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:max="100"
+                android:progress="0"
+                android:translationX="300dp"
+                android:translationY="100dp" />
+
+
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="300dp"
+                android:layout_height="500dp"
+                android:layout_gravity="bottom"
+                app:srcCompat="@drawable/tyottomattena" />
+
+            <TextView
+                android:id="@+id/question_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="240dp"
+                android:background="@color/white"
+                android:text="Question loading..."
+                android:textSize="30dp" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:id="@+id/kaisetu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:src="@drawable/game_back" />
+
+        <TextView
+            android:id="@+id/kaisetu_name"
+            android:layout_width="350dp"
+            android:layout_height="65dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="25dp"
+            android:background="@color/white"
+            android:text="名前"
+            android:gravity="center"
+            android:textSize="30dp"/>
+
+        <ImageView
+            android:id="@+id/kaisetu_img"
+            android:layout_width="match_parent"
+            android:layout_height="295dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="100dp"
+            app:srcCompat="@android:drawable/alert_light_frame" />
+
+        <TextView
+            android:id="@+id/kaisetu_text"
+            android:layout_width="350dp"
+            android:layout_height="182dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="160dp"
+            android:background="@color/white"
+            android:text="ここに解説を書きます"
+            android:textSize="25dp" />
+
+        <Button
+            android:id="@+id/next"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="300dp"
+            android:text="Next"
+            android:textSize="20dp"
+            android:onClick="onTap_next"
+            app:cornerRadius="0dp" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/kekka"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#AA2244"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="700dp"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="結果"
+                android:textSize="50dp"
+                android:layout_marginTop="100dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/black"/>
+
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/money"/>
+                <TextView
+                    android:id="@+id/kekka_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="x0"
+                    android:textSize="40dp"/>
+            </LinearLayout>
+
+
+            <ImageView
+                android:id="@+id/takara"
+                android:layout_margin="20dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/takarabako0"
+                android:onClick="onTap_takara"/>
+
+            <Button
+                android:id="@+id/finish"
+                android:layout_width="150dp"
+                android:layout_height="70dp"
+                android:onClick="game_home"
+                android:text="終了"
+                android:textSize="30dp"
+                android:visibility="gone"
+                app:cornerRadius="0dp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/card_over"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#AA000000"
+            android:gravity="center"
+            android:visibility="gone"
+            android:onClick="onTap_takara_back">
+
+            <ImageView
+                android:id="@+id/get_card"
+                android:layout_width="350dp"
+                android:layout_height="700dp"
+                android:layout_gravity="center"
+                android:src="@drawable/takarabako1"/>
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

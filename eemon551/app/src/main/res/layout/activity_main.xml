@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:background="#89B2F0">
+
+    <FrameLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
+        >
+
+        <ImageView
+            android:id="@+id/image_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/img" />
+
+        <Button
+            android:id="@+id/tap"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="150dp"
+            android:backgroundTint="#C89696"
+            android:text="タップ"
+            android:textSize="50sp"/>
+
+        <LinearLayout
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:background="#99FFFFFF"
+            android:layout_marginBottom="100dp"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/user_title"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text=""
+            android:textSize="20sp"
+            android:gravity="center_vertical"
+            android:paddingStart="30dp"/>
+
+        <TextView
+            android:id="@+id/app_name"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:text="" />
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/title2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="220dp"
+            app:srcCompat="@drawable/rogo551" />
+
+        <ImageView
+            android:id="@+id/arutoki2"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="10dp"
+            android:rotation="-8"
+            android:rotationY="44"
+            app:srcCompat="@drawable/arutoki" />
+
+        <ImageView
+            android:id="@+id/naitoki2"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="80dp"
+            android:layout_marginBottom="-70dp"
+            android:rotation="16"
+            android:rotationY="-15"
+            app:srcCompat="@drawable/naitoki" />
+
+    </FrameLayout>
+    
+    <FrameLayout
+        android:id="@+id/set_user"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/back_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/img" />
+
+        <TextView
+            android:id="@+id/app_youkoso"
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_marginBottom="100dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="551ゲームへようこそ"
+            android:visibility="gone"/>
+
+        <EditText
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="user_nameを入力してください"
+            android:inputType="text"
+            android:layout_gravity="center"
+            android:layout_marginTop="130dp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:background="@color/white" />
+
+        <Button
+            android:id="@+id/kettei"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="決定"
+            android:layout_gravity="center"
+            android:layout_marginTop="220dp"
+            android:backgroundTint="#C89696"
+            android:textSize="30dp"
+            android:fontFamily="@font/acme"/>
+
+        <ImageView
+            android:id="@+id/arutoki"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="40dp"
+            android:rotation="-8"
+            android:rotationY="44"
+            app:srcCompat="@drawable/arutoki" />
+
+        <ImageView
+            android:id="@+id/naitoki"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="80dp"
+            android:layout_marginBottom="-40dp"
+            android:rotation="16"
+            android:rotationY="-15"
+            app:srcCompat="@drawable/naitoki" />
+
+        <ImageView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="150dp"
+            app:srcCompat="@drawable/rogo551" />
+
+        <ImageView
+            android:id="@+id/happy"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="60dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/happy" />
+
+        <ImageView
+            android:id="@+id/sad"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="100dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/sad" />
+
+
+
+    </FrameLayout>
+
+</LinearLayout>
+

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="food">#ED7D31</color>
+    <color name="build">#FFD966</color>
+    <color name="chara">#222A35</color>
+    <color name="place">#119983</color>
+    <color name="culture">#7769B8</color>
+    <color name="bar">#91A600</color>
+    <color name="button">#6A3300</color>
+    <color name="selected">#005550</color>
+</resources>

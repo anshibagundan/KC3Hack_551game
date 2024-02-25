@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".decoration">
+
+    <FrameLayout
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FF000000"
+        android:visibility="visible"
+        >
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:progress="0"
+            android:max="100" />
+
+
+        <!--        <ImageView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            app:srcCompat="@drawable/tiger"/>-->
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="500dp"
+            android:layout_gravity="bottom|right"
+            app:srcCompat="@drawable/tyottomattena" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/decoration"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="#89B2F0"
+        android:visibility="gone">
+        <ImageView
+            android:id="@+id/image_3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/img" />
+        <!--ホーム下-->
+
+        <LinearLayout
+            android:id="@+id/home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal"
+            android:background="@color/white">
+            <!--ショップ-->
+            <LinearLayout
+                android:layout_width="82dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:background="#757575"
+                android:layout_margin="2dp"
+                android:onClick="decoration_store">
+                <ImageView
+                    android:id="@+id/store_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_gravity="bottom"
+                    app:srcCompat="@drawable/store" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ショップ"
+                    android:gravity="center"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="82dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:background="#757575"
+                android:layout_margin="2dp"
+                android:onClick="decoration_zukann"
+                >
+
+                <ImageView
+                    android:id="@+id/zukan_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/zukan" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="図鑑"
+                    android:gravity="center"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+            <!--ゲーム-->
+            <LinearLayout
+                android:layout_width="82dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:background="#757575"
+                android:layout_margin="2dp"
+                android:onClick="decoration_home"
+
+                >
+                <ImageView
+                    android:id="@+id/quizu"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/quiz" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ゲーム"
+                    android:gravity="center"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+            <!--装飾-->
+            <LinearLayout
+                android:layout_width="130dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:background="#a9a9ed"
+                android:layout_margin="2dp">
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/syougou" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="装飾"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+            <!--説明-->
+            <LinearLayout
+                android:layout_width="82dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:background="#757575"
+                android:layout_margin="2dp"
+                android:onClick="decoration_introduce">
+                <ImageView
+                    android:id="@+id/setsumei_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/setsumei" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="説明"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+        <!--看板-->
+        <ImageView
+            android:id="@+id/decoration_sign"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/decoration_sign" />
+
+
+
+        <Button
+            android:id="@+id/name_change_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="400dp"
+            android:backgroundTint="#C89696"
+            android:onClick="overlay_name"
+            android:text="名前変更"
+            android:textSize="40dp"
+            android:fontFamily="@font/acme"/>
+
+        <Button
+            android:id="@+id/title_change_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="280dp"
+            android:backgroundTint="#C89696"
+            android:onClick="overlay_title"
+            android:text="称号変更"
+            android:textSize="40dp"
+            android:fontFamily="@font/acme"/>
+
+        <Button
+            android:id="@+id/background_change_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="160dp"
+            android:backgroundTint="#C89696"
+            android:onClick="overlay_background"
+            android:text="背景変更"
+            android:textSize="40dp"
+            android:fontFamily="@font/acme"/>
+
+
+
+    </FrameLayout>
+
+
+
+
+        <!--    名前変更画面-->
+        <LinearLayout
+            android:id="@+id/name_change"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:background="#ffe6cc"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:orientation="horizontal"
+                android:background="@color/bar">
+                <TextView
+                    android:id="@+id/back_from_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="←"
+                    android:textSize="70dp"
+                    android:background="#9C573E"
+                    android:textColor="@color/white"
+                    android:onClick="overlay_back"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="名前変更"
+                    android:textSize="50dp"
+                    android:textColor="@color/white"
+                    android:background="@color/bar"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="350dp"
+                android:layout_height="300dp"
+                android:background="@color/bar"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_marginTop="200dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="新しい名前を入力してください。"
+                    android:inputType="text"
+                    android:textSize="23dp"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="60dp"
+                    android:textStyle="bold"/>
+                <!--新しい名前を入力-->
+                <EditText
+                    android:id="@+id/user_name_change"
+                    android:layout_width="300dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="60dp"
+                    android:hint="名前を入力"
+                    android:textColor="@color/black"
+                    android:background="@color/white"
+                    android:inputType="text"/>
+
+<!--                決定ボタン-->
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="決定"
+                    android:backgroundTint="#9C573E"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="30dp"
+                    android:textSize="20sp"
+                    android:onClick="changeName"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!--    称号変更画面-->
+        <LinearLayout
+            android:id="@+id/title_change"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:background="#ffe6cc">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:orientation="horizontal"
+                android:background="@color/bar">
+                <TextView
+                    android:id="@+id/back_from_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="←"
+                    android:textSize="70dp"
+                    android:background="#9C573E"
+                    android:textColor="@color/white"
+                    android:onClick="overlay_back"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="称号変更"
+                    android:textSize="50dp"
+                    android:textColor="@color/white"
+                    android:background="@color/bar"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                >
+
+                <TextView
+                    android:id="@+id/user_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    />
+
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="namae"
+                    android:textSize="30sp"
+                    android:gravity="right"
+                    />
+
+            </LinearLayout>
+
+
+
+
+            <!--        すくろーる-->
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="400dp">
+
+                <LinearLayout
+                    android:id="@+id/titles"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/pretitle"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="なにわの"-->
+<!--                        android:textSize="30sp"-->
+<!--                        android:textStyle="bold"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:background="@color/place"-->
+<!--                        android:onClick="title_tap"-->
+<!--                        android:padding="20dp"-->
+<!--                        />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="なにわの"-->
+<!--                        android:textSize="30sp"-->
+<!--                        android:textStyle="bold"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:background="@color/place"-->
+<!--                        android:onClick="title_tap"-->
+<!--                        android:padding="20dp"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        />-->
+
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="100dp"-->
+<!--                        android:background="@color/place"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:layout_marginTop="20dp"-->
+<!--                        android:gravity="center"-->
+<!--                        >-->
+
+<!--                        <TextView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="50dp"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="なにわの"-->
+<!--                            android:textSize="30sp"-->
+<!--                            android:textStyle="bold"-->
+<!--                            android:textColor="@color/white"-->
+<!--                            />-->
+
+<!--                    </LinearLayout>-->
+
+
+
+                </LinearLayout>
+            </ScrollView>
+
+            <!--        提出-->
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="変更"
+                android:textSize="30sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:onClick="changeTitle">
+            </Button>
+
+        </LinearLayout>
+
+        <!--    背景変更画面-->
+        <LinearLayout
+            android:id="@+id/background_change"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:background="#ffe6cc">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:orientation="horizontal"
+                android:background="@color/bar">
+
+                <TextView
+                    android:id="@+id/back_from_background"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="←"
+                    android:textSize="70dp"
+                    android:background="#9C573E"
+                    android:textColor="@color/white"
+                    android:onClick="overlay_back"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="背景変更"
+                    android:textSize="50dp"
+                    android:textColor="@color/white"
+                    android:background="@color/bar"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+            <!--button-->
+
+            <!--        「背景変更」-->
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:id="@+id/LinearLayout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/genre1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="30dp">
+
+                        <!-- View -->
+                        <View
+                            android:layout_width="45dp"
+                            android:layout_height="2dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@color/black"/>
+
+                        <!-- TextView -->
+                        <TextView
+                            android:id="@+id/genre1_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="背景"
+                            android:textSize="30sp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@color/black"/>
+
+                    </LinearLayout>
+
+                    <!--        大阪の画像    -->
+                    <GridLayout
+                        android:id="@+id/background_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:columnCount="2"
+                        android:layout_gravity="center"
+                        android:useDefaultMargins="true">
+
+
+                    </GridLayout>
+                </LinearLayout>
+
+            </ScrollView>
+        </LinearLayout>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

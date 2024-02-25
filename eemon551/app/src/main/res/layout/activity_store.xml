@@ -1,0 +1,939 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".store">
+
+    <LinearLayout
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FF000000"
+        android:visibility="visible"
+        android:gravity="right"
+        >
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:max="100"
+            android:progress="0"
+            android:translationX="300dp"
+            android:translationY="100dp" />
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="500dp"
+            android:layout_gravity="bottom"
+            app:srcCompat="@drawable/tyottomattena" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/store"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffe6cc"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/image_3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/img" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/shop_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                app:srcCompat="@drawable/shop_sign" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/money" />
+
+                <TextView
+                    android:id="@+id/money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="40sp"
+                    android:textStyle="bold"
+                    android:gravity="center"/>
+            </LinearLayout>
+
+<!--            購入-->
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="450dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="カード"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"/>
+
+                    <GridLayout
+                        android:id="@+id/card_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:columnCount="2"
+                        android:useDefaultMargins="true"
+                        >
+    <!--たこ焼き-->
+                        <LinearLayout
+                            android:id="@+id/card_table_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:padding="10dp"
+                            android:background="#775E2B"
+                            android:orientation="vertical"
+                            android:layout_columnWeight="1"
+                            android:onClick="go_buy_card">
+
+                            <TextView
+                                android:id="@+id/cardname1"
+                        android:layout_width="100dp"
+                        android:layout_height="30dp"
+                        android:text=" "
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:gravity="center"
+                       />
+
+                            <ImageView
+                                android:id="@+id/card_1"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                app:srcCompat="@drawable/card_backside"
+                                android:layout_gravity="center"
+                                />
+                            <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="5dp"
+                        >
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            app:srcCompat="@drawable/money" />
+
+                        <TextView
+                            android:id="@+id/card_cost1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:text="###"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            android:gravity="center"
+                            android:layout_marginStart="5dp"/>
+                    </LinearLayout>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/card_table_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:padding="10dp"
+                            android:background="#775E2B"
+                            android:orientation="vertical"
+                            android:layout_columnWeight="1"
+                            android:onClick="go_buy_card2">
+
+                            <TextView
+                                android:id="@+id/cardname2"
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:text=" "
+                                android:textSize="10sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                />
+
+                            <ImageView
+                                android:id="@+id/card_2"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                app:srcCompat="@drawable/card_backside"
+                                android:layout_gravity="center"
+                                />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:layout_marginTop="5dp"
+                                >
+
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    app:srcCompat="@drawable/money" />
+
+                                <TextView
+                                    android:id="@+id/card_cost2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="50dp"
+                                    android:text="###"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/white"
+                                    android:gravity="center"
+                                    android:layout_marginStart="5dp"/>
+                            </LinearLayout>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/card_table_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:padding="10dp"
+                            android:background="#775E2B"
+                            android:orientation="vertical"
+                            android:layout_columnWeight="1"
+                            android:onClick="go_buy_card3">
+
+                            <TextView
+                                android:id="@+id/cardname3"
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:text=" "
+                                android:textSize="10sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                           />
+
+                            <ImageView
+                                android:id="@+id/card_3"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                app:srcCompat="@drawable/card_backside"
+                                android:layout_gravity="center"
+                                />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:layout_marginTop="5dp"
+                                >
+
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    app:srcCompat="@drawable/money" />
+
+                                <TextView
+                                    android:id="@+id/card_cost3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="50dp"
+                                    android:text="###"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/white"
+                                    android:gravity="center"
+                                    android:layout_marginStart="5dp"/>
+                            </LinearLayout>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/card_table_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:padding="10dp"
+                            android:background="#775E2B"
+                            android:orientation="vertical"
+                            android:layout_columnWeight="1"
+                            android:onClick="go_buy_card4">
+
+                            <TextView
+                                android:id="@+id/cardname4"
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:text=" "
+                                android:textSize="10sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                />
+
+                            <ImageView
+                                android:id="@+id/card_4"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                app:srcCompat="@drawable/card_backside"
+                                android:layout_gravity="center"
+                                />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:layout_marginTop="5dp"
+                                >
+
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    app:srcCompat="@drawable/money" />
+
+                                <TextView
+                                    android:id="@+id/card_cost4"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="50dp"
+                                    android:text="###"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/white"
+                                    android:gravity="center"
+                                    android:layout_marginStart="5dp"/>
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:visibility="gone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:padding="10dp"
+                            android:background="#F000"
+                            android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="80dp"
+                        android:text="おめでとう！！"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:gravity="center"
+                        />
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:text="売れるものは\nもうない！！"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:gravity="center"
+                        android:layout_marginTop="5dp"
+                        />
+
+
+                </LinearLayout>
+
+                    </GridLayout>
+
+<!--            称号        -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="称号"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+<!--                称号1        -->
+                        <LinearLayout
+                            android:id="@+id/title1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/place"
+                            android:orientation="vertical"
+                            android:layout_marginBottom="10dp"
+                            android:onClick="go_buy_title"
+                            >
+                            <TextView
+                            android:id="@+id/shop_title1"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:gravity="center"
+                            android:text="1"
+                            android:textSize="30sp"
+                            android:textColor="@color/white"
+                            />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:layout_marginEnd="10dp"
+                                >
+
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    app:srcCompat="@drawable/money" />
+
+                                <TextView
+                                    android:id="@+id/title_cost"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="50dp"
+                                    android:text="###"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/white"
+                                    android:gravity="center"
+                                    android:layout_marginStart="5dp"/>
+                            </LinearLayout>
+
+                    </LinearLayout>
+<!--                称号2        -->
+                        <LinearLayout
+                            android:id="@+id/title2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/place"
+                            android:orientation="vertical"
+                            android:layout_marginBottom="10dp"
+                            android:onClick="go_buy_title2">
+                            <TextView
+                                android:id="@+id/shop_title2"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:gravity="center"
+                                android:text="2"
+                                android:textSize="30sp"
+                                android:textColor="@color/white"
+                                />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:layout_marginEnd="10dp"
+                                >
+
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    app:srcCompat="@drawable/money" />
+
+                                <TextView
+                                    android:id="@+id/title_cost2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="50dp"
+                                    android:text="###"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/white"
+                                    android:gravity="center"
+                                    android:layout_marginStart="5dp"
+                                    />
+                            </LinearLayout>
+
+                        </LinearLayout>
+<!--                称号3        -->
+                        <LinearLayout
+                            android:id="@+id/title3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/place"
+                            android:orientation="vertical"
+                            android:onClick="go_buy_title3">
+                            <TextView
+                                android:id="@+id/shop_title3"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:gravity="center"
+                                android:text="3"
+                                android:textSize="30sp"
+                                android:textColor="@color/white"
+                                />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="10dp"
+                                android:gravity="right"
+                                >
+
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    app:srcCompat="@drawable/money" />
+
+                                <TextView
+                                    android:id="@+id/title_cost3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="50dp"
+                                    android:text="###"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/white"
+                                    android:gravity="center"
+                                    android:layout_marginStart="5dp"/>
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+<!--        背景購入-->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:text="画面背景"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="10dp"
+                        android:background="@color/chara"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="vertical"
+                            android:onClick="go_buy_back">
+                            <ImageView
+                                android:id="@+id/buy_back"
+                                android:layout_width="150dp"
+                                android:layout_height="200dp"
+                                app:srcCompat="@drawable/card_backside"
+                                android:layout_gravity="center"
+                                />
+                            <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_marginTop="5dp"
+                            >
+
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                app:srcCompat="@drawable/money" />
+
+                            <TextView
+                                android:id="@+id/back_cost1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:text="###"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                android:layout_marginStart="5dp"/>
+                        </LinearLayout>
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+<!--        ホーム-->
+        <LinearLayout
+            android:id="@+id/home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal"
+            android:background="@color/white">
+            <!--ショップ-->
+            <LinearLayout
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:background="#a9a9ed"
+                >
+                <ImageView
+                    android:id="@+id/store_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_gravity="bottom"
+                    app:srcCompat="@drawable/store" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ショップ"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+            <!--図鑑-->
+            <LinearLayout
+                android:layout_width="82dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:background="#757575"
+                android:layout_margin="2dp"
+                android:onClick="store_zukann"
+                >
+
+                <ImageView
+                    android:id="@+id/zukan_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/zukan" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="図鑑"
+                    android:gravity="center"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+            <!--ゲーム-->
+            <LinearLayout
+                android:layout_width="82dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:background="#757575"
+                android:layout_margin="2dp"
+                android:onClick="store_home"
+                >
+                <ImageView
+                    android:id="@+id/quizu"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/quiz" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ゲーム"
+                    android:gravity="center"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+            <!--称号-->
+            <LinearLayout
+                android:layout_width="82dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:background="#757575"
+                android:layout_margin="2dp"
+                android:onClick="store_deco"
+                >
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/syougou" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="装飾"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    />
+
+
+            </LinearLayout>
+            <!--説明-->
+            <LinearLayout
+                android:layout_width="82dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:background="#757575"
+                android:layout_margin="2dp"
+                android:onClick="store_introduce">
+                <ImageView
+                    android:id="@+id/setsumei_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/setsumei" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="説明"
+                    android:gravity="center"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+<!--    カード購入画面-->
+    <FrameLayout
+        android:id="@+id/buy_card_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="#ffe6cc">
+
+        <ImageView
+            android:id="@+id/buy_card"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:layout_marginTop="40dp"
+            app:srcCompat="@drawable/tobita">
+
+        </ImageView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="220dp"
+            >
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:srcCompat="@drawable/money" />
+
+            <TextView
+                android:id="@+id/buy_card_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="100"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginStart="5dp"/>
+        </LinearLayout>
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="290dp"
+            android:layout_marginStart="100dp"
+            android:backgroundTint="#CC6876"
+            android:text="買う"
+            android:textSize="20sp"
+            android:onClick="buy_card"/>
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="290dp"
+            android:layout_marginEnd="100dp"
+            android:backgroundTint="#77AACC"
+            android:text="買わない"
+            android:textSize="20sp"
+            android:onClick="back_store"/>
+
+        <LinearLayout
+            android:id="@+id/card_ano"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+        </LinearLayout>
+    </FrameLayout>
+
+<!--    称号購入画面-->
+
+    <FrameLayout
+        android:id="@+id/buy_title_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="#ffe6cc"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="称号"
+            android:textSize="40sp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="150dp"/>
+
+
+        <TextView
+            android:id="@+id/buy_title"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="なにわの"
+            android:textSize="30sp"
+            android:textColor="@color/white"
+            android:background="@color/place"
+            android:layout_marginBottom="40dp"/>
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="100dp"
+            >
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:srcCompat="@drawable/money" />
+
+            <TextView
+                android:id="@+id/buy_title_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:text="500"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginStart="5dp"/>
+        </LinearLayout>
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="240dp"
+            android:layout_marginStart="100dp"
+            android:backgroundTint="#CC6876"
+            android:text="買う"
+            android:textSize="20sp"
+            android:onClick="buy_title"/>
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="240dp"
+            android:layout_marginEnd="100dp"
+            android:backgroundTint="#77AACC"
+            android:text="買わない"
+            android:textSize="20sp"
+            android:onClick="back_store"/>
+
+        <LinearLayout
+            android:id="@+id/title_ano"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+<!--背景購入画面-->
+    <FrameLayout
+        android:id="@+id/buy_back_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="#ffe6cc">
+
+        <ImageView
+            android:id="@+id/buy_back2"
+            android:layout_width="wrap_content"
+            android:layout_height="500dp"
+            android:layout_marginTop="40dp"
+            app:srcCompat="@drawable/tobita">
+        </ImageView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="220dp"
+            >
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:srcCompat="@drawable/money" />
+
+            <TextView
+                android:id="@+id/back_cost2"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="500"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginStart="5dp"/>
+        </LinearLayout>
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="290dp"
+            android:layout_marginStart="100dp"
+            android:backgroundTint="#CC6876"
+            android:text="買う"
+            android:textSize="20sp"
+            android:onClick="buy_back"/>
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="290dp"
+            android:layout_marginEnd="100dp"
+            android:backgroundTint="#77AACC"
+            android:text="買わない"
+            android:textSize="20sp"
+            android:onClick="back_store"/>
+
+        <LinearLayout
+            android:id="@+id/back_ano"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+        </LinearLayout>
+    </FrameLayout>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
