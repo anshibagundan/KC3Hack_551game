@@ -57,7 +57,11 @@ public class garally extends AppCompatActivity {
     private int falseNum;
     private View loading_gauge;
     private final int gauge_max = 385;
-    private LinearLayout.LayoutParams gaugeParams;
+    private LinearLayout.LayoutParams gaugeParams,kansaiParams;
+    private final int kansai_maxView = 290;
+    private final int kansai_max = 67*5;
+    private TextView kansai_per;
+    private View kansai;
 
 
 
@@ -93,6 +97,17 @@ public class garally extends AppCompatActivity {
         card_image = findViewById(R.id.card_image);
         last = findViewById(R.id.last);
         loading_gauge = findViewById(R.id.loading_gauge);
+
+        kansai = findViewById(R.id.kansai);
+        kansai_per = findViewById(R.id.gage_per);
+
+        //関西ゲージ
+        // 新しい幅を設定
+        int newWidth = (trueNum+falseNum) / kansai_max * kansai_maxView;
+        int newWidthPixels = (int) (newWidth * getResources().getDisplayMetrics().density);
+        kansaiParams.width = newWidthPixels;
+        // TextView のレイアウトパラメータを更新
+        kansai.setLayoutParams(gaugeParams);
 
         fetchQuestions();
 
@@ -213,7 +228,7 @@ public class garally extends AppCompatActivity {
                     }
                 }
                 last.setText(String.valueOf(67-pendingOverlays.get())+"/67");
-                // 新しい幅を設定（例: 400dp）
+                // 新しい幅を設定
                 int newWidthInDp = pendingOverlays.get() / 67 * gauge_max;
                 int newWidthInPixels = (int) (newWidthInDp * getResources().getDisplayMetrics().density);
                 gaugeParams.width = newWidthInPixels;
