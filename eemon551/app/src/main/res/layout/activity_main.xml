@@ -172,26 +172,6 @@
             android:layout_marginBottom="150dp"
             app:srcCompat="@drawable/rogo551" />
 
-        <ImageView
-            android:id="@+id/happy"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="60dp"
-            android:visibility="gone"
-            app:srcCompat="@drawable/happy" />
-
-        <ImageView
-            android:id="@+id/sad"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="100dp"
-            android:visibility="gone"
-            app:srcCompat="@drawable/sad" />
-
 
 
     </FrameLayout>

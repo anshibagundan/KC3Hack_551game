@@ -63,18 +63,18 @@ public class activity_home extends AppCompatActivity {
         initializeViews();
 
         apiService.getUser(userId).enqueue(new Callback<User>() {
-           @Override
-           public void onResponse(Call<User> call, Response<User> response) {
-               if (response.isSuccessful() && response.body() != null) {
-                   name.setText(response.body().getName());
-               }
-           }
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    name.setText(response.body().getName());
+                }
+            }
 
-           @Override
-           public void onFailure(Call<User> call, Throwable t) {
-               Log.e("API_CALL", "API call failed: " + t.getMessage());
-           }
-       });
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("API_CALL", "API call failed: " + t.getMessage());
+            }
+        });
         writeTitle(shogo);
         setBackgroundid(image_3);
         GetMoney();
@@ -231,12 +231,11 @@ public class activity_home extends AppCompatActivity {
                     while (!response.body().get(i).getUse()) {
                         i = i + 1;
                     }
-                    Log.e("UserTitleId2", "" + i);
                     int usertitleid = response.body().get(i).getTitle_id();
                     setTitleName(usertitleid, user_title);
                     decrementPendingAsyncTasks();
-                    }
                 }
+            }
 
 
             @Override
@@ -278,15 +277,15 @@ public class activity_home extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.e("UserBackgroundId", "userId: " + userId);
                     for(UserBackground data:response.body()){
-                            if (data.getUse()&&data.getUser_data_id()==userId) {
-                                userbackgroundid = data.getBackground_id();
-                                setBackground(userbackgroundid, background_image);
-                                Log.e("UserBackgroundId", "userbackgroundid: " + userbackgroundid);
-                                Log.e("UserBackgroundId", "user_data_id: " + data.getUser_data_id());
-                                break;
-                            }
-
+                        if (data.getUse()&&data.getUser_data_id()==userId) {
+                            userbackgroundid = data.getBackground_id();
+                            setBackground(userbackgroundid, background_image);
+                            Log.e("UserBackgroundId", "userbackgroundid: " + userbackgroundid);
+                            Log.e("UserBackgroundId", "user_data_id: " + data.getUser_data_id());
+                            break;
                         }
+
+                    }
 
                     decrementPendingAsyncTasks();
                 }

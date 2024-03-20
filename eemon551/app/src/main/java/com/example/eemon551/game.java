@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -21,7 +20,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -78,8 +76,6 @@ public class game extends AppCompatActivity {
     private TextView kekka_money;
 
     private ImageView image_3;
-    private AtomicInteger pendingOverlays = new AtomicInteger(0);
-    private ProgressBar progressBar;
 
 
     @Override
@@ -109,9 +105,6 @@ public class game extends AppCompatActivity {
         get_card = findViewById(R.id.get_card);
         kekka_money = findViewById(R.id.kekka_money);
         image_3 = findViewById(R.id.image_3);
-        progressBar = findViewById(R.id.progressBar);
-        progressBar.setMax(100); // 進行状況の最大値を設定（例: 非同期タスクの総数に基づく）
-        progressBar.setProgress(0); // 初期進行状況を0に設定
 
         // ApiServiceインスタンスを取得
         apiService = ApiClient.getApiService();
@@ -127,9 +120,8 @@ public class game extends AppCompatActivity {
     }
 
     private void loadQuestion() {
-        incrementPendingAsyncTasks();
         Random random = new Random();
-        int questionNo = random.nextInt(156); // 仮定する質問の数に応じて調整
+        int questionNo = random.nextInt(100); // 仮定する質問の数に応じて調整
 
         // APIリクエストを実行して質問をロード
         if (genreId == 0) {
@@ -146,12 +138,10 @@ public class game extends AppCompatActivity {
                             loadQuestion();
                         }
                     }
-                    decrementPendingAsyncTasks();
                 }
 
                 @Override
                 public void onFailure(Call<List<Question>> call, Throwable t) {
-                    decrementPendingAsyncTasks();
                     Log.e("LocationFetch", "APIリクエスト失敗: ", t);
                 }
             });
@@ -176,12 +166,10 @@ public class game extends AppCompatActivity {
                             loadQuestion();
                         }
                     }
-                    decrementPendingAsyncTasks();
                 }
 
                 @Override
                 public void onFailure(Call<List<Question>> call, Throwable t) {
-                    decrementPendingAsyncTasks();
                     Log.e("LocationFetch", "APIリクエスト失敗: ", t);
                 }
             });
@@ -189,7 +177,6 @@ public class game extends AppCompatActivity {
     }
 
     private void DisplayQuestion(Question question) {
-        incrementPendingAsyncTasks();
         touka_loading.setVisibility(View.GONE);
         String name = question.getName();
         questionText.setText(name + "が～？");
@@ -216,7 +203,7 @@ public class game extends AppCompatActivity {
         }
         //出題済みidを格納
         displayedQuestionIds.add(question.getId());
-        decrementPendingAsyncTasks();
+
         button_right.setVisibility(View.VISIBLE);
         button_left.setVisibility(View.VISIBLE);
 
@@ -224,7 +211,6 @@ public class game extends AppCompatActivity {
     }
 
     private void loadLocationData(int locId, Question question) {
-        incrementPendingAsyncTasks();
         apiService.getLocationById(locId).enqueue(new Callback<Location>() {
             @Override
             public void onResponse(Call<Location> call, Response<Location> response) {
@@ -237,14 +223,12 @@ public class game extends AppCompatActivity {
                     if (touka_loading.getVisibility() == View.GONE) {
                         setupButtonListeners(buttonLeft, buttonRight, currentQuestionIsKansai, locId, question);
                     }
-                    decrementPendingAsyncTasks();
                     Log.e("T_Q", "2" + T_Q);
                 }
             }
 
             @Override
             public void onFailure(Call<Location> call, Throwable t) {
-                decrementPendingAsyncTasks();
                 Log.e("LocationFetch", "locationデータ取得失敗: ", t);
             }
         });
@@ -253,7 +237,6 @@ public class game extends AppCompatActivity {
 
     //buttomと正誤判定
     private void setupButtonListeners(Button buttonLeft, Button buttonRight, Boolean currentQuestionIsKansai, int locId, Question question) {
-        incrementPendingAsyncTasks();
         if (locationId == 0) {
             buttonLeft.setOnClickListener(view -> {
                 if (currentQuestionIsKansai) {
@@ -495,7 +478,6 @@ public class game extends AppCompatActivity {
             Log.d("kansai", "TrueQuestionIds" + TrueQuestionIds);
         }
         Log.e("T_Q", "1" + T_Q);
-        decrementPendingAsyncTasks();
     }
 
 
@@ -656,16 +638,12 @@ public class game extends AppCompatActivity {
     }
 
     private <T> T getRandomElement(Set<T> set) {
-        incrementPendingAsyncTasks();
         List<T> list = new ArrayList<>(set);
         Random random = new Random();
-        decrementPendingAsyncTasks();
         return list.get(random.nextInt(list.size()));
-
     }
 
     private void SetUserQuestionData(int randomValue, Set<Integer> displayedQuestionIds) {
-        incrementPendingAsyncTasks();
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         int userId = prefs.getInt("UserId", 1);
 
@@ -684,17 +662,14 @@ public class game extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.isSuccessful()) {
-                            decrementPendingAsyncTasks();
                             Log.d("UpdateQuestionData", "Question data updated successfully.");
                         } else {
-                            decrementPendingAsyncTasks();
                             Log.e("UpdateQuestionData", "Failed to update question data. Response code: " + response.code());
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
-                        decrementPendingAsyncTasks();
                         Log.e("UpdateQuestionData", "API call failed.", t);
                     }
                 });
@@ -704,17 +679,14 @@ public class game extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.isSuccessful()) {
-                            decrementPendingAsyncTasks();
                             Log.d("InsertQuestionData", "Question data inserted successfully.");
                         } else {
-                            decrementPendingAsyncTasks();
                             Log.e("InsertQuestionData", "Failed to insert question data. Response code: " + response.code());
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
-                        decrementPendingAsyncTasks();
                         Log.e("InsertQuestionData", "API call failed.", t);
                     }
                 });
@@ -731,17 +703,14 @@ public class game extends AppCompatActivity {
                             @Override
                             public void onResponse(Call<Void> call, Response<Void> response) {
                                 if (response.isSuccessful()) {
-                                    decrementPendingAsyncTasks();
                                     Log.d("InsertQuestionData", "Question data inserted successfully for non-selected question.");
                                 } else {
-                                    decrementPendingAsyncTasks();
                                     Log.e("InsertQuestionData", "Failed to insert question data for non-selected question. Response code: " + response.code());
                                 }
                             }
 
                             @Override
                             public void onFailure(Call<Void> call, Throwable t) {
-                                decrementPendingAsyncTasks();
                                 Log.e("InsertQuestionData", "API call failed for non-selected question.", t);
                             }
                         });
@@ -757,7 +726,6 @@ public class game extends AppCompatActivity {
     }
 
     private void SearchQuestionData(int userId, int qes_id, SearchQuestionDataCallback callback) {
-        incrementPendingAsyncTasks();
         apiService.getUserQuestionData(userId).enqueue(new Callback<List<UserQuestionData>>() {
             @Override
             public void onResponse(Call<List<UserQuestionData>> call, Response<List<UserQuestionData>> response) {
@@ -776,7 +744,6 @@ public class game extends AppCompatActivity {
                 } else {
                     callback.onResult(4); // データがなかった場合
                 }
-                decrementPendingAsyncTasks();
             }
 
             @Override
@@ -788,8 +755,6 @@ public class game extends AppCompatActivity {
     }
     private void setBackgroundid(ImageView background_image){
         //DBから称号を取ってくる titleに格納
-        incrementPendingAsyncTasks();
-
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         int userId = prefs.getInt("UserId", 1);
         apiService.getUserBackgrounds(userId).enqueue(new Callback<List<UserBackground>>() {
@@ -803,7 +768,6 @@ public class game extends AppCompatActivity {
                             setBackground(userbackgroundid, background_image);
                             Log.e("UserBackgroundId", "userbackgroundid: " + userbackgroundid);
                             Log.e("UserBackgroundId", "user_data_id: " + data.getUser_data_id());
-                            decrementPendingAsyncTasks();
                             break;
                         }
 
@@ -813,7 +777,6 @@ public class game extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<UserBackground>> call, Throwable t) {
-                decrementPendingAsyncTasks();
                 Log.e("UserBackgroundId", "API call failed: " + t.getMessage());
             }
         });
@@ -821,7 +784,6 @@ public class game extends AppCompatActivity {
 
     }
     private void setBackground(int Userbackgroundid, ImageView background_image){
-        incrementPendingAsyncTasks();
 
         apiService.getBackgrounds(Userbackgroundid).enqueue(new Callback<background>() {
             @Override
@@ -836,14 +798,12 @@ public class game extends AppCompatActivity {
                             @Override
                             public void run() {
                                 background_image.setBackgroundResource(resourceId);
-                                decrementPendingAsyncTasks();
                             }
                         });
 
                     } else {
                         String img2 = "img".replace("\"", "").trim();
                         background_image.setImageResource(getResources().getIdentifier(img2, "drawable", getPackageName()));
-                        decrementPendingAsyncTasks();
                         Log.e("UserBackgroundId", "Resource ID not found for: " + img);
                     }
 
@@ -853,38 +813,9 @@ public class game extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<background> call, Throwable t) {
-                decrementPendingAsyncTasks();
                 Log.e("UserBackgroundId", "API call failed: " + t.getMessage());
             }
         });
     }
 
-    private int totalAsyncTasks = 0; // 非同期タスクの総数
-    private int completedAsyncTasks = 0; // 完了した非同期タスクの数
-
-    private void updateProgressBar() {
-        runOnUiThread(() -> {
-            int progress = (int) (((double) completedAsyncTasks / totalAsyncTasks) * 100);
-            progressBar.setProgress(progress);
-        });
-    }
-
-    private void incrementPendingAsyncTasks() {
-        synchronized (this) {
-            totalAsyncTasks++;
-            updateProgressBar();
-        }
-    }
-
-    private void decrementPendingAsyncTasks() {
-        synchronized (this) {
-            completedAsyncTasks++;
-            updateProgressBar();
-            if (completedAsyncTasks == totalAsyncTasks) {
-                runOnUiThread(() -> toi.setVisibility(View.VISIBLE));
-            }
-        }
-    }
-
 }
-

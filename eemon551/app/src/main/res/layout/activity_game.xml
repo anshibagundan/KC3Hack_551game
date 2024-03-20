@@ -34,7 +34,6 @@
             android:layout_gravity="top|right"
             android:layout_marginBottom="240dp"
             android:layout_margin="20dp"
-            android:background="@color/white"
             android:text="第1問"
             android:textSize="30dp" />
 
@@ -60,6 +59,15 @@
             android:text="ないとき..."
             android:textSize="20dp"/>
 
+        <TextView
+            android:id="@+id/question_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Question loading..."
+            android:textSize="30dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="240dp" />
+
         <ImageView
             android:id="@+id/Question_image"
             android:layout_gravity="center"
@@ -83,19 +91,19 @@
             android:textSize="30dp"
             android:visibility="gone" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/touka_loading"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:background="#CC000000"-->
-<!--            android:visibility="gone"-->
-<!--            android:text="Now loading..."-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="30dp"-->
-<!--            android:gravity="center"-->
-<!--            android:onClick="on" />-->
+        <!--        <TextView-->
+        <!--            android:id="@+id/touka_loading"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:background="#CC000000"-->
+        <!--            android:visibility="gone"-->
+        <!--            android:text="Now loading..."-->
+        <!--            android:textColor="@color/white"-->
+        <!--            android:textSize="30dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:onClick="on" />-->
 
-<!--        ちょっとまってな画面-->
+        <!--        ちょっとまってな画面-->
         <LinearLayout
             android:id="@+id/touka_loading"
             android:layout_width="match_parent"
@@ -103,35 +111,12 @@
             android:background="#FF000000"
             android:gravity="right">
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:max="100"
-                android:progress="0"
-                android:translationX="300dp"
-                android:translationY="100dp" />
-
-
-
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="300dp"
                 android:layout_height="500dp"
                 android:layout_gravity="bottom"
                 app:srcCompat="@drawable/tyottomattena" />
-
-            <TextView
-                android:id="@+id/question_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="240dp"
-                android:background="@color/white"
-                android:text="Question loading..."
-                android:textSize="30dp" />
 
         </LinearLayout>
 
