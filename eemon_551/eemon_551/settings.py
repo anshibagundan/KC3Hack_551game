@@ -82,11 +82,11 @@ WSGI_APPLICATION = 'eemon_551.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'eemon',
-        'USER': 'eemon_user',
-        'PASSWORD': 'xBcSex0Q4EVEJZf6FAeBtjHJlLdy7xbu',
-        'HOST': 'dpg-cn3h3cv109ks73epvbhg-a.oregon-postgres.render.com',
-        'PORT': '5432',
+        'NAME': 'd71868esfat8v',  # データベース名
+        'USER': 'u9mc3fpf0lb6h3',  # データベースユーザー名
+        'PASSWORD': 'p46f898e10f5ede76989ad776821a4cc51da231f2c75a4f6f48048e6ebf206249',  # データベースユーザーのパスワード
+        'HOST': 'c7gljno857ucsl.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com',  # データベースサーバーのホスト名
+        'PORT': '5432',  # データベースサーバーのポート
     }
 }
 
