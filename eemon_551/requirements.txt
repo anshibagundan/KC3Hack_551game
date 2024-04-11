@@ -20,7 +20,7 @@ executing==1.2.0
 filelock
 Flask
 fonttools
-greenlet==2.0.2
+greenlet
 gunicorn==21.2.0
 ipykernel
 ipython
