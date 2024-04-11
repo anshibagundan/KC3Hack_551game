@@ -1,7 +1,0 @@
-INSERT INTO location (name, font)
-VALUES ('大阪', 'fontex1');
-VALUES ('京都', 'fontex2');
-VALUES ('兵庫', 'fontex3');
-VALUES ('奈良', 'fontex4');
-VALUES ('和歌山', 'fontex5');
-VALUES ('滋賀', 'fontex6');
