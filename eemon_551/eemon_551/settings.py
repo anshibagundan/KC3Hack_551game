@@ -28,7 +28,8 @@ DEBUG = True
 APPEND_SLASH=False
 
 ALLOWED_HOSTS = ['eemon-551.onrender.com',
-                  '127.0.0.1',]
+                  '127.0.0.1',
+                  '.herokuapp.com',]
 
 
 # Application definition
