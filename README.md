@@ -25,7 +25,11 @@
 551ゲームというオリジナルな2択選択ゲームを作成した．  
 551ゲームとはゲームを楽しんでもらうことはもちろんだが，ゲームを通して関西の食べ物や文化などをより知ってもらうことが目的である．
 
-プレイヤーに楽しさややりごたえを提供するために，コレクション機能を多数追加した．  
+プレイヤーに楽しさややりごたえを提供するために，カードや称号，背景などのコレクション機能を多数追加した． 
+</br>
+<img width="1322" alt="image" src="https://github.com/anshibagundan/KC3Hack_551game/assets/125728897/f27b1100-3586-403e-8591-1b6c6b027b8a">
+<img width="1320" alt="image" src="https://github.com/anshibagundan/KC3Hack_551game/assets/125728897/43776e86-752c-466d-b873-fa172a964f89">
+<img width="1321" alt="image" src="https://github.com/anshibagundan/KC3Hack_551game/assets/125728897/761364e0-6af7-4c75-9a3e-92e566b82390">
 <!-- 開発したプロダクトの説明を入力してください -->
 
 
@@ -43,22 +47,33 @@
 下の左右矢印で正解の問題範囲を選択することができる．  
 (例：関西全域を選択すると，関西のものが問題で出題された時は「あるとき～」ボタンをクリックすると正解になる．しかし，大阪を選択すると，大坂のものが問題で出題された時のみ「あるとき～」ボタンをクリックすると正解になる．)
 
-ジャンルと場所が選択できたらスタートボタンを押そう。。
+ジャンルと場所が選択できたらスタートボタンを押そう。
+</br>
+<img width="277" alt="image" src="https://github.com/anshibagundan/KC3Hack_551game/assets/125728897/c6671f59-88ec-4530-9021-13f54678d395">
+</br>
 先ほどの選択がジャンル：全て、場所：関西全域だとして説明するね．  
 まず問題や10問出題されるよ．  
 関西のものが出題されると「あるとき」が正解で「ないときぃ」が不正解  
 関西以外のものが出題されると「あるとき」が不正解で「ないときぃ」が正解になる．
-  
- 
-
 正解，不正解で関西お馴染みのリアクションがでてくるよ．(画面をタップ)  
+<img width="256" alt="image" src="https://github.com/anshibagundan/KC3Hack_551game/assets/125728897/be3cd3f1-f095-43a5-ade2-c7c042632b44">
+<img width="246" alt="image" src="https://github.com/anshibagundan/KC3Hack_551game/assets/125728897/7d8fff58-e165-43ef-a21f-2a2364108583">
+<img width="251" alt="image" src="https://github.com/anshibagundan/KC3Hack_551game/assets/125728897/727038d5-98f0-4a22-b162-d6907edd0331">
+</br>
+
 そのあと問題に出たものの詳細説明が出てくる．  
+</br>
+<img width="250" alt="image" src="https://github.com/anshibagundan/KC3Hack_551game/assets/125728897/737790bf-1cde-440b-bf84-e32d94dc8102">
+</br>
+10問終わると結果が表示される．   
+結果画面で関西コイン(ゲーム内マネー)とカードが入手できる． 
+</br>
+<img width="255" alt="image" src="https://github.com/anshibagundan/KC3Hack_551game/assets/125728897/95b086fa-7cfd-4893-abaa-a8a354f718da">
+<img width="265" alt="image" src="https://github.com/anshibagundan/KC3Hack_551game/assets/125728897/b7f097e7-4045-42c1-b4ad-599334e8a160">
+<img width="259" alt="image" src="https://github.com/anshibagundan/KC3Hack_551game/assets/125728897/138f406a-77ae-4ac4-8ce6-9d810c487122">
+</br>
 
-10問終わると結果が表示される．  
-  
-結果画面で関西コイン(ゲーム内マネー)とカードが入手できる．  
 ゲームの説明以上  
-
   
 **ショップの説明**
   まだ手に入れていないカード，称号，背景を購入できる．
@@ -66,7 +81,7 @@
   まだ，ゲーム内で一度も出会ってないもののカードは買えないから，カードを集めるためにたくさん遊んでください．
   値段に関しては独断と偏見でつけているので，気にしないでください．
 
-
+<img width="1320" alt="image" src="https://github.com/anshibagundan/KC3Hack_551game/assets/125728897/389d80bb-c5af-4f95-8520-8c070f6787ce">
 
 
 ## 注力したポイント
